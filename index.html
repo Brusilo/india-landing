@@ -1,36 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tutu — Travel across Russia for less</title>
-<meta name="description" content="Buses, trains and flights across Russia, in English. Tickets and hotels booked by 42 million travellers.">
+<title>Туту – путешествуйте по России выгодно</title>
+<meta name="description" content="Автобусы, поезда и самолёты по России. Билеты и отели на Туту выбирают 42 млн путешественников.">
 <meta name="theme-color" content="#0D0B68">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%237D71FF'/></svg>">
 
-<!-- Lora italic stands in for PT Cooper Light Italic (brand accent face) — the real file was not supplied. Swap when available. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400&display=swap" rel="stylesheet">
 
 <style>
-/* ============================================================
-   Tutu Sans — brand face. Files live in /fonts (WOFF2).
-   ============================================================ */
 @font-face{font-family:'Tutu Sans';src:url('fonts/tutu_sans_regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'Tutu Sans';src:url('fonts/tutu_sans_medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:'Tutu Sans';src:url('fonts/tutu_sans_demibold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
 @font-face{font-family:'Tutu Sans';src:url('fonts/tutu_sans_bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
 
 :root{
-  /* Brand — these five only */
   --deep-blue:#0D0B68;
   --berry-purple:#7D71FF;
   --cloud-white:#EDEFFF;
-  --orange:#FF872E;      /* discount badges only */
-  --green:#00C95E;       /* hotel rating chips only */
+  --orange:#FF872E;
+  --green:#00C95E;
 
-  /* Neutrals */
   --white:#fff;
   --text:#4B4B5C;
   --muted:#8C8CA1;
@@ -69,12 +63,13 @@ input:focus{outline:none}
 .container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 16px}
 @media(min-width:768px){.container{padding:0 24px}}
 
-.section{padding:52px 0}
-@media(min-width:768px){.section{padding:80px 0}}
+/* Уменьшены отступы (воздух) */
+.section{padding:36px 0}
+@media(min-width:768px){.section{padding:56px 0}}
 .section--cloud{background:var(--cloud-white)}
 
-.section-head{margin-bottom:22px}
-@media(min-width:768px){.section-head{margin-bottom:28px}}
+.section-head{margin-bottom:16px}
+@media(min-width:768px){.section-head{margin-bottom:20px}}
 .section-head h2{
   font-weight:700;
   font-size:clamp(26px,4.4vw,40px);
@@ -85,9 +80,6 @@ input:focus{outline:none}
 .section-head p{margin-top:8px;font-size:15px;color:var(--muted);max-width:620px}
 @media(min-width:768px){.section-head p{font-size:16px}}
 
-/* ============================================================
-   Header
-   ============================================================ */
 .top{background:var(--deep-blue)}
 .top-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:16px}
 @media(min-width:768px){.top-inner{padding-block:22px}}
@@ -102,9 +94,6 @@ input:focus{outline:none}
 }
 .lang button.is-active{background:var(--white);color:var(--deep-blue);font-weight:600}
 
-/* ============================================================
-   Hero
-   ============================================================ */
 .hero{background:var(--deep-blue);color:var(--white);padding:24px 0 44px}
 @media(min-width:768px){.hero{padding:36px 0 64px}}
 
@@ -139,7 +128,6 @@ input:focus{outline:none}
 }
 .pill svg{width:15px;height:15px;flex:none;fill:currentColor;opacity:.9}
 
-/* Transport tabs */
 .transport{
   display:flex;gap:6px;margin-top:30px;
   overflow-x:auto;scrollbar-width:none;
@@ -156,14 +144,12 @@ input:focus{outline:none}
 }
 .transport .ico img{
   width:26px;height:26px;
-  /* brand icons ship in deep blue — recolour to white for the dark hero */
   filter:brightness(0) invert(1);
 }
 .transport button.is-active .ico{background:var(--berry-purple)}
 .transport .lbl{font-size:13px;font-weight:500;color:rgba(255,255,255,.72);line-height:1}
 .transport button.is-active .lbl{color:var(--white);font-weight:600}
 
-/* Search form */
 .search{
   margin-top:20px;
   background:var(--white);
@@ -216,9 +202,6 @@ input:focus{outline:none}
   font-size:13px;font-weight:500;color:var(--white);
 }
 
-/* ============================================================
-   Filter tabs
-   ============================================================ */
 .filters{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
 .filters::-webkit-scrollbar{display:none}
 .filters button{
@@ -228,9 +211,6 @@ input:focus{outline:none}
 }
 .filters button.is-active{background:var(--berry-purple);color:var(--white);font-weight:600}
 
-/* ============================================================
-   Card rows — horizontal scroll on mobile, grid on desktop
-   ============================================================ */
 .row{
   display:flex;gap:14px;
   overflow-x:auto;scroll-snap-type:x mandatory;
@@ -254,8 +234,7 @@ input:focus{outline:none}
   box-shadow:var(--shadow-sm);
   display:flex;flex-direction:column;
 }
-/* Gradient stands in for a photo. Replace the .card-media div with
-   <img class="card-img" src="..." alt=""> — same box, same radius. */
+
 .card-media{
   position:relative;
   aspect-ratio:16/10;
@@ -281,7 +260,6 @@ input:focus{outline:none}
 .card-meta{font-size:13px;color:var(--muted)}
 .card-type{font-size:13px;color:var(--text);margin-top:auto;padding-top:4px}
 
-/* Hotels */
 .rating{
   position:absolute;left:12px;bottom:12px;
   background:var(--green);color:var(--white);
@@ -300,9 +278,6 @@ input:focus{outline:none}
   padding:6px 10px;border-radius:999px;
 }
 
-/* ============================================================
-   Tiles
-   ============================================================ */
 .tiles{display:grid;gap:14px;grid-template-columns:1fr}
 @media(min-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1024px){
@@ -326,9 +301,6 @@ input:focus{outline:none}
 }
 .tile--plain{padding-bottom:24px}
 
-/* ============================================================
-   Wide panel
-   ============================================================ */
 .panel{
   background:var(--cloud-white);
   border-radius:24px;
@@ -344,9 +316,6 @@ input:focus{outline:none}
 .panel p{margin-top:12px;font-size:16px;line-height:1.55;color:var(--text);max-width:58ch}
 @media(min-width:768px){.panel p{font-size:17px}}
 
-/* ============================================================
-   FAQ
-   ============================================================ */
 .faq{display:grid;gap:12px}
 @media(min-width:900px){
   .faq{grid-template-columns:1fr 1fr;gap:16px}
@@ -356,9 +325,6 @@ input:focus{outline:none}
 .faq-card h3{font-size:16.5px;font-weight:600;color:var(--deep-blue);line-height:1.3}
 .faq-card p{margin-top:8px;font-size:14.5px;line-height:1.6;color:var(--text)}
 
-/* ============================================================
-   App block
-   ============================================================ */
 .app-card{
   background:var(--white);
   border:1px solid var(--line);
@@ -370,7 +336,6 @@ input:focus{outline:none}
 @media(min-width:768px){
   .app-card{grid-template-columns:auto 1fr;align-items:center;padding:44px;gap:44px}
 }
-/* QR placeholder — drop the real code in as <img src="assets/qr.png"> */
 .qr{
   width:156px;height:156px;flex:none;
   border:1px solid var(--line);border-radius:18px;
@@ -387,9 +352,6 @@ input:focus{outline:none}
   font-size:14px;font-weight:500;text-align:center;line-height:1.2;
 }
 
-/* ============================================================
-   Footer
-   ============================================================ */
 .footer{background:var(--deep-blue);color:var(--white);padding:40px 0 34px}
 @media(min-width:768px){.footer{padding:56px 0 44px}}
 .footer-top{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
@@ -414,219 +376,207 @@ input:focus{outline:none}
 </head>
 <body>
 
-<!-- ============================ Header ============================ -->
 <header class="top">
   <div class="container top-inner">
     <img class="logo" src="assets/logo-tutu-white.png" alt="Tutu">
-    <nav class="lang" aria-label="Language">
-      <button type="button" class="is-active" aria-current="true">EN</button>
-      <button type="button">RU</button>
+    <nav class="lang" aria-label="Язык">
+      <button type="button">EN</button>
+      <button type="button" class="is-active" aria-current="true">RU</button>
       <button type="button">हिंदी</button>
     </nav>
   </div>
 </header>
 
-<!-- ============================ 1. Hero ============================ -->
 <section class="hero">
   <div class="container">
-    <h1>Travel across Russia for <span class="accent">less</span></h1>
-    <p class="hero-sub">Buses, trains and flights across the country. In English, from search to ticket.</p>
+    <h1>Путешествуйте по России <span class="accent">выгодно</span></h1>
+    <p class="hero-sub">Автобусы, поезда и самолёты по всей стране. Всё на русском – от поиска до покупки билета.</p>
 
     <div class="pills">
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.9 3 3 6.4 3 10.6c0 2.2 1.1 4.2 3 5.6v3.3l3.3-1.8c.9.2 1.8.3 2.7.3 5.1 0 9-3.4 9-7.4S17.1 3 12 3Z"/></svg>
-        English support
+        Поддержка на русском
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Zm7.2-.7a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4ZM3 18.4C3 15.5 5.7 13.1 9 13.1s6 2.4 6 5.3v.9H3v-.9Zm13.8-4.2c2.4 0 4.2 1.8 4.2 4.1v1h-4.4v-.9c0-1.6-.6-3-1.6-4.2h1.8Z"/></svg>
-        42 million travellers
+        42 млн путешественников
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.6 2.6 5.3 5.8.9-4.2 4 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4 5.8-.9L12 3.6Z"/></svg>
-        4.84 app rating
+        4,84 – рейтинг приложения
       </span>
     </div>
 
-    <!-- Transport tabs — inert in stage 1 -->
-    <div class="transport" role="tablist" aria-label="Transport type">
+    <div class="transport" role="tablist" aria-label="Вид транспорта">
       <button type="button" class="is-active" role="tab" aria-selected="true">
         <span class="ico"><img src="assets/icon-bus.png" alt="" aria-hidden="true"></span>
-        <span class="lbl">Buses</span>
+        <span class="lbl">Автобусы</span>
       </button>
       <button type="button" role="tab" aria-selected="false">
         <span class="ico"><img src="assets/icon-train.png" alt="" aria-hidden="true"></span>
-        <span class="lbl">Trains</span>
+        <span class="lbl">Поезда</span>
       </button>
       <button type="button" role="tab" aria-selected="false">
         <span class="ico"><img src="assets/icon-flight.png" alt="" aria-hidden="true"></span>
-        <span class="lbl">Flights</span>
+        <span class="lbl">Самолёты</span>
       </button>
       <button type="button" role="tab" aria-selected="false">
         <span class="ico"><img src="assets/icon-hotel.png" alt="" aria-hidden="true"></span>
-        <span class="lbl">Hotels</span>
+        <span class="lbl">Отели</span>
       </button>
     </div>
 
-    <!-- Search form — visual only in stage 1 -->
     <form class="search" onsubmit="return false">
       <div class="field">
-        <label for="f-from">From</label>
-        <input id="f-from" type="text" placeholder="City or station" autocomplete="off">
+        <label for="f-from">Откуда</label>
+        <input id="f-from" type="text" placeholder="Город или вокзал" autocomplete="off">
       </div>
       <div class="swap" aria-hidden="true">
         <span><svg viewBox="0 0 24 24"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span>
       </div>
       <div class="field">
-        <label for="f-to">To</label>
-        <input id="f-to" type="text" placeholder="City or station" autocomplete="off">
+        <label for="f-to">Куда</label>
+        <input id="f-to" type="text" placeholder="Город или вокзал" autocomplete="off">
       </div>
       <div class="field">
-        <label for="f-date">Date</label>
-        <input id="f-date" type="text" placeholder="Add a date" autocomplete="off">
+        <label for="f-date">Когда</label>
+        <input id="f-date" type="text" placeholder="Выберите дату" autocomplete="off">
       </div>
       <div class="field field--pax">
-        <label>Passengers</label>
-        <span class="value">1 passenger</span>
+        <label>Кто едет</label>
+        <span class="value">1 пассажир</span>
       </div>
-      <button type="button" class="btn-search">Search</button>
+      <button type="button" class="btn-search">Найти</button>
     </form>
 
     <div class="chips">
-      <span class="chip">Moscow</span>
-      <span class="chip">Kazan</span>
-      <span class="chip">Nizhny Novgorod</span>
-      <span class="chip">Saint Petersburg</span>
-      <span class="chip">Ufa</span>
+      <span class="chip">Дели</span>
+      <span class="chip">Мумбаи</span>
+      <span class="chip">Гоа</span>
+      <span class="chip">Москва</span>
+      <span class="chip">Санкт-Петербург</span>
     </div>
   </div>
 </section>
 
-<!-- ============================ 2. Popular routes ============================ -->
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <h2>Popular routes</h2>
-      <p>Prices below the 10-day average. Updated regularly.</p>
+      <h2>Популярные маршруты</h2>
+      <p>Цены ниже среднего за последние 10 дней. Обновляем регулярно.</p>
     </div>
 
-    <div class="filters" role="tablist" aria-label="Filter routes">
-      <button type="button" class="is-active" role="tab" aria-selected="true">All</button>
-      <button type="button" role="tab" aria-selected="false">Buses</button>
-      <button type="button" role="tab" aria-selected="false">Trains</button>
+    <div class="filters" role="tablist" aria-label="Фильтр маршрутов">
+      <button type="button" class="is-active" role="tab" aria-selected="true">Все</button>
+      <button type="button" role="tab" aria-selected="false">Авиа</button>
+      <button type="button" role="tab" aria-selected="false">Поезда</button>
+      <button type="button" role="tab" aria-selected="false">Автобусы</button>
     </div>
 
     <div class="row" id="routes"></div>
   </div>
 </section>
 
-<!-- ============================ 3. Travelling with friends ============================ -->
 <section class="section">
   <div class="container">
-    <div class="section-head"><h2>Travelling with friends</h2></div>
+    <div class="section-head"><h2>Путешествуйте вместе</h2></div>
     <div class="tiles tiles--3">
       <article class="tile">
-        <h3>Seats together</h3>
-        <p>Pick seats next to each other on the seat map, instead of taking whatever the system assigns.</p>
+        <h3>Места рядом</h3>
+        <p>Выберите места рядом на схеме вагона, а не те, которые система назначит автоматически.</p>
         <svg class="tile-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10V6a1.6 1.6 0 0 1 3.2 0v4M3 11.5h5.2a1 1 0 0 1 1 1V18H2v-5.5a1 1 0 0 1 1-1Zm12.8-1.5V6a1.6 1.6 0 0 1 3.2 0v4m-4.2 1.5H21a1 1 0 0 1 1 1V18h-7.2v-5.5a1 1 0 0 1 1-1Z"/></svg>
       </article>
       <article class="tile">
-        <h3>One booking for everyone</h3>
-        <p>Add everyone's details in a single order instead of buying tickets one by one.</p>
+        <h3>Один заказ на всех</h3>
+        <p>Добавьте данные всех пассажиров в один заказ – не придётся покупать билеты по одному.</p>
         <svg class="tile-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5V6.6c0-.9.7-1.6 1.6-1.6h14.8c.9 0 1.6.7 1.6 1.6v1.9a2.2 2.2 0 0 0 0 4.4v1.9c0 .9-.7 1.6-1.6 1.6H4.6c-.9 0-1.6-.7-1.6-1.6v-1.9a2.2 2.2 0 0 0 0-4.4Zm7 .2 1.7 1.7 3.4-3.4"/></svg>
       </article>
       <article class="tile">
-        <h3>Rooms for a group</h3>
-        <p>Filter for places that actually fit your whole group.</p>
+        <h3>Номера для всей компании</h3>
+        <p>Выберите варианты размещения, где хватит места всей компании.</p>
         <svg class="tile-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18v-6.4A1.6 1.6 0 0 1 4.6 10h14.8a1.6 1.6 0 0 1 1.6 1.6V18M3 15.5h18M4.6 10V7.6A1.6 1.6 0 0 1 6.2 6h3a1.6 1.6 0 0 1 1.6 1.6V10m2.4 0V7.6A1.6 1.6 0 0 1 14.8 6h3a1.6 1.6 0 0 1 1.6 1.6V10M3.6 18v1.6M20.4 18v1.6"/></svg>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============================ 4. First time on a Russian site? ============================ -->
 <section class="section section--cloud">
   <div class="container">
-    <div class="section-head"><h2>First time on a Russian site?</h2></div>
+    <div class="section-head"><h2>Впервые покупаете на российском сайте?</h2></div>
     <div class="tiles tiles--4">
       <article class="tile">
-        <h3>English all the way</h3>
-        <p>From search to payment confirmation, not just the homepage.</p>
+        <h3>Всё на русском</h3>
+        <p>От поиска до подтверждения оплаты – не только главная страница.</p>
         <svg class="tile-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.2 9.6h17.6M3.2 14.4h17.6M12 3c2.3 2.4 3.5 5.5 3.5 9s-1.2 6.6-3.5 9c-2.3-2.4-3.5-5.5-3.5-9S9.7 5.4 12 3Z"/></svg>
       </article>
       <article class="tile">
-        <h3>Station names in Latin</h3>
-        <p>Find the right station without guessing at Cyrillic.</p>
+        <h3>Названия станций на русском</h3>
+        <p>Легко найдите нужный вокзал без путаницы в названиях.</p>
         <svg class="tile-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M12 6.6h6.4L20 8.8l-1.6 2.2H12M12 13.4H5.6L4 15.6l1.6 2.2H12"/></svg>
       </article>
       <article class="tile">
-        <h3>Passport details made simple</h3>
-        <p>Clear fields for your passport data, with the format explained.</p>
+        <h3>Понятное заполнение данных</h3>
+        <p>Понятные поля для паспортных данных и подсказки по формату.</p>
         <svg class="tile-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.2"/><circle cx="12" cy="10" r="2.6"/><path d="M8.4 17.2c.7-1.5 2-2.4 3.6-2.4s2.9.9 3.6 2.4"/></svg>
       </article>
       <article class="tile">
-        <h3>Support in English</h3>
-        <p>Chat, email and phone, answered in English.</p>
+        <h3>Поддержка на русском</h3>
+        <p>Поможем в чате, по почте и телефону.</p>
         <svg class="tile-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 14v-2a7.5 7.5 0 0 1 15 0v2M4.5 13h1.6a1 1 0 0 1 1 1v3.4a1 1 0 0 1-1 1H5.3A1.8 1.8 0 0 1 3.5 16.6V14a1 1 0 0 1 1-1Zm15 0h-1.6a1 1 0 0 0-1 1v3.4a1 1 0 0 0 1 1h.8a1.8 1.8 0 0 0 1.8-1.8V14a1 1 0 0 0-1-1Z"/></svg>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============================ 5. No surprises at checkout ============================ -->
 <section class="section">
   <div class="container">
     <div class="panel">
-      <h2>No surprises at checkout</h2>
-      <p>Baggage, fees and extras are shown before you pay — not added at the last step.</p>
+      <h2>Никаких сюрпризов при оплате</h2>
+      <p>Багаж, сборы и дополнительные услуги видны до оплаты – без неожиданных доплат на последнем шаге.</p>
     </div>
   </div>
 </section>
 
-<!-- ============================ 6. Where to stay ============================ -->
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <h2>Where to stay</h2>
-      <p>Hotels and apartments across Russia</p>
+      <h2>Где остановиться</h2>
+      <p>Отели и апартаменты по всей России</p>
     </div>
     <div class="row row--hotels" id="hotels"></div>
   </div>
 </section>
 
-<!-- ============================ 7. Questions and answers ============================ -->
 <section class="section section--cloud">
   <div class="container">
-    <div class="section-head"><h2>Questions and answers</h2></div>
+    <div class="section-head"><h2>Частые вопросы</h2></div>
     <div class="faq" id="faq"></div>
   </div>
 </section>
 
-<!-- ============================ 8. About Tutu ============================ -->
 <section class="section">
   <div class="container">
-    <div class="section-head"><h2>About Tutu</h2></div>
+    <div class="section-head"><h2>О Туту</h2></div>
     <div class="tiles tiles--3">
       <article class="tile tile--plain">
-        <h3>A Russian travel service since 2003</h3>
-        <p>Tickets and hotels booked by 42 million travellers.</p>
+        <h3>Сервис для путешествий с 2003 года</h3>
+        <p>Билеты и отели на Туту выбирают 42 млн путешественников.</p>
       </article>
       <article class="tile tile--plain">
-        <h3>Everything in one place</h3>
-        <p>Buses, trains, domestic and international flights, hotels.</p>
+        <h3>Всё в одном месте</h3>
+        <p>Автобусы, поезда, внутренние и международные рейсы, отели.</p>
       </article>
       <article class="tile tile--plain">
-        <h3>Help when you need it</h3>
-        <p>Support by chat, email and phone, in English.</p>
+        <h3>Поможем, если понадобится</h3>
+        <p>Поддержка в чате, по почте и телефону.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============================ 9. Mobile app ============================ -->
 <section class="section">
   <div class="container">
     <div class="app-card">
-      <!-- QR placeholder — replace this whole .qr block with <img class="qr" src="assets/qr.png" alt="Download the Tutu app"> -->
       <div class="qr" aria-hidden="true">
         <svg viewBox="0 0 84 84">
           <path d="M4 4h24v24H4V4Zm5 5v14h14V9H9Zm4 4h6v6h-6v-6ZM56 4h24v24H56V4Zm5 5v14h14V9H61Zm4 4h6v6h-6v-6ZM4 56h24v24H4V56Zm5 5v14h14V61H9Zm4 4h6v6h-6v-6Z"/>
@@ -634,8 +584,8 @@ input:focus{outline:none}
         </svg>
       </div>
       <div>
-        <p class="app-caption">The app is available in English.</p>
-        <p class="app-note">Scan the code or get it from your store.</p>
+        <p class="app-caption">Приложение на русском языке.</p>
+        <p class="app-note">Отсканируйте код или скачайте приложение в магазине.</p>
         <div class="stores">
           <span class="store">App Store</span>
           <span class="store">Google Play</span>
@@ -647,7 +597,6 @@ input:focus{outline:none}
   </div>
 </section>
 
-<!-- ============================ 10. Footer ============================ -->
 <footer class="footer">
   <div class="container">
     <div class="footer-top">
@@ -665,35 +614,28 @@ input:focus{outline:none}
 
     <p class="footer-site">tutu.ru</p>
     <p class="legal">
-      Tutu is a Russian travel service operating since 2003. Prices, dates and hotels shown on this page are sample
-      values for a concept preview and do not reflect live availability or pricing on tutu.ru.
+      Туту – сервис для путешествий, который работает с 2003 года. Цены, даты и отели на этой странице – примерные
+      значения для демонстрации концепции и не отражают актуальную доступность или цены на tutu.ru.
       <br>© 2026 Tutu. All rights reserved.
     </p>
   </div>
 </footer>
 
 <script>
-/* ==================================================================
-   CONFIG — single source for all route, hotel and FAQ content.
-   Swap real values in here; the markup below is generated from it.
-   Every price and date is a PLACEHOLDER.
-   ================================================================== */
 const CONFIG = {
   currency: '₽',
 
-  // PLACEHOLDER — replace with real prices before launch
   routes: [
-    { id:'r1', from:'Moscow',          to:'Kazan',            typeLine:'overnight train',  transport:'train',  combined:false, price:'2 340', oldPrice:'3 100', off:'-24%', date:'12 Oct', duration:'11h 40m', gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' },
-    { id:'r2', from:'Moscow',          to:'Nizhny Novgorod',  typeLine:'high-speed train', transport:'train',  combined:false, price:'1 503', oldPrice:'1 890', off:'-20%', date:'14 Oct', duration:'3h 48m',  gradient:'radial-gradient(120% 120% at 20% 10%,#7D71FF 0%,#0D0B68 72%)' },
-    { id:'r3', from:'Moscow',          to:'Yoshkar-Ola',      typeLine:'bus + transfer',   transport:'bus',    combined:true,  price:'2 780', oldPrice:'3 400', off:'-18%', date:'15 Oct', duration:'13h 20m', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r4', from:'Saint Petersburg',to:'Moscow',           typeLine:'high-speed train', transport:'train',  combined:false, price:'3 490', oldPrice:'4 200', off:'-17%', date:'17 Oct', duration:'4h 05m',  gradient:'linear-gradient(75deg,#0D0B68 15%,#7D71FF 120%)' },
-    { id:'r5', from:'Moscow',          to:'Ufa',              typeLine:'overnight train',  transport:'train',  combined:false, price:'3 120', oldPrice:'3 900', off:'-20%', date:'18 Oct', duration:'24h 10m', gradient:'radial-gradient(130% 110% at 85% 15%,#7D71FF 0%,#0D0B68 68%)' },
-    { id:'r6', from:'Moscow',          to:'Syktyvkar',        typeLine:'flight + transfer',transport:'flight', combined:true,  price:'6 480', oldPrice:'8 100', off:'-20%', date:'19 Oct', duration:'5h 30m',  gradient:'linear-gradient(160deg,#0D0B68 0%,#7D71FF 62%,#0D0B68 100%)' },
-    { id:'r7', from:'Kazan',           to:'Cheboksary',       typeLine:'direct bus',       transport:'bus',    combined:false, price:'858',   oldPrice:'1 050', off:'-18%', date:'20 Oct', duration:'2h 40m',  gradient:'linear-gradient(45deg,#7D71FF 0%,#0D0B68 88%)' },
-    { id:'r8', from:'Moscow',          to:'Perm',             typeLine:'train + transfer', transport:'train',  combined:true,  price:'4 210', oldPrice:'5 300', off:'-21%', date:'21 Oct', duration:'22h 15m', gradient:'linear-gradient(300deg,#0D0B68 8%,#7D71FF 100%)' }
+    { id:'r1', from:'Дели', to:'Москва', typeLine:'прямой рейс', transport:'flight', combined:false, price:'28 500', oldPrice:'34 100', off:'-16%', date:'12 окт', duration:'6h 20m', gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' },
+    { id:'r2', from:'Мумбаи', to:'Москва', typeLine:'самолёт + пересадка', transport:'flight', combined:true, price:'31 500', oldPrice:'38 900', off:'-19%', date:'14 окт', duration:'10h 45m', gradient:'radial-gradient(120% 120% at 20% 10%,#7D71FF 0%,#0D0B68 72%)' },
+    { id:'r3', from:'Гоа', to:'Москва', typeLine:'чартерный рейс', transport:'flight', combined:false, price:'42 000', oldPrice:'50 400', off:'-16%', date:'15 окт', duration:'7h 15m', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r4', from:'Дели', to:'Санкт-Петербург', typeLine:'самолёт + пересадка', transport:'flight', combined:true, price:'34 500', oldPrice:'41 000', off:'-15%', date:'17 окт', duration:'12h 10m', gradient:'linear-gradient(75deg,#0D0B68 15%,#7D71FF 120%)' },
+    { id:'r5', from:'Москва', to:'Казань', typeLine:'ночной поезд', transport:'train', combined:false, price:'2 340', oldPrice:'3 100', off:'-24%', date:'18 окт', duration:'11h 40m', gradient:'radial-gradient(130% 110% at 85% 15%,#7D71FF 0%,#0D0B68 68%)' },
+    { id:'r6', from:'Москва', to:'Санкт-Петербург', typeLine:'скоростной поезд', transport:'train', combined:false, price:'3 490', oldPrice:'4 200', off:'-17%', date:'19 окт', duration:'4h 05m', gradient:'linear-gradient(160deg,#0D0B68 0%,#7D71FF 62%,#0D0B68 100%)' },
+    { id:'r7', from:'Санкт-Петербург', to:'Мурманск', typeLine:'самолёт', transport:'flight', combined:false, price:'5 800', oldPrice:'7 000', off:'-17%', date:'20 окт', duration:'2h 20m', gradient:'linear-gradient(45deg,#7D71FF 0%,#0D0B68 88%)' },
+    { id:'r8', from:'Москва', to:'Сочи', typeLine:'самолёт', transport:'flight', combined:false, price:'6 200', oldPrice:'8 500', off:'-27%', date:'21 окт', duration:'3h 30m', gradient:'linear-gradient(300deg,#0D0B68 8%,#7D71FF 100%)' }
   ],
 
-  // PLACEHOLDER — replace with real hotels and prices before launch
   hotels: [
     { id:'h1', name:'City Centre Hotel',   city:'Moscow',           stars:4, rating:'8.7', price:'4 200', gradient:'linear-gradient(140deg,#0D0B68 0%,#7D71FF 100%)' },
     { id:'h2', name:'Nevsky Rooms',        city:'Saint Petersburg', stars:3, rating:'9.0', price:'3 100', gradient:'radial-gradient(120% 120% at 80% 20%,#7D71FF 0%,#0D0B68 70%)' },
@@ -703,21 +645,18 @@ const CONFIG = {
   ],
 
   faq: [
-    { q:'What payment methods work in Russia?',
-      a:'Russian bank cards and SBP work on Tutu. UPI, RuPay and Indian Visa or Mastercard are not accepted anywhere in Russia, so you will need a Russian card or cash.' },
-    { q:'What if the name on my ticket differs from my passport?',
-      a:'Small differences in transliteration are normally fine — staff check your passport number, not the spelling. If a letter is clearly wrong, contact support before you travel and it can be corrected.' },
-    { q:'Do I need registration when checking into a hotel?',
-      a:'Hotels register foreign guests automatically and give you the paperwork. Private apartments often do not, so check with the host before booking if you need the registration.' },
-    { q:'What is the difference between platskart and kupe?',
-      a:'Platskart is an open carriage with bunks and no doors — cheaper, more social. Kupe is a closed compartment for four people with a door — more private, more expensive.' },
-    { q:'How do I get from the airport to another city?',
-      a:'Many routes combine a flight with a train or bus. You can search the whole journey at once instead of booking each leg separately.' }
+    { q:'Какие способы оплаты работают в России?',
+      a:'На Туту можно оплачивать российскими банковскими картами и через СБП. UPI, RuPay и индийские карты Visa или Mastercard в России не принимаются, поэтому понадобится российская карта или наличные.' },
+    { q:'Что делать, если имя в билете отличается от паспорта?',
+      a:'Небольшие отличия в транслитерации обычно не проблема – при посадке проверяют номер паспорта, а не написание имени. Если в имени явно допущена ошибка, свяжитесь с поддержкой до поездки – данные можно исправить.' },
+    { q:'Нужна ли регистрация при заселении в отель?',
+      a:'Отели регистрируют иностранных гостей автоматически и выдают необходимые документы. В частных апартаментах такой регистрации может не быть, поэтому, если она вам нужна, уточните это у хозяина до бронирования.' },
+    { q:'Чем плацкарт отличается от купе?',
+      a:'Плацкарт – открытый вагон со спальными местами без дверей: обычно дешевле и более оживлённо. Купе – отдельное закрытое купе на четыре места с дверью: больше уединения и выше цена.' },
+    { q:'Как добраться из аэропорта в другой город?',
+      a:'На многих маршрутах можно совместить перелёт с поездом или автобусом. Найдите весь маршрут сразу, вместо того чтобы бронировать каждый участок отдельно.' }
   ]
 };
-
-/* Stage 1: markup is generated from CONFIG, nothing is wired up.
-   data-cta carries the identifier stage 2 needs for utm_content + dataLayer. */
 
 document.getElementById('routes').innerHTML = CONFIG.routes.map(r => `
   <article class="card" data-cta="route_${r.id}${r.combined ? '_combined' : ''}" data-transport="${r.transport}">
@@ -730,7 +669,7 @@ document.getElementById('routes').innerHTML = CONFIG.routes.map(r => `
         <span class="price-old">${r.oldPrice} ${CONFIG.currency}</span>
         <span class="badge-off">${r.off}</span>
       </div>
-      <p class="route-name">${r.from} — ${r.to}</p>
+      <p class="route-name">${r.from} – ${r.to}</p>
       <p class="card-meta">${r.date} · ${r.duration}</p>
       <p class="card-type">${r.typeLine}</p>
     </div>
@@ -744,8 +683,8 @@ document.getElementById('hotels').innerHTML = CONFIG.hotels.map(h => `
     <div class="card-body">
       <p class="hotel-top"><span class="stars">${'★'.repeat(h.stars)}</span> ${h.city}</p>
       <p class="hotel-name">${h.name}</p>
-      <p class="hotel-price">${h.price} ${CONFIG.currency} <span>per night</span></p>
-      <span class="badge-instant">Booking confirmed instantly</span>
+      <p class="hotel-price">${h.price} ${CONFIG.currency} <span>за ночь</span></p>
+      <span class="badge-instant">Мгновенное подтверждение бронирования</span>
     </div>
   </article>`).join('');
 
