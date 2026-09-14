@@ -1,0 +1,108 @@
+# Tutu — India landing (stage 1)
+
+A single-page marketing landing for Tutu, aimed at Indian students living in Russia.
+Page content is in English. This is a **demand test**, not a working product — every CTA
+will eventually link out to tutu.ru.
+
+**Stage 1 is a static layout: everything is visible and styled, nothing is interactive.**
+
+## Running it
+
+Open `index.html` in a browser. It needs no build step and no npm.
+
+Fonts and logos are loaded by relative path, so if you open the file straight from disk
+some browsers may block them — serving the folder over any local HTTP server avoids that.
+
+## Structure
+
+```
+index.html                  the whole page: markup + inline CSS + CONFIG
+fonts/                      Tutu Sans (WOFF2) — regular 400, medium 500, demibold 600, bold 700
+assets/
+  logo-tutu-white.png       wordmark used in the header and footer
+  logo-tutu-lavender.png    not used yet, kept for light backgrounds
+  icon-bus / train / flight / hotel .png   transport tab icons
+```
+
+Fonts are declared with `@font-face` at the top of the `<style>` block. To swap a weight,
+drop the new `.woff2` into `fonts/` and keep the file name, or update the `src` path.
+
+## Everything that is a placeholder
+
+All route and hotel data lives in the `CONFIG` object at the top of the `<script>` block at
+the bottom of `index.html`. The cards are generated from it, so real values can be swapped in
+without touching any markup.
+
+| What | Where | Note |
+|---|---|---|
+| Route prices, old prices, discounts | `CONFIG.routes` | **invented — replace before launch** |
+| Route dates and durations | `CONFIG.routes` | **invented — replace before launch** |
+| Hotel names, cities, ratings, prices | `CONFIG.hotels` | **invented — replace before launch** |
+| Card images | `.card-media` gradients | no real photos yet, see below |
+| QR code | `.qr` block in section 9 | SVG placeholder, not a scannable code |
+
+The footer carries a line stating that prices shown are sample values, so nothing on the page
+reads as a real offer. Remove it once real prices are in.
+
+### Swapping in real images
+
+Each card image is a CSS gradient in brand colors with the city or hotel name on it:
+
+```html
+<div class="card-media" style="background:...">...</div>
+```
+
+Replace that element with an image of the same box — the class is already styled:
+
+```html
+<img class="card-img" src="assets/routes/kazan.jpg" alt="">
+```
+
+The rating chip and media label are positioned inside the media box, so if you keep them,
+wrap the `<img>` and the chip in a `.card-media` without the inline gradient.
+
+### QR code
+
+Section 9 has an SVG placeholder. To use the real code, replace the whole `.qr` block with:
+
+```html
+<img class="qr" src="assets/qr.png" alt="Download the Tutu app">
+```
+
+## Fonts
+
+- **Tutu Sans** — brand face, loaded locally from `fonts/`. A system sans stack is set as fallback.
+- **Lora Italic** (Google Fonts) — **stand-in** for PT Cooper Light Italic, the brand accent face,
+  which was not supplied. It is used in exactly one word — "less" in the H1 — and nowhere else.
+  When the real file arrives, add it as an `@font-face` and change `--font-accent`.
+
+## Brand colors in use
+
+| Token | Value | Used for |
+|---|---|---|
+| `--deep-blue` | `#0D0B68` | hero and footer background, headings |
+| `--berry-purple` | `#7D71FF` | primary button, active states |
+| `--cloud-white` | `#EDEFFF` | alternating section backgrounds, tiles |
+| `--orange` | `#FF872E` | discount badges only |
+| `--green` | `#00C95E` | hotel rating chips only |
+
+No other brand colors are used. Body text is neutral grey.
+
+## Not wired up yet (stage 2)
+
+Styled but inert on purpose:
+
+- transport tabs (Buses / Trains / Flights / Hotels) and route filters (All / Buses / Trains)
+- the search form — the inputs accept typing but nothing is submitted
+- the language switcher (EN / RU / हिंदी)
+- FAQ cards render expanded; no collapse behaviour
+- every CTA, the store buttons and the footer `tutu.ru` line — no links, no UTM, no tracking
+
+Route cards already carry `data-cta` (`route_r3_combined`, `hotel_h1`, …), which is the
+identifier stage 2 needs for `utm_content` and `dataLayer`.
+
+## Deploying to GitHub Pages
+
+Push to `main`, then in the repository open **Settings → Pages** and set
+**Source: Deploy from a branch**, **Branch: `main` / `root`**. The page goes live at
+`https://<user>.github.io/india-landing/` a minute or so later.
