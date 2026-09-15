@@ -231,7 +231,6 @@ input:focus{outline:none}
   .row > *{flex:none}
 }
 
-/* Карусель со стрелками — только для отелей */
 .carousel-wrap{position:relative}
 .carousel-nav{display:none}
 @media(min-width:1024px){
@@ -306,6 +305,23 @@ input:focus{outline:none}
 .tile p{margin-top:8px;font-size:14.5px;line-height:1.55;color:var(--text)}
 .tile .tile-ico{position:absolute;right:18px;bottom:18px;width:44px;height:44px}
 .tile--plain{padding-bottom:24px}
+
+/* Карточки с цифрой — секция «О Туту» */
+.tile--stat{padding:26px 22px 24px;display:flex;flex-direction:column}
+.tile--stat .stat-num{
+  font-weight:700;
+  font-size:clamp(38px,4.4vw,52px);
+  line-height:1;
+  letter-spacing:-.03em;
+  color:var(--lilac);
+  margin-bottom:10px;
+}
+.tile--stat h3{font-size:16.5px}
+.tile--stat p{margin-top:6px;font-size:14px}
+.tile--stat .stat-accent{
+  position:absolute;top:22px;right:22px;
+  width:40px;height:40px;
+}
 
 .panel{
   background:var(--cloud-white);
@@ -402,18 +418,19 @@ input:focus{outline:none}
     <h1><span class="accent">Дешёвые</span> билеты по России</h1>
     <p class="hero-sub">Автобусы, поезда и самолёты по всей России. Поможем добраться из Индии до любого города без проблем.</p>
 
+    <!-- ПЛАШКИ ОБНОВЛЕНЫ по официальным данным tutu.ru -->
     <div class="pills">
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Zm7.2-.7a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4ZM3 18.4C3 15.5 5.7 13.1 9 13.1s6 2.4 6 5.3v.9H3v-.9Zm13.8-4.2c2.4 0 4.2 1.8 4.2 4.1v1h-4.4v-.9c0-1.6-.6-3-1.6-4.2h1.8Z"/></svg>
-        30 млн путешествуют с нами
+        42 млн путешествуют с нами
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.6 2.6 5.3 5.8.9-4.2 4 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4 5.8-.9L12 3.6Z"/></svg>
-        4,84 — рейтинг приложения
+        4,8 — рейтинг приложения
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.3 3.2 8.3 7.5 9.4 4.3-1.1 7.5-5.1 7.5-9.4V6L12 3Z"/></svg>
-        Более 20 лет помогаем путешественникам
+        С 2003 года на рынке
       </span>
     </div>
 
@@ -484,7 +501,6 @@ input:focus{outline:none}
       <button type="button" role="tab" aria-selected="false">Самолёты</button>
     </div>
 
-    <!-- Стрелки убраны — ряд прокручивается свайпом -->
     <div class="row" id="routes"></div>
   </div>
 </section>
@@ -544,7 +560,6 @@ input:focus{outline:none}
         <h2>Где остановиться</h2>
         <p>Отели, хостелы и апартаменты в России и Индии</p>
       </div>
-      <!-- Стрелки для отелей работают: ряд листается -->
       <div class="carousel-wrap">
         <div class="carousel-nav" aria-hidden="true">
           <button type="button" onclick="document.getElementById('hotels').scrollBy({left:-300,behavior:'smooth'})">
@@ -588,34 +603,42 @@ input:focus{outline:none}
   </div>
 </section>
 
+<!-- СЕКЦИЯ «О Туту» — с цифрами и годом основания -->
+<section class="section section--cloud">
+  <div class="container">
+    <div class="section-head">
+      <h2>О Туту</h2>
+      <p>Проверенный сервис с историей — работаем с 2003 года.</p>
+    </div>
+    <div class="tiles tiles--4">
+      <article class="tile tile--stat">
+        <div class="stat-num">с 2003</div>
+        <h3>Более 20 лет на рынке</h3>
+        <p>Один из первых сервисов путешествий в России. Работаем дольше, чем большинство конкурентов.</p>
+      </article>
+      <article class="tile tile--stat">
+        <div class="stat-num">42 млн</div>
+        <h3>Путешественников</h3>
+        <p>Каждый месяц Туту выбирают более 42 миллионов пассажиров — и возвращаются снова.</p>
+      </article>
+      <article class="tile tile--stat">
+        <div class="stat-num">500+</div>
+        <h3>Перевозчиков</h3>
+        <p>Работаем напрямую с авиакомпаниями, РЖД и автобусными операторами. Без посредников.</p>
+      </article>
+      <article class="tile tile--stat">
+        <div class="stat-num">24/7</div>
+        <h3>Поддержка на связи</h3>
+        <p>Чат, почта и телефон. Отвечаем на русском и английском в любое время суток.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section class="section section--cloud">
   <div class="container">
     <div class="section-head"><h2>Частые вопросы</h2></div>
     <div class="faq" id="faq"></div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-head"><h2>О Туту</h2></div>
-    <div class="tiles tiles--4">
-      <article class="tile tile--plain">
-        <h3>Всё в одном месте</h3>
-        <p>Автобусы, поезда, самолёты и отели.</p>
-      </article>
-      <article class="tile tile--plain">
-        <h3>Работаем напрямую с перевозчиками</h3>
-        <p>Билет приходит из системы перевозчика.</p>
-      </article>
-      <article class="tile tile--plain">
-        <h3>Билет не потеряется</h3>
-        <p>Придёт на почту и останется в личном кабинете.</p>
-      </article>
-      <article class="tile tile--plain">
-        <h3>Можно оплатить позже</h3>
-        <p>Зафиксируйте цену и выкупите билет через несколько дней.</p>
-      </article>
-    </div>
   </div>
 </section>
 
@@ -662,7 +685,6 @@ input:focus{outline:none}
 const CONFIG = {
   currency: '₽',
 
-  // 8 маршрутов: убраны Курск и Чебоксары, сохранены Тверь, Казань, Йошкар-Ола
   routes: [
     { id:'r1', from:'Мумбаи',           to:'Москва',     typeLine:'рейс с пересадкой',    transport:'flight', combined:true,  price:'31 200', duration:'10 ч 45 мин', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
     { id:'r2', from:'Дели',             to:'Москва',     typeLine:'прямой рейс',          transport:'flight', combined:false, price:'24 800', duration:'6 ч 30 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
@@ -674,7 +696,6 @@ const CONFIG = {
     { id:'r8', from:'Уфа',              to:'Казань',     typeLine:'автобус',              transport:'bus',    combined:false, price:'1 690',  duration:'8 ч 30 мин',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' }
   ],
 
-  // 12 отелей — достаточно для листания стрелками, на десктопе по 4 в ряд
   hotels: [
     { id:'h1',  name:'Мини-отель Стерео',                     city:'Казань',          distance:'1,5 км от центра', rating:'8,4', reviews:'158 отзывов', type:'Мини-отель',   price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
     { id:'h2',  name:'Грейс Амалия',                          city:'Сочи',            distance:'633 м до пляжа',   rating:'9,1', reviews:'240 отзывов', type:'Гостевой дом', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
