@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Туту — дешёвые билеты по России</title>
-<meta name="description" content="Из Дели в Москву и дальше до вашего города. Автобусы, поезда, самолёты.">
+<meta name="description" content="Из Индии в Россию и дальше до вашего города. Автобусы, поезда, самолёты.">
 <meta name="theme-color" content="#0D0B68">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -231,6 +231,24 @@ input:focus{outline:none}
   .row > *{flex:none}
 }
 
+/* Карусель со стрелками */
+.carousel-wrap{position:relative}
+.carousel-nav{display:none}
+@media(min-width:1024px){
+  .carousel-nav{
+    display:flex;gap:8px;position:absolute;top:-52px;right:0;
+  }
+  .carousel-nav button{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--white);border:1px solid var(--line);
+    display:grid;place-items:center;
+    box-shadow:var(--shadow-sm);
+    transition:background .15s ease;
+  }
+  .carousel-nav button:hover{background:var(--cloud-white)}
+  .carousel-nav svg{width:16px;height:16px;stroke:var(--deep-blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+}
+
 .card{
   background:var(--white);
   border:1px solid var(--line);
@@ -270,12 +288,6 @@ input:focus{outline:none}
 .hotel-meta{font-size:13px;color:var(--muted)}
 .hotel-price{margin-top:auto;padding-top:6px;font-size:18px;font-weight:700;color:var(--deep-blue)}
 .hotel-price span{font-size:13px;font-weight:400;color:var(--muted)}
-.badge-instant{
-  align-self:flex-start;margin-top:6px;
-  background:var(--cloud-white);color:var(--deep-blue);
-  font-size:11.5px;font-weight:500;line-height:1;
-  padding:6px 10px;border-radius:999px;
-}
 
 .tiles{display:grid;gap:14px;grid-template-columns:1fr}
 @media(min-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}}
@@ -317,9 +329,9 @@ input:focus{outline:none}
 .panel--accent h2,.panel--accent p{color:var(--white)}
 .panel--dark{background:var(--deep-blue)}
 .panel--dark h2,.panel--dark p{color:var(--white)}
-.panel--dark .panel-ico{box-shadow:0 0 0 8px rgba(255,69,227,.30)}
+.panel--dark .panel-ico{box-shadow:0 0 0 8px rgba(186,97,255,.30)}
 .stage{
-  background:linear-gradient(100deg,#BA61FF 0%,#FF45E3 100%);
+  background:linear-gradient(100deg,#BA61FF 0%,#BA61FF 100%);
   border-radius:24px;
   padding:28px 20px;
 }
@@ -388,12 +400,12 @@ input:focus{outline:none}
 <section class="hero">
   <div class="container">
     <h1><span class="accent">Дешёвые</span> билеты по России</h1>
-    <p class="hero-sub">Из Дели в Москву и дальше до вашего города. Автобусы, поезда, самолёты.</p>
+    <p class="hero-sub">Автобусы, поезда и самолёты по всей России. Поможем добраться из Индии до любого города — с пересадками и без.</p>
 
     <div class="pills">
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Zm7.2-.7a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4ZM3 18.4C3 15.5 5.7 13.1 9 13.1s6 2.4 6 5.3v.9H3v-.9Zm13.8-4.2c2.4 0 4.2 1.8 4.2 4.1v1h-4.4v-.9c0-1.6-.6-3-1.6-4.2h1.8Z"/></svg>
-        42 млн путешествуют с нами
+        30 млн путешествуют с нами
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.6 2.6 5.3 5.8.9-4.2 4 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4 5.8-.9L12 3.6Z"/></svg>
@@ -401,7 +413,7 @@ input:focus{outline:none}
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.3 3.2 8.3 7.5 9.4 4.3-1.1 7.5-5.1 7.5-9.4V6L12 3Z"/></svg>
-        22 года работаем для вас
+        Более 20 лет помогаем путешественникам
       </span>
     </div>
 
@@ -449,11 +461,11 @@ input:focus{outline:none}
 
     <div class="chips">
       <span class="chip">Дели</span>
+      <span class="chip">Мумбаи</span>
       <span class="chip">Москва</span>
       <span class="chip">Казань</span>
       <span class="chip">Уфа</span>
       <span class="chip">Тверь</span>
-      <span class="chip">Волгоград</span>
     </div>
   </div>
 </section>
@@ -472,19 +484,29 @@ input:focus{outline:none}
       <button type="button" role="tab" aria-selected="false">Самолёты</button>
     </div>
 
-    <div class="row" id="routes"></div>
+    <div class="carousel-wrap">
+      <div class="carousel-nav" aria-hidden="true">
+        <button type="button" onclick="document.getElementById('routes').scrollBy({left:-300,behavior:'smooth'})">
+          <svg viewBox="0 0 24 24"><path d="M15 19 8 12l7-7"/></svg>
+        </button>
+        <button type="button" onclick="document.getElementById('routes').scrollBy({left:300,behavior:'smooth'})">
+          <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="row" id="routes"></div>
+    </div>
   </div>
 </section>
 
-<!-- Панель стоит под карточками намеренно: первый контакт с составными маршрутами должен быть без подсказки -->
+<!-- Блок «Без доплат» — сразу под маршрутами -->
 <section class="section">
   <div class="container">
-    <div class="panel panel--accent">
+    <div class="panel panel--dark">
       <div>
-        <h2>Доберётесь до любого города</h2>
-        <p>Не только до Москвы. Покажем весь маршрут с пересадкой на поезд или автобус.</p>
+        <h2>Без доплат в конце</h2>
+        <p>Багаж и сборы видно до оплаты, а не на последнем шаге.</p>
       </div>
-      <img class="panel-ico" src="assets/icons/transport-mix.png" alt="" aria-hidden="true">
+      <img class="panel-ico" src="assets/icons/money.png" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
@@ -514,12 +536,34 @@ input:focus{outline:none}
 
 <section class="section">
   <div class="container">
+    <div class="panel panel--accent">
+      <div>
+        <h2>Доберётесь до любого города</h2>
+        <p>Не только до Москвы. Покажем весь маршрут с пересадкой на поезд или автобус.</p>
+      </div>
+      <img class="panel-ico" src="assets/icons/transport-mix.png" alt="" aria-hidden="true">
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
     <div class="stage">
       <div class="section-head">
         <h2>Где остановиться</h2>
         <p>Отели, хостелы и апартаменты в России и Индии</p>
       </div>
-      <div class="row row--hotels" id="hotels"></div>
+      <div class="carousel-wrap">
+        <div class="carousel-nav" aria-hidden="true">
+          <button type="button" onclick="document.getElementById('hotels').scrollBy({left:-300,behavior:'smooth'})">
+            <svg viewBox="0 0 24 24"><path d="M15 19 8 12l7-7"/></svg>
+          </button>
+          <button type="button" onclick="document.getElementById('hotels').scrollBy({left:300,behavior:'smooth'})">
+            <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+        <div class="row row--hotels" id="hotels"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -548,18 +592,6 @@ input:focus{outline:none}
         <p>Чат, почта и телефон.</p>
         <img class="tile-ico" src="assets/icons/chat.png" alt="" aria-hidden="true">
       </article>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="panel panel--dark">
-      <div>
-        <h2>Без доплат в конце</h2>
-        <p>Багаж и сборы видно до оплаты, а не на последнем шаге.</p>
-      </div>
-      <img class="panel-ico" src="assets/icons/money.png" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
@@ -628,7 +660,7 @@ input:focus{outline:none}
 
     <p class="footer-site">tutu.ru</p>
     <p class="legal">
-      Цены и даты на этой странице демонстрационные и не отражают реальную доступность билетов.
+      Цены и даты на этой странице демонстрационные и могут отличаться от актуальных на момент бронирования.
       <br>© 2026 Туту. Все права защищены.
     </p>
   </div>
@@ -638,26 +670,26 @@ input:focus{outline:none}
 const CONFIG = {
   currency: '₽',
 
-  // PLACEHOLDER — цены ориентировочные, обновить по реальной выдаче перед запуском
-  // TODO: подтвердить у продуктовой команды, что составные маршруты собираются в сервисе
   routes: [
-    { id:'r1', from:'Дели',            to:'Москва',     typeLine:'прямой рейс',          transport:'flight', combined:false, price:'27 400', date:'12 окт', duration:'6 ч 20 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
-    { id:'r2', from:'Шереметьево',     to:'Тверь',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'1 340',  date:'14 окт', duration:'3 ч 30 мин',  gradient:'radial-gradient(120% 120% at 15% 10%,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
-    { id:'r3', from:'Москва',          to:'Казань',     typeLine:'ночной поезд',         transport:'train',  combined:false, price:'2 180',  date:'15 окт', duration:'11 ч 40 мин', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r4', from:'Москва',          to:'Йошкар-Ола', typeLine:'поезд',                transport:'train',  combined:false, price:'2 860',  date:'17 окт', duration:'14 ч 30 мин', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r5', from:'Шереметьево',     to:'Курск',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'3 210',  date:'18 окт', duration:'9 ч 30 мин',  gradient:'radial-gradient(130% 110% at 85% 15%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'r6', from:'Казань',          to:'Чебоксары',  typeLine:'автобус',              transport:'bus',    combined:false, price:'840',    date:'19 окт', duration:'2 ч 40 мин',  gradient:'linear-gradient(20deg,#0D0B68 0%,#7D71FF 55%,#5F94FF 100%)' },
-    { id:'r7', from:'Санкт-Петербург', to:'Йошкар-Ола', typeLine:'поезд + автобус',      transport:'train',  combined:true,  price:'4 950',  date:'20 окт', duration:'27 ч 30 мин', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
-    { id:'r8', from:'Уфа',             to:'Казань',     typeLine:'автобус',              transport:'bus',    combined:false, price:'1 690',  date:'21 окт', duration:'8 ч 30 мин',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' }
+    { id:'r1', from:'Мумбаи',           to:'Москва',     typeLine:'прямой рейс',          transport:'flight', combined:false, price:'27 400', duration:'6 ч 20 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r2', from:'Дели',             to:'Москва',     typeLine:'прямой рейс',          transport:'flight', combined:false, price:'24 800', duration:'6 ч 10 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'r3', from:'Москва',           to:'Дели',       typeLine:'прямой рейс',          transport:'flight', combined:false, price:'25 200', duration:'6 ч 05 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
+    { id:'r4', from:'Шереметьево',      to:'Тверь',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'1 340',  duration:'3 ч 30 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
+    { id:'r5', from:'Москва',           to:'Казань',     typeLine:'ночной поезд',         transport:'train',  combined:false, price:'2 180',  duration:'11 ч 40 мин', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r6', from:'Москва',           to:'Йошкар-Ола', typeLine:'поезд',                transport:'train',  combined:false, price:'2 860',  duration:'14 ч 30 мин', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r7', from:'Шереметьево',      to:'Курск',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'3 210',  duration:'9 ч 30 мин',  gradient:'radial-gradient(130% 110% at 85% 15%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'r8', from:'Казань',           to:'Чебоксары',  typeLine:'автобус',              transport:'bus',    combined:false, price:'840',    duration:'2 ч 40 мин',  gradient:'linear-gradient(20deg,#0D0B68 0%,#7D71FF 55%,#5F94FF 100%)' },
+    { id:'r9', from:'Санкт-Петербург',  to:'Йошкар-Ола', typeLine:'поезд + автобус',      transport:'train',  combined:true,  price:'4 950',  duration:'27 ч 30 мин', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r10',from:'Уфа',              to:'Казань',     typeLine:'автобус',              transport:'bus',    combined:false, price:'1 690',  duration:'8 ч 30 мин',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' }
   ],
 
-  // Данные с tutu.ru на 15.09.2026 — реальные объекты, рейтинг от 8,0. Цены обновить перед запуском
   hotels: [
-    { id:'h1', name:'Мини-отель Стерео',                     city:'Казань',          distance:'1,5 км от центра', rating:'8,4', reviews:'158 отзывов', type:'Мини-отель',   stars:0, badge:'',                  price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
-    { id:'h2', name:'Грейс Амалия',                          city:'Сочи',            distance:'633 м до пляжа',   rating:'9,1', reviews:'240 отзывов', type:'Гостевой дом', stars:0, badge:'Бесплатная отмена', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'h3', name:'Хостел Автор Таганка',                  city:'Москва',          distance:'',                 rating:'8,4', reviews:'',            type:'Хостел',       stars:0, badge:'',                  price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
-    { id:'h4', name:'Jasminn Hotel, Goa',                    city:'Гоа',             distance:'607 м от центра',  rating:'8,0', reviews:'127 отзывов', type:'Отель',        stars:4, badge:'',                  price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#7D71FF 60%,#BA61FF 100%)' },
-    { id:'h5', name:'Гостевые комнаты и апартаменты Грифон', city:'Санкт-Петербург', distance:'',                 rating:'9,1', reviews:'',            type:'Апартаменты',  stars:0, badge:'',                  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' }
+    { id:'h1', name:'Мини-отель Стерео',                     city:'Казань',          distance:'1,5 км от центра', rating:'8,4', reviews:'158 отзывов', type:'Мини-отель',   price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
+    { id:'h2', name:'Грейс Амалия',                          city:'Сочи',            distance:'633 м до пляжа',   rating:'9,1', reviews:'240 отзывов', type:'Гостевой дом', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'h3', name:'Хостел Автор Таганка',                  city:'Москва',          distance:'',                 rating:'8,4', reviews:'',            type:'Хостел',       price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
+    { id:'h4', name:'Jasminn Hotel, Goa',                    city:'Гоа',             distance:'607 м от центра',  rating:'8,0', reviews:'127 отзывов', type:'Отель',        price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
+    { id:'h5', name:'Гостевые комнаты и апартаменты Грифон', city:'Санкт-Петербург', distance:'',                 rating:'9,1', reviews:'',            type:'Апартаменты',  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
+    { id:'h6', name:'The Fern Residency, Mumbai',            city:'Мумбаи',          distance:'2,1 км от центра', rating:'8,6', reviews:'89 отзывов',  type:'Отель',        price:'5 120', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' }
   ],
 
   faq: [
@@ -686,7 +718,7 @@ document.getElementById('routes').innerHTML = CONFIG.routes.map(r => `
         <span class="price">от ${r.price} ${CONFIG.currency}</span>
       </div>
       <p class="route-name">${r.from} — ${r.to}</p>
-      <p class="card-meta">${r.date} · ${r.duration}</p>
+      <p class="card-meta">${r.duration}</p>
       <p class="card-type">${r.typeLine}</p>
     </div>
   </article>`).join('');
@@ -699,8 +731,7 @@ document.getElementById('hotels').innerHTML = CONFIG.hotels.map(h => `
     <div class="card-body">
       <p class="hotel-top">${h.city}${h.distance ? ` · ${h.distance}` : ''}</p>
       <p class="hotel-name">${h.name}</p>
-      <p class="hotel-meta">${h.type}${h.stars ? ` · ${'★'.repeat(h.stars)}` : ''}${h.reviews ? ` · ${h.reviews}` : ''}</p>
-      ${h.badge ? `<span class="badge-instant">${h.badge}</span>` : ''}
+      <p class="hotel-meta">${h.type}${h.reviews ? ` · ${h.reviews}` : ''}</p>
       <p class="hotel-price">от ${h.price} ${CONFIG.currency} <span>1 ночь</span></p>
     </div>
   </article>`).join('');
