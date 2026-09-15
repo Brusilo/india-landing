@@ -24,6 +24,7 @@ assets/
   icon-bus / train / flight / hotel .png   transport tab icons
   qr.png                    app download QR code (transparent background)
   favicon.png, apple-touch-icon.png   browser tab and home-screen icon
+  icons/                    brand icons taken from «Иконки для оформления.pptx» (tiles, panels, socials)
 ```
 
 Fonts are declared with `@font-face` at the top of the `<style>` block. To swap a weight,
@@ -71,7 +72,7 @@ puts a white rounded square behind it. To change the code, overwrite the file.
 
 - **Tutu Sans** — brand face, loaded locally from `fonts/`. A system sans stack is set as fallback.
 - **Lora Italic** (Google Fonts) — **stand-in** for PT Cooper Light Italic, the brand accent face,
-  which was not supplied. It is used in exactly one word — «дешевле» in the H1 — and nowhere else.
+  which was not supplied. It is used in exactly one word — «Дешёвые» in the H1 — and nowhere else.
   When the real file arrives, add it as an `@font-face` and change `--font-accent`.
 
 ## Brand colors in use
