@@ -27,6 +27,7 @@
   --green:#00C95E;
   --blue:#5F94FF;
   --lilac:#BA61FF;
+  --magenta:#FF45E3;
 
   --white:#fff;
   --text:#4B4B5C;
@@ -96,8 +97,10 @@ input:focus{outline:none}
 }
 .lang button.is-active{background:var(--white);color:var(--deep-blue);font-weight:600}
 
-.hero{background:var(--deep-blue);color:var(--white);padding:24px 0 44px}
-@media(min-width:768px){.hero{padding:36px 0 64px}}
+.hero{background:var(--deep-blue);color:var(--white);padding:24px 0 72px}
+@media(min-width:768px){.hero{padding:36px 0 104px}}
+.hero + .section{position:relative;margin-top:-28px;border-radius:28px 28px 0 0;background:var(--white)}
+@media(min-width:768px){.hero + .section{margin-top:-40px;border-radius:40px 40px 0 0}}
 
 .hero h1{
   font-weight:700;
@@ -318,6 +321,9 @@ input:focus{outline:none}
 @media(min-width:768px){.panel p{font-size:17px}}
 .panel--accent{background:var(--berry-purple)}
 .panel--accent h2,.panel--accent p{color:var(--white)}
+.panel--dark{background:var(--deep-blue)}
+.panel--dark h2,.panel--dark p{color:var(--white)}
+.panel--dark .panel-ico{box-shadow:0 0 0 8px rgba(255,69,227,.30)}
 
 .faq{display:grid;gap:12px}
 @media(min-width:900px){
@@ -332,30 +338,19 @@ input:focus{outline:none}
   border:1px solid var(--line);
   border-radius:24px;
   box-shadow:var(--shadow-md);
-  padding:28px 20px 20px;
-  display:grid;gap:24px;align-items:center;
+  padding:32px 24px;
+  display:grid;gap:28px;align-items:center;justify-items:center;
 }
 @media(min-width:768px){
-  .app-card{grid-template-columns:1fr auto;padding:20px 20px 20px 48px;gap:40px}
+  .app-card{grid-template-columns:1fr auto;padding:44px 48px;gap:48px;justify-items:start}
 }
-.qr-zone{background:var(--cloud-white);border-radius:20px;padding:24px;display:grid;place-items:center}
-@media(min-width:768px){.qr-zone{padding:36px 48px}}
-.qr{
-  width:180px;height:180px;
-  border-radius:18px;
-  padding:14px;background:var(--white);
-}
-@media(min-width:768px){.qr{width:220px;height:220px;padding:16px}}
+.qr{width:220px;height:220px;flex:none}
+@media(min-width:768px){.qr{width:280px;height:280px}}
 .qr img{width:100%;height:100%;object-fit:contain}
 .app-caption{font-size:clamp(20px,3vw,26px);font-weight:600;color:var(--deep-blue);line-height:1.2}
 .app-note{margin-top:8px;font-size:15px;color:var(--muted)}
-.stores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;width:100%;max-width:430px}
-.store{
-  display:flex;align-items:center;justify-content:center;
-  padding:13px 12px;border-radius:var(--r-btn);
-  background:var(--deep-blue);color:var(--white);
-  font-size:14px;font-weight:500;text-align:center;line-height:1.2;
-}
+.stores{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.store-ico{height:44px;width:auto}
 
 .footer{background:var(--deep-blue);color:var(--white);padding:40px 0 34px}
 @media(min-width:768px){.footer{padding:56px 0 44px}}
@@ -400,8 +395,8 @@ input:focus{outline:none}
         4,84 — рейтинг приложения
       </span>
       <span class="pill">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.9 3 3 6.4 3 10.6c0 2.2 1.1 4.2 3 5.6v3.3l3.3-1.8c.9.2 1.8.3 2.7.3 5.1 0 9-3.4 9-7.4S17.1 3 12 3Z"/></svg>
-        Поддержка на английском
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.3 3.2 8.3 7.5 9.4 4.3-1.1 7.5-5.1 7.5-9.4V6L12 3Z"/></svg>
+        Работаем с 2003 года
       </span>
     </div>
 
@@ -481,15 +476,15 @@ input:focus{outline:none}
   <div class="container">
     <div class="panel panel--accent">
       <div>
-        <h2>Весь путь до вашего города</h2>
-        <p>Прилетели в Москву, а дальше поезд или автобус. Ищите всю дорогу сразу, а не по частям на разных сайтах.</p>
+        <h2>Доберётесь до любого города</h2>
+        <p>Не только до Москвы. Покажем весь маршрут с пересадкой на поезд или автобус.</p>
       </div>
       <img class="panel-ico" src="assets/icons/transport-mix.png" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section section--cloud">
   <div class="container">
     <div class="section-head"><h2>Едете компанией</h2></div>
     <div class="tiles tiles--3">
@@ -512,6 +507,16 @@ input:focus{outline:none}
   </div>
 </section>
 
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Где остановиться</h2>
+      <p>Отели, хостелы и апартаменты</p>
+    </div>
+    <div class="row row--hotels" id="hotels"></div>
+  </div>
+</section>
+
 <section class="section section--cloud">
   <div class="container">
     <div class="section-head"><h2>Покупаете у нас впервые?</h2></div>
@@ -519,7 +524,7 @@ input:focus{outline:none}
       <article class="tile">
         <h3>Английский на всём пути</h3>
         <p>От поиска до оплаты, а не только на главной.</p>
-        <img class="tile-ico" src="assets/icons/letter-a.png" alt="" aria-hidden="true">
+        <img class="tile-ico" src="assets/icons/chat-single.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
         <h3>Названия станций латиницей</h3>
@@ -542,23 +547,13 @@ input:focus{outline:none}
 
 <section class="section">
   <div class="container">
-    <div class="panel">
+    <div class="panel panel--dark">
       <div>
         <h2>Без доплат в конце</h2>
         <p>Багаж и сборы видно до оплаты, а не на последнем шаге.</p>
       </div>
-      <img class="panel-ico" src="assets/icons/ruble.png" alt="" aria-hidden="true">
+      <img class="panel-ico" src="assets/icons/money.png" alt="" aria-hidden="true">
     </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <h2>Где остановиться</h2>
-      <p>Отели, хостелы и апартаменты</p>
-    </div>
-    <div class="row row--hotels" id="hotels"></div>
   </div>
 </section>
 
@@ -572,11 +567,7 @@ input:focus{outline:none}
 <section class="section">
   <div class="container">
     <div class="section-head"><h2>О Туту</h2></div>
-    <div class="tiles tiles--3">
-      <article class="tile tile--plain">
-        <h3>Сервис работает с 2003 года</h3>
-        <p>Билеты и отели на Туту выбирают 42 млн путешественников.</p>
-      </article>
+    <div class="tiles">
       <article class="tile tile--plain">
         <h3>Всё в одном месте</h3>
         <p>Автобусы, поезда, самолёты и отели.</p>
@@ -594,18 +585,16 @@ input:focus{outline:none}
     <div class="app-card">
       <div>
         <p class="app-caption">Приложение на английском</p>
-        <p class="app-note">Отсканируйте код или найдите Туту в магазине приложений.</p>
+        <p class="app-note">Поиск, оплата и заказы на английском. Отсканируйте код или найдите Туту в магазине приложений.</p>
         <div class="stores">
-          <span class="store">App Store</span>
-          <span class="store">Google Play</span>
-          <span class="store">Huawei AppGallery</span>
-          <span class="store">RuStore</span>
+          <img class="store-ico" src="assets/icons/store-apple.png" alt="App Store">
+          <img class="store-ico" src="assets/icons/store-google.png" alt="Google Play">
+          <img class="store-ico" src="assets/icons/store-huawei.png" alt="Huawei AppGallery">
+          <img class="store-ico" src="assets/icons/store-rustore.png" alt="RuStore">
         </div>
       </div>
-      <div class="qr-zone">
-        <div class="qr">
-          <img src="assets/qr.png" alt="QR-код для скачивания приложения Туту">
-        </div>
+      <div class="qr">
+        <img src="assets/qr.png" alt="QR-код для скачивания приложения Туту">
       </div>
     </div>
   </div>

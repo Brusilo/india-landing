@@ -22,9 +22,9 @@ assets/
   logo-tutu-white.png       wordmark used in the header and footer
   logo-tutu-lavender.png    not used yet, kept for light backgrounds
   icon-bus / train / flight / hotel .png   transport tab icons
-  qr.png                    app download QR code (transparent background)
+  qr.png                    app download QR code
   favicon.png, apple-touch-icon.png   browser tab and home-screen icon
-  icons/                    brand icons taken from «Иконки для оформления.pptx» (tiles, panels, socials)
+  icons/                    brand icons taken from «Иконки для оформления.pptx» (tiles, panels, socials, stores); store-apple.png was generated separately
 ```
 
 Fonts are declared with `@font-face` at the top of the `<style>` block. To swap a weight,
@@ -65,8 +65,8 @@ wrap the `<img>` and the chip in a `.card-media` without the inline gradient.
 
 ### QR code
 
-`assets/qr.png` is the real app code. It has a transparent background, so the `.qr` wrapper
-puts a white rounded square behind it. To change the code, overwrite the file.
+`assets/qr.png` is the real app code and carries its own white rounded background.
+To change the code, overwrite the file.
 
 ## Fonts
 
@@ -86,9 +86,9 @@ puts a white rounded square behind it. To change the code, overwrite the file.
 | `--green` | `#00C95E` | hotel rating chips only |
 | `--blue` | `#5F94FF` | card image gradients |
 | `--lilac` | `#BA61FF` | card image gradients |
+| `--magenta` | `#FF45E3` | ring around the icon on the dark price panel only |
 
-No other brand colors are used — magenta `#FF45E3` is left out on purpose, it clashes with the
-orange discount badges. Body text is neutral grey.
+No other brand colors are used. Body text is neutral grey.
 
 ## Not wired up yet (stage 2)
 
