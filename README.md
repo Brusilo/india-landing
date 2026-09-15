@@ -1,7 +1,7 @@
 # Tutu — India landing (stage 1)
 
 A single-page marketing landing for Tutu, aimed at Indian students living in Russia.
-Page content is in English. This is a **demand test**, not a working product — every CTA
+Page content is in Russian (the English version is built separately). This is a **demand test**, not a working product — every CTA
 will eventually link out to tutu.ru.
 
 **Stage 1 is a static layout: everything is visible and styled, nothing is interactive.**
@@ -22,6 +22,8 @@ assets/
   logo-tutu-white.png       wordmark used in the header and footer
   logo-tutu-lavender.png    not used yet, kept for light backgrounds
   icon-bus / train / flight / hotel .png   transport tab icons
+  qr.png                    app download QR code (transparent background)
+  favicon.png, apple-touch-icon.png   browser tab and home-screen icon
 ```
 
 Fonts are declared with `@font-face` at the top of the `<style>` block. To swap a weight,
@@ -39,7 +41,6 @@ without touching any markup.
 | Route dates and durations | `CONFIG.routes` | **invented — replace before launch** |
 | Hotel names, cities, ratings, prices | `CONFIG.hotels` | **invented — replace before launch** |
 | Card images | `.card-media` gradients | no real photos yet, see below |
-| QR code | `.qr` block in section 9 | SVG placeholder, not a scannable code |
 
 The footer carries a line stating that prices shown are sample values, so nothing on the page
 reads as a real offer. Remove it once real prices are in.
@@ -63,17 +64,14 @@ wrap the `<img>` and the chip in a `.card-media` without the inline gradient.
 
 ### QR code
 
-Section 9 has an SVG placeholder. To use the real code, replace the whole `.qr` block with:
-
-```html
-<img class="qr" src="assets/qr.png" alt="Download the Tutu app">
-```
+`assets/qr.png` is the real app code. It has a transparent background, so the `.qr` wrapper
+puts a white rounded square behind it. To change the code, overwrite the file.
 
 ## Fonts
 
 - **Tutu Sans** — brand face, loaded locally from `fonts/`. A system sans stack is set as fallback.
 - **Lora Italic** (Google Fonts) — **stand-in** for PT Cooper Light Italic, the brand accent face,
-  which was not supplied. It is used in exactly one word — "less" in the H1 — and nowhere else.
+  which was not supplied. It is used in exactly one word — «дешевле» in the H1 — and nowhere else.
   When the real file arrives, add it as an `@font-face` and change `--font-accent`.
 
 ## Brand colors in use
@@ -81,12 +79,15 @@ Section 9 has an SVG placeholder. To use the real code, replace the whole `.qr` 
 | Token | Value | Used for |
 |---|---|---|
 | `--deep-blue` | `#0D0B68` | hero and footer background, headings |
-| `--berry-purple` | `#7D71FF` | primary button, active states |
+| `--berry-purple` | `#7D71FF` | primary button, active states, multimodal panel |
 | `--cloud-white` | `#EDEFFF` | alternating section backgrounds, tiles |
 | `--orange` | `#FF872E` | discount badges only |
 | `--green` | `#00C95E` | hotel rating chips only |
+| `--blue` | `#5F94FF` | card image gradients |
+| `--lilac` | `#BA61FF` | card image gradients |
 
-No other brand colors are used. Body text is neutral grey.
+No other brand colors are used — magenta `#FF45E3` is left out on purpose, it clashes with the
+orange discount badges. Body text is neutral grey.
 
 ## Not wired up yet (stage 2)
 
