@@ -98,7 +98,7 @@ No other brand colors are used. Body text is neutral grey.
 Styled but inert on purpose:
 
 - transport tabs (Buses / Trains / Flights / Hotels) and route filters (All / Buses / Trains)
-- the search form — the inputs accept typing but nothing is submitted
+- the search form — the date field opens a calendar, but nothing is submitted
 - FAQ cards render expanded; no collapse behaviour
 - every CTA, the store buttons and the footer `tutu.ru` line — no links, no UTM, no tracking
 

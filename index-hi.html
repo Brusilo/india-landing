@@ -179,6 +179,29 @@ input:focus{outline:none}
 .field label{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.01em}
 .field input,.field .value{font-size:16px;font-weight:500;color:var(--deep-blue);line-height:1.3}
 .field input::placeholder{color:#A3A3B8;font-weight:400}
+.field--date{position:relative}
+.field--date input{cursor:pointer}
+.dp{
+  position:absolute;top:calc(100% + 8px);left:0;z-index:30;
+  width:300px;max-width:calc(100vw - 32px);
+  background:var(--white);border-radius:18px;
+  box-shadow:0 14px 40px rgba(13,11,104,.20);
+  padding:14px;color:var(--deep-blue);
+}
+.dp[hidden]{display:none}
+.dp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.dp-title{font-size:15px;font-weight:600}
+.dp-nav{width:34px;height:34px;border-radius:50%;display:grid;place-items:center}
+.dp-nav:hover:not(:disabled){background:var(--cloud-white)}
+.dp-nav:disabled{opacity:.3;cursor:default}
+.dp-nav svg{width:16px;height:16px;stroke:var(--deep-blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.dp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.dp-wd{padding:6px 0;font-size:11px;font-weight:500;color:var(--muted);text-align:center}
+.dp-day{height:36px;border-radius:10px;font-size:14px;font-weight:500;color:var(--deep-blue)}
+.dp-day:hover:not(:disabled){background:var(--cloud-white)}
+.dp-day:disabled{color:#C8C8D6;cursor:default}
+.dp-day.is-today{box-shadow:inset 0 0 0 1.5px var(--berry-purple)}
+.dp-day.is-selected{background:var(--berry-purple);color:var(--white)}
 
 .swap{display:none}
 @media(min-width:900px){
@@ -230,8 +253,9 @@ input:focus{outline:none}
 @media(min-width:768px){.row{margin-inline:-24px;padding-inline:24px}}
 @media(min-width:1024px){
   .row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-inline:0;padding:0;overflow:visible}
-  .row--hotels{grid-template-columns:repeat(4,1fr)}
   .row > *{flex:none}
+  .row--hotels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-block:2px 8px}
+  .row--hotels > *{flex:0 0 calc((100% - 60px) / 4)}
 }
 
 .carousel-wrap{position:relative}
@@ -247,7 +271,8 @@ input:focus{outline:none}
     box-shadow:var(--shadow-sm);
     transition:background .15s ease;
   }
-  .carousel-nav button:hover{background:var(--cloud-white)}
+  .carousel-nav button:hover:not(:disabled){background:var(--cloud-white)}
+  .carousel-nav button:disabled{opacity:.45;cursor:default}
   .carousel-nav svg{width:16px;height:16px;stroke:var(--deep-blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 }
 
@@ -414,7 +439,7 @@ input:focus{outline:none}
 <section class="hero">
   <div class="container">
     <h1>रूस भर में <span class="accent">सस्ती</span> टिकटें</h1>
-    <p class="hero-sub">बसें, ट्रेनें और हवाई जहाज़ – पूरे रूस में। भारत से किसी भी शहर तक पहुँचने में हम आपकी मदद करेंगे – बिना किसी परेशानी के।</p>
+    <p class="hero-sub">बसें, ट्रेनें और हवाई जहाज़ पूरे रूस में। भारत से किसी भी शहर तक पहुँचने में हम बिना किसी परेशानी के आपकी मदद करेंगे।</p>
 
     <div class="pills">
       <span class="pill">
@@ -542,7 +567,7 @@ input:focus{outline:none}
     <div class="panel panel--accent">
       <div>
         <h2>किसी भी शहर तक पहुँचें</h2>
-        <p>सिर्फ़ मॉस्को ही नहीं। हम आपको पूरा रूट दिखाएँगे – ट्रेन या बस से कनेक्शन के साथ।</p>
+        <p>सिर्फ़ मॉस्को ही नहीं। हम आपको ट्रेन या बस के कनेक्शन के साथ पूरा रूट दिखाएँगे।</p>
       </div>
       <img class="panel-ico" src="assets/icons/transport-mix.png" alt="" aria-hidden="true">
     </div>
@@ -557,12 +582,12 @@ input:focus{outline:none}
         <p>रूस और भारत में होटल, हॉस्टल और अपार्टमेंट</p>
       </div>
       <div class="carousel-wrap">
-        <div class="carousel-nav" aria-hidden="true">
-          <button type="button" onclick="document.getElementById('hotels').scrollBy({left:-300,behavior:'smooth'})">
-            <svg viewBox="0 0 24 24"><path d="M15 19 8 12l7-7"/></svg>
+        <div class="carousel-nav">
+          <button type="button" aria-label="पिछला">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19 8 12l7-7"/></svg>
           </button>
-          <button type="button" onclick="document.getElementById('hotels').scrollBy({left:300,behavior:'smooth'})">
-            <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
+          <button type="button" aria-label="अगला">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
           </button>
         </div>
         <div class="row row--hotels" id="hotels"></div>
@@ -577,7 +602,7 @@ input:focus{outline:none}
     <div class="tiles tiles--4">
       <article class="tile">
         <h3>हर कदम पर अंग्रेज़ी</h3>
-        <p>खोज से भुगतान तक – सिर्फ़ होमपेज पर ही नहीं।</p>
+        <p>खोज से भुगतान तक,सिर्फ़ होमपेज पर ही नहीं।</p>
         <img class="tile-ico" src="assets/icons/chat-single.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
@@ -613,7 +638,7 @@ input:focus{outline:none}
       <article class="tile tile--stat">
         <div class="stat-num">4.2 करोड़</div>
         <h3>यात्री</h3>
-        <p>हर महीने 4.2 करोड़ से ज़्यादा यात्री Tutu चुनते हैं – और दोबारा लौटकर आते हैं।</p>
+        <p>4.2 करोड़ से ज़्यादा यात्री Tutu चुन चुके हैं और बार-बार लौटकर आते हैं।</p>
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">500+</div>
@@ -641,7 +666,7 @@ input:focus{outline:none}
     <div class="app-card">
       <div>
         <p class="app-caption">अंग्रेज़ी में ऐप</p>
-        <p class="app-note">पूरी यात्रा – खोज से बुकिंग तक – अंग्रेज़ी में। QR कोड स्कैन करें या अपने ऐप स्टोर में Tutu खोजें।</p>
+        <p class="app-note">खोज से बुकिंग तक पूरी यात्राअंग्रेज़ी में। QR कोड स्कैन करें या अपने ऐप स्टोर में Tutu खोजें।</p>
         <div class="stores">
           <img class="store-ico" src="assets/icons/store-apple.png" alt="App Store">
           <img class="store-ico" src="assets/icons/store-google.png" alt="Google Play">
@@ -680,7 +705,7 @@ const CONFIG = {
   currency: '₹',
 
   routes: [
-    { id:'r1', from:'Mumbai',         to:'Moscow',      typeLine:'कनेक्टिंग फ़्लाइट',         transport:'flight', combined:true,  price:'35,412', duration:'10 घंटे 45 मिनट', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r1', from:'Mumbai',         to:'Moscow',      typeLine:'कनेक्टिंग फ़्लाइट',         transport:'flight', combined:false, price:'35,412', duration:'10 घंटे 45 मिनट', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
     { id:'r2', from:'Delhi',          to:'Moscow',      typeLine:'सीधी उड़ान',                transport:'flight', combined:false, price:'28,148', duration:'6 घंटे 30 मिनट',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
     { id:'r3', from:'Moscow',         to:'Delhi',       typeLine:'सीधी उड़ान',                transport:'flight', combined:false, price:'28,602', duration:'6 घंटे 5 मिनट',   gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
     { id:'r4', from:'Sheremetyevo',   to:'Tver',        typeLine:'एयरपोर्ट एक्सप्रेस + ट्रेन',transport:'train',  combined:true,  price:'1,521',  duration:'3 घंटे 30 मिनट',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
@@ -698,22 +723,18 @@ const CONFIG = {
     { id:'h5',  name:'Grifon Guest Rooms and Apartments', city:'St. Petersburg', distance:'',                     rating:'9.1', reviews:'',           type:'अपार्टमेंट', price:'5,243', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
     { id:'h6',  name:'The Fern Residency, Mumbai',        city:'Mumbai',         distance:'सेंटर से 2.1 किमी',    rating:'8.6', reviews:'89 रिव्यू',  type:'होटल',       price:'5,811', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
     { id:'h7',  name:'The International by Tunga',        city:'Mumbai',         distance:'सेंटर से 1.8 किमी',    rating:'8.2', reviews:'112 रिव्यू', type:'होटल',       price:'4,755', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
-    { id:'h8',  name:'Hotel Sahara Star',                 city:'Mumbai',         distance:'एयरपोर्ट से 500 मीटर', rating:'7.5', reviews:'56 रिव्यू',  type:'होटल',       price:'5,249', gradient:'linear-gradient(200deg,#0D0B68 0%,#7D71FF 100%)' },
-    { id:'h9',  name:'Taj Mahal Tower, Mumbai',           city:'Mumbai',         distance:'',                     rating:'9.4', reviews:'312 रिव्यू', type:'होटल',       price:'14,528',gradient:'radial-gradient(130% 130% at 30% 20%,#BA61FF 0%,#0D0B68 70%)' },
-    { id:'h10', name:'The Postcard Cuelim',               city:'Goa',            distance:'बीच से 1.2 किमी',      rating:'9.0', reviews:'78 रिव्यू',  type:'होटल',       price:'9,534', gradient:'linear-gradient(150deg,#BA61FF 0%,#5F94FF 100%)' },
-    { id:'h11', name:'White Square Nirvana',              city:'Goa',            distance:'',                     rating:'8.7', reviews:'',           type:'अपार्टमेंट', price:'4,483', gradient:'linear-gradient(110deg,#7D71FF 0%,#0D0B68 90%)' },
-    { id:'h12', name:'Kosmos Hotel, Delhi',               city:'Delhi',          distance:'सेंटर से 3.5 किमी',    rating:'8.1', reviews:'204 रिव्यू', type:'होटल',       price:'4,086', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
+    { id:'h8',  name:'Kosmos Hotel, Delhi',               city:'Delhi',          distance:'सेंटर से 3.5 किमी',    rating:'8.1', reviews:'204 रिव्यू', type:'होटल',       price:'4,086', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
   ],
 
   faq: [
     { q:'रूस में कौन से भुगतान तरीके चलते हैं?',
-      a:'Tutu पर आप रूसी बैंक कार्ड और SBP से भुगतान कर सकते हैं। UPI, RuPay और भारत में जारी Visa या Mastercard कार्ड रूस में नहीं चलते। भुगतान के लिए रूसी कार्ड या नक़दी की ज़रूरत होगी।' },
+      a:'Tutu पर आप रूसी बैंक कार्ड और SBP से भुगतान कर सकते हैं। UPI, RuPay और भारत में जारी Visa या Mastercard कार्ड रूस में नहीं चलते। इस पेज पर दाम सिर्फ़ समझने के लिए रुपये में दिखाए गए हैं, भुगतान रूसी रूबल में होता है। भुगतान के लिए रूसी कार्ड या नक़दी की ज़रूरत होगी।' },
     { q:'टिकट पर नाम की स्पेलिंग ग़लत हो तो क्या करें?',
       a:'अक्षरों के छोटे-मोटे फ़र्क़ से आमतौर पर कोई दिक्कत नहीं होती, क्योंकि चढ़ते समय पासपोर्ट नंबर देखा जाता है, नाम की स्पेलिंग नहीं। अगर नाम में कोई बड़ी ग़लती है, तो यात्रा से पहले सहायता टीम से संपर्क करें।' },
     { q:'होटल में चेक-इन के समय रजिस्ट्रेशन ज़रूरी है?',
       a:'होटल विदेशी मेहमानों का रजिस्ट्रेशन ख़ुद करते हैं और कागज़ात देते हैं। प्राइवेट अपार्टमेंट में रजिस्ट्रेशन की सुविधा न हो, तो बुकिंग से पहले मालिक से पूछ लें।' },
     { q:'प्लात्सकार्ट और कूपे में क्या फ़र्क़ है?',
-      a:'प्लात्सकार्ट एक खुला डिब्बा होता है जिसमें सोने की जगहें होती हैं – कोई दरवाज़ा या पर्दा नहीं। सस्ता है, पर शोर ज़्यादा। कूपे चार लोगों का एक बंद डिब्बा होता है जिसमें दरवाज़ा होता है – शांत, पर महँगा।' },
+      a:'प्लात्सकार्ट एक खुला डिब्बा होता है जिसमें सोने की जगहें होती हैं, पर कोई दरवाज़ा या पर्दा नहीं। सस्ता है, पर शोर ज़्यादा। कूपे चार लोगों का एक बंद डिब्बा होता है जिसमें दरवाज़ा होता है। यह शांत है, पर महँगा।' },
     { q:'हवाई अड्डे से दूसरे शहर कैसे पहुँचें?',
       a:'कई रूट पर उड़ान को ट्रेन या बस से जोड़ा जा सकता है। पूरी यात्रा एक साथ खोजें, हर टिकट अलग-अलग बुक करने की ज़रूरत नहीं।' },
     { q:'सामान के बारे में क्या जानना चाहिए?',
@@ -754,6 +775,94 @@ document.getElementById('faq').innerHTML = CONFIG.faq.map(f => `
     <h3>${f.q}</h3>
     <p>${f.a}</p>
   </article>`).join('');
+
+(function(){
+  const row=document.getElementById('hotels');
+  const [prev,next]=document.querySelectorAll('.carousel-nav button');
+  const step=dir=>{
+    const width=row.firstElementChild.getBoundingClientRect().width+(parseFloat(getComputedStyle(row).columnGap)||0);
+    // aim at a card index rather than an offset, so a click during the previous animation still advances
+    const index=Math.max(0,Math.round(row.scrollLeft/width)+dir);
+    row.scrollTo({left:index*width,behavior:'smooth'});
+  };
+  const sync=()=>{
+    prev.disabled=row.scrollLeft<=2;
+    next.disabled=row.scrollLeft+row.clientWidth>=row.scrollWidth-2;
+  };
+  prev.addEventListener('click',()=>step(-1));
+  next.addEventListener('click',()=>step(1));
+  row.addEventListener('scroll',sync,{passive:true});
+  window.addEventListener('resize',sync);
+  sync();
+})();
+
+(function(){
+  const input=document.getElementById('f-date');
+  const field=input.closest('.field');
+  const lang=document.documentElement.lang;
+  const locale=lang==='en'?'en-GB':lang;
+  const labels={ru:['Предыдущий месяц','Следующий месяц'],en:['Previous month','Next month'],hi:['पिछला महीना','अगला महीना']}[lang]||['‹','›'];
+  const monthFmt=new Intl.DateTimeFormat(locale,{month:'long'});
+  const weekdayFmt=new Intl.DateTimeFormat(locale,{weekday:'short'});
+  const dayFmt=new Intl.DateTimeFormat(locale,{day:'numeric',month:'short'});
+  const today=new Date();today.setHours(0,0,0,0);
+  const firstMonth=new Date(today.getFullYear(),today.getMonth(),1);
+  const lastMonth=new Date(today.getFullYear(),today.getMonth()+11,1);
+  let view=firstMonth;
+  let selected=null;
+
+  field.classList.add('field--date');
+  input.readOnly=true;
+  input.setAttribute('aria-haspopup','dialog');
+  const dp=document.createElement('div');
+  dp.className='dp';
+  dp.hidden=true;
+  dp.setAttribute('role','dialog');
+  field.appendChild(dp);
+
+  const icon=d=>`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+  const pad=n=>String(n).padStart(2,'0');
+
+  function render(){
+    const y=view.getFullYear(), m=view.getMonth();
+    const offset=(new Date(y,m,1).getDay()+6)%7;
+    const count=new Date(y,m+1,0).getDate();
+    const title=monthFmt.format(view);
+    let html=`<div class="dp-head">
+      <button type="button" class="dp-nav" data-step="-1" aria-label="${labels[0]}" ${+view<=+firstMonth?'disabled':''}>${icon('M15 19 8 12l7-7')}</button>
+      <span class="dp-title">${title.charAt(0).toUpperCase()+title.slice(1)} ${y}</span>
+      <button type="button" class="dp-nav" data-step="1" aria-label="${labels[1]}" ${+view>=+lastMonth?'disabled':''}>${icon('m9 5 7 7-7 7')}</button>
+    </div><div class="dp-grid">`;
+    // 1 Jan 2024 is a Monday, so these seven dates give weekday names from Monday on
+    for(let i=0;i<7;i++) html+=`<span class="dp-wd">${weekdayFmt.format(new Date(2024,0,1+i))}</span>`;
+    html+='<span></span>'.repeat(offset);
+    for(let d=1;d<=count;d++){
+      const date=new Date(y,m,d);
+      const cls='dp-day'+(+date===+today?' is-today':'')+(selected&&+date===+selected?' is-selected':'');
+      html+=`<button type="button" class="${cls}" data-day="${d}" ${date<today?'disabled':''}>${d}</button>`;
+    }
+    dp.innerHTML=html+'</div>';
+  }
+  const open=()=>{ if(selected) view=new Date(selected.getFullYear(),selected.getMonth(),1); render(); dp.hidden=false; };
+  const close=()=>{ dp.hidden=true; };
+
+  input.addEventListener('click',()=>dp.hidden?open():close());
+  input.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+  dp.addEventListener('click',e=>{
+    // re-rendering detaches the clicked node, which the outside-click check below would read as a click outside
+    e.stopPropagation();
+    const nav=e.target.closest('.dp-nav');
+    if(nav){ view=new Date(view.getFullYear(),view.getMonth()+Number(nav.dataset.step),1); render(); return; }
+    const day=e.target.closest('.dp-day');
+    if(!day||day.disabled) return;
+    selected=new Date(view.getFullYear(),view.getMonth(),Number(day.dataset.day));
+    input.value=`${dayFmt.format(selected)}, ${weekdayFmt.format(selected)}`;
+    input.dataset.iso=`${selected.getFullYear()}-${pad(selected.getMonth()+1)}-${pad(selected.getDate())}`;
+    close();
+  });
+  document.addEventListener('click',e=>{ if(!field.contains(e.target)) close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+})();
 </script>
 
 </body>

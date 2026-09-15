@@ -178,6 +178,29 @@ input:focus{outline:none}
 .field label{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.01em}
 .field input,.field .value{font-size:16px;font-weight:500;color:var(--deep-blue);line-height:1.3}
 .field input::placeholder{color:#A3A3B8;font-weight:400}
+.field--date{position:relative}
+.field--date input{cursor:pointer}
+.dp{
+  position:absolute;top:calc(100% + 8px);left:0;z-index:30;
+  width:300px;max-width:calc(100vw - 32px);
+  background:var(--white);border-radius:18px;
+  box-shadow:0 14px 40px rgba(13,11,104,.20);
+  padding:14px;color:var(--deep-blue);
+}
+.dp[hidden]{display:none}
+.dp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.dp-title{font-size:15px;font-weight:600}
+.dp-nav{width:34px;height:34px;border-radius:50%;display:grid;place-items:center}
+.dp-nav:hover:not(:disabled){background:var(--cloud-white)}
+.dp-nav:disabled{opacity:.3;cursor:default}
+.dp-nav svg{width:16px;height:16px;stroke:var(--deep-blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.dp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.dp-wd{padding:6px 0;font-size:11px;font-weight:500;color:var(--muted);text-align:center}
+.dp-day{height:36px;border-radius:10px;font-size:14px;font-weight:500;color:var(--deep-blue)}
+.dp-day:hover:not(:disabled){background:var(--cloud-white)}
+.dp-day:disabled{color:#C8C8D6;cursor:default}
+.dp-day.is-today{box-shadow:inset 0 0 0 1.5px var(--berry-purple)}
+.dp-day.is-selected{background:var(--berry-purple);color:var(--white)}
 
 .swap{display:none}
 @media(min-width:900px){
@@ -229,8 +252,9 @@ input:focus{outline:none}
 @media(min-width:768px){.row{margin-inline:-24px;padding-inline:24px}}
 @media(min-width:1024px){
   .row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-inline:0;padding:0;overflow:visible}
-  .row--hotels{grid-template-columns:repeat(4,1fr)}
   .row > *{flex:none}
+  .row--hotels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-block:2px 8px}
+  .row--hotels > *{flex:0 0 calc((100% - 60px) / 4)}
 }
 
 .carousel-wrap{position:relative}
@@ -246,7 +270,8 @@ input:focus{outline:none}
     box-shadow:var(--shadow-sm);
     transition:background .15s ease;
   }
-  .carousel-nav button:hover{background:var(--cloud-white)}
+  .carousel-nav button:hover:not(:disabled){background:var(--cloud-white)}
+  .carousel-nav button:disabled{opacity:.45;cursor:default}
   .carousel-nav svg{width:16px;height:16px;stroke:var(--deep-blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 }
 
@@ -563,12 +588,12 @@ input:focus{outline:none}
         <p>Отели, хостелы и апартаменты в России и Индии</p>
       </div>
       <div class="carousel-wrap">
-        <div class="carousel-nav" aria-hidden="true">
-          <button type="button" onclick="document.getElementById('hotels').scrollBy({left:-300,behavior:'smooth'})">
-            <svg viewBox="0 0 24 24"><path d="M15 19 8 12l7-7"/></svg>
+        <div class="carousel-nav">
+          <button type="button" aria-label="Назад">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19 8 12l7-7"/></svg>
           </button>
-          <button type="button" onclick="document.getElementById('hotels').scrollBy({left:300,behavior:'smooth'})">
-            <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
+          <button type="button" aria-label="Вперёд">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
           </button>
         </div>
         <div class="row row--hotels" id="hotels"></div>
@@ -609,9 +634,7 @@ input:focus{outline:none}
 <section class="section section--cloud">
   <div class="container">
     <div class="section-head">
-      <h2>О Туту</h2>
-      <p>Проверенный сервис с историей — работаем с 2003 года.</p>
-    </div>
+      <h2>О Туту</h2>    </div>
     <div class="tiles tiles--4">
       <article class="tile tile--stat">
         <div class="stat-num">с 2003</div>
@@ -621,7 +644,7 @@ input:focus{outline:none}
       <article class="tile tile--stat">
         <div class="stat-num">42 млн</div>
         <h3>Путешественников</h3>
-        <p>Каждый месяц Туту выбирают более 42 миллионов пассажиров — и возвращаются снова.</p>
+        <p>Туту уже выбрали более 42 миллионов пассажиров — и возвращаются снова.</p>
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">500+</div>
@@ -688,7 +711,7 @@ const CONFIG = {
   currency: '₽',
 
   routes: [
-    { id:'r1', from:'Мумбаи',           to:'Москва',     typeLine:'рейс с пересадкой',    transport:'flight', combined:true,  price:'31 200', duration:'10 ч 45 мин', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r1', from:'Мумбаи',           to:'Москва',     typeLine:'рейс с пересадкой',    transport:'flight', combined:false, price:'31 200', duration:'10 ч 45 мин', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
     { id:'r2', from:'Дели',             to:'Москва',     typeLine:'прямой рейс',          transport:'flight', combined:false, price:'24 800', duration:'6 ч 30 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
     { id:'r3', from:'Москва',           to:'Дели',       typeLine:'прямой рейс',          transport:'flight', combined:false, price:'25 200', duration:'6 ч 05 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
     { id:'r4', from:'Шереметьево',      to:'Тверь',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'1 340',  duration:'3 ч 30 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
@@ -706,11 +729,7 @@ const CONFIG = {
     { id:'h5',  name:'Гостевые комнаты и апартаменты Грифон', city:'Санкт-Петербург', distance:'',                 rating:'9,1', reviews:'',            type:'Апартаменты',  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
     { id:'h6',  name:'The Fern Residency, Mumbai',            city:'Мумбаи',          distance:'2,1 км от центра', rating:'8,6', reviews:'89 отзывов',  type:'Отель',        price:'5 120', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
     { id:'h7',  name:'The International by Tunga',            city:'Мумбаи',          distance:'1,8 км от центра', rating:'8,2', reviews:'112 отзывов', type:'Отель',        price:'4 189', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
-    { id:'h8',  name:'Hotel Sahara Star',                     city:'Мумбаи',          distance:'500 м от аэропорта',rating:'7,5', reviews:'56 отзывов',  type:'Отель',        price:'4 625', gradient:'linear-gradient(200deg,#0D0B68 0%,#7D71FF 100%)' },
-    { id:'h9',  name:'Taj Mahal Tower, Mumbai',               city:'Мумбаи',          distance:'',                 rating:'9,4', reviews:'312 отзывов', type:'Отель',        price:'12 800', gradient:'radial-gradient(130% 130% at 30% 20%,#BA61FF 0%,#0D0B68 70%)' },
-    { id:'h10', name:'The Postcard Cuelim',                   city:'Гоа',             distance:'1,2 км до пляжа',  rating:'9,0', reviews:'78 отзывов',  type:'Отель',        price:'8 400', gradient:'linear-gradient(150deg,#BA61FF 0%,#5F94FF 100%)' },
-    { id:'h11', name:'White Square Nirvana',                  city:'Гоа',             distance:'',                 rating:'8,7', reviews:'',            type:'Апартаменты',  price:'3 950', gradient:'linear-gradient(110deg,#7D71FF 0%,#0D0B68 90%)' },
-    { id:'h12', name:'Гостиница Космос, Дели',                city:'Дели',            distance:'3,5 км от центра', rating:'8,1', reviews:'204 отзыва',  type:'Отель',        price:'3 600', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
+    { id:'h8',  name:'Гостиница Космос, Дели',                city:'Дели',            distance:'3,5 км от центра', rating:'8,1', reviews:'204 отзыва',  type:'Отель',        price:'3 600', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
   ],
 
   faq: [
@@ -762,6 +781,94 @@ document.getElementById('faq').innerHTML = CONFIG.faq.map(f => `
     <h3>${f.q}</h3>
     <p>${f.a}</p>
   </article>`).join('');
+
+(function(){
+  const row=document.getElementById('hotels');
+  const [prev,next]=document.querySelectorAll('.carousel-nav button');
+  const step=dir=>{
+    const width=row.firstElementChild.getBoundingClientRect().width+(parseFloat(getComputedStyle(row).columnGap)||0);
+    // aim at a card index rather than an offset, so a click during the previous animation still advances
+    const index=Math.max(0,Math.round(row.scrollLeft/width)+dir);
+    row.scrollTo({left:index*width,behavior:'smooth'});
+  };
+  const sync=()=>{
+    prev.disabled=row.scrollLeft<=2;
+    next.disabled=row.scrollLeft+row.clientWidth>=row.scrollWidth-2;
+  };
+  prev.addEventListener('click',()=>step(-1));
+  next.addEventListener('click',()=>step(1));
+  row.addEventListener('scroll',sync,{passive:true});
+  window.addEventListener('resize',sync);
+  sync();
+})();
+
+(function(){
+  const input=document.getElementById('f-date');
+  const field=input.closest('.field');
+  const lang=document.documentElement.lang;
+  const locale=lang==='en'?'en-GB':lang;
+  const labels={ru:['Предыдущий месяц','Следующий месяц'],en:['Previous month','Next month'],hi:['पिछला महीना','अगला महीना']}[lang]||['‹','›'];
+  const monthFmt=new Intl.DateTimeFormat(locale,{month:'long'});
+  const weekdayFmt=new Intl.DateTimeFormat(locale,{weekday:'short'});
+  const dayFmt=new Intl.DateTimeFormat(locale,{day:'numeric',month:'short'});
+  const today=new Date();today.setHours(0,0,0,0);
+  const firstMonth=new Date(today.getFullYear(),today.getMonth(),1);
+  const lastMonth=new Date(today.getFullYear(),today.getMonth()+11,1);
+  let view=firstMonth;
+  let selected=null;
+
+  field.classList.add('field--date');
+  input.readOnly=true;
+  input.setAttribute('aria-haspopup','dialog');
+  const dp=document.createElement('div');
+  dp.className='dp';
+  dp.hidden=true;
+  dp.setAttribute('role','dialog');
+  field.appendChild(dp);
+
+  const icon=d=>`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+  const pad=n=>String(n).padStart(2,'0');
+
+  function render(){
+    const y=view.getFullYear(), m=view.getMonth();
+    const offset=(new Date(y,m,1).getDay()+6)%7;
+    const count=new Date(y,m+1,0).getDate();
+    const title=monthFmt.format(view);
+    let html=`<div class="dp-head">
+      <button type="button" class="dp-nav" data-step="-1" aria-label="${labels[0]}" ${+view<=+firstMonth?'disabled':''}>${icon('M15 19 8 12l7-7')}</button>
+      <span class="dp-title">${title.charAt(0).toUpperCase()+title.slice(1)} ${y}</span>
+      <button type="button" class="dp-nav" data-step="1" aria-label="${labels[1]}" ${+view>=+lastMonth?'disabled':''}>${icon('m9 5 7 7-7 7')}</button>
+    </div><div class="dp-grid">`;
+    // 1 Jan 2024 is a Monday, so these seven dates give weekday names from Monday on
+    for(let i=0;i<7;i++) html+=`<span class="dp-wd">${weekdayFmt.format(new Date(2024,0,1+i))}</span>`;
+    html+='<span></span>'.repeat(offset);
+    for(let d=1;d<=count;d++){
+      const date=new Date(y,m,d);
+      const cls='dp-day'+(+date===+today?' is-today':'')+(selected&&+date===+selected?' is-selected':'');
+      html+=`<button type="button" class="${cls}" data-day="${d}" ${date<today?'disabled':''}>${d}</button>`;
+    }
+    dp.innerHTML=html+'</div>';
+  }
+  const open=()=>{ if(selected) view=new Date(selected.getFullYear(),selected.getMonth(),1); render(); dp.hidden=false; };
+  const close=()=>{ dp.hidden=true; };
+
+  input.addEventListener('click',()=>dp.hidden?open():close());
+  input.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+  dp.addEventListener('click',e=>{
+    // re-rendering detaches the clicked node, which the outside-click check below would read as a click outside
+    e.stopPropagation();
+    const nav=e.target.closest('.dp-nav');
+    if(nav){ view=new Date(view.getFullYear(),view.getMonth()+Number(nav.dataset.step),1); render(); return; }
+    const day=e.target.closest('.dp-day');
+    if(!day||day.disabled) return;
+    selected=new Date(view.getFullYear(),view.getMonth(),Number(day.dataset.day));
+    input.value=`${dayFmt.format(selected)}, ${weekdayFmt.format(selected)}`;
+    input.dataset.iso=`${selected.getFullYear()}-${pad(selected.getMonth()+1)}-${pad(selected.getDate())}`;
+    close();
+  });
+  document.addEventListener('click',e=>{ if(!field.contains(e.target)) close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+})();
 </script>
 
 </body>
