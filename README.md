@@ -38,9 +38,9 @@ without touching any markup.
 
 | What | Where | Note |
 |---|---|---|
-| Route prices, old prices, discounts | `CONFIG.routes` | **invented — replace before launch** |
-| Route dates and durations | `CONFIG.routes` | **invented — replace before launch** |
-| Hotel names, cities, ratings, prices | `CONFIG.hotels` | **invented — replace before launch** |
+| Route prices («от N ₽») | `CONFIG.routes` | **approximate — refresh from live search before launch** |
+| Route dates and durations | `CONFIG.routes` | **approximate — replace before launch** |
+| Hotels, ratings, reviews, prices | `CONFIG.hotels` | real listings from tutu.ru on 15.09.2026 — refresh prices before launch |
 | Card images | `.card-media` gradients | no real photos yet, see below |
 
 The footer carries a line stating that prices shown are sample values, so nothing on the page
@@ -82,11 +82,11 @@ To change the code, overwrite the file.
 | `--deep-blue` | `#0D0B68` | hero and footer background, headings |
 | `--berry-purple` | `#7D71FF` | primary button, active states, multimodal panel |
 | `--cloud-white` | `#EDEFFF` | alternating section backgrounds, tiles |
-| `--orange` | `#FF872E` | discount badges only |
+| `--orange` | `#FF872E` | not used at the moment — discount badges were removed |
 | `--green` | `#00C95E` | hotel rating chips only |
 | `--blue` | `#5F94FF` | card image gradients |
-| `--lilac` | `#BA61FF` | card image gradients |
-| `--magenta` | `#FF45E3` | ring around the icon on the dark price panel only |
+| `--lilac` | `#BA61FF` | card image gradients, hotel panel gradient |
+| `--magenta` | `#FF45E3` | ring on the dark price panel, hotel panel gradient |
 
 No other brand colors are used. Body text is neutral grey.
 

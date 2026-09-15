@@ -255,12 +255,6 @@ input:focus{outline:none}
 .card-body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:5px;flex:1}
 .price-row{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
 .price{font-size:20px;font-weight:700;color:var(--deep-blue);letter-spacing:-.01em}
-.price-old{font-size:12.5px;font-weight:400;color:var(--muted);text-decoration:line-through}
-.badge-off{
-  background:var(--orange);color:var(--white);
-  font-size:12px;font-weight:700;line-height:1;
-  padding:4px 7px;border-radius:7px;
-}
 .route-name{font-size:15px;font-weight:600;color:var(--deep-blue);line-height:1.3}
 .card-meta{font-size:13px;color:var(--muted)}
 .card-type{font-size:13px;color:var(--text);margin-top:auto;padding-top:4px}
@@ -271,10 +265,10 @@ input:focus{outline:none}
   font-size:13px;font-weight:700;line-height:1;
   padding:5px 8px;border-radius:8px;
 }
-.hotel-top{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-.stars{color:var(--deep-blue);letter-spacing:1px;font-size:11px}
+.hotel-top{font-size:13px;color:var(--muted)}
 .hotel-name{font-size:15px;font-weight:600;color:var(--deep-blue);line-height:1.3}
-.hotel-price{font-size:18px;font-weight:700;color:var(--deep-blue)}
+.hotel-meta{font-size:13px;color:var(--muted)}
+.hotel-price{margin-top:auto;padding-top:6px;font-size:18px;font-weight:700;color:var(--deep-blue)}
 .hotel-price span{font-size:13px;font-weight:400;color:var(--muted)}
 .badge-instant{
   align-self:flex-start;margin-top:6px;
@@ -324,6 +318,17 @@ input:focus{outline:none}
 .panel--dark{background:var(--deep-blue)}
 .panel--dark h2,.panel--dark p{color:var(--white)}
 .panel--dark .panel-ico{box-shadow:0 0 0 8px rgba(255,69,227,.30)}
+.stage{
+  background:linear-gradient(100deg,#BA61FF 0%,#FF45E3 100%);
+  border-radius:24px;
+  padding:28px 20px;
+}
+@media(min-width:768px){.stage{padding:44px 40px}}
+.stage .section-head h2{color:var(--white)}
+.stage .section-head p{color:rgba(255,255,255,.88)}
+.stage .row{margin-inline:-20px;padding-inline:20px}
+@media(min-width:768px){.stage .row{margin-inline:-40px;padding-inline:40px}}
+@media(min-width:1024px){.stage .row{margin-inline:0;padding-inline:0}}
 
 .faq{display:grid;gap:12px}
 @media(min-width:900px){
@@ -396,7 +401,7 @@ input:focus{outline:none}
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.3 3.2 8.3 7.5 9.4 4.3-1.1 7.5-5.1 7.5-9.4V6L12 3Z"/></svg>
-        Работаем с 2003 года
+        22 года работаем для вас
       </span>
     </div>
 
@@ -457,7 +462,7 @@ input:focus{outline:none}
   <div class="container">
     <div class="section-head">
       <h2>Выгодные направления</h2>
-      <p>Цены ниже среднего за последние 10 дней.</p>
+      <p>Цены ниже средних за последние 10 дней.</p>
     </div>
 
     <div class="filters" role="tablist" aria-label="Фильтр маршрутов">
@@ -509,11 +514,13 @@ input:focus{outline:none}
 
 <section class="section">
   <div class="container">
-    <div class="section-head">
-      <h2>Где остановиться</h2>
-      <p>Отели, хостелы и апартаменты</p>
+    <div class="stage">
+      <div class="section-head">
+        <h2>Где остановиться</h2>
+        <p>Отели, хостелы и апартаменты в России и Индии</p>
+      </div>
+      <div class="row row--hotels" id="hotels"></div>
     </div>
-    <div class="row row--hotels" id="hotels"></div>
   </div>
 </section>
 
@@ -567,7 +574,7 @@ input:focus{outline:none}
 <section class="section">
   <div class="container">
     <div class="section-head"><h2>О Туту</h2></div>
-    <div class="tiles">
+    <div class="tiles tiles--4">
       <article class="tile tile--plain">
         <h3>Всё в одном месте</h3>
         <p>Автобусы, поезда, самолёты и отели.</p>
@@ -575,6 +582,14 @@ input:focus{outline:none}
       <article class="tile tile--plain">
         <h3>Работаем напрямую с перевозчиками</h3>
         <p>Билет приходит из системы перевозчика.</p>
+      </article>
+      <article class="tile tile--plain">
+        <h3>Билет не потеряется</h3>
+        <p>Придёт на почту и останется в личном кабинете.</p>
+      </article>
+      <article class="tile tile--plain">
+        <h3>Можно оплатить позже</h3>
+        <p>Зафиксируйте цену и выкупите билет через несколько дней.</p>
       </article>
     </div>
   </div>
@@ -585,7 +600,7 @@ input:focus{outline:none}
     <div class="app-card">
       <div>
         <p class="app-caption">Приложение на английском</p>
-        <p class="app-note">Поиск, оплата и заказы на английском. Отсканируйте код или найдите Туту в магазине приложений.</p>
+        <p class="app-note">Весь путь от поиска до бронирования на английском языке. Отсканируйте код или найдите Туту в магазине приложений.</p>
         <div class="stores">
           <img class="store-ico" src="assets/icons/store-apple.png" alt="App Store">
           <img class="store-ico" src="assets/icons/store-google.png" alt="Google Play">
@@ -623,26 +638,26 @@ input:focus{outline:none}
 const CONFIG = {
   currency: '₽',
 
-  // PLACEHOLDER — цены, скидки и даты выдуманы, время в пути примерное; заменить реальными перед запуском
-  // TODO: подтвердить у продуктовой команды, что такие составные маршруты реально собираются в сервисе
+  // PLACEHOLDER — цены ориентировочные, обновить по реальной выдаче перед запуском
+  // TODO: подтвердить у продуктовой команды, что составные маршруты собираются в сервисе
   routes: [
-    { id:'r1', from:'Дели',            to:'Москва',     typeLine:'прямой рейс',          transport:'flight', combined:false, price:'28 500', oldPrice:'34 100', off:'-16%', date:'12 окт', duration:'6 ч 20 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
-    { id:'r2', from:'Шереметьево',     to:'Тверь',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'1 500',  oldPrice:'1 850',  off:'-19%', date:'14 окт', duration:'3 ч 30 мин',  gradient:'radial-gradient(120% 120% at 15% 10%,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
-    { id:'r3', from:'Москва',          to:'Казань',     typeLine:'ночной поезд',         transport:'train',  combined:false, price:'2 200',  oldPrice:'2 900',  off:'-24%', date:'15 окт', duration:'11 ч 40 мин', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r4', from:'Москва',          to:'Йошкар-Ола', typeLine:'поезд',                transport:'train',  combined:false, price:'2 900',  oldPrice:'3 500',  off:'-17%', date:'17 окт', duration:'14 ч 30 мин', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r5', from:'Шереметьево',     to:'Курск',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'3 400',  oldPrice:'4 000',  off:'-15%', date:'18 окт', duration:'9 ч 30 мин',  gradient:'radial-gradient(130% 110% at 85% 15%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'r6', from:'Казань',          to:'Чебоксары',  typeLine:'автобус',              transport:'bus',    combined:false, price:'860',    oldPrice:'1 050',  off:'-18%', date:'19 окт', duration:'2 ч 40 мин',  gradient:'linear-gradient(20deg,#0D0B68 0%,#7D71FF 55%,#5F94FF 100%)' },
-    { id:'r7', from:'Санкт-Петербург', to:'Йошкар-Ола', typeLine:'поезд + автобус',      transport:'train',  combined:true,  price:'5 200',  oldPrice:'6 100',  off:'-15%', date:'20 окт', duration:'27 ч 30 мин', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
-    { id:'r8', from:'Уфа',             to:'Казань',     typeLine:'автобус',              transport:'bus',    combined:false, price:'1 700',  oldPrice:'2 000',  off:'-15%', date:'21 окт', duration:'8 ч 30 мин',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' }
+    { id:'r1', from:'Дели',            to:'Москва',     typeLine:'прямой рейс',          transport:'flight', combined:false, price:'27 400', date:'12 окт', duration:'6 ч 20 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r2', from:'Шереметьево',     to:'Тверь',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'1 340',  date:'14 окт', duration:'3 ч 30 мин',  gradient:'radial-gradient(120% 120% at 15% 10%,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
+    { id:'r3', from:'Москва',          to:'Казань',     typeLine:'ночной поезд',         transport:'train',  combined:false, price:'2 180',  date:'15 окт', duration:'11 ч 40 мин', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r4', from:'Москва',          to:'Йошкар-Ола', typeLine:'поезд',                transport:'train',  combined:false, price:'2 860',  date:'17 окт', duration:'14 ч 30 мин', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r5', from:'Шереметьево',     to:'Курск',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'3 210',  date:'18 окт', duration:'9 ч 30 мин',  gradient:'radial-gradient(130% 110% at 85% 15%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'r6', from:'Казань',          to:'Чебоксары',  typeLine:'автобус',              transport:'bus',    combined:false, price:'840',    date:'19 окт', duration:'2 ч 40 мин',  gradient:'linear-gradient(20deg,#0D0B68 0%,#7D71FF 55%,#5F94FF 100%)' },
+    { id:'r7', from:'Санкт-Петербург', to:'Йошкар-Ола', typeLine:'поезд + автобус',      transport:'train',  combined:true,  price:'4 950',  date:'20 окт', duration:'27 ч 30 мин', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r8', from:'Уфа',             to:'Казань',     typeLine:'автобус',              transport:'bus',    combined:false, price:'1 690',  date:'21 окт', duration:'8 ч 30 мин',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' }
   ],
 
-  // PLACEHOLDER — вымышленные объекты, заменить реальными предложениями перед запуском
+  // Данные с tutu.ru на 15.09.2026 — реальные объекты, рейтинг от 8,0. Цены обновить перед запуском
   hotels: [
-    { id:'h1', name:'Отель в центре',               city:'Москва',          stars:4, rating:'8,7', price:'4 200', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
-    { id:'h2', name:'Гостиница у вокзала',          city:'Санкт-Петербург', stars:3, rating:'8,3', price:'3 100', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'h3', name:'Мини-отель в центре',          city:'Казань',          stars:3, rating:'8,9', price:'2 750', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
-    { id:'h4', name:'Апартаменты у метро',          city:'Нижний Новгород', stars:0, rating:'9,1', price:'3 480', gradient:'linear-gradient(95deg,#0D0B68 0%,#7D71FF 60%,#BA61FF 100%)' },
-    { id:'h5', name:'Хостел рядом с университетом', city:'Уфа',             stars:0, rating:'8,2', price:'900',   gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' }
+    { id:'h1', name:'Мини-отель Стерео',                     city:'Казань',          distance:'1,5 км от центра', rating:'8,4', reviews:'158 отзывов', type:'Мини-отель',   stars:0, badge:'',                  price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
+    { id:'h2', name:'Грейс Амалия',                          city:'Сочи',            distance:'633 м до пляжа',   rating:'9,1', reviews:'240 отзывов', type:'Гостевой дом', stars:0, badge:'Бесплатная отмена', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'h3', name:'Хостел Автор Таганка',                  city:'Москва',          distance:'',                 rating:'8,4', reviews:'',            type:'Хостел',       stars:0, badge:'',                  price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
+    { id:'h4', name:'Jasminn Hotel, Goa',                    city:'Гоа',             distance:'607 м от центра',  rating:'8,0', reviews:'127 отзывов', type:'Отель',        stars:4, badge:'',                  price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#7D71FF 60%,#BA61FF 100%)' },
+    { id:'h5', name:'Гостевые комнаты и апартаменты Грифон', city:'Санкт-Петербург', distance:'',                 rating:'9,1', reviews:'',            type:'Апартаменты',  stars:0, badge:'',                  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' }
   ],
 
   faq: [
@@ -668,9 +683,7 @@ document.getElementById('routes').innerHTML = CONFIG.routes.map(r => `
     </div>
     <div class="card-body">
       <div class="price-row">
-        <span class="price">${r.price} ${CONFIG.currency}</span>
-        <span class="price-old">${r.oldPrice} ${CONFIG.currency}</span>
-        <span class="badge-off">${r.off}</span>
+        <span class="price">от ${r.price} ${CONFIG.currency}</span>
       </div>
       <p class="route-name">${r.from} — ${r.to}</p>
       <p class="card-meta">${r.date} · ${r.duration}</p>
@@ -681,13 +694,14 @@ document.getElementById('routes').innerHTML = CONFIG.routes.map(r => `
 document.getElementById('hotels').innerHTML = CONFIG.hotels.map(h => `
   <article class="card" data-cta="hotel_${h.id}">
     <div class="card-media" style="background:${h.gradient}">
-      <span class="rating">${h.rating}</span>
+      ${h.rating ? `<span class="rating">${h.rating}</span>` : ''}
     </div>
     <div class="card-body">
-      <p class="hotel-top">${h.stars ? `<span class="stars">${'★'.repeat(h.stars)}</span>` : ''}${h.city}</p>
+      <p class="hotel-top">${h.city}${h.distance ? ` · ${h.distance}` : ''}</p>
       <p class="hotel-name">${h.name}</p>
-      <p class="hotel-price">${h.price} ${CONFIG.currency} <span>за ночь</span></p>
-      <span class="badge-instant">Бронь подтверждается сразу</span>
+      <p class="hotel-meta">${h.type}${h.stars ? ` · ${'★'.repeat(h.stars)}` : ''}${h.reviews ? ` · ${h.reviews}` : ''}</p>
+      ${h.badge ? `<span class="badge-instant">${h.badge}</span>` : ''}
+      <p class="hotel-price">от ${h.price} ${CONFIG.currency} <span>1 ночь</span></p>
     </div>
   </article>`).join('');
 
