@@ -1,7 +1,8 @@
 # Tutu — India landing (stage 1)
 
 A single-page marketing landing for Tutu, aimed at Indian students living in Russia.
-Page content is in Russian (the English version is built separately). This is a **demand test**, not a working product — every CTA
+The page exists in three languages — Russian (`index.html`), English (`index-en.html`) and
+Hindi (`index-hi.html`) — linked from the language switcher in the header. This is a **demand test**, not a working product — every CTA
 will eventually link out to tutu.ru.
 
 **Stage 1 is a static layout: everything is visible and styled, nothing is interactive.**
@@ -16,7 +17,9 @@ some browsers may block them — serving the folder over any local HTTP server a
 ## Structure
 
 ```
-index.html                  the whole page: markup + inline CSS + CONFIG
+index.html                  Russian page: markup + inline CSS + CONFIG (prices in ₽)
+index-en.html               English page, same structure (prices in ₹)
+index-hi.html               Hindi page, same structure (prices in ₹)
 fonts/                      Tutu Sans (WOFF2) — regular 400, medium 500, demibold 600, bold 700
 assets/
   logo-tutu-white.png       wordmark used in the header and footer
@@ -96,7 +99,6 @@ Styled but inert on purpose:
 
 - transport tabs (Buses / Trains / Flights / Hotels) and route filters (All / Buses / Trains)
 - the search form — the inputs accept typing but nothing is submitted
-- the language switcher (EN / RU / हिंदी)
 - FAQ cards render expanded; no collapse behaviour
 - every CTA, the store buttons and the footer `tutu.ru` line — no links, no UTM, no tracking
 

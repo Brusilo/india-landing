@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="hi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Туту — дешёвые билеты по России</title>
-<meta name="description" content="Из Индии в Россию и дальше до вашего города. Автобусы, поезда, самолёты.">
+<title>Tutu – रूस भर में सस्ती टिकटें</title>
+<meta name="description" content="भारत से मॉस्को और आगे आपके शहर तक। बसें, ट्रेनें, हवाई जहाज़।">
 <meta name="theme-color" content="#0D0B68">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -41,8 +41,8 @@
   --r-btn:12px;
   --maxw:1180px;
 
-  --font:'Tutu Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-  --font-accent:'Lora',Georgia,'Times New Roman',serif;
+  --font:'Tutu Sans','Noto Sans Devanagari',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Nirmala UI',Helvetica,Arial,sans-serif;
+  --font-accent:'Lora','Noto Serif Devanagari',Georgia,'Times New Roman',serif;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -76,8 +76,8 @@ input:focus{outline:none}
 .section-head h2{
   font-weight:700;
   font-size:clamp(26px,4.4vw,40px);
-  line-height:1.12;
-  letter-spacing:-.02em;
+  line-height:1.2;
+  letter-spacing:-.01em;
   color:var(--deep-blue);
 }
 .section-head p{margin-top:8px;font-size:15px;color:var(--muted);max-width:620px}
@@ -106,15 +106,16 @@ input:focus{outline:none}
 
 .hero h1{
   font-weight:700;
-  font-size:clamp(34px,6.6vw,58px);
-  line-height:1.05;
-  letter-spacing:-.025em;
-  max-width:16ch;
+  font-size:clamp(32px,6.2vw,56px);
+  line-height:1.15;
+  letter-spacing:-.01em;
+  max-width:18ch;
 }
 .hero h1 .accent{
-  font-family:var(--font-accent);
-  font-style:italic;
-  font-weight:400;
+  color:var(--lilac);
+  font-family:inherit;
+  font-style:normal;
+  font-weight:700;
   letter-spacing:0;
 }
 .hero-sub{
@@ -303,27 +304,22 @@ input:focus{outline:none}
   padding:24px 22px 78px;
 }
 .section--cloud .tile{background:var(--white)}
-.tile h3{font-size:18px;font-weight:600;color:var(--deep-blue);line-height:1.25}
-.tile p{margin-top:8px;font-size:14.5px;line-height:1.55;color:var(--text)}
+.tile h3{font-size:18px;font-weight:600;color:var(--deep-blue);line-height:1.35}
+.tile p{margin-top:8px;font-size:14.5px;line-height:1.65;color:var(--text)}
 .tile .tile-ico{position:absolute;right:18px;bottom:18px;width:44px;height:44px}
 .tile--plain{padding-bottom:24px}
 
-/* Карточки с цифрой — секция «О Туту» */
 .tile--stat{padding:26px 22px 24px;display:flex;flex-direction:column}
 .tile--stat .stat-num{
   font-weight:700;
-  font-size:clamp(38px,4.4vw,52px);
-  line-height:1;
-  letter-spacing:-.03em;
+  font-size:clamp(34px,4.2vw,48px);
+  line-height:1.1;
+  letter-spacing:-.02em;
   color:var(--lilac);
   margin-bottom:10px;
 }
 .tile--stat h3{font-size:16.5px}
 .tile--stat p{margin-top:6px;font-size:14px}
-.tile--stat .stat-accent{
-  position:absolute;top:22px;right:22px;
-  width:40px;height:40px;
-}
 
 .panel{
   background:var(--cloud-white);
@@ -337,11 +333,11 @@ input:focus{outline:none}
 .panel--accent .panel-ico{box-shadow:0 0 0 8px rgba(255,255,255,.16)}
 .panel h2{
   font-weight:700;
-  font-size:clamp(24px,4vw,36px);
-  line-height:1.15;letter-spacing:-.02em;
+  font-size:clamp(22px,3.6vw,34px);
+  line-height:1.25;letter-spacing:-.01em;
   color:var(--deep-blue);
 }
-.panel p{margin-top:12px;font-size:16px;line-height:1.55;color:var(--text);max-width:58ch}
+.panel p{margin-top:12px;font-size:16px;line-height:1.65;color:var(--text);max-width:58ch}
 @media(min-width:768px){.panel p{font-size:17px}}
 .panel--accent{background:var(--berry-purple)}
 .panel--accent h2,.panel--accent p{color:var(--white)}
@@ -365,8 +361,8 @@ input:focus{outline:none}
   .faq{grid-template-columns:1fr 1fr;gap:16px}
 }
 .faq-card{background:var(--white);border-radius:18px;padding:22px 20px}
-.faq-card h3{font-size:16.5px;font-weight:600;color:var(--deep-blue);line-height:1.3}
-.faq-card p{margin-top:8px;font-size:14.5px;line-height:1.6;color:var(--text)}
+.faq-card h3{font-size:16.5px;font-weight:600;color:var(--deep-blue);line-height:1.4}
+.faq-card p{margin-top:8px;font-size:14.5px;line-height:1.7;color:var(--text)}
 
 .app-card{
   background:var(--white);
@@ -382,8 +378,8 @@ input:focus{outline:none}
 .qr{width:220px;height:220px;flex:none}
 @media(min-width:768px){.qr{width:280px;height:280px}}
 .qr img{width:100%;height:100%;object-fit:contain}
-.app-caption{font-size:clamp(20px,3vw,26px);font-weight:600;color:var(--deep-blue);line-height:1.2}
-.app-note{margin-top:8px;font-size:15px;color:var(--muted)}
+.app-caption{font-size:clamp(20px,3vw,26px);font-weight:600;color:var(--deep-blue);line-height:1.3}
+.app-note{margin-top:8px;font-size:15px;color:var(--muted);line-height:1.65}
 .stores{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
 .store-ico{height:44px;width:auto}
 
@@ -396,7 +392,7 @@ input:focus{outline:none}
 .footer-site{margin-top:26px;font-size:15px;font-weight:500;color:var(--white)}
 .legal{
   margin-top:12px;
-  font-weight:500;font-size:12.5px;line-height:1.6;
+  font-weight:500;font-size:12.5px;line-height:1.7;
   color:rgba(255,255,255,.58);
   max-width:70ch;
 }
@@ -407,84 +403,83 @@ input:focus{outline:none}
 <header class="top">
   <div class="container top-inner">
     <img class="logo" src="assets/logo-tutu-white.png" alt="Tutu">
-    <nav class="lang" aria-label="Язык">
+    <nav class="lang" aria-label="भाषा">
       <a href="index-en.html" hreflang="en">EN</a>
-      <a href="index-hi.html" hreflang="hi">हिंदी</a>
-      <a href="index.html" class="is-active" aria-current="true" hreflang="ru">RU</a>
+      <a href="index-hi.html" class="is-active" aria-current="true" hreflang="hi">हिंदी</a>
+      <a href="index.html" hreflang="ru">RU</a>
     </nav>
   </div>
 </header>
 
 <section class="hero">
   <div class="container">
-    <h1><span class="accent">Дешёвые</span> билеты по России</h1>
-    <p class="hero-sub">Автобусы, поезда и самолёты по всей России. Поможем добраться из Индии до любого города без проблем.</p>
+    <h1>रूस भर में <span class="accent">सस्ती</span> टिकटें</h1>
+    <p class="hero-sub">बसें, ट्रेनें और हवाई जहाज़ – पूरे रूस में। भारत से किसी भी शहर तक पहुँचने में हम आपकी मदद करेंगे – बिना किसी परेशानी के।</p>
 
-    <!-- ПЛАШКИ ОБНОВЛЕНЫ по официальным данным tutu.ru -->
     <div class="pills">
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Zm7.2-.7a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4ZM3 18.4C3 15.5 5.7 13.1 9 13.1s6 2.4 6 5.3v.9H3v-.9Zm13.8-4.2c2.4 0 4.2 1.8 4.2 4.1v1h-4.4v-.9c0-1.6-.6-3-1.6-4.2h1.8Z"/></svg>
-        42 млн путешествуют с нами
+        4.2 करोड़ लोग हमारे साथ
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.6 2.6 5.3 5.8.9-4.2 4 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4 5.8-.9L12 3.6Z"/></svg>
-        4,8 — рейтинг приложения
+        4.8 ऐप रेटिंग
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.3 3.2 8.3 7.5 9.4 4.3-1.1 7.5-5.1 7.5-9.4V6L12 3Z"/></svg>
-        С 2003 года на рынке
+        2003 से सेवा में
       </span>
     </div>
 
-    <div class="transport" role="tablist" aria-label="Вид транспорта">
+    <div class="transport" role="tablist" aria-label="सवारी का प्रकार">
       <button type="button" class="is-active" role="tab" aria-selected="true">
         <span class="ico"><img src="assets/icon-bus.png" alt="" aria-hidden="true"></span>
-        <span class="lbl">Автобусы</span>
+        <span class="lbl">बसें</span>
       </button>
       <button type="button" role="tab" aria-selected="false">
         <span class="ico"><img src="assets/icon-train.png" alt="" aria-hidden="true"></span>
-        <span class="lbl">Поезда</span>
+        <span class="lbl">ट्रेनें</span>
       </button>
       <button type="button" role="tab" aria-selected="false">
         <span class="ico"><img src="assets/icon-flight.png" alt="" aria-hidden="true"></span>
-        <span class="lbl">Самолёты</span>
+        <span class="lbl">फ़्लाइट्स</span>
       </button>
       <button type="button" role="tab" aria-selected="false">
         <span class="ico"><img src="assets/icon-hotel.png" alt="" aria-hidden="true"></span>
-        <span class="lbl">Отели</span>
+        <span class="lbl">होटल</span>
       </button>
     </div>
 
     <form class="search" onsubmit="return false">
       <div class="field">
-        <label for="f-from">Откуда</label>
-        <input id="f-from" type="text" placeholder="Город или вокзал" autocomplete="off">
+        <label for="f-from">कहाँ से</label>
+        <input id="f-from" type="text" placeholder="शहर या स्टेशन" autocomplete="off">
       </div>
       <div class="swap" aria-hidden="true">
         <span><svg viewBox="0 0 24 24"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span>
       </div>
       <div class="field">
-        <label for="f-to">Куда</label>
-        <input id="f-to" type="text" placeholder="Город или вокзал" autocomplete="off">
+        <label for="f-to">कहाँ तक</label>
+        <input id="f-to" type="text" placeholder="शहर या स्टेशन" autocomplete="off">
       </div>
       <div class="field">
-        <label for="f-date">Когда</label>
-        <input id="f-date" type="text" placeholder="Выберите дату" autocomplete="off">
+        <label for="f-date">कब</label>
+        <input id="f-date" type="text" placeholder="तारीख़ चुनें" autocomplete="off">
       </div>
       <div class="field field--pax">
-        <label>Кто едет</label>
-        <span class="value">1 пассажир</span>
+        <label>कितने यात्री</label>
+        <span class="value">1 यात्री</span>
       </div>
-      <button type="button" class="btn-search">Найти</button>
+      <button type="button" class="btn-search">खोजें</button>
     </form>
 
     <div class="chips">
-      <span class="chip">Дели</span>
-      <span class="chip">Мумбаи</span>
-      <span class="chip">Москва</span>
-      <span class="chip">Казань</span>
-      <span class="chip">Уфа</span>
-      <span class="chip">Тверь</span>
+      <span class="chip">Delhi</span>
+      <span class="chip">Mumbai</span>
+      <span class="chip">Moscow</span>
+      <span class="chip">Kazan</span>
+      <span class="chip">Ufa</span>
+      <span class="chip">Tver</span>
     </div>
   </div>
 </section>
@@ -492,28 +487,27 @@ input:focus{outline:none}
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <h2>Выгодные направления</h2>
-      <p>Цены ниже средних за последние 10 дней.</p>
+      <h2>सस्ते और बेहतरीन रूट</h2>
+      <p>पिछले 10 दिनों के औसत से कम दाम।</p>
     </div>
 
-    <div class="filters" role="tablist" aria-label="Фильтр маршрутов">
-      <button type="button" class="is-active" role="tab" aria-selected="true">Все</button>
-      <button type="button" role="tab" aria-selected="false">Автобусы</button>
-      <button type="button" role="tab" aria-selected="false">Поезда</button>
-      <button type="button" role="tab" aria-selected="false">Самолёты</button>
+    <div class="filters" role="tablist" aria-label="रूट फ़िल्टर">
+      <button type="button" class="is-active" role="tab" aria-selected="true">सभी</button>
+      <button type="button" role="tab" aria-selected="false">बसें</button>
+      <button type="button" role="tab" aria-selected="false">ट्रेनें</button>
+      <button type="button" role="tab" aria-selected="false">फ़्लाइट्स</button>
     </div>
 
     <div class="row" id="routes"></div>
   </div>
 </section>
 
-<!-- Блок «Без доплат» — сразу под маршрутами -->
 <section class="section">
   <div class="container">
     <div class="panel panel--dark">
       <div>
-        <h2>Без доплат в конце</h2>
-        <p>Багаж и сборы видно до оплаты, а не на последнем шаге.</p>
+        <h2>कोई छिपा शुल्क नहीं</h2>
+        <p>सामान और शुल्क भुगतान से पहले ही दिख जाते हैं, आख़िरी स्टेप पर नहीं।</p>
       </div>
       <img class="panel-ico" src="assets/icons/money.png" alt="" aria-hidden="true">
     </div>
@@ -522,21 +516,21 @@ input:focus{outline:none}
 
 <section class="section section--cloud">
   <div class="container">
-    <div class="section-head"><h2>Едете компанией</h2></div>
+    <div class="section-head"><h2>साथ में यात्रा कर रहे हैं?</h2></div>
     <div class="tiles tiles--3">
       <article class="tile">
-        <h3>Один заказ на всех</h3>
-        <p>Добавьте всех пассажиров сразу, не покупая билеты по одному.</p>
+        <h3>सबके लिए एक ही ऑर्डर</h3>
+        <p>एक-एक करके टिकट खरीदने की जगह सारे यात्रियों को एक साथ जोड़ें।</p>
         <img class="tile-ico" src="assets/icons/ticket.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
-        <h3>Места рядом</h3>
-        <p>Выбирайте места на схеме, чтобы сидеть вместе.</p>
+        <h3>साथ-साथ सीटें</h3>
+        <p>नक़्शे पर सीटें चुनें ताकि आप साथ बैठ सकें।</p>
         <img class="tile-ico" src="assets/icons/seat.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
-        <h3>Жильё для компании</h3>
-        <p>Найдите вариант, где хватит места всем.</p>
+        <h3>ग्रुप के लिए रहने की जगह</h3>
+        <p>ऐसी जगह खोजें जहाँ सबके लिए जगह हो।</p>
         <img class="tile-ico" src="assets/icons/bed.png" alt="" aria-hidden="true">
       </article>
     </div>
@@ -547,8 +541,8 @@ input:focus{outline:none}
   <div class="container">
     <div class="panel panel--accent">
       <div>
-        <h2>Доберётесь до любого города</h2>
-        <p>Не только до Москвы. Покажем весь маршрут с пересадкой на поезд или автобус.</p>
+        <h2>किसी भी शहर तक पहुँचें</h2>
+        <p>सिर्फ़ मॉस्को ही नहीं। हम आपको पूरा रूट दिखाएँगे – ट्रेन या बस से कनेक्शन के साथ।</p>
       </div>
       <img class="panel-ico" src="assets/icons/transport-mix.png" alt="" aria-hidden="true">
     </div>
@@ -559,8 +553,8 @@ input:focus{outline:none}
   <div class="container">
     <div class="stage">
       <div class="section-head">
-        <h2>Где остановиться</h2>
-        <p>Отели, хостелы и апартаменты в России и Индии</p>
+        <h2>कहाँ ठहरें</h2>
+        <p>रूस और भारत में होटल, हॉस्टल और अपार्टमेंट</p>
       </div>
       <div class="carousel-wrap">
         <div class="carousel-nav" aria-hidden="true">
@@ -579,59 +573,57 @@ input:focus{outline:none}
 
 <section class="section section--cloud">
   <div class="container">
-    <div class="section-head"><h2>Покупаете у нас впервые?</h2></div>
+    <div class="section-head"><h2>पहली बार हमसे बुकिंग कर रहे हैं?</h2></div>
     <div class="tiles tiles--4">
       <article class="tile">
-        <h3>Английский на всём пути</h3>
-        <p>От поиска до оплаты, а не только на главной.</p>
+        <h3>हर कदम पर अंग्रेज़ी</h3>
+        <p>खोज से भुगतान तक – सिर्फ़ होमपेज पर ही नहीं।</p>
         <img class="tile-ico" src="assets/icons/chat-single.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
-        <h3>Названия станций латиницей</h3>
-        <p>Не придётся разбирать русские названия.</p>
+        <h3>स्टेशनों के नाम लैटिन लिपि में</h3>
+        <p>रूसी नाम पढ़ने की मशक्कत नहीं।</p>
         <img class="tile-ico" src="assets/icons/map-pin.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
-        <h3>Понятные поля паспорта</h3>
-        <p>Показываем, что и в каком формате вводить.</p>
+        <h3>पासपोर्ट फ़ील्ड साफ़-साफ़</h3>
+        <p>हम बताते हैं क्या भरना है और किस फ़ॉर्मैट में।</p>
         <img class="tile-ico" src="assets/icons/person-id.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
-        <h3>Поддержка на английском</h3>
-        <p>Чат, почта и телефон.</p>
+        <h3>अंग्रेज़ी में सहायता</h3>
+        <p>चैट, ईमेल और फ़ोन।</p>
         <img class="tile-ico" src="assets/icons/chat.png" alt="" aria-hidden="true">
       </article>
     </div>
   </div>
 </section>
 
-<!-- СЕКЦИЯ «О Туту» — с цифрами и годом основания -->
 <section class="section section--cloud">
   <div class="container">
     <div class="section-head">
-      <h2>О Туту</h2>
-      <p>Проверенный сервис с историей — работаем с 2003 года.</p>
+      <h2>Tutu के बारे में</h2>
     </div>
     <div class="tiles tiles--4">
       <article class="tile tile--stat">
-        <div class="stat-num">с 2003</div>
-        <h3>Более 20 лет на рынке</h3>
-        <p>Один из первых сервисов путешествий в России. Работаем дольше, чем большинство конкурентов.</p>
+        <div class="stat-num">2003 से</div>
+        <h3>20 साल से ज़्यादा का अनुभव</h3>
+        <p>रूस की सबसे पुरानी ट्रैवल सर्विसेज़ में से एक। ज़्यादातर मुक़ाबिलों से कहीं ज़्यादा समय से।</p>
       </article>
       <article class="tile tile--stat">
-        <div class="stat-num">42 млн</div>
-        <h3>Путешественников</h3>
-        <p>Каждый месяц Туту выбирают более 42 миллионов пассажиров — и возвращаются снова.</p>
+        <div class="stat-num">4.2 करोड़</div>
+        <h3>यात्री</h3>
+        <p>हर महीने 4.2 करोड़ से ज़्यादा यात्री Tutu चुनते हैं – और दोबारा लौटकर आते हैं।</p>
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">500+</div>
-        <h3>Перевозчиков</h3>
-        <p>Работаем напрямую с авиакомпаниями, РЖД и автобусными операторами. Без посредников.</p>
+        <h3>साझेदार कंपनियाँ</h3>
+        <p>हम सीधे एयरलाइंस, रूसी रेलवे और बस ऑपरेटरों के साथ काम करते हैं। कोई बिचौलिया नहीं।</p>
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">24/7</div>
-        <h3>Поддержка на связи</h3>
-        <p>Чат, почта и телефон. Отвечаем на русском и английском в любое время суток.</p>
+        <h3>हमेशा आपकी मदद के लिए</h3>
+        <p>चैट, ईमेल और फ़ोन। रूसी और अंग्रेज़ी में, दिन हो या रात।</p>
       </article>
     </div>
   </div>
@@ -639,7 +631,7 @@ input:focus{outline:none}
 
 <section class="section section--cloud">
   <div class="container">
-    <div class="section-head"><h2>Частые вопросы</h2></div>
+    <div class="section-head"><h2>अक्सर पूछे जाने वाले सवाल</h2></div>
     <div class="faq" id="faq"></div>
   </div>
 </section>
@@ -648,8 +640,8 @@ input:focus{outline:none}
   <div class="container">
     <div class="app-card">
       <div>
-        <p class="app-caption">Приложение на английском</p>
-        <p class="app-note">Весь путь от поиска до бронирования на английском языке. Отсканируйте код или найдите Туту в магазине приложений.</p>
+        <p class="app-caption">अंग्रेज़ी में ऐप</p>
+        <p class="app-note">पूरी यात्रा – खोज से बुकिंग तक – अंग्रेज़ी में। QR कोड स्कैन करें या अपने ऐप स्टोर में Tutu खोजें।</p>
         <div class="stores">
           <img class="store-ico" src="assets/icons/store-apple.png" alt="App Store">
           <img class="store-ico" src="assets/icons/store-google.png" alt="Google Play">
@@ -658,7 +650,7 @@ input:focus{outline:none}
         </div>
       </div>
       <div class="qr">
-        <img src="assets/qr.png" alt="QR-код для скачивания приложения Туту">
+        <img src="assets/qr.png" alt="Tutu ऐप डाउनलोड करने का QR कोड">
       </div>
     </div>
   </div>
@@ -677,55 +669,55 @@ input:focus{outline:none}
 
     <p class="footer-site">tutu.ru</p>
     <p class="legal">
-      Цены и даты на этой странице демонстрационные и могут отличаться от актуальных на момент бронирования.
-      <br>© 2026 Туту. Все права защищены.
+      इस पेज पर दिखाए गए दाम और तारीख़ें सिर्फ़ उदाहरण के लिए हैं और बुकिंग के समय असली उपलब्धता से अलग हो सकती हैं।
+      <br>© 2026 Tutu. सर्वाधिकार सुरक्षित।
     </p>
   </div>
 </footer>
 
 <script>
 const CONFIG = {
-  currency: '₽',
+  currency: '₹',
 
   routes: [
-    { id:'r1', from:'Мумбаи',           to:'Москва',     typeLine:'рейс с пересадкой',    transport:'flight', combined:true,  price:'31 200', duration:'10 ч 45 мин', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
-    { id:'r2', from:'Дели',             to:'Москва',     typeLine:'прямой рейс',          transport:'flight', combined:false, price:'24 800', duration:'6 ч 30 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'r3', from:'Москва',           to:'Дели',       typeLine:'прямой рейс',          transport:'flight', combined:false, price:'25 200', duration:'6 ч 05 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
-    { id:'r4', from:'Шереметьево',      to:'Тверь',      typeLine:'аэроэкспресс + поезд', transport:'train',  combined:true,  price:'1 340',  duration:'3 ч 30 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
-    { id:'r5', from:'Москва',           to:'Казань',     typeLine:'ночной поезд',         transport:'train',  combined:false, price:'2 180',  duration:'11 ч 40 мин', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r6', from:'Москва',           to:'Йошкар-Ола', typeLine:'поезд',                transport:'train',  combined:false, price:'2 860',  duration:'14 ч 30 мин', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r7', from:'Санкт-Петербург',  to:'Йошкар-Ола', typeLine:'поезд + автобус',      transport:'train',  combined:true,  price:'4 950',  duration:'27 ч 30 мин', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
-    { id:'r8', from:'Уфа',              to:'Казань',     typeLine:'автобус',              transport:'bus',    combined:false, price:'1 690',  duration:'8 ч 30 мин',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' }
+    { id:'r1', from:'Mumbai',         to:'Moscow',      typeLine:'कनेक्टिंग फ़्लाइट',         transport:'flight', combined:true,  price:'35,412', duration:'10 घंटे 45 मिनट', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r2', from:'Delhi',          to:'Moscow',      typeLine:'सीधी उड़ान',                transport:'flight', combined:false, price:'28,148', duration:'6 घंटे 30 मिनट',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'r3', from:'Moscow',         to:'Delhi',       typeLine:'सीधी उड़ान',                transport:'flight', combined:false, price:'28,602', duration:'6 घंटे 5 मिनट',   gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
+    { id:'r4', from:'Sheremetyevo',   to:'Tver',        typeLine:'एयरपोर्ट एक्सप्रेस + ट्रेन',transport:'train',  combined:true,  price:'1,521',  duration:'3 घंटे 30 मिनट',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
+    { id:'r5', from:'Moscow',         to:'Kazan',       typeLine:'रात भर चलने वाली ट्रेन',    transport:'train',  combined:false, price:'2,474',  duration:'11 घंटे 40 मिनट', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r6', from:'Moscow',         to:'Yoshkar-Ola', typeLine:'ट्रेन',                     transport:'train',  combined:false, price:'3,246',  duration:'14 घंटे 30 मिनट', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r7', from:'St. Petersburg', to:'Yoshkar-Ola', typeLine:'ट्रेन + बस',                transport:'train',  combined:true,  price:'5,618',  duration:'27 घंटे 30 मिनट', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r8', from:'Ufa',            to:'Kazan',       typeLine:'बस',                        transport:'bus',    combined:false, price:'1,918',  duration:'8 घंटे 30 मिनट',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' }
   ],
 
   hotels: [
-    { id:'h1',  name:'Мини-отель Стерео',                     city:'Казань',          distance:'1,5 км от центра', rating:'8,4', reviews:'158 отзывов', type:'Мини-отель',   price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
-    { id:'h2',  name:'Грейс Амалия',                          city:'Сочи',            distance:'633 м до пляжа',   rating:'9,1', reviews:'240 отзывов', type:'Гостевой дом', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'h3',  name:'Хостел Автор Таганка',                  city:'Москва',          distance:'',                 rating:'8,4', reviews:'',            type:'Хостел',       price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
-    { id:'h4',  name:'Jasminn Hotel, Goa',                    city:'Гоа',             distance:'607 м от центра',  rating:'8,0', reviews:'127 отзывов', type:'Отель',        price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
-    { id:'h5',  name:'Гостевые комнаты и апартаменты Грифон', city:'Санкт-Петербург', distance:'',                 rating:'9,1', reviews:'',            type:'Апартаменты',  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
-    { id:'h6',  name:'The Fern Residency, Mumbai',            city:'Мумбаи',          distance:'2,1 км от центра', rating:'8,6', reviews:'89 отзывов',  type:'Отель',        price:'5 120', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'h7',  name:'The International by Tunga',            city:'Мумбаи',          distance:'1,8 км от центра', rating:'8,2', reviews:'112 отзывов', type:'Отель',        price:'4 189', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
-    { id:'h8',  name:'Hotel Sahara Star',                     city:'Мумбаи',          distance:'500 м от аэропорта',rating:'7,5', reviews:'56 отзывов',  type:'Отель',        price:'4 625', gradient:'linear-gradient(200deg,#0D0B68 0%,#7D71FF 100%)' },
-    { id:'h9',  name:'Taj Mahal Tower, Mumbai',               city:'Мумбаи',          distance:'',                 rating:'9,4', reviews:'312 отзывов', type:'Отель',        price:'12 800', gradient:'radial-gradient(130% 130% at 30% 20%,#BA61FF 0%,#0D0B68 70%)' },
-    { id:'h10', name:'The Postcard Cuelim',                   city:'Гоа',             distance:'1,2 км до пляжа',  rating:'9,0', reviews:'78 отзывов',  type:'Отель',        price:'8 400', gradient:'linear-gradient(150deg,#BA61FF 0%,#5F94FF 100%)' },
-    { id:'h11', name:'White Square Nirvana',                  city:'Гоа',             distance:'',                 rating:'8,7', reviews:'',            type:'Апартаменты',  price:'3 950', gradient:'linear-gradient(110deg,#7D71FF 0%,#0D0B68 90%)' },
-    { id:'h12', name:'Гостиница Космос, Дели',                city:'Дели',            distance:'3,5 км от центра', rating:'8,1', reviews:'204 отзыва',  type:'Отель',        price:'3 600', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
+    { id:'h1',  name:'Mini-hotel Stereo',                 city:'Kazan',          distance:'सेंटर से 1.5 किमी',    rating:'8.4', reviews:'158 रिव्यू', type:'मिनी-होटल',  price:'2,361', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
+    { id:'h2',  name:'Grace Amalia',                      city:'Sochi',          distance:'बीच से 633 मीटर',      rating:'9.1', reviews:'240 रिव्यू', type:'गेस्ट हाउस', price:'2,611', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'h3',  name:'Hostel Avtor Taganka',              city:'Moscow',         distance:'',                     rating:'8.4', reviews:'',           type:'हॉस्टल',     price:'3,607', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
+    { id:'h4',  name:'Jasminn Hotel, Goa',                city:'Goa',            distance:'सेंटर से 607 मीटर',    rating:'8.0', reviews:'127 रिव्यू', type:'होटल',       price:'4,806', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
+    { id:'h5',  name:'Grifon Guest Rooms and Apartments', city:'St. Petersburg', distance:'',                     rating:'9.1', reviews:'',           type:'अपार्टमेंट', price:'5,243', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
+    { id:'h6',  name:'The Fern Residency, Mumbai',        city:'Mumbai',         distance:'सेंटर से 2.1 किमी',    rating:'8.6', reviews:'89 रिव्यू',  type:'होटल',       price:'5,811', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'h7',  name:'The International by Tunga',        city:'Mumbai',         distance:'सेंटर से 1.8 किमी',    rating:'8.2', reviews:'112 रिव्यू', type:'होटल',       price:'4,755', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
+    { id:'h8',  name:'Hotel Sahara Star',                 city:'Mumbai',         distance:'एयरपोर्ट से 500 मीटर', rating:'7.5', reviews:'56 रिव्यू',  type:'होटल',       price:'5,249', gradient:'linear-gradient(200deg,#0D0B68 0%,#7D71FF 100%)' },
+    { id:'h9',  name:'Taj Mahal Tower, Mumbai',           city:'Mumbai',         distance:'',                     rating:'9.4', reviews:'312 रिव्यू', type:'होटल',       price:'14,528',gradient:'radial-gradient(130% 130% at 30% 20%,#BA61FF 0%,#0D0B68 70%)' },
+    { id:'h10', name:'The Postcard Cuelim',               city:'Goa',            distance:'बीच से 1.2 किमी',      rating:'9.0', reviews:'78 रिव्यू',  type:'होटल',       price:'9,534', gradient:'linear-gradient(150deg,#BA61FF 0%,#5F94FF 100%)' },
+    { id:'h11', name:'White Square Nirvana',              city:'Goa',            distance:'',                     rating:'8.7', reviews:'',           type:'अपार्टमेंट', price:'4,483', gradient:'linear-gradient(110deg,#7D71FF 0%,#0D0B68 90%)' },
+    { id:'h12', name:'Kosmos Hotel, Delhi',               city:'Delhi',          distance:'सेंटर से 3.5 किमी',    rating:'8.1', reviews:'204 रिव्यू', type:'होटल',       price:'4,086', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
   ],
 
   faq: [
-    { q:'Какие способы оплаты работают в России?',
-      a:'На Туту можно оплачивать российскими банковскими картами и через СБП. UPI, RuPay и индийские карты Visa или Mastercard в России не принимаются. Для оплаты понадобится российская карта или наличные.' },
-    { q:'Что делать при ошибке в написании имени в билете?',
-      a:'Небольшие отличия в транслитерации обычно не вызывают проблем, ведь при посадке проверяют номер паспорта, а не написание имени. Если в имени допущена грубая ошибка, свяжитесь с поддержкой до поездки для исправления данных.' },
-    { q:'Нужна ли регистрация при заселении в отель?',
-      a:'Отели сами регистрируют иностранных гостей и выдают документы. В частных апартаментах регистрации может не быть, уточните у хозяина до бронирования.' },
-    { q:'В чем разница между плацкартом и купе?',
-      a:'Плацкарт — открытый вагон со спальными местами, без дверей и перегородок. Дешевле, но шумнее. Купе — закрытое отделение на четыре места с дверью: тише и дороже.' },
-    { q:'Как добраться из аэропорта в другой город?',
-      a:'На многих маршрутах перелёт можно совместить с поездом или автобусом. Ищите всю дорогу сразу, а не каждый билет отдельно.' },
-    { q:'Что нужно знать про багаж?',
-      a:'Нормы провоза у каждого перевозчика свои. Сколько мест и килограммов входит в билет, видно до оплаты. Если с багажом что-то случилось в дороге, напишите в поддержку.' }
+    { q:'रूस में कौन से भुगतान तरीके चलते हैं?',
+      a:'Tutu पर आप रूसी बैंक कार्ड और SBP से भुगतान कर सकते हैं। UPI, RuPay और भारत में जारी Visa या Mastercard कार्ड रूस में नहीं चलते। भुगतान के लिए रूसी कार्ड या नक़दी की ज़रूरत होगी।' },
+    { q:'टिकट पर नाम की स्पेलिंग ग़लत हो तो क्या करें?',
+      a:'अक्षरों के छोटे-मोटे फ़र्क़ से आमतौर पर कोई दिक्कत नहीं होती, क्योंकि चढ़ते समय पासपोर्ट नंबर देखा जाता है, नाम की स्पेलिंग नहीं। अगर नाम में कोई बड़ी ग़लती है, तो यात्रा से पहले सहायता टीम से संपर्क करें।' },
+    { q:'होटल में चेक-इन के समय रजिस्ट्रेशन ज़रूरी है?',
+      a:'होटल विदेशी मेहमानों का रजिस्ट्रेशन ख़ुद करते हैं और कागज़ात देते हैं। प्राइवेट अपार्टमेंट में रजिस्ट्रेशन की सुविधा न हो, तो बुकिंग से पहले मालिक से पूछ लें।' },
+    { q:'प्लात्सकार्ट और कूपे में क्या फ़र्क़ है?',
+      a:'प्लात्सकार्ट एक खुला डिब्बा होता है जिसमें सोने की जगहें होती हैं – कोई दरवाज़ा या पर्दा नहीं। सस्ता है, पर शोर ज़्यादा। कूपे चार लोगों का एक बंद डिब्बा होता है जिसमें दरवाज़ा होता है – शांत, पर महँगा।' },
+    { q:'हवाई अड्डे से दूसरे शहर कैसे पहुँचें?',
+      a:'कई रूट पर उड़ान को ट्रेन या बस से जोड़ा जा सकता है। पूरी यात्रा एक साथ खोजें, हर टिकट अलग-अलग बुक करने की ज़रूरत नहीं।' },
+    { q:'सामान के बारे में क्या जानना चाहिए?',
+      a:'हर कंपनी के सामान के नियम अलग होते हैं। टिकट में कितने बैग और कितने किलो शामिल हैं, यह भुगतान से पहले दिख जाता है। रास्ते में सामान के साथ कुछ हो जाए, तो सहायता टीम को बताएँ।' }
   ]
 };
 
@@ -736,9 +728,9 @@ document.getElementById('routes').innerHTML = CONFIG.routes.map(r => `
     </div>
     <div class="card-body">
       <div class="price-row">
-        <span class="price">от ${r.price} ${CONFIG.currency}</span>
+        <span class="price">${CONFIG.currency}${r.price} से</span>
       </div>
-      <p class="route-name">${r.from} — ${r.to}</p>
+      <p class="route-name">${r.from} – ${r.to}</p>
       <p class="card-meta">${r.duration}</p>
       <p class="card-type">${r.typeLine}</p>
     </div>
@@ -753,7 +745,7 @@ document.getElementById('hotels').innerHTML = CONFIG.hotels.map(h => `
       <p class="hotel-top">${h.city}${h.distance ? ` · ${h.distance}` : ''}</p>
       <p class="hotel-name">${h.name}</p>
       <p class="hotel-meta">${h.type}${h.reviews ? ` · ${h.reviews}` : ''}</p>
-      <p class="hotel-price">от ${h.price} ${CONFIG.currency} <span>1 ночь</span></p>
+      <p class="hotel-price">${CONFIG.currency}${h.price} से <span>प्रति रात</span></p>
     </div>
   </article>`).join('');
 
