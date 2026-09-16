@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tutu — cheap tickets across Russia</title>
-<meta name="description" content="Buses, trains and flights across Russia. And your ticket back home to India.">
+<title>Tutu – cheap tickets across Russia</title>
+<meta name="description" content="Buses, trains and flights across Russia, plus your ticket back home to India.">
 <meta name="theme-color" content="#0D0B68">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -44,6 +44,12 @@
   --font:'Tutu Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   --font-accent:'Lora',Georgia,'Times New Roman',serif;
 }
+/* Tutu Sans and Lora have no Devanagari glyphs, so the Hindi page needs its own fallbacks and looser lines */
+html:lang(hi){--font:'Tutu Sans','Noto Sans Devanagari','Nirmala UI','Mangal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+:lang(hi) .hero h1{line-height:1.2;letter-spacing:0}
+:lang(hi) .hero h1 .accent{font-family:inherit;font-style:normal;font-weight:700;color:var(--lilac)}
+:lang(hi) .section-head h2,:lang(hi) .panel h2{line-height:1.3;letter-spacing:0}
+:lang(hi) .tile p,:lang(hi) .faq-item > p{line-height:1.7}
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -90,14 +96,15 @@ input:focus{outline:none}
 .section-head--row > div:first-child{flex:1;min-width:0}
 
 .head-actions{
-  display:flex;flex-direction:row;
-  align-items:center;
-  gap:20px;
+  display:flex;flex-direction:column;
+  align-items:flex-end;
+  gap:12px;
   flex-shrink:0;
-  padding-bottom:2px;
 }
 .head-actions__see,
 .head-actions__nav{display:flex;align-items:center}
+.filters-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+.filters-bar .filters{margin-bottom:0;min-width:0}
 
 .see-all{
   color:var(--berry-purple);font-weight:600;font-size:15px;
@@ -563,7 +570,7 @@ input:focus{outline:none}
     <nav class="top-nav" aria-label="Sections">
       <a href="#routes">Deals</a>
       <a href="#">Routes</a>
-      <a href="#faq">Help</a>
+      <a href="#faq">Help centre</a>
       <a href="#">Travel guide</a>
     </nav>
     <nav class="lang" aria-label="Language">
@@ -577,20 +584,20 @@ input:focus{outline:none}
 <section class="hero">
   <div class="container">
     <h1><span class="accent">Cheap</span> tickets across Russia</h1>
-    <p class="hero-sub">Buses, trains and flights across Russia. And your ticket back home to India.</p>
+    <p class="hero-sub">Buses, trains and flights across Russia, plus your ticket back home to India.</p>
 
     <div class="pills">
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Zm7.2-.7a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4ZM3 18.4C3 15.5 5.7 13.1 9 13.1s6 2.4 6 5.3v.9H3v-.9Zm13.8-4.2c2.4 0 4.2 1.8 4.2 4.1v1h-4.4v-.9c0-1.6-.6-3-1.6-4.2h1.8Z"/></svg>
-        42 million travellers with us
+        42 million people travel with us
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.6 2.6 5.3 5.8.9-4.2 4 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4 5.8-.9L12 3.6Z"/></svg>
-        4.8 – app rating
+        4.8 app rating
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.3 3.2 8.3 7.5 9.4 4.3-1.1 7.5-5.1 7.5-9.4V6L12 3Z"/></svg>
-        22 years of service
+        22 years working for you
       </span>
     </div>
 
@@ -626,8 +633,8 @@ input:focus{outline:none}
         <input id="f-to" type="text" placeholder="City or station" autocomplete="off">
       </div>
       <div class="field">
-        <label for="f-date">When</label>
-        <input id="f-date" type="text" placeholder="Choose a date" autocomplete="off">
+        <label for="f-date">Date</label>
+        <input id="f-date" type="text" placeholder="Select a date" autocomplete="off">
       </div>
       <div class="field field--pax">
         <label>Passengers</label>
@@ -661,23 +668,23 @@ input:focus{outline:none}
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
           </a>
         </div>
-        <div class="head-actions__nav">
-          <div class="carousel-nav" aria-hidden="true" data-carousel="routes">
-            <button type="button" aria-label="Previous">
-              <svg viewBox="0 0 24 24"><path d="M15 19 8 12l7-7"/></svg>
-            </button>
-            <button type="button" aria-label="Next">
-              <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
 
-    <div class="filters" role="tablist" aria-label="Route filter">
-      <button type="button" class="is-active" role="tab" aria-selected="true">All</button>
-      <button type="button" role="tab" aria-selected="false">Trains</button>
-      <button type="button" role="tab" aria-selected="false">Самолёты</button>
+    <div class="filters-bar">
+      <div class="filters" role="tablist" aria-label="Route filter">
+        <button type="button" class="is-active" role="tab" aria-selected="true">All</button>
+        <button type="button" role="tab" aria-selected="false">Trains</button>
+        <button type="button" role="tab" aria-selected="false">Flights</button>
+      </div>
+      <div class="carousel-nav" data-carousel="routes">
+        <button type="button" aria-label="Previous">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19 8 12l7-7"/></svg>
+        </button>
+        <button type="button" aria-label="Next">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
 
     <div class="carousel-wrap">
@@ -704,12 +711,12 @@ input:focus{outline:none}
     <div class="tiles tiles--3">
       <article class="tile">
         <h3>One booking for everyone</h3>
-        <p>Add all passengers at once instead of buying separate tickets.</p>
+        <p>Add all passengers at once instead of buying tickets one by one.</p>
         <img class="tile-ico" src="assets/icons/ticket.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
         <h3>Seats together</h3>
-        <p>Pick your seats on the seating plan so you can sit together.</p>
+        <p>Choose seats on the seat map so you can sit together.</p>
         <img class="tile-ico" src="assets/icons/seat.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
@@ -726,7 +733,7 @@ input:focus{outline:none}
     <div class="panel panel--accent">
       <div>
         <h2>Get to any city</h2>
-        <p>Not just Moscow. We'll show you the whole route, including the transfer to a train or bus.</p>
+        <p>Not just Moscow. We'll show you the whole journey, with connections by train or bus.</p>
       </div>
       <img class="panel-ico" src="assets/icons/transport-mix.png" alt="" aria-hidden="true">
     </div>
@@ -749,12 +756,12 @@ input:focus{outline:none}
             </a>
           </div>
           <div class="head-actions__nav">
-            <div class="carousel-nav" aria-hidden="true" data-carousel="hotels">
+            <div class="carousel-nav" data-carousel="hotels">
               <button type="button" aria-label="Previous">
-                <svg viewBox="0 0 24 24"><path d="M15 19 8 12l7-7"/></svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19 8 12l7-7"/></svg>
               </button>
               <button type="button" aria-label="Next">
-                <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
               </button>
             </div>
           </div>
@@ -773,22 +780,22 @@ input:focus{outline:none}
     <div class="tiles tiles--4">
       <article class="tile">
         <h3>Service in English</h3>
-        <p>Round-the-clock support and the Tutu mobile app are available in English.</p>
+        <p>24/7 support and the Tutu mobile app are available in English.</p>
         <img class="tile-ico" src="assets/icons/chat.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
-        <h3>Everything at once</h3>
-        <p>Compare prices for three types of transport in a single search.</p>
+        <h3>Everything in one search</h3>
+        <p>Compare prices for flights, trains and buses at the same time.</p>
         <img class="tile-ico" src="assets/icons/ticket.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
         <h3>Pay later</h3>
-        <p>You can lock in the price of a ticket and pay for it later.</p>
+        <p>Lock in a ticket price now and pay for it later.</p>
         <img class="tile-ico" src="assets/icons/money.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
         <h3>Save up to 30%</h3>
-        <p>Save up to 20% on non-refundable train tickets. And around your birthday, get up to 30% off for yourself and three friends.</p>
+        <p>Save up to 20% on non-refundable train tickets. On your birthday, get up to 30% off for you and three friends.</p>
         <img class="tile-ico" src="assets/icons/ticket.png" alt="" aria-hidden="true">
       </article>
     </div>
@@ -800,14 +807,14 @@ input:focus{outline:none}
     <div class="section-head"><h2>About Tutu</h2></div>
     <div class="tiles tiles--4">
       <article class="tile tile--stat">
-        <div class="stat-num">since 2003</div>
-        <h3>Over 20 years on the market</h3>
-        <p>One of the first travel services in Russia. We have been around longer than most of our competitors.</p>
+        <div class="stat-num">Since 2003</div>
+        <h3>Over 20 years in business</h3>
+        <p>One of the first travel services in Russia. We've been around longer than most of our competitors.</p>
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">42 million</div>
         <h3>Travellers</h3>
-        <p>More than 42 million passengers have chosen Tutu – and they keep coming back.</p>
+        <p>More than 42 million passengers have chosen Tutu, and they keep coming back.</p>
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">10,000+</div>
@@ -816,8 +823,8 @@ input:focus{outline:none}
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">24/7</div>
-        <h3>Support on hand</h3>
-        <p>Chat, email and phone. We reply in Russian and English at any hour.</p>
+        <h3>Support around the clock</h3>
+        <p>Chat, email and phone. We reply in Russian and English at any time of day.</p>
       </article>
     </div>
   </div>
@@ -840,7 +847,7 @@ input:focus{outline:none}
         <h4 class="footer-app-title">Tutu app</h4>
         <div class="footer-app-body">
           <div class="qr">
-            <img src="assets/qr.png" alt="QR-код для скачивания приложения Туту">
+            <img src="assets/qr.png" alt="QR code to download the Tutu app">
           </div>
           <div class="stores">
             <a href="#" aria-label="App Store"><img src="assets/icons/store-apple.png" alt="App Store"></a>
@@ -855,16 +862,16 @@ input:focus{outline:none}
         <h4>Company</h4>
         <a href="#about">About us</a>
         <a href="#">Careers</a>
-        <a href="#">Contacts</a>
+        <a href="#">Contact us</a>
         <a href="#">News</a>
         <a href="#">Legal information</a>
       </div>
 
       <div class="footer-col">
         <h4>For travellers</h4>
-        <a href="#">Gift certificates</a>
+        <a href="#">Gift cards</a>
         <a href="#">Loyalty programme</a>
-        <a href="#">Country travel guides</a>
+        <a href="#">Country guides</a>
 
         <h4 class="footer-h4-extra">For partners</h4>
         <a href="#">Become a partner</a>
@@ -875,7 +882,7 @@ input:focus{outline:none}
 
       <div class="footer-col">
         <h4>Help</h4>
-        <a href="#faq">Help</a>
+        <a href="#faq">Help centre</a>
         <a href="#">Feedback</a>
 
         <h4 class="footer-h4-extra">Follow us</h4>
@@ -890,7 +897,7 @@ input:focus{outline:none}
 
     <p class="footer-site">tutu.ru</p>
     <p class="legal">
-      Prices and dates on this page are for demonstration only and may differ from those available at the time of booking.
+      Prices and dates on this page are examples only and may differ at the time of booking.
       <br>© 2026 Tutu. All rights reserved.
     </p>
   </div>
@@ -902,46 +909,50 @@ const CONFIG = {
   rubToInr: 1.135,
 
   routes: [
-    { id:'r1',  from:'Moscow',           to:'Mumbai',     typeLine:'flight with a stopover',    transport:'flight', combined:false, price:'25 538', duration:'11 h 10 min', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r1',  from:'Moscow',           to:'Mumbai',     typeLine:'connecting flight',    transport:'flight', combined:false, price:'25 538', duration:'11 h 10 min', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
     { id:'r2',  from:'Moscow',           to:'Kazan',     typeLine:'overnight train',         transport:'train',  combined:false, price:'1 874',  duration:'11 h 40 min', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
     { id:'r3',  from:'Moscow',           to:'Yoshkar-Ola', typeLine:'train',                transport:'train',  combined:false, price:'1 874',  duration:'13 h 30 min', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
     { id:'r4',  from:'Delhi',             to:'Moscow',     typeLine:'direct flight',          transport:'flight', combined:false, price:'25 004', duration:'6 h 30 min',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
     { id:'r5',  from:'Moscow',           to:'Delhi',       typeLine:'direct flight',          transport:'flight', combined:false, price:'16 048', duration:'6 h 05 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
     { id:'r6',  from:'Sheremetyevo',      to:'Tver',      typeLine:'Aeroexpress + train', transport:'train',  combined:true,  price:'1 200',  duration:'3 h 30 min',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
-    { id:'r7',  from:'Saint Petersburg',  to:'Yoshkar-Ola', typeLine:'train + bus',      transport:'train',  combined:true,  price:'5 369',  duration:'27 h 30 min', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r7',  from:'St Petersburg',  to:'Yoshkar-Ola', typeLine:'train + bus',      transport:'train',  combined:true,  price:'5 369',  duration:'27 h 30 min', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
     { id:'r8',  from:'Ufa',              to:'Kazan',     typeLine:'bus',              transport:'bus',    combined:false, price:'1 668',  duration:'8 h 30 min',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
     { id:'r9',  from:'Moscow',           to:'Sochi',       typeLine:'direct flight',          transport:'flight', combined:false, price:'4 099',  duration:'2 h 35 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' },
     { id:'r10', from:'Kazan',           to:'Yekaterinburg',typeLine:'train',               transport:'train',  combined:false, price:'1 514',  duration:'7 h 15 min',  gradient:'linear-gradient(200deg,#5F94FF 0%,#BA61FF 100%)' }
   ],
 
   hotels: [
-    { id:'h1',  name:'Stereo Mini Hotel',                     city:'Kazan',          distance:'1.5 km from the centre', rating:'8,4', reviews:'158 reviews', type:'Small hotel',   price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
-    { id:'h2',  name:'Grace Amalia',                          city:'Sochi',            distance:'633 m to the beach',   rating:'9,1', reviews:'240 reviews', type:'Guest house', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'h3',  name:'Avtor Taganka Hostel',                  city:'Moscow',          distance:'',                 rating:'8,4', reviews:'',            type:'Hostel',       price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
-    { id:'h4',  name:'Jasminn Hotel, Goa',                    city:'Goa',             distance:'607 m from the centre',  rating:'8,0', reviews:'127 reviews', type:'Hotel',        price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
-    { id:'h5',  name:'Grifon Guest Rooms & Apartments', city:'Saint Petersburg', distance:'',                 rating:'9,1', reviews:'',            type:'Apartments',  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
-    { id:'h6',  name:'The Fern Residency, Mumbai',            city:'Mumbai',          distance:'2.1 km from the centre', rating:'8,6', reviews:'89 reviews',  type:'Hotel',        price:'5 120', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'h7',  name:'The International by Tunga',            city:'Mumbai',          distance:'1.8 km from the centre', rating:'8,2', reviews:'112 reviews', type:'Hotel',        price:'4 189', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
-    { id:'h8',  name:'Kosmos Hotel, Delhi',                city:'Delhi',            distance:'3.5 km from the centre', rating:'8,1', reviews:'204 reviews',  type:'Hotel',        price:'3 600', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
+    { id:'h1',  name:'Stereo Mini-Hotel',                     city:'Kazan',          distance:'1.5 km from the centre', rating:'8.4', reviews:'158 reviews', type:'Mini-hotel',   price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
+    { id:'h2',  name:'Grace Amalia',                          city:'Sochi',            distance:'633 m from the beach',   rating:'9.1', reviews:'240 reviews', type:'Guest house', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'h3',  name:'Avtor Taganka Hostel',                  city:'Moscow',          distance:'',                 rating:'8.4', reviews:'',            type:'Hostel',       price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
+    { id:'h4',  name:'Jasminn Hotel, Goa',                    city:'Goa',             distance:'607 m from the centre',  rating:'8.0', reviews:'127 reviews', type:'Hotel',        price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
+    { id:'h5',  name:'Grifon Guest Rooms & Apartments', city:'St Petersburg', distance:'',                 rating:'9.1', reviews:'',            type:'Apartments',  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
+    { id:'h6',  name:'The Fern Residency, Mumbai',            city:'Mumbai',          distance:'2.1 km from the centre', rating:'8.6', reviews:'89 reviews',  type:'Hotel',        price:'5 120', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'h7',  name:'The International by Tunga',            city:'Mumbai',          distance:'1.8 km from the centre', rating:'8.2', reviews:'112 reviews', type:'Hotel',        price:'4 189', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
+    { id:'h8',  name:'Kosmos Hotel, Delhi',                city:'Delhi',            distance:'3.5 km from the centre', rating:'8.1', reviews:'204 reviews',  type:'Hotel',        price:'3 600', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
   ],
 
   faq: [
-    { q:'What payment methods work on Tutu?',
-      a:'On Tutu you can pay with a Russian bank card or through SBP. Indian Visa and Mastercard cards, as well as UPI and RuPay, are not accepted by the service.' },
-    { q:'What if there is a mistake in the name on my ticket?',
-      a:'Small spelling differences in transliteration usually do not cause problems at boarding, because what matters to conductors and inspectors is the passport number. If the mistake is serious, write to support before your trip and we will help correct the details.' },
-    { q:'Do I need registration when checking into a hotel?',
-      a:'Hotels and hostels register foreign guests themselves on arrival. If you plan to rent a private apartment, check with the host in advance whether they handle migration registration.' },
+    { q:'How can I pay on Tutu?',
+      a:'You can pay with a card issued by a Russian bank or through SBP, the Russian Faster Payments System. Indian Visa and Mastercard cards, UPI and RuPay are not accepted.' },
+    { q:'What if my name is misspelled on the ticket?',
+      a:'Minor transliteration differences usually cause no trouble at boarding, because conductors and inspectors go by your passport number. If the mistake is serious, contact support before your trip and we will help correct your details.' },
+    { q:'Do I need to register when I check into a hotel?',
+      a:'Hotels and hostels register foreign guests themselves at check-in. If you are renting a private apartment, ask the host in advance whether they will handle your migration registration.' },
     { q:'What is the difference between platskart and kupe?',
-      a:'Platskart is an open carriage with sleeping berths and no doors. The trip costs less, but the carriage can be noisy. Kupe consists of closed four-berth compartments with a door, where it is much quieter and more comfortable.' },
+      a:'Platskart is an open-plan sleeper carriage with no compartment doors. It is cheaper, but it can be noisy. Kupe has closed four-berth compartments with a door, so it is much quieter and more comfortable.' },
     { q:'How do I get from the airport to another city?',
-      a:'On Tutu you can build a multi-leg route combining a flight, a train and a bus in one go. The system picks convenient connections so you do not have to look for each ticket separately.' },
-    { q:'How much baggage can I take with me?',
-      a:'Each carrier sets its own allowance. The exact number of pieces and kilograms included in the fare is shown on screen before you buy the ticket.' },
-    { q:'Can I return or exchange a ticket?',
-      a:'Refund conditions depend on the fare and the carrier. Some tickets are refunded in full, others with a fee deducted, and the cheapest fares may be non-refundable. All the details are visible before purchase, and a refund can be arranged online in your account on the site or in the app.' }
+      a:'On Tutu you can plan a multi-leg journey that combines a flight, a train and a bus. The system finds convenient connections, so you do not have to search for each ticket separately.' },
+    { q:'How much baggage can I take?',
+      a:'Each carrier has its own baggage allowance. You will see exactly how many bags and kilograms are included in the fare before you buy the ticket.' },
+    { q:'Can I get a refund or exchange a ticket?',
+      a:'It depends on the fare and the carrier. Some tickets are fully refundable, others are refunded minus a fee, and the cheapest fares may be non-refundable. You will see all the conditions before you buy, and you can request a refund online in your account on the website or in the app.' }
   ]
 };
+
+const NUM_LOCALE = document.documentElement.lang === 'ru' ? 'ru-RU' : 'en-IN';
+const toRub = p => parseInt(p.replace(/\s/g, ''), 10);
+const fmtNum = n => n.toLocaleString(NUM_LOCALE);
 
 const CTA_CARD = `
   <a class="card card--cta" href="#">
@@ -959,7 +970,7 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
     <div class="card-body">
       <p class="route-name">${r.from} – ${r.to}</p>
       <div class="price-row">
-        <span class="price">from ${r.price} ${CONFIG.currency}</span>
+        <span class="price">from ${fmtNum(rub)} ${CONFIG.currency}</span>
         <span class="price-alt">≈ ₹${inrFmt}</span>
       </div>
       <p class="card-meta">${r.duration}</p>
@@ -977,7 +988,7 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => `
       <p class="hotel-top">${h.city}${h.distance ? ` · ${h.distance}` : ''}</p>
       <p class="hotel-name">${h.name}</p>
       <p class="hotel-meta">${h.type}${h.reviews ? ` · ${h.reviews}` : ''}</p>
-      <p class="hotel-price">${h.price} ${CONFIG.currency} <span>per night</span></p>
+      <p class="hotel-price">${fmtNum(toRub(h.price))} ${CONFIG.currency} <span>per night</span></p>
     </div>
   </article>`).join('') + CTA_CARD;
 

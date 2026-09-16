@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>टुटु — रूस में सस्ते टिकट</title>
-<meta name="description" content="पूरे रूस में बसें, ट्रेनें और फ़्लाइट्स। और भारत वापसी का टिकट भी।">
+<title>Tutu – रूस में सस्ते टिकट</title>
+<meta name="description" content="पूरे रूस में बस, ट्रेन और फ़्लाइट के टिकट। साथ ही भारत लौटने का टिकट भी।">
 <meta name="theme-color" content="#0D0B68">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -44,6 +44,12 @@
   --font:'Tutu Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   --font-accent:'Lora',Georgia,'Times New Roman',serif;
 }
+/* Tutu Sans and Lora have no Devanagari glyphs, so the Hindi page needs its own fallbacks and looser lines */
+html:lang(hi){--font:'Tutu Sans','Noto Sans Devanagari','Nirmala UI','Mangal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+:lang(hi) .hero h1{line-height:1.2;letter-spacing:0}
+:lang(hi) .hero h1 .accent{font-family:inherit;font-style:normal;font-weight:700;color:var(--lilac)}
+:lang(hi) .section-head h2,:lang(hi) .panel h2{line-height:1.3;letter-spacing:0}
+:lang(hi) .tile p,:lang(hi) .faq-item > p{line-height:1.7}
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -90,14 +96,15 @@ input:focus{outline:none}
 .section-head--row > div:first-child{flex:1;min-width:0}
 
 .head-actions{
-  display:flex;flex-direction:row;
-  align-items:center;
-  gap:20px;
+  display:flex;flex-direction:column;
+  align-items:flex-end;
+  gap:12px;
   flex-shrink:0;
-  padding-bottom:2px;
 }
 .head-actions__see,
 .head-actions__nav{display:flex;align-items:center}
+.filters-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+.filters-bar .filters{margin-bottom:0;min-width:0}
 
 .see-all{
   color:var(--berry-purple);font-weight:600;font-size:15px;
@@ -563,7 +570,7 @@ input:focus{outline:none}
     <nav class="top-nav" aria-label="सेक्शन">
       <a href="#routes">ऑफ़र</a>
       <a href="#">रूट</a>
-      <a href="#faq">सहायता</a>
+      <a href="#faq">सहायता केंद्र</a>
       <a href="#">यात्रा गाइड</a>
     </nav>
     <nav class="lang" aria-label="भाषा">
@@ -576,17 +583,17 @@ input:focus{outline:none}
 
 <section class="hero">
   <div class="container">
-    <h1><span class="accent">सस्ते</span> रूस में टिकट</h1>
-    <p class="hero-sub">पूरे रूस में बसें, ट्रेनें और फ़्लाइट्स। और भारत वापसी का टिकट भी।</p>
+    <h1>रूस में <span class="accent">सस्ते</span> टिकट</h1>
+    <p class="hero-sub">पूरे रूस में बस, ट्रेन और फ़्लाइट के टिकट। साथ ही भारत लौटने का टिकट भी।</p>
 
     <div class="pills">
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Zm7.2-.7a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4ZM3 18.4C3 15.5 5.7 13.1 9 13.1s6 2.4 6 5.3v.9H3v-.9Zm13.8-4.2c2.4 0 4.2 1.8 4.2 4.1v1h-4.4v-.9c0-1.6-.6-3-1.6-4.2h1.8Z"/></svg>
-        4.2 करोड़ यात्री हमारे साथ
+        4.2 करोड़ लोग हमारे साथ यात्रा करते हैं
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.6 2.6 5.3 5.8.9-4.2 4 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4 5.8-.9L12 3.6Z"/></svg>
-        4.8 – ऐप रेटिंग
+        4.8 ऐप रेटिंग
       </span>
       <span class="pill">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.3 3.2 8.3 7.5 9.4 4.3-1.1 7.5-5.1 7.5-9.4V6L12 3Z"/></svg>
@@ -594,7 +601,7 @@ input:focus{outline:none}
       </span>
     </div>
 
-    <div class="transport" role="tablist" aria-label="परिवहन का प्रकार">
+    <div class="transport" role="tablist" aria-label="ट्रांसपोर्ट का प्रकार">
       <button type="button" role="tab" aria-selected="false">
         <span class="ico"><img src="assets/icon-hotel.png" alt="" aria-hidden="true"></span>
         <span class="lbl">होटल</span>
@@ -626,7 +633,7 @@ input:focus{outline:none}
         <input id="f-to" type="text" placeholder="शहर या स्टेशन" autocomplete="off">
       </div>
       <div class="field">
-        <label for="f-date">कब</label>
+        <label for="f-date">तारीख़</label>
         <input id="f-date" type="text" placeholder="तारीख़ चुनें" autocomplete="off">
       </div>
       <div class="field field--pax">
@@ -651,7 +658,7 @@ input:focus{outline:none}
   <div class="container">
     <div class="section-head section-head--row">
       <div>
-        <h2>बेहतरीन दामों वाले रूट</h2>
+        <h2>किफ़ायती रूट</h2>
         <p>पिछले 10 दिनों के औसत से कम दाम</p>
       </div>
       <div class="head-actions">
@@ -661,23 +668,23 @@ input:focus{outline:none}
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
           </a>
         </div>
-        <div class="head-actions__nav">
-          <div class="carousel-nav" aria-hidden="true" data-carousel="routes">
-            <button type="button" aria-label="पिछला">
-              <svg viewBox="0 0 24 24"><path d="M15 19 8 12l7-7"/></svg>
-            </button>
-            <button type="button" aria-label="अगला">
-              <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
 
-    <div class="filters" role="tablist" aria-label="रूट फ़िल्टर">
-      <button type="button" class="is-active" role="tab" aria-selected="true">सभी</button>
-      <button type="button" role="tab" aria-selected="false">ट्रेन</button>
-      <button type="button" role="tab" aria-selected="false">Самолёты</button>
+    <div class="filters-bar">
+      <div class="filters" role="tablist" aria-label="रूट फ़िल्टर">
+        <button type="button" class="is-active" role="tab" aria-selected="true">सभी</button>
+        <button type="button" role="tab" aria-selected="false">ट्रेन</button>
+        <button type="button" role="tab" aria-selected="false">फ़्लाइट</button>
+      </div>
+      <div class="carousel-nav" data-carousel="routes">
+        <button type="button" aria-label="पिछला">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19 8 12l7-7"/></svg>
+        </button>
+        <button type="button" aria-label="अगला">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
 
     <div class="carousel-wrap">
@@ -690,8 +697,8 @@ input:focus{outline:none}
   <div class="container">
     <div class="panel panel--dark">
       <div>
-        <h2>आख़िर में कोई अतिरिक्त शुल्क नहीं</h2>
-        <p>सामान और शुल्क भुगतान से पहले ही दिख जाते हैं, आख़िरी चरण में नहीं।</p>
+        <h2>भुगतान के समय कोई छिपा शुल्क नहीं</h2>
+        <p>बैगेज और सभी शुल्क भुगतान से पहले ही दिख जाते हैं, आख़िरी स्टेप पर नहीं।</p>
       </div>
       <img class="panel-ico" src="assets/icons/money.png" alt="" aria-hidden="true">
     </div>
@@ -703,18 +710,18 @@ input:focus{outline:none}
     <div class="section-head"><h2>ग्रुप में यात्रा</h2></div>
     <div class="tiles tiles--3">
       <article class="tile">
-        <h3>सबके लिए एक ही बुकिंग</h3>
+        <h3>सबके लिए एक बुकिंग</h3>
         <p>सभी यात्रियों को एक साथ जोड़ें, अलग-अलग टिकट ख़रीदने की ज़रूरत नहीं।</p>
         <img class="tile-ico" src="assets/icons/ticket.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
         <h3>साथ-साथ सीटें</h3>
-        <p>सीट प्लान पर अपनी सीटें चुनें, ताकि सब साथ बैठ सकें।</p>
+        <p>सीट मैप पर सीटें चुनें, ताकि सब साथ बैठ सकें।</p>
         <img class="tile-ico" src="assets/icons/seat.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
         <h3>पूरे ग्रुप के लिए कमरे</h3>
-        <p>ऐसे होटल या अपार्टमेंट चुनें जहाँ पूरे ग्रुप के लिए कमरे हों।</p>
+        <p>ऐसे होटल या अपार्टमेंट खोजें जिनमें पूरे ग्रुप के लिए कमरे हों।</p>
         <img class="tile-ico" src="assets/icons/bed.png" alt="" aria-hidden="true">
       </article>
     </div>
@@ -726,7 +733,7 @@ input:focus{outline:none}
     <div class="panel panel--accent">
       <div>
         <h2>किसी भी शहर तक पहुँचें</h2>
-        <p>सिर्फ़ मॉस्को तक नहीं। पूरा रूट दिखाएँगे, ट्रेन या बस से कनेक्शन के साथ।</p>
+        <p>सिर्फ़ मॉस्को तक नहीं। हम ट्रेन या बस के कनेक्शन के साथ पूरा रूट दिखाएँगे।</p>
       </div>
       <img class="panel-ico" src="assets/icons/transport-mix.png" alt="" aria-hidden="true">
     </div>
@@ -749,12 +756,12 @@ input:focus{outline:none}
             </a>
           </div>
           <div class="head-actions__nav">
-            <div class="carousel-nav" aria-hidden="true" data-carousel="hotels">
+            <div class="carousel-nav" data-carousel="hotels">
               <button type="button" aria-label="पिछला">
-                <svg viewBox="0 0 24 24"><path d="M15 19 8 12l7-7"/></svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19 8 12l7-7"/></svg>
               </button>
               <button type="button" aria-label="अगला">
-                <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
               </button>
             </div>
           </div>
@@ -769,26 +776,26 @@ input:focus{outline:none}
 
 <section class="section section--cloud">
   <div class="container">
-    <div class="section-head"><h2>टुटु क्यों चुनें</h2></div>
+    <div class="section-head"><h2>Tutu क्यों चुनें</h2></div>
     <div class="tiles tiles--4">
       <article class="tile">
         <h3>अंग्रेज़ी में सेवा</h3>
-        <p>24/7 सपोर्ट और टुटु मोबाइल ऐप अंग्रेज़ी में उपलब्ध हैं।</p>
+        <p>24/7 सपोर्ट और Tutu मोबाइल ऐप अंग्रेज़ी में उपलब्ध हैं।</p>
         <img class="tile-ico" src="assets/icons/chat.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
-        <h3>सब कुछ एक जगह</h3>
-        <p>एक ही सर्च में तीन तरह के परिवहन के दामों की तुलना करें।</p>
+        <h3>एक ही सर्च में सब कुछ</h3>
+        <p>फ़्लाइट, ट्रेन और बस के दामों की एक साथ तुलना करें।</p>
         <img class="tile-ico" src="assets/icons/ticket.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
         <h3>बाद में भुगतान</h3>
-        <p>टिकट का दाम अभी लॉक करें और भुगतान बाद में करें।</p>
+        <p>टिकट का दाम अभी तय करें और भुगतान बाद में करें।</p>
         <img class="tile-ico" src="assets/icons/money.png" alt="" aria-hidden="true">
       </article>
       <article class="tile">
         <h3>30% तक की बचत</h3>
-        <p>नॉन-रिफ़ंडेबल ट्रेन टिकटों पर 20% तक बचाएँ। और जन्मदिन के मौक़े पर अपने और तीन दोस्तों के लिए 30% तक की छूट पाएँ।</p>
+        <p>नॉन-रिफ़ंडेबल ट्रेन टिकटों पर 20% तक बचाएँ। जन्मदिन पर अपने और तीन दोस्तों के लिए 30% तक की छूट पाएँ।</p>
         <img class="tile-ico" src="assets/icons/ticket.png" alt="" aria-hidden="true">
       </article>
     </div>
@@ -797,27 +804,27 @@ input:focus{outline:none}
 
 <section class="section section--cloud" id="about">
   <div class="container">
-    <div class="section-head"><h2>टुटु के बारे में</h2></div>
+    <div class="section-head"><h2>Tutu के बारे में</h2></div>
     <div class="tiles tiles--4">
       <article class="tile tile--stat">
         <div class="stat-num">2003 से</div>
         <h3>20 साल से ज़्यादा का अनुभव</h3>
-        <p>रूस की पहली ट्रैवल सेवाओं में से एक। हम ज़्यादातर प्रतिस्पर्धियों से पहले से काम कर रहे हैं।</p>
+        <p>रूस की सबसे पहली ट्रैवल सेवाओं में से एक। हम ज़्यादातर प्रतिस्पर्धियों से ज़्यादा समय से काम कर रहे हैं।</p>
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">4.2 करोड़</div>
         <h3>यात्री</h3>
-        <p>4.2 करोड़ से ज़्यादा यात्री टुटु चुन चुके हैं – और बार-बार लौटते हैं।</p>
+        <p>4.2 करोड़ से ज़्यादा यात्री Tutu चुन चुके हैं और बार-बार लौटकर आते हैं।</p>
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">10,000+</div>
-        <h3>परिवहन कंपनियाँ</h3>
-        <p>एयरलाइंस, रूसी रेलवे और बस कंपनियों के साथ सीधे काम करते हैं, बिना किसी बिचौलिये के।</p>
+        <h3>ट्रांसपोर्ट कंपनियाँ</h3>
+        <p>हम एयरलाइंस, रूसी रेलवे और बस कंपनियों के साथ सीधे काम करते हैं। कोई बिचौलिया नहीं।</p>
       </article>
       <article class="tile tile--stat">
         <div class="stat-num">24/7</div>
-        <h3>सपोर्ट हमेशा उपलब्ध</h3>
-        <p>चैट, ईमेल और फ़ोन। रूसी और अंग्रेज़ी में किसी भी समय जवाब देते हैं।</p>
+        <h3>हमेशा आपकी मदद के लिए</h3>
+        <p>चैट, ईमेल और फ़ोन। दिन हो या रात, हम रूसी और अंग्रेज़ी में जवाब देते हैं।</p>
       </article>
     </div>
   </div>
@@ -837,10 +844,10 @@ input:focus{outline:none}
     <div class="footer-grid">
 
       <div class="footer-app-col">
-        <h4 class="footer-app-title">टुटु ऐप</h4>
+        <h4 class="footer-app-title">Tutu ऐप</h4>
         <div class="footer-app-body">
           <div class="qr">
-            <img src="assets/qr.png" alt="QR-код для скачивания приложения Туту">
+            <img src="assets/qr.png" alt="Tutu ऐप डाउनलोड करने का QR कोड">
           </div>
           <div class="stores">
             <a href="#" aria-label="App Store"><img src="assets/icons/store-apple.png" alt="App Store"></a>
@@ -855,30 +862,30 @@ input:focus{outline:none}
         <h4>कंपनी</h4>
         <a href="#about">हमारे बारे में</a>
         <a href="#">करियर</a>
-        <a href="#">संपर्क</a>
-        <a href="#">समाचार</a>
+        <a href="#">संपर्क करें</a>
+        <a href="#">ख़बरें</a>
         <a href="#">क़ानूनी जानकारी</a>
       </div>
 
       <div class="footer-col">
         <h4>यात्रियों के लिए</h4>
-        <a href="#">गिफ़्ट सर्टिफ़िकेट</a>
+        <a href="#">गिफ़्ट कार्ड</a>
         <a href="#">लॉयल्टी प्रोग्राम</a>
-        <a href="#">देशों की यात्रा गाइड</a>
+        <a href="#">देशों की गाइड</a>
 
         <h4 class="footer-h4-extra">पार्टनर्स के लिए</h4>
         <a href="#">पार्टनर बनें</a>
         <a href="#">अपनी प्रॉपर्टी जोड़ें</a>
-        <a href="#">टुटु पर विज्ञापन</a>
+        <a href="#">Tutu पर विज्ञापन</a>
         <a href="#">एफ़िलिएट प्रोग्राम</a>
       </div>
 
       <div class="footer-col">
         <h4>सहायता</h4>
-        <a href="#faq">सहायता</a>
-        <a href="#">प्रतिक्रिया</a>
+        <a href="#faq">सहायता केंद्र</a>
+        <a href="#">फ़ीडबैक</a>
 
-        <h4 class="footer-h4-extra">सोशल मीडिया पर हमें फ़ॉलो करें</h4>
+        <h4 class="footer-h4-extra">सोशल मीडिया पर फ़ॉलो करें</h4>
         <div class="socials">
           <a href="#" aria-label="Telegram"><img class="social" src="assets/icons/telegram.png" alt="Telegram"></a>
           <a href="#" aria-label="VK"><img class="social" src="assets/icons/vk.png" alt="VK"></a>
@@ -890,8 +897,8 @@ input:focus{outline:none}
 
     <p class="footer-site">tutu.ru</p>
     <p class="legal">
-      इस पेज पर दिए गए दाम और तारीख़ें सिर्फ़ उदाहरण के लिए हैं और बुकिंग के समय अलग हो सकती हैं।
-      <br>© 2026 टुटु। सर्वाधिकार सुरक्षित।
+      इस पेज पर दिए गए दाम और तारीख़ें सिर्फ़ उदाहरण हैं और बुकिंग के समय अलग हो सकती हैं।
+      <br>© 2026 Tutu. सर्वाधिकार सुरक्षित।
     </p>
   </div>
 </footer>
@@ -905,43 +912,47 @@ const CONFIG = {
     { id:'r1',  from:'मॉस्को',           to:'मुंबई',     typeLine:'कनेक्टिंग फ़्लाइट',    transport:'flight', combined:false, price:'25 538', duration:'11 घं 10 मि', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
     { id:'r2',  from:'मॉस्को',           to:'कज़ान',     typeLine:'रात की ट्रेन',         transport:'train',  combined:false, price:'1 874',  duration:'11 घं 40 मि', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
     { id:'r3',  from:'मॉस्को',           to:'योश्कर-ओला', typeLine:'ट्रेन',                transport:'train',  combined:false, price:'1 874',  duration:'13 घं 30 मि', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r4',  from:'दिल्ली',             to:'मॉस्को',     typeLine:'डायरेक्ट फ़्लाइट',          transport:'flight', combined:false, price:'25 004', duration:'6 घं 30 मि',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'r5',  from:'मॉस्को',           to:'दिल्ली',       typeLine:'डायरेक्ट फ़्लाइट',          transport:'flight', combined:false, price:'16 048', duration:'6 घं 05 मि',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
+    { id:'r4',  from:'दिल्ली',             to:'मॉस्को',     typeLine:'सीधी फ़्लाइट',          transport:'flight', combined:false, price:'25 004', duration:'6 घं 30 मि',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'r5',  from:'मॉस्को',           to:'दिल्ली',       typeLine:'सीधी फ़्लाइट',          transport:'flight', combined:false, price:'16 048', duration:'6 घं 05 मि',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
     { id:'r6',  from:'शेरेमेतेवो',      to:'त्वेर',      typeLine:'एयरोएक्सप्रेस + ट्रेन', transport:'train',  combined:true,  price:'1 200',  duration:'3 घं 30 मि',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
     { id:'r7',  from:'सेंट पीटर्सबर्ग',  to:'योश्कर-ओला', typeLine:'ट्रेन + बस',      transport:'train',  combined:true,  price:'5 369',  duration:'27 घं 30 मि', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
     { id:'r8',  from:'ऊफ़ा',              to:'कज़ान',     typeLine:'बस',              transport:'bus',    combined:false, price:'1 668',  duration:'8 घं 30 मि',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
-    { id:'r9',  from:'मॉस्को',           to:'सोची',       typeLine:'डायरेक्ट फ़्लाइट',          transport:'flight', combined:false, price:'4 099',  duration:'2 घं 35 मि',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' },
-    { id:'r10', from:'कज़ान',           to:'येकातेरिनबुर्ग',typeLine:'ट्रेन',               transport:'train',  combined:false, price:'1 514',  duration:'7 घं 15 मि',  gradient:'linear-gradient(200deg,#5F94FF 0%,#BA61FF 100%)' }
+    { id:'r9',  from:'मॉस्को',           to:'सोची',       typeLine:'सीधी फ़्लाइट',          transport:'flight', combined:false, price:'4 099',  duration:'2 घं 35 मि',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' },
+    { id:'r10', from:'कज़ान',           to:'येकातेरिनबर्ग',typeLine:'ट्रेन',               transport:'train',  combined:false, price:'1 514',  duration:'7 घं 15 मि',  gradient:'linear-gradient(200deg,#5F94FF 0%,#BA61FF 100%)' }
   ],
 
   hotels: [
-    { id:'h1',  name:'स्टीरियो मिनी होटल',                     city:'कज़ान',          distance:'केंद्र से 1.5 किमी', rating:'8,4', reviews:'158 समीक्षाएँ', type:'छोटा होटल',   price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
-    { id:'h2',  name:'ग्रेस अमालिया',                          city:'सोची',            distance:'समुद्र तट से 633 मी',   rating:'9,1', reviews:'240 समीक्षाएँ', type:'गेस्ट हाउस', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'h3',  name:'अव्तोर तगांका हॉस्टल',                  city:'मॉस्को',          distance:'',                 rating:'8,4', reviews:'',            type:'हॉस्टल',       price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
-    { id:'h4',  name:'जैसमिन होटल, गोवा',                    city:'गोवा',             distance:'केंद्र से 607 मी',  rating:'8,0', reviews:'127 समीक्षाएँ', type:'होटल',        price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
-    { id:'h5',  name:'ग्रिफ़ॉन गेस्ट रूम्स और अपार्टमेंट', city:'सेंट पीटर्सबर्ग', distance:'',                 rating:'9,1', reviews:'',            type:'अपार्टमेंट',  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
-    { id:'h6',  name:'द फ़र्न रेज़िडेंसी, मुंबई',            city:'मुंबई',          distance:'केंद्र से 2.1 किमी', rating:'8,6', reviews:'89 समीक्षाएँ',  type:'होटल',        price:'5 120', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'h7',  name:'द इंटरनेशनल बाय टुंगा',            city:'मुंबई',          distance:'केंद्र से 1.8 किमी', rating:'8,2', reviews:'112 समीक्षाएँ', type:'होटल',        price:'4 189', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
-    { id:'h8',  name:'कोस्मोस होटल, दिल्ली',                city:'दिल्ली',            distance:'केंद्र से 3.5 किमी', rating:'8,1', reviews:'204 समीक्षाएँ',  type:'होटल',        price:'3 600', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
+    { id:'h1',  name:'Stereo Mini-Hotel',                     city:'कज़ान',          distance:'सेंटर से 1.5 किमी', rating:'8.4', reviews:'158 रिव्यू', type:'मिनी होटल',   price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
+    { id:'h2',  name:'Grace Amalia',                          city:'सोची',            distance:'बीच से 633 मीटर',   rating:'9.1', reviews:'240 रिव्यू', type:'गेस्ट हाउस', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'h3',  name:'Avtor Taganka Hostel',                  city:'मॉस्को',          distance:'',                 rating:'8.4', reviews:'',            type:'हॉस्टल',       price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
+    { id:'h4',  name:'Jasminn Hotel, Goa',                    city:'गोवा',             distance:'सेंटर से 607 मीटर',  rating:'8.0', reviews:'127 रिव्यू', type:'होटल',        price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
+    { id:'h5',  name:'Grifon Guest Rooms & Apartments', city:'सेंट पीटर्सबर्ग', distance:'',                 rating:'9.1', reviews:'',            type:'अपार्टमेंट',  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
+    { id:'h6',  name:'The Fern Residency, Mumbai',            city:'मुंबई',          distance:'सेंटर से 2.1 किमी', rating:'8.6', reviews:'89 रिव्यू',  type:'होटल',        price:'5 120', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'h7',  name:'The International by Tunga',            city:'मुंबई',          distance:'सेंटर से 1.8 किमी', rating:'8.2', reviews:'112 रिव्यू', type:'होटल',        price:'4 189', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
+    { id:'h8',  name:'Kosmos Hotel, Delhi',                city:'दिल्ली',            distance:'सेंटर से 3.5 किमी', rating:'8.1', reviews:'204 रिव्यू',  type:'होटल',        price:'3 600', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
   ],
 
   faq: [
-    { q:'टुटु पर भुगतान के कौन से तरीक़े काम करते हैं?',
-      a:'टुटु पर आप रूसी बैंक के कार्ड से या SBP के ज़रिए भुगतान कर सकते हैं। भारतीय Visa और Mastercard कार्ड, साथ ही UPI और RuPay, इस सेवा पर स्वीकार नहीं किए जाते।' },
-    { q:'अगर टिकट पर नाम में ग़लती हो तो क्या करें?',
-      a:'ट्रांसलिटरेशन में छोटी-मोटी ग़लतियाँ आमतौर पर बोर्डिंग में रुकावट नहीं बनतीं, क्योंकि कंडक्टर और निरीक्षक मुख्य रूप से पासपोर्ट नंबर देखते हैं। अगर ग़लती बड़ी है, तो यात्रा से पहले सपोर्ट को लिखें और हम जानकारी ठीक करने में मदद करेंगे।' },
+    { q:'Tutu पर भुगतान कैसे करें?',
+      a:'Tutu पर रूसी बैंक के कार्ड से या SBP (रूस का फ़ास्ट पेमेंट सिस्टम) से भुगतान किया जा सकता है। भारतीय Visa और Mastercard कार्ड, UPI और RuPay स्वीकार नहीं किए जाते।' },
+    { q:'टिकट पर नाम में ग़लती हो तो क्या करें?',
+      a:'स्पेलिंग में छोटे-मोटे फ़र्क़ से आमतौर पर बोर्डिंग में दिक़्क़त नहीं होती, क्योंकि कंडक्टर और टिकट जाँचने वाले पासपोर्ट नंबर देखते हैं। अगर ग़लती बड़ी है, तो यात्रा से पहले सपोर्ट को लिखें। हम जानकारी ठीक करने में मदद करेंगे।' },
     { q:'होटल में चेक-इन के समय रजिस्ट्रेशन ज़रूरी है?',
-      a:'होटल और हॉस्टल विदेशी मेहमानों का रजिस्ट्रेशन ख़ुद करते हैं। अगर आप निजी अपार्टमेंट लेने की सोच रहे हैं, तो पहले ही मालिक से पूछ लें कि क्या वे माइग्रेशन रजिस्ट्रेशन कराते हैं।' },
-    { q:'प्लत्सकार्त और कुपे में क्या फ़र्क़ है?',
-      a:'प्लत्सकार्त खुला डिब्बा होता है जिसमें बिना दरवाज़ों के सोने की बर्थ होती हैं। यात्रा सस्ती पड़ती है, लेकिन डिब्बे में शोर हो सकता है। कुपे में दरवाज़े वाले बंद चार-बर्थ केबिन होते हैं, जहाँ काफ़ी शांति और आराम रहता है।' },
+      a:'होटल और हॉस्टल चेक-इन के समय विदेशी मेहमानों का रजिस्ट्रेशन ख़ुद करते हैं। अगर आप प्राइवेट अपार्टमेंट किराए पर ले रहे हैं, तो मालिक से पहले ही पूछ लें कि क्या वे माइग्रेशन रजिस्ट्रेशन करवाएँगे।' },
+    { q:'प्लात्सकार्त और कूपे में क्या फ़र्क़ है?',
+      a:'प्लात्सकार्त खुला स्लीपर डिब्बा है, जिसमें केबिन के दरवाज़े नहीं होते। यह सस्ता है, लेकिन इसमें शोर हो सकता है। कूपे में दरवाज़े वाले बंद चार-बर्थ केबिन होते हैं, जहाँ कहीं ज़्यादा शांति और आराम रहता है।' },
     { q:'एयरपोर्ट से दूसरे शहर कैसे पहुँचें?',
-      a:'टुटु पर आप फ़्लाइट, ट्रेन और बस को जोड़कर पूरा रूट एक साथ बना सकते हैं। सिस्टम ख़ुद सुविधाजनक कनेक्शन चुन लेता है, ताकि आपको हर टिकट अलग से न ढूँढना पड़े।' },
+      a:'Tutu पर आप फ़्लाइट, ट्रेन और बस को जोड़कर पूरा रूट एक साथ प्लान कर सकते हैं। सिस्टम ख़ुद सुविधाजनक कनेक्शन ढूँढता है, ताकि आपको हर टिकट अलग से न खोजना पड़े।' },
     { q:'कितना सामान साथ ले जा सकते हैं?',
-      a:'हर परिवहन कंपनी के अपने नियम होते हैं। किराए में कितने बैग और कितने किलो शामिल हैं, यह टिकट ख़रीदने से पहले ही स्क्रीन पर दिख जाता है।' },
-    { q:'क्या टिकट वापस या एक्सचेंज किया जा सकता है?',
-      a:'रिफ़ंड की शर्तें किराए और परिवहन कंपनी पर निर्भर करती हैं। कुछ टिकटों पर पूरी रक़म वापस मिलती है, कुछ पर शुल्क कटता है, और सबसे सस्ते किराए नॉन-रिफ़ंडेबल हो सकते हैं। सारी शर्तें ख़रीदने से पहले दिखती हैं, और रिफ़ंड साइट पर अपने अकाउंट में या ऐप में ऑनलाइन कराया जा सकता है।' }
+      a:'हर कंपनी के बैगेज नियम अलग होते हैं। किराए में कितने बैग और कितने किलो शामिल हैं, यह टिकट ख़रीदने से पहले ही स्क्रीन पर दिख जाता है।' },
+    { q:'क्या टिकट कैंसिल करके पैसे वापस मिल सकते हैं या टिकट बदला जा सकता है?',
+      a:'यह किराए और कंपनी के नियमों पर निर्भर करता है। कुछ टिकटों पर पूरा पैसा वापस मिलता है, कुछ पर शुल्क कटता है, और सबसे सस्ते किराए नॉन-रिफ़ंडेबल हो सकते हैं। सारी शर्तें ख़रीदने से पहले दिखती हैं, और रिफ़ंड वेबसाइट पर अपने अकाउंट में या ऐप में ऑनलाइन किया जा सकता है।' }
   ]
 };
+
+const NUM_LOCALE = document.documentElement.lang === 'ru' ? 'ru-RU' : 'en-IN';
+const toRub = p => parseInt(p.replace(/\s/g, ''), 10);
+const fmtNum = n => n.toLocaleString(NUM_LOCALE);
 
 const CTA_CARD = `
   <a class="card card--cta" href="#">
@@ -959,7 +970,7 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
     <div class="card-body">
       <p class="route-name">${r.from} – ${r.to}</p>
       <div class="price-row">
-        <span class="price">${r.price} ${CONFIG.currency} से</span>
+        <span class="price">${fmtNum(rub)} ${CONFIG.currency} से</span>
         <span class="price-alt">≈ ₹${inrFmt}</span>
       </div>
       <p class="card-meta">${r.duration}</p>
@@ -977,7 +988,7 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => `
       <p class="hotel-top">${h.city}${h.distance ? ` · ${h.distance}` : ''}</p>
       <p class="hotel-name">${h.name}</p>
       <p class="hotel-meta">${h.type}${h.reviews ? ` · ${h.reviews}` : ''}</p>
-      <p class="hotel-price">${h.price} ${CONFIG.currency} से <span>प्रति रात</span></p>
+      <p class="hotel-price">${fmtNum(toRub(h.price))} ${CONFIG.currency} <span>प्रति रात</span></p>
     </div>
   </article>`).join('') + CTA_CARD;
 
