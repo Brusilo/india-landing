@@ -67,9 +67,13 @@ input:focus{outline:none}
 .container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 16px}
 @media(min-width:768px){.container{padding:0 24px}}
 
-.section{padding:36px 0}
-@media(min-width:768px){.section{padding:56px 0}}
+.section{padding:40px 0 0}
+@media(min-width:768px){.section{padding-top:56px}}
 .section--cloud{background:var(--cloud-white)}
+/* bottom padding only where a visible edge follows, so every block sits the same distance from its nearest boundary */
+.section--cloud,.section:has(+ .section--cloud),.section:has(+ footer){padding-bottom:40px}
+@media(min-width:768px){.section--cloud,.section:has(+ .section--cloud),.section:has(+ footer){padding-bottom:56px}}
+.section--cloud + .section--cloud{padding-top:0}
 
 .section-head{margin-bottom:16px}
 @media(min-width:768px){.section-head{margin-bottom:20px}}
@@ -247,14 +251,15 @@ input:focus{outline:none}
   overflow-x:auto;scroll-snap-type:x mandatory;
   scrollbar-width:none;
   margin-inline:-16px;padding:2px 16px 8px;
+  margin-bottom:-8px;
 }
 .row::-webkit-scrollbar{display:none}
 .row > *{flex:0 0 250px;scroll-snap-align:start}
 @media(min-width:768px){.row{margin-inline:-24px;padding-inline:24px}}
 @media(min-width:1024px){
-  .row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-inline:0;padding:0;overflow:visible}
+  .row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-inline:0;margin-bottom:0;padding:0;overflow:visible}
   .row > *{flex:none}
-  .row--hotels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-block:2px 8px}
+  .row--hotels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-block:2px 8px;margin-bottom:-8px}
   .row--hotels > *{flex:0 0 calc((100% - 60px) / 4)}
 }
 
@@ -381,13 +386,29 @@ input:focus{outline:none}
 @media(min-width:768px){.stage .row{margin-inline:-40px;padding-inline:40px}}
 @media(min-width:1024px){.stage .row{margin-inline:0;padding-inline:0}}
 
-.faq{display:grid;gap:12px}
-@media(min-width:900px){
-  .faq{grid-template-columns:1fr 1fr;gap:16px}
+.faq{display:grid;gap:10px;max-width:880px}
+.faq-item{background:var(--white);border-radius:16px;padding:0 20px}
+.faq-item summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;gap:14px;
+  padding:18px 0;
+  font-size:16.5px;font-weight:600;color:var(--deep-blue);line-height:1.45;
 }
-.faq-card{background:var(--white);border-radius:18px;padding:22px 20px}
-.faq-card h3{font-size:16.5px;font-weight:600;color:var(--deep-blue);line-height:1.4}
-.faq-card p{margin-top:8px;font-size:14.5px;line-height:1.7;color:var(--text)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-plus{
+  position:relative;flex:none;width:24px;height:24px;
+  border-radius:50%;background:var(--berry-purple);
+}
+.faq-plus::before,.faq-plus::after{
+  content:'';position:absolute;left:50%;top:50%;
+  background:var(--white);
+  transform:translate(-50%,-50%);
+  transition:opacity .18s ease;
+}
+.faq-plus::before{width:11px;height:2px}
+.faq-plus::after{width:2px;height:11px}
+.faq-item[open] .faq-plus::after{opacity:0}
+.faq-item > p{margin:0 0 18px 38px;font-size:14.5px;line-height:1.7;color:var(--text)}
 
 .app-card{
   background:var(--white);
@@ -405,8 +426,11 @@ input:focus{outline:none}
 .qr img{width:100%;height:100%;object-fit:contain}
 .app-caption{font-size:clamp(20px,3vw,26px);font-weight:600;color:var(--deep-blue);line-height:1.3}
 .app-note{margin-top:8px;font-size:15px;color:var(--muted);line-height:1.65}
-.stores{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
-.store-ico{height:44px;width:auto}
+.stores{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;margin-top:24px;max-width:420px;
+}
+.store-ico{height:56px;width:auto;justify-self:start}
 
 .footer{background:var(--deep-blue);color:var(--white);padding:40px 0 34px}
 @media(min-width:768px){.footer{padding:56px 0 44px}}
@@ -439,7 +463,7 @@ input:focus{outline:none}
 <section class="hero">
   <div class="container">
     <h1>रूस भर में <span class="accent">सस्ती</span> टिकटें</h1>
-    <p class="hero-sub">बसें, ट्रेनें और हवाई जहाज़ पूरे रूस में। भारत से किसी भी शहर तक पहुँचने में हम बिना किसी परेशानी के आपकी मदद करेंगे।</p>
+    <p class="hero-sub">बसें, ट्रेनें और हवाई जहाज़ पूरे रूस में। और भारत वापस घर का टिकट भी।</p>
 
     <div class="pills">
       <span class="pill">
@@ -513,7 +537,7 @@ input:focus{outline:none}
   <div class="container">
     <div class="section-head">
       <h2>सस्ते और बेहतरीन रूट</h2>
-      <p>पिछले 10 दिनों के औसत से कम दाम।</p>
+      <p>पिछले 10 दिनों के औसत से कम दाम</p>
     </div>
 
     <div class="filters" role="tablist" aria-label="रूट फ़िल्टर">
@@ -579,7 +603,6 @@ input:focus{outline:none}
     <div class="stage">
       <div class="section-head">
         <h2>कहाँ ठहरें</h2>
-        <p>रूस और भारत में होटल, हॉस्टल और अपार्टमेंट</p>
       </div>
       <div class="carousel-wrap">
         <div class="carousel-nav">
@@ -598,27 +621,22 @@ input:focus{outline:none}
 
 <section class="section section--cloud">
   <div class="container">
-    <div class="section-head"><h2>पहली बार हमसे बुकिंग कर रहे हैं?</h2></div>
-    <div class="tiles tiles--4">
+    <div class="section-head"><h2>Tutu क्यों सुविधाजनक है</h2></div>
+    <div class="tiles tiles--3">
       <article class="tile">
-        <h3>हर कदम पर अंग्रेज़ी</h3>
-        <p>खोज से भुगतान तक,सिर्फ़ होमपेज पर ही नहीं।</p>
-        <img class="tile-ico" src="assets/icons/chat-single.png" alt="" aria-hidden="true">
-      </article>
-      <article class="tile">
-        <h3>स्टेशनों के नाम लैटिन लिपि में</h3>
-        <p>रूसी नाम पढ़ने की मशक्कत नहीं।</p>
-        <img class="tile-ico" src="assets/icons/map-pin.png" alt="" aria-hidden="true">
-      </article>
-      <article class="tile">
-        <h3>पासपोर्ट फ़ील्ड साफ़-साफ़</h3>
-        <p>हम बताते हैं क्या भरना है और किस फ़ॉर्मैट में।</p>
-        <img class="tile-ico" src="assets/icons/person-id.png" alt="" aria-hidden="true">
-      </article>
-      <article class="tile">
-        <h3>अंग्रेज़ी में सहायता</h3>
-        <p>चैट, ईमेल और फ़ोन।</p>
+        <h3>अंग्रेज़ी में</h3>
+        <p>Tutu की सहायता टीम और मोबाइल ऐप अंग्रेज़ी में उपलब्ध हैं।</p>
         <img class="tile-ico" src="assets/icons/chat.png" alt="" aria-hidden="true">
+      </article>
+      <article class="tile">
+        <h3>सब कुछ एक साथ</h3>
+        <p>एक ही खोज में तीन तरह के परिवहन के दाम की तुलना करें।</p>
+        <img class="tile-ico" src="assets/icons/ticket.png" alt="" aria-hidden="true">
+      </article>
+      <article class="tile">
+        <h3>बाद में भुगतान</h3>
+        <p>टिकट का दाम तय करें और बाद में भुगतान करें।</p>
+        <img class="tile-ico" src="assets/icons/money.png" alt="" aria-hidden="true">
       </article>
     </div>
   </div>
@@ -641,7 +659,8 @@ input:focus{outline:none}
         <p>4.2 करोड़ से ज़्यादा यात्री Tutu चुन चुके हैं और बार-बार लौटकर आते हैं।</p>
       </article>
       <article class="tile tile--stat">
-        <div class="stat-num">500+</div>
+        <!-- TODO: подтвердить цифру у команды. Источник — блог партнёрской программы Туту, 2022 год, речь только про автобусных перевозчиков -->
+        <div class="stat-num">10,000+</div>
         <h3>साझेदार कंपनियाँ</h3>
         <p>हम सीधे एयरलाइंस, रूसी रेलवे और बस ऑपरेटरों के साथ काम करते हैं। कोई बिचौलिया नहीं।</p>
       </article>
@@ -666,7 +685,7 @@ input:focus{outline:none}
     <div class="app-card">
       <div>
         <p class="app-caption">अंग्रेज़ी में ऐप</p>
-        <p class="app-note">खोज से बुकिंग तक पूरी यात्राअंग्रेज़ी में। QR कोड स्कैन करें या अपने ऐप स्टोर में Tutu खोजें।</p>
+        <p class="app-note">अंग्रेज़ी में टिकट खोजें और अपनी यात्रा ट्रैक करें। QR कोड स्कैन करें या अपने ऐप स्टोर में Tutu खोजें।</p>
         <div class="stores">
           <img class="store-ico" src="assets/icons/store-apple.png" alt="App Store">
           <img class="store-ico" src="assets/icons/store-google.png" alt="Google Play">
@@ -705,7 +724,7 @@ const CONFIG = {
   currency: '₹',
 
   routes: [
-    { id:'r1', from:'Mumbai',         to:'Moscow',      typeLine:'कनेक्टिंग फ़्लाइट',         transport:'flight', combined:false, price:'35,412', duration:'10 घंटे 45 मिनट', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r1', from:'Moscow',         to:'Mumbai',      typeLine:'कनेक्टिंग फ़्लाइट',         transport:'flight', combined:false, price:'34,618', duration:'11 घंटे 10 मिनट', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
     { id:'r2', from:'Delhi',          to:'Moscow',      typeLine:'सीधी उड़ान',                transport:'flight', combined:false, price:'28,148', duration:'6 घंटे 30 मिनट',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
     { id:'r3', from:'Moscow',         to:'Delhi',       typeLine:'सीधी उड़ान',                transport:'flight', combined:false, price:'28,602', duration:'6 घंटे 5 मिनट',   gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
     { id:'r4', from:'Sheremetyevo',   to:'Tver',        typeLine:'एयरपोर्ट एक्सप्रेस + ट्रेन',transport:'train',  combined:true,  price:'1,521',  duration:'3 घंटे 30 मिनट',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
@@ -738,7 +757,9 @@ const CONFIG = {
     { q:'हवाई अड्डे से दूसरे शहर कैसे पहुँचें?',
       a:'कई रूट पर उड़ान को ट्रेन या बस से जोड़ा जा सकता है। पूरी यात्रा एक साथ खोजें, हर टिकट अलग-अलग बुक करने की ज़रूरत नहीं।' },
     { q:'सामान के बारे में क्या जानना चाहिए?',
-      a:'हर कंपनी के सामान के नियम अलग होते हैं। टिकट में कितने बैग और कितने किलो शामिल हैं, यह भुगतान से पहले दिख जाता है। रास्ते में सामान के साथ कुछ हो जाए, तो सहायता टीम को बताएँ।' }
+      a:'हर कंपनी के सामान के नियम अलग होते हैं। टिकट में कितने बैग और कितने किलो शामिल हैं, यह भुगतान से पहले दिख जाता है। रास्ते में सामान के साथ कुछ हो जाए, तो सहायता टीम को बताएँ।' },
+    { q:'क्या टिकट वापस या बदला जा सकता है?',
+      a:'यह किराए और कंपनी के नियमों पर निर्भर करता है: कुछ टिकटों पर पूरा पैसा वापस मिलता है, कुछ पर कटौती होती है, और सबसे सस्ते टिकट नॉन-रिफ़ंडेबल हो सकते हैं। शर्तें भुगतान से पहले दिखाई जाती हैं, और रिफ़ंड सहायता टीम के ज़रिए कराया जा सकता है।' }
   ]
 };
 
@@ -771,10 +792,10 @@ document.getElementById('hotels').innerHTML = CONFIG.hotels.map(h => `
   </article>`).join('');
 
 document.getElementById('faq').innerHTML = CONFIG.faq.map(f => `
-  <article class="faq-card">
-    <h3>${f.q}</h3>
+  <details class="faq-item">
+    <summary><span class="faq-plus" aria-hidden="true"></span>${f.q}</summary>
     <p>${f.a}</p>
-  </article>`).join('');
+  </details>`).join('');
 
 (function(){
   const row=document.getElementById('hotels');
