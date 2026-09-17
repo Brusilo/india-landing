@@ -1,0 +1,62 @@
+name: Polish mobile icons and restore Grifon rating
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mobile-icon-polish-v24.yml'
+permissions:
+  contents: write
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply browser-tested scoped changes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('assets/responsive.css')
+          css = p.read_text(encoding='utf-8')
+          old = '  .panel-ico { width: 56px; height: 56px; margin-top: 6px; }'
+          new = old + '\n  /* Center the no-extra-fees icon in the full height of its mobile card. */\n  .panel--dark > .panel-ico[src$="/money.png"] { align-self: center; margin-block: 3px; }'
+          assert css.count(old) == 1, 'Review changed mobile panel styles'
+          css = css.replace(old, new, 1)
+          old = ('    grid-column: 2; grid-row: 1 / 3; align-self: center; justify-self: end;\n'
+                 '    transform: none;')
+          new = ('    grid-column: 2; grid-row: 1 / 3; align-self: center; justify-self: end;\n'
+                 '    transform: translateX(4px);')
+          assert css.count(old) == 1, 'Review changed transport icon styles'
+          css = css.replace(old, new, 1)
+          p.write_text(css, encoding='utf-8')
+
+          p = Path('assets/card-links.js')
+          js = p.read_text(encoding='utf-8')
+          old = "rating:'',price:2400,url:'https://hotel.tutu.ru/h_gostevye_komnaty_i_apartamenty_grifon/'"
+          new = "rating:'9,1',price:2400,url:'https://hotel.tutu.ru/h_gostevye_komnaty_i_apartamenty_grifon/'"
+          assert js.count(old) == 1, 'Review changed Grifon data'
+          p.write_text(js.replace(old, new, 1), encoding='utf-8')
+
+          for filename in ('index.html', 'index-en.html', 'index-hi.html'):
+              p = Path(filename)
+              html = p.read_text(encoding='utf-8')
+              for asset in ('responsive.css', 'card-links.js'):
+                  html, count = re.subn(r'assets/' + re.escape(asset) + r'\?v=[^"\s]+',
+                                       'assets/' + asset + '?v=20260917-polish-24', html)
+                  assert count == 1, (filename, asset, count)
+              p.write_text(html, encoding='utf-8')
+          Path('.github/workflows/mobile-icon-polish-v24.yml').unlink()
+          print('Mobile money icon centered; transport circle shifted 4px right; Grifon rating restored to 9.1; desktop icon layout and prices unchanged.')
+          PY
+          node --check assets/card-links.js
+      - name: Commit scoped changes
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/responsive.css assets/card-links.js index.html index-en.html index-hi.html .github/workflows/mobile-icon-polish-v24.yml
+          git diff --cached --check
+          git commit -m 'fix: center mobile money icon, nudge transport circle and restore Grifon rating'
+          git push
