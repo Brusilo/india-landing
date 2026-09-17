@@ -28,7 +28,7 @@ jobs:
             width:680px!important;
             max-width:none!important;
             right:-20px!important;
-            top:-55px!important;
+            top:-82px!important;
             opacity:1!important;
             transform:rotate(-5deg)!important;
           }
@@ -63,7 +63,7 @@ jobs:
           }
 
           @media(max-width:1200px){
-            .hero>.hero-decor--suitcase{width:560px!important;right:-28px!important;top:-30px!important}
+            .hero>.hero-decor--suitcase{width:560px!important;right:-28px!important;top:-48px!important}
             #routes>.section-decor--ticket{width:340px!important;right:-45px!important;top:30px!important}
             #hotels>.section-decor--keys{width:250px!important;left:-28px!important;top:46px!important}
           }
@@ -103,6 +103,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "fix: fine tune decorative artwork positions"
+            git commit -m "fix: lock suitcase position across languages"
             git push
           fi
