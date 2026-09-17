@@ -195,6 +195,8 @@
   .panel h2 { font-size: 25px; line-height: 1.2; }
   .panel p { font-size: 15px; line-height: 1.5; margin-top: 10px; }
   .panel-ico { width: 56px; height: 56px; margin-top: 6px; }
+  /* Center the no-extra-fees icon in the full height of its mobile card. */
+  .panel--dark > .panel-ico[src$="/money.png"] { align-self: center; margin-block: 3px; }
   /* Center the circle on the right of the complete text block. */
   .panel.panel--transport {
     grid-template-columns: minmax(0, 1fr) 80px;
@@ -206,7 +208,7 @@
   .panel--transport p { grid-column: 1; grid-row: 2; margin-top: 0; }
   .panel.panel--transport .panel-ico {
     grid-column: 2; grid-row: 1 / 3; align-self: center; justify-self: end;
-    transform: none;
+    transform: translateX(4px);
     width: 80px; height: 80px; margin-top: 0;
   }
   .faq { max-width: 100%; gap: 8px; }
