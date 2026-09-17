@@ -1,0 +1,47 @@
+name: Verify hardened Tutu links v8
+
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-link-builder-v8.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Refresh cache version
+        run: |
+          sed -i 's/tutu-links-7/tutu-links-8/g' index.html index-en.html index-hi.html
+      - name: Validate
+        run: |
+          node --check assets/tutu-link-builder.js
+          node - <<'NODE'
+          global.window={};require('./assets/tutu-link-builder.js');const L=window.TUTU_LINKS;
+          const p=(id,country,canonical,ru,iata=[])=>({id,country,canonical,name:{ru},iata});
+          const d=(y,m,day)=>new Date(y,m-1,day);
+          if(L.railSlug(p('ru-oryol','RU','Oryol','Орёл'))!=='Orel')throw Error('Orel');
+          if(L.railSlug(p('ru-yoshkar-ola','RU','Yoshkar-Ola','Йошкар-Ола'))!=='Ioshkar-Ola')throw Error('Ioshkar-Ola');
+          if(L.railSlug(p('ru-grozny','RU','Grozny','Грозный'))!=='Groznyy')throw Error('Groznyy');
+          if(L.supports('flight',p('ru-tver','RU','Tver','Тверь',[])))throw Error('Tver must not be flight-supported');
+          if(!L.supports('flight',p('in-delhi','IN','Delhi','Дели',['DEL'])))throw Error('Delhi must be flight-supported');
+          let u=L.build('flight',{from:p('in-delhi','IN','Delhi','Дели',['DEL']),to:p('in-mumbai','IN','Mumbai','Мумбаи',['BOM']),date:d(2026,9,20),adults:1,children:0,childAges:[],cabin:'economy'});
+          if(!u.includes('route%5B0%5D=216-20092026-158'))throw Error(u);
+          u=L.build('train',{from:p('ru-moscow','RU','Moscow','Москва'),to:p('ru-yoshkar-ola','RU','Yoshkar-Ola','Йошкар-Ола'),date:d(2026,9,20),adults:1,children:0,childAges:[]});
+          if(!u.includes('/poezda/Moskva/Ioshkar-Ola/'))throw Error(u);
+          console.log('builder v8 OK');
+          NODE
+          git diff --check
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/verify-link-builder-v8.yml
+          git add index.html index-en.html index-hi.html
+          git commit -m "Refresh hardened Tutu link cache v8"
+          git push origin HEAD:main
