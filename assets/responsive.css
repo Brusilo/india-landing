@@ -5,7 +5,11 @@
   transform-origin: center;
 }
 /* Only the transport callout gets a larger illustration. */
-.panel--transport .panel-ico { width: 128px; height: 128px; }
+.panel--transport .panel-ico {
+  width: 128px; height: 128px;
+  /* Lift only this illustration; preserve text flow and the other icons. */
+  transform: translateY(-16px);
+}
 .mobile-menu-toggle { display: none; }
 
 @media (max-width: 1100px) {
@@ -190,16 +194,17 @@
   .panel h2 { font-size: 25px; line-height: 1.2; }
   .panel p { font-size: 15px; line-height: 1.5; margin-top: 10px; }
   .panel-ico { width: 56px; height: 56px; margin-top: 6px; }
-  /* Keep the heading full-width so the larger circle cannot squeeze it. */
+  /* Put the circle beside the heading, with the description full-width below. */
   .panel.panel--transport {
     grid-template-columns: minmax(0, 1fr) 80px;
     column-gap: 16px; row-gap: 12px;
   }
   .panel--transport > div { display: contents; }
-  .panel--transport h2 { grid-column: 1 / -1; }
-  .panel--transport p { grid-column: 1; margin-top: 0; }
+  .panel--transport h2 { grid-column: 1; grid-row: 1; }
+  .panel--transport p { grid-column: 1 / -1; grid-row: 2; margin-top: 0; }
   .panel.panel--transport .panel-ico {
-    grid-column: 2; grid-row: 2; align-self: center; justify-self: end;
+    grid-column: 2; grid-row: 1; align-self: start; justify-self: end;
+    transform: none;
     width: 80px; height: 80px; margin-top: 0;
   }
   .faq { max-width: 100%; gap: 8px; }
