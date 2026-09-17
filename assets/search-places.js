@@ -290,7 +290,7 @@
   const places=rows.map((r,i)=>{
     const [country,ru,en,hi,iata,aliases,priority]=r;
     const id=country.toLowerCase()+'-'+slug(en);
-    const search=normalize([ru,en,hi,iata,aliases,C[country].ru,C[country].en,C[country].hi].join(' '));
+    const search=normalize([ru,en,hi,aliases,C[country].ru,C[country].en,C[country].hi].join(' '));
     return {id,country,canonical:en,slug:slug(en),name:{ru,en,hi},iata:iata?iata.split(' '):[],aliases:(aliases||'').split(' ').filter(Boolean),priority:priority||999,search};
   });
   const byId=new Map(places.map(x=>[x.id,x]));
@@ -300,7 +300,7 @@
   };
   function lang(){const l=document.documentElement.lang;return l==='hi'?'hi':l==='en'?'en':'ru'}
   function countryName(code,l=lang()){return (C[code]&&C[code][l])||code}
-  function display(p,l=lang()){return {name:p.name[l]||p.name.en,meta:[countryName(p.country,l),p.iata.join(', ')].filter(Boolean).join(' · ')}}
+  function display(p,l=lang()){return {name:p.name[l]||p.name.en,meta:countryName(p.country,l)}}
   function levenshtein(a,b){
     if(a===b)return 0;if(!a.length)return b.length;if(!b.length)return a.length;
     const v=Array.from({length:b.length+1},(_,i)=>i);
@@ -308,7 +308,7 @@
   }
   function tokenScore(q,p){
     if(!q)return p.priority/1000;
-    const fields=[p.name.ru,p.name.en,p.name.hi,p.canonical,...p.iata,...p.aliases].map(normalize).filter(Boolean);
+    const fields=[p.name.ru,p.name.en,p.name.hi,p.canonical,...p.aliases.filter(a=>!/^\w{3}$/.test(a)||a!==a.toUpperCase())].map(normalize).filter(Boolean);
     let best=99;
     for(const f of fields){
       if(f===q)best=Math.min(best,0);
@@ -320,7 +320,6 @@
         for(const w of words){const d=levenshtein(q,w);if(d<=2)best=Math.min(best,.52+d*.08)}
       }
     }
-    if(best===99 && p.search.includes(q))best=.42;
     return best===99?99:best+(p.priority/10000)+(p.country==='RU'||p.country==='IN'?0:.02);
   }
   function search(query,limit=6){

@@ -54,6 +54,19 @@
 .search-v2 .v2-field--place { overflow: visible !important; }
 .search-v2 .v2-field--interactive { cursor: pointer; text-align: left; }
 
+.search-v2 .v2-trigger {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  text-align: left;
+  color: inherit;
+}
+
+
 .search-v2 .v2-caption {
   display: none;
   min-height: 16px;

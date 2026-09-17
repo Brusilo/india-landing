@@ -106,13 +106,13 @@
   }
 
   function dateField(caption,value){
-    return '<button type="button" class="v2-field v2-field--interactive v2-field--date '+(value?'has-value':'')+'" data-role="date" aria-haspopup="dialog">'+
-      '<span class="v2-caption">'+esc(caption)+'</span><span class="v2-value">'+esc(value||caption)+'</span><div class="v2-calendar" hidden></div></button>';
+    return '<div class="v2-field v2-field--date '+(value?'has-value':'')+'" data-role="date">'+
+      '<button type="button" class="v2-trigger" data-trigger="date" aria-haspopup="dialog"><span class="v2-caption">'+esc(caption)+'</span><span class="v2-value">'+esc(value||caption)+'</span></button><div class="v2-calendar" hidden></div></div>';
   }
 
   function paxField(caption){
-    return '<button type="button" class="v2-field v2-field--interactive v2-field--always-caption v2-field--pax" data-role="pax" aria-haspopup="dialog">'+
-      '<span class="v2-caption">'+esc(caption)+'</span><span class="v2-value">'+esc(travellerValue())+'</span><div class="v2-popover" hidden></div></button>';
+    return '<div class="v2-field v2-field--always-caption v2-field--pax" data-role="pax">'+
+      '<button type="button" class="v2-trigger" data-trigger="pax" aria-haspopup="dialog"><span class="v2-caption">'+esc(caption)+'</span><span class="v2-value">'+esc(travellerValue())+'</span></button><div class="v2-popover" hidden></div></div>';
   }
 
   function renderForm(){
@@ -226,30 +226,33 @@
 
   function bindCalendar(){
     const field=form.querySelector('.v2-field--date');if(!field)return;
-    const box=field.querySelector('.v2-calendar');
-    field.addEventListener('click',e=>{
-      e.stopPropagation();
+    const trigger=field.querySelector('[data-trigger="date"]'),box=field.querySelector('.v2-calendar');
+    trigger.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      const wasHidden=box.hidden;
+      closeOverlays(box);
+      if(wasHidden){
+        const s=states[mode],focusDate=mode==='hotel'?(s.start||today):(s.date||today);
+        calendarView=new Date(focusDate.getFullYear(),focusDate.getMonth(),1);
+        renderCalendar(box);box.hidden=false;
+      }else box.hidden=true;
+    });
+    box.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
       const nav=e.target.closest('.cal-nav');
       if(nav){calendarView=new Date(calendarView.getFullYear(),calendarView.getMonth()+Number(nav.dataset.step),1);renderCalendar(box);return}
       const day=e.target.closest('.cal-day');
-      if(day){
-        const chosen=parseIso(day.dataset.date),s=states[mode];
-        if(mode==='hotel'){
-          if(!s.start||s.end||chosen<=s.start){s.start=chosen;s.end=null}
-          else{s.end=chosen}
-        }else{s.date=chosen}
-        field.classList.add('has-value');
-        field.querySelector('.v2-value').textContent=mode==='hotel'?formatRange(s.start,s.end):formatSingle(s.date);
-        renderCalendar(box);
-        if(mode!=='hotel'||s.end)box.hidden=true;
-        renderHints();
-        return;
-      }
-      if(e.target.closest('.v2-calendar'))return;
-      closeOverlays(box);
-      const s=states[mode],focusDate=mode==='hotel'?(s.start||today):(s.date||today);
-      calendarView=new Date(focusDate.getFullYear(),focusDate.getMonth(),1);
-      renderCalendar(box);box.hidden=!box.hidden;
+      if(!day||day.disabled)return;
+      const chosen=parseIso(day.dataset.date),s=states[mode];
+      if(mode==='hotel'){
+        if(!s.start||s.end||chosen<=s.start){s.start=chosen;s.end=null}
+        else{s.end=chosen}
+      }else{s.date=chosen}
+      field.classList.add('has-value');
+      field.querySelector('.v2-value').textContent=mode==='hotel'?formatRange(s.start,s.end):formatSingle(s.date);
+      renderCalendar(box);
+      if(mode!=='hotel'||s.end)box.hidden=true;
+      renderHints();
     });
   }
 
@@ -262,9 +265,14 @@
 
   function bindPax(){
     const field=form.querySelector('.v2-field--pax');if(!field)return;
-    const box=field.querySelector('.v2-popover');
-    field.addEventListener('click',e=>{
-      e.stopPropagation();
+    const trigger=field.querySelector('[data-trigger="pax"]'),box=field.querySelector('.v2-popover');
+    trigger.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      const wasHidden=box.hidden;closeOverlays(box);
+      if(wasHidden){renderGuestPopover(box);box.hidden=false}else box.hidden=true;
+    });
+    box.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
       const step=e.target.closest('[data-step]');
       if(step){
         const s=states[mode],delta=Number(step.dataset.step);
@@ -273,9 +281,7 @@
         field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box);return;
       }
       const cab=e.target.closest('[data-cabin]');
-      if(cab){states[mode].cabin=cab.dataset.cabin;field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box);return}
-      if(e.target.closest('.v2-popover'))return;
-      closeOverlays(box);renderGuestPopover(box);box.hidden=!box.hidden;
+      if(cab){states[mode].cabin=cab.dataset.cabin;field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box)}
     });
   }
 
