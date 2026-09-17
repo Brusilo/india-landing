@@ -13,26 +13,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Update visible hero copy
+      - name: Refine localized copy and titles
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
 
-          hero = {
-              'index.html': 'Автобусы, поезда и самолёты по всей стране. И международные рейсы обратно домой.',
-              'index-en.html': 'Buses, trains and flights across the country, plus international flights back home.',
-              'index-hi.html': 'पूरे देश में बस, ट्रेन और फ़्लाइट — और घर वापसी के लिए अंतरराष्ट्रीय उड़ानें।',
+          replacements = {
+              'index.html': [
+                  ('<title>Туту – дешёвые билеты по России</title>', '<title>Туту: дешёвые билеты по России</title>'),
+                  ('Багаж и сборы видно до оплаты, а не на последнем шаге.', 'Багаж и сборы покажем заранее, до оплаты.'),
+                  ('Один из первых сервисов путешествий в России. Работаем дольше, чем большинство конкурентов.', 'Один из первых сервисов путешествий в России.'),
+                  ('Туту уже выбрали более 42 миллионов пассажиров – и возвращаются снова.', 'Более 42 миллионов путешественников уже выбрали Туту.'),
+              ],
+              'index-en.html': [
+                  ('<title>Tutu – cheap tickets across Russia</title>', '<title>Tutu: cheap tickets across Russia</title>'),
+                  ('Baggage and fees are shown before you pay, not at the last step.', 'We show baggage and fees upfront, before you pay.'),
+                  ("One of the first travel services in Russia. We've been around longer than most of our competitors.", "One of Russia's first travel services."),
+                  ('More than 42 million passengers have chosen Tutu, and they keep coming back.', 'More than 42 million travellers have chosen Tutu.'),
+              ],
+              'index-hi.html': [
+                  ('<title>Tutu – रूस में सस्ते टिकट</title>', '<title>Tutu: रूस में सस्ते टिकट</title>'),
+                  ('बैगेज और सभी शुल्क भुगतान से पहले ही दिख जाते हैं, आख़िरी स्टेप पर नहीं।', 'बैगेज और सभी शुल्क भुगतान से पहले ही साफ़ दिखाई देते हैं।'),
+                  ('रूस की सबसे पहली ट्रैवल सेवाओं में से एक। हम ज़्यादातर प्रतिस्पर्धियों से ज़्यादा समय से काम कर रहे हैं।', 'रूस की शुरुआती ट्रैवल सेवाओं में से एक।'),
+                  ('4.2 करोड़ से ज़्यादा यात्री Tutu चुन चुके हैं और बार-बार लौटकर आते हैं।', '4.2 करोड़ से ज़्यादा यात्री Tutu चुन चुके हैं।'),
+              ],
           }
 
-          for filename, new_text in hero.items():
+          for filename, reps in replacements.items():
               path = Path(filename)
               text = path.read_text(encoding='utf-8')
-              updated, count = re.subn(r'(<p class="hero-sub">).*?(</p>)', lambda m: m.group(1) + new_text + m.group(2), text, count=1, flags=re.S)
-              if count != 1:
-                  raise RuntimeError(f'hero-sub not found in {filename}')
-              path.write_text(updated, encoding='utf-8')
+              for old, new in reps:
+                  if old not in text:
+                      raise RuntimeError(f'Expected text not found in {filename}: {old}')
+                  text = text.replace(old, new, 1)
+              path.write_text(text, encoding='utf-8')
           PY
       - name: Commit updated pages
         shell: bash
@@ -43,6 +58,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "copy: update visible hero messaging"
+            git commit -m "copy: refine trust text and browser titles"
             git push
           fi
