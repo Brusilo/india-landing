@@ -13,35 +13,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Update localized copy
+      - name: Update visible hero copy
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import re
 
-          replacements = {
-              'index.html': {
-                  'Автобусы, поезда и самолёты по всей России. И обратный билет домой в Индию.': 'Автобусы, поезда и самолёты по всей стране. И международные рейсы обратно домой.',
-                  'Отели, хостелы и апартаменты в России и Индии': 'Отели, хостелы и апартаменты для всей поездки.',
-              },
-              'index-en.html': {
-                  'Buses, trains and flights across Russia, plus your ticket back home to India.': 'Buses, trains and flights across the country, plus international flights back home.',
-                  'Hotels, hostels and apartments in Russia and India': 'Hotels, hostels and apartments for your whole trip.',
-              },
-              'index-hi.html': {
-                  'पूरे रूस में बस, ट्रेन और फ़्लाइट के टिकट। साथ ही भारत लौटने का टिकट भी।': 'पूरे देश में बस, ट्रेन और फ़्लाइट — और घर वापसी के लिए अंतरराष्ट्रीय उड़ानें।',
-                  'रूस और भारत में होटल, हॉस्टल और अपार्टमेंट': 'पूरी यात्रा के लिए होटल, हॉस्टल और अपार्टमेंट।',
-              },
+          hero = {
+              'index.html': 'Автобусы, поезда и самолёты по всей стране. И международные рейсы обратно домой.',
+              'index-en.html': 'Buses, trains and flights across the country, plus international flights back home.',
+              'index-hi.html': 'पूरे देश में बस, ट्रेन और फ़्लाइट — और घर वापसी के लिए अंतरराष्ट्रीय उड़ानें।',
           }
 
-          for filename, reps in replacements.items():
+          for filename, new_text in hero.items():
               path = Path(filename)
               text = path.read_text(encoding='utf-8')
-              for old, new in reps.items():
-                  if old not in text:
-                      raise RuntimeError(f'Expected text not found in {filename}: {old}')
-                  text = text.replace(old, new, 1)
-              path.write_text(text, encoding='utf-8')
+              updated, count = re.subn(r'(<p class="hero-sub">).*?(</p>)', lambda m: m.group(1) + new_text + m.group(2), text, count=1, flags=re.S)
+              if count != 1:
+                  raise RuntimeError(f'hero-sub not found in {filename}')
+              path.write_text(updated, encoding='utf-8')
           PY
       - name: Commit updated pages
         shell: bash
@@ -52,6 +43,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "copy: refine hero and hotel messaging"
+            git commit -m "copy: update visible hero messaging"
             git push
           fi
