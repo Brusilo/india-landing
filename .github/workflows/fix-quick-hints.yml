@@ -16,81 +16,8 @@ jobs:
         with:
           ref: main
 
-      - name: Align quick hint groups
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-
-          js_path = Path('assets/search-v2.js')
-          js = js_path.read_text(encoding='utf-8')
-          old = '''    const placeHtml=a.map(item=>{const id=item[0],role=mode==='hotel'?'destination':item[1],p=TUTU_PLACES.byId.get(id);if(!p)return '';return '<button type="button" class="quick-chip-v2" data-v2-place="'+esc(id)+'" data-v2-role="'+esc(role)+'">'+esc(TUTU_PLACES.display(p,pageLang).name)+'</button>'}).join('');
-    const dateHtml=b.map(x=>{
-      const start=new Date(today);start.setDate(start.getDate()+x[0]);
-      const label=mode==='hotel'?compactDayFmt.format(start)+' – '+compactDayFmt.format(new Date(start.getFullYear(),start.getMonth(),start.getDate()+(x[1]||1))):(x[0]===0?(pageLang==='ru'?'Сегодня':pageLang==='hi'?'आज':'Today'):(pageLang==='ru'?'Завтра':pageLang==='hi'?'कल':'Tomorrow'));
-      return '<button type="button" class="quick-chip-v2" data-v2-date="'+x[0]+'" data-v2-length="'+x[1]+'">'+esc(label)+'</button>';
-    }).join('');
-    hints.innerHTML='<div class="quick-group-v2">'+placeHtml+'</div><div class="quick-group-v2">'+dateHtml+'</div>';
-'''
-          new = '''    const placeChip=item=>{const id=item[0],role=mode==='hotel'?'destination':item[1],p=TUTU_PLACES.byId.get(id);if(!p)return '';return '<button type="button" class="quick-chip-v2" data-v2-place="'+esc(id)+'" data-v2-role="'+esc(role)+'">'+esc(TUTU_PLACES.display(p,pageLang).name)+'</button>'};
-    const dateHtml=b.map(x=>{
-      const start=new Date(today);start.setDate(start.getDate()+x[0]);
-      const label=mode==='hotel'?compactDayFmt.format(start)+' – '+compactDayFmt.format(new Date(start.getFullYear(),start.getMonth(),start.getDate()+(x[1]||1))):(x[0]===0?(pageLang==='ru'?'Сегодня':pageLang==='hi'?'आज':'Today'):(pageLang==='ru'?'Завтра':pageLang==='hi'?'कल':'Tomorrow'));
-      return '<button type="button" class="quick-chip-v2" data-v2-date="'+x[0]+'" data-v2-length="'+x[1]+'">'+esc(label)+'</button>';
-    }).join('');
-    if(mode==='hotel'){
-      const destinationHtml=a.map(placeChip).join('');
-      hints.innerHTML='<div class="quick-group-v2 quick-group-v2--destination">'+destinationHtml+'</div><div class="quick-group-v2 quick-group-v2--date">'+dateHtml+'</div>';
-    }else{
-      const fromHtml=a.filter(item=>item[1]==='from').map(placeChip).join('');
-      const toHtml=a.filter(item=>item[1]==='to').map(placeChip).join('');
-      hints.innerHTML='<div class="quick-group-v2 quick-group-v2--from">'+fromHtml+'</div><div class="quick-group-v2 quick-group-v2--to">'+toHtml+'</div><div class="quick-group-v2 quick-group-v2--date">'+dateHtml+'</div>';
-    }
-'''
-          if old not in js:
-              raise SystemExit('renderHints markup marker not found')
-          js = js.replace(old, new, 1)
-          js_path.write_text(js, encoding='utf-8')
-
-          css_path = Path('assets/search-v2.css')
-          css = css_path.read_text(encoding='utf-8')
-          old_css = '''.search-hints-v2 .quick-group-v2 { display: flex; gap: 6px; flex-wrap: wrap; min-width: 0; }
-.search-hints-v2[data-mode="hotel"] .quick-group-v2:first-child { grid-column: 1; }
-.search-hints-v2[data-mode="hotel"] .quick-group-v2:nth-child(2) { grid-column: 2; }
-.search-hints-v2[data-mode="flight"] .quick-group-v2:first-child,
-.search-hints-v2[data-mode="train"] .quick-group-v2:first-child,
-.search-hints-v2[data-mode="bus"] .quick-group-v2:first-child { grid-column: 1 / 4; }
-.search-hints-v2[data-mode="flight"] .quick-group-v2:nth-child(2),
-.search-hints-v2[data-mode="train"] .quick-group-v2:nth-child(2),
-.search-hints-v2[data-mode="bus"] .quick-group-v2:nth-child(2) { grid-column: 4; }
-'''
-          new_css = '''.search-hints-v2 .quick-group-v2 { display: flex; gap: 6px; flex-wrap: wrap; min-width: 0; align-items: flex-start; }
-.search-hints-v2[data-mode="hotel"] .quick-group-v2--destination { grid-column: 1; }
-.search-hints-v2[data-mode="hotel"] .quick-group-v2--date { grid-column: 2; }
-.search-hints-v2[data-mode="flight"] .quick-group-v2--from,
-.search-hints-v2[data-mode="train"] .quick-group-v2--from,
-.search-hints-v2[data-mode="bus"] .quick-group-v2--from { grid-column: 1; }
-.search-hints-v2[data-mode="flight"] .quick-group-v2--to,
-.search-hints-v2[data-mode="train"] .quick-group-v2--to,
-.search-hints-v2[data-mode="bus"] .quick-group-v2--to { grid-column: 3; }
-.search-hints-v2[data-mode="flight"] .quick-group-v2--date,
-.search-hints-v2[data-mode="train"] .quick-group-v2--date,
-.search-hints-v2[data-mode="bus"] .quick-group-v2--date { grid-column: 4; }
-'''
-          if old_css not in css:
-              raise SystemExit('quick hint CSS marker not found')
-          css = css.replace(old_css, new_css, 1)
-          css_path.write_text(css, encoding='utf-8')
-
-          version = '20260917-hints2'
-          for name in ['index.html','index-en.html','index-hi.html']:
-              p=Path(name)
-              s=p.read_text(encoding='utf-8')
-              s=re.sub(r'assets/search-v2\.css(?:\?v=[^"\']+)?', 'assets/search-v2.css?v='+version, s)
-              s=re.sub(r'assets/search-v2\.js(?:\?v=[^"\']+)?', 'assets/search-v2.js?v='+version, s)
-              p.write_text(s, encoding='utf-8')
-          PY
+      - name: Apply quick hint alignment
+        run: python3 .github/scripts/fix_quick_hints.py
 
       - name: Validate
         shell: bash
@@ -106,12 +33,12 @@ jobs:
           done
           git diff --check
 
-      - name: Commit fix and remove workflow
+      - name: Commit fix and clean helpers
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git rm .github/workflows/fix-quick-hints.yml
+          git rm .github/workflows/fix-quick-hints.yml .github/scripts/fix_quick_hints.py
           git add assets/search-v2.js assets/search-v2.css index.html index-en.html index-hi.html
           git commit -m "Align quick hints with search fields"
           git push origin HEAD:main
