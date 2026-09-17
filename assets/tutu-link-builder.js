@@ -108,7 +108,9 @@
     'ru-nizhny-novgorod':'Nizhnij-Novgorod',
     'ru-mineralnye-vody':'Mineralnye_Vody',
     'ru-veliky-novgorod':'Novgorod',
-    'ru-yoshkar-ola':'Yoshkar-Ola',
+    'ru-yoshkar-ola':'Ioshkar-Ola',
+    'ru-oryol':'Orel',
+    'ru-grozny':'Groznyy',
     'ru-gorno-altaysk':'Gorno-Altaysk',
     'ru-ulan-ude':'Ulan-Ude',
     'ru-petropavlovsk-kamchatsky':'Petropavlovsk-Kamchatskiy',
@@ -171,7 +173,7 @@
 
   function supports(mode,place){
     if(!place)return false;
-    if(mode==='flight')return !!aviaSlug(place);
+    if(mode==='flight')return !!aviaSlug(place)&&Array.isArray(place.iata)&&place.iata.length>0;
     if(mode==='hotel')return !!countrySlug[place.country]&&!!hotelSlug(place);
     if(mode==='train'||mode==='bus')return railCountries.has(place.country)&&!!railSlug(place);
     return false;
