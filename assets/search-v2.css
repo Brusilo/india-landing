@@ -19,7 +19,7 @@
   position: relative !important;
   z-index: 20 !important;
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(145px, .55fr) minmax(250px, 1.05fr) 172px;
+  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(205px, .75fr) minmax(235px, 1fr) 172px;
   align-items: stretch;
   gap: 0;
   width: 100%;
@@ -236,7 +236,7 @@
   position: relative;
   z-index: 4;
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(145px, .55fr) minmax(250px, 1.05fr) 172px;
+  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(205px, .75fr) minmax(235px, 1fr) 172px;
   column-gap: 0;
   row-gap: 8px;
   width: 100%;
