@@ -1,0 +1,35 @@
+name: Adjust desktop date width
+
+on:
+  push:
+    paths:
+      - '.github/workflows/adjust-desktop-date-width.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Adjust desktop date and passenger columns
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('assets/search-v2.css')
+          text = path.read_text(encoding='utf-8')
+          old = 'grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(205px, .75fr) minmax(235px, 1fr) 172px;'
+          new = 'grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(235px, .85fr) minmax(220px, .95fr) 172px;'
+          count = text.count(old)
+          if count != 2:
+              raise SystemExit(f'Expected 2 desktop grid definitions, found {count}')
+          path.write_text(text.replace(old, new), encoding='utf-8')
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/search-v2.css
+          git commit -m "Give desktop date field more room"
+          git push
