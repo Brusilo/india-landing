@@ -25,10 +25,10 @@ jobs:
           .hero>.container{position:relative!important;z-index:2!important}
           .hero>.hero-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
           .hero>.hero-decor--suitcase{
-            width:640px!important;
+            width:680px!important;
             max-width:none!important;
-            right:34px!important;
-            top:-22px!important;
+            right:-20px!important;
+            top:-120px!important;
             opacity:1!important;
             transform:rotate(-5deg)!important;
           }
@@ -37,19 +37,19 @@ jobs:
           #routes>.container,#hotels>.container{position:relative!important;z-index:2!important}
           #routes>.section-decor,#hotels>.section-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
           #routes>.section-decor--ticket{
-            width:385px!important;
+            width:420px!important;
             max-width:none!important;
             right:-54px!important;
-            top:92px!important;
-            opacity:.98!important;
+            top:-24px!important;
+            opacity:1!important;
             transform:rotate(5deg)!important;
           }
           #hotels>.section-decor--keys{
-            width:275px!important;
+            width:300px!important;
             max-width:none!important;
-            left:-14px!important;
-            top:52px!important;
-            opacity:.98!important;
+            left:-100px!important;
+            top:40px!important;
+            opacity:1!important;
             transform:rotate(-7deg)!important;
           }
 
@@ -63,12 +63,12 @@ jobs:
           }
 
           @media(max-width:1200px){
-            .hero>.hero-decor--suitcase{width:535px!important;right:-4px!important;top:4px!important}
-            #routes>.section-decor--ticket{width:325px!important;right:-42px!important;top:100px!important}
-            #hotels>.section-decor--keys{width:235px!important;left:-12px!important;top:56px!important}
+            .hero>.hero-decor--suitcase{width:560px!important;right:-28px!important;top:-80px!important}
+            #routes>.section-decor--ticket{width:340px!important;right:-45px!important;top:-10px!important}
+            #hotels>.section-decor--keys{width:250px!important;left:-82px!important;top:46px!important}
           }
           @media(max-width:899px){
-            .hero>.hero-decor--suitcase{width:260px!important;right:-34px!important;top:72px!important;opacity:.78!important}
+            .hero>.hero-decor--suitcase{width:270px!important;right:-42px!important;top:18px!important;opacity:.82!important}
             #routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none!important}
             .footer{padding-top:24px!important}
             .footer-logo{margin-bottom:20px!important}
@@ -103,6 +103,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "fix: refine artwork placement and compact footer"
+            git commit -m "fix: reposition decorative artwork decisively"
             git push
           fi
