@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Refine decorative artwork layout
+      - name: Use original artwork and refine layout
         shell: bash
         run: |
           python3 - <<'PY'
@@ -25,48 +25,58 @@ jobs:
           .hero>.container{position:relative!important;z-index:2!important}
           .hero>.hero-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
           .hero>.hero-decor--suitcase{
-            width:520px!important;
+            width:560px!important;
             max-width:none!important;
-            right:70px!important;
-            top:92px!important;
-            opacity:.96!important;
-            transform:rotate(-6deg)!important;
+            right:72px!important;
+            top:18px!important;
+            opacity:1!important;
+            transform:rotate(-5deg)!important;
           }
 
-          #routes,#hotels{position:relative!important;overflow:hidden!important;isolation:isolate}
+          #routes,#hotels{position:relative!important;isolation:isolate}
+          #routes{overflow:visible!important}
+          #hotels{overflow:hidden!important}
           #routes>.container,#hotels>.container{position:relative!important;z-index:2!important}
           #routes>.section-decor,#hotels>.section-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
           #routes>.section-decor--ticket{
-            width:250px!important;
+            width:340px!important;
             max-width:none!important;
-            right:28px!important;
-            top:72px!important;
-            opacity:.84!important;
-            transform:rotate(8deg)!important;
+            right:36px!important;
+            top:104px!important;
+            opacity:.96!important;
+            transform:rotate(5deg)!important;
           }
           #hotels>.section-decor--keys{
-            width:190px!important;
+            width:245px!important;
             max-width:none!important;
-            left:18px!important;
-            top:72px!important;
-            opacity:.82!important;
-            transform:rotate(-8deg)!important;
+            left:16px!important;
+            top:62px!important;
+            opacity:.94!important;
+            transform:rotate(-7deg)!important;
           }
 
           @media(max-width:1200px){
-            .hero>.hero-decor--suitcase{width:430px!important;right:18px!important;top:120px!important}
-            #routes>.section-decor--ticket{width:210px!important;right:12px!important}
-            #hotels>.section-decor--keys{width:170px!important;left:8px!important}
+            .hero>.hero-decor--suitcase{width:470px!important;right:8px!important;top:40px!important}
+            #routes>.section-decor--ticket{width:285px!important;right:18px!important;top:112px!important}
+            #hotels>.section-decor--keys{width:210px!important;left:6px!important}
           }
           @media(max-width:899px){
-            .hero>.hero-decor--suitcase{width:245px!important;right:-42px!important;top:155px!important;opacity:.58!important}
+            .hero>.hero-decor--suitcase{width:245px!important;right:-35px!important;top:92px!important;opacity:.72!important}
             #routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none!important}
           }
           '''
 
+          replacements = {
+              'assets/decor-suitcase.png': 'assets/чемодан.png',
+              'assets/decor-ticket.png': 'assets/билет.png',
+              'assets/decor-keys.png': 'assets/ключи.png',
+          }
+
           for filename in ('index.html','index-en.html','index-hi.html'):
               path = Path(filename)
               text = path.read_text(encoding='utf-8')
+              for old, new in replacements.items():
+                  text = text.replace(old, new)
               if '/* decor-placement-fix */' in text:
                   start = text.index('/* decor-placement-fix */')
                   end = text.index('</style>', start)
@@ -84,6 +94,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "fix: refine decorative artwork layout"
+            git commit -m "fix: use original decorative artwork and refine layout"
             git push
           fi
