@@ -1,0 +1,129 @@
+name: Finalize resort cities and combined route cards v11
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-resorts-v11.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add resort cities and safe combined-route fallbacks
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          root=Path('.')
+
+          # Add more verified Tutu Hotel localities. Keep them hotel/search-friendly;
+          # transport builders will still validate their own support.
+          p=root/'assets/search-places.js'
+          s=p.read_text(encoding='utf-8')
+          marker='    // India — international and high-demand nodes'
+          assert marker in s
+          rows=[
+            "    ['RU','Лазаревское','Lazarevskoye','लाज़ारेव्स्कोये','','',134],",
+            "    ['RU','Дивноморское','Divnomorskoye','दिव्नोमोर्स्कोये','','',135],",
+            "    ['RU','Кабардинка','Kabardinka','कबार्दिंका','','',136],",
+            "    ['RU','Витязево','Vityazevo','वित्याज़ेवो','','',137],",
+            "    ['RU','Сукко','Sukko','सुक्को','','',138],",
+            "    ['RU','Архыз','Arkhyz','आर्खिज़','','',139],",
+            "    ['RU','Шерегеш','Sheregesh','शेरेगेश','','',140],",
+            "    ['RU','Листвянка','Listvyanka','लिस्तव्यांका','','',141],",
+            "    ['RU','Зеленоградск','Zelenogradsk','ज़ेलेनोग्राद्स्क','','',142],",
+            "    ['RU','Светлогорск','Svetlogorsk','स्वेतलोगोर्स्क','','',143],",
+            "    ['RU','Сортавала','Sortavala','सोर्टावाला','','',144],",
+            "    ['RU','Белокуриха','Belokurikha','बेलोकुरिखा','','',145],",
+            "    ['RU','Сириус','Sirius','सिरियस','','',146],",
+            "    ['RU','Теберда','Teberda','तेबेर्दा','','',147],",
+          ]
+          missing=[r for r in rows if r.split("','",2)[1] not in s]
+          if missing:
+            block='\n'.join(missing)+'\n\n'
+            s=s.replace(marker,block+marker,1)
+            p.write_text(s,encoding='utf-8')
+
+          # Preserve combined-route cards, but never claim a fake exact search or stale price.
+          p=root/'assets/card-links.js'
+          s=p.read_text(encoding='utf-8')
+          old="""    ['route_r6_combined','route_r7_combined'].forEach(id=>{const x=routes.querySelector('[data-cta=\"'+id+'\"]');if(x)x.remove()});
+    routes.querySelectorAll('.card[data-transport]').forEach(card=>{
+      const id=(card.dataset.cta||'').replace(/^route_/,'').replace(/_combined$/,'');
+      const d=routeData[id];
+      if(d){
+        const price=card.querySelector('.price');if(price)price.textContent=(lang==='en'?'from ':lang==='hi'?'से ':'от ')+nf(d.price)+' ₽';
+        const alt=card.querySelector('.price-alt');if(alt)alt.textContent='≈ ₹'+Math.round(d.price*RUB_TO_INR).toLocaleString('en-IN');
+        const meta=card.querySelector('.card-meta');if(meta)meta.textContent=duration(d.h,d.m);
+      }
+      activate(card,routeUrl(card));
+    });"""
+          new="""    const combinedFallback=new Set(['r6','r7']);
+    routes.querySelectorAll('.card[data-transport]').forEach(card=>{
+      const id=(card.dataset.cta||'').replace(/^route_/,'').replace(/_combined$/,'');
+      if(combinedFallback.has(id)){
+        const price=card.querySelector('.price');if(price)price.textContent=lang==='ru'?'Уточнить на Туту':lang==='hi'?'टूटू पर देखें':'Check on Tutu';
+        const alt=card.querySelector('.price-alt');if(alt)alt.textContent='';
+        const meta=card.querySelector('.card-meta');if(meta)meta.textContent=lang==='ru'?'Составной маршрут':lang==='hi'?'संयुक्त मार्ग':'Combined route';
+        activate(card,HOME);
+        return;
+      }
+      const d=routeData[id];
+      if(d){
+        const price=card.querySelector('.price');if(price)price.textContent=(lang==='en'?'from ':lang==='hi'?'से ':'от ')+nf(d.price)+' ₽';
+        const alt=card.querySelector('.price-alt');if(alt)alt.textContent='≈ ₹'+Math.round(d.price*RUB_TO_INR).toLocaleString('en-IN');
+        const meta=card.querySelector('.card-meta');if(meta)meta.textContent=duration(d.h,d.m);
+      }
+      activate(card,routeUrl(card));
+    });"""
+          assert old in s, 'combined route block not found'
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+
+          # Cache-bust the expanded place database and card-link runtime on all locales.
+          for fn in ['index.html','index-en.html','index-hi.html']:
+            p=root/fn
+            h=p.read_text(encoding='utf-8')
+            h=h.replace('assets/search-places.js?v=20260917-places-9','assets/search-places.js?v=20260917-places-11')
+            h=h.replace('assets/card-links.js?v=20260917-links-10','assets/card-links.js?v=20260917-links-11')
+            p.write_text(h,encoding='utf-8')
+
+          wf=root/'.github/workflows/finalize-resorts-v11.yml'
+          if wf.exists(): wf.unlink()
+          PY
+
+      - name: Validate final link pass
+        shell: bash
+        run: |
+          node --check assets/search-places.js
+          node --check assets/card-links.js
+          python3 - <<'PY'
+          from pathlib import Path
+          places=Path('assets/search-places.js').read_text(encoding='utf-8')
+          links=Path('assets/card-links.js').read_text(encoding='utf-8')
+          for city in ['Лазаревское','Дивноморское','Кабардинка','Витязево','Сукко','Архыз','Шерегеш','Листвянка','Зеленоградск','Светлогорск','Сортавала','Белокуриха','Сириус','Теберда']:
+            assert city in places, city
+          assert "const combinedFallback=new Set(['r6','r7'])" in links
+          assert "Уточнить на Туту" in links
+          assert "route_r6_combined','route_r7_combined" not in links
+          for fn in ['index.html','index-en.html','index-hi.html']:
+            h=Path(fn).read_text(encoding='utf-8')
+            assert 'assets/search-places.js?v=20260917-places-11' in h
+            assert 'assets/card-links.js?v=20260917-links-11' in h
+            assert 'role="tablist" aria-label="Фильтр маршрутов"' not in h
+          print('v11 final validation OK')
+          PY
+
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Finalize resort cities and route card fallbacks v11'
+          git push
