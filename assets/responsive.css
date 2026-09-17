@@ -7,8 +7,9 @@
 /* Only the transport callout gets a larger illustration. */
 .panel--transport .panel-ico {
   width: 128px; height: 128px;
-  /* Lift only this illustration; preserve text flow and the other icons. */
-  transform: translateY(-16px);
+  /* Center within the card rather than offsetting the illustration upward. */
+  align-self: center;
+  transform: none;
 }
 .mobile-menu-toggle { display: none; }
 
