@@ -957,6 +957,7 @@ body{position:relative!important}
   </div>
 </footer>
 
+<script src="assets/search-places.js"></script>
 <script>
 const CONFIG = {
   currency: '₽',
@@ -1062,9 +1063,26 @@ document.getElementById('faq-list').innerHTML = CONFIG.faq.map(f => `
   function renderPax(){const childRow=children>0?'<div class="pax-row"><div><div class="pax-name">'+L.child+'</div><div class="pax-sub">'+L.child_sub+'</div></div><div class="stepper"><button type="button" data-pax="child" data-step="-1">−</button><output>'+children+'</output><button type="button" data-pax="child" data-step="1">+</button></div></div>':'';const cabinBlock=mode==='flight'?'<div class="cabin"><div class="cabin-title">'+L.cabin+'</div><div class="cabin-tabs"><button type="button" data-cabin="economy" class="'+(cabin==='economy'?'is-active':'')+'">'+L.economy+'</button><button type="button" data-cabin="business" class="'+(cabin==='business'?'is-active':'')+'">'+L.business+'</button></div></div>':'';paxPop.innerHTML='<div class="pax-row"><div><div class="pax-name">'+L.adult+'</div><div class="pax-sub">'+L.adult_sub+'</div></div><div class="stepper"><button type="button" data-pax="adult" data-step="-1">−</button><output>'+adults+'</output><button type="button" data-pax="adult" data-step="1">+</button></div></div><button type="button" class="add-child '+(children===0?'is-visible':'')+'" data-add-child>＋ '+L.child+'</button>'+childRow+cabinBlock;paxPop.querySelectorAll('[data-step]').forEach(b=>{const total=adults+children;if(b.dataset.pax==='adult'&&b.dataset.step==='-1'&&adults<=1)b.disabled=true;if(b.dataset.step==='1'&&total>=9)b.disabled=true})}
   function closePax(){paxPop.hidden=true;paxTrigger.setAttribute('aria-expanded','false')}paxTrigger.addEventListener('click',()=>{if(paxPop.hidden){renderPax();paxPop.hidden=false;paxTrigger.setAttribute('aria-expanded','true')}else closePax()});
   paxPop.addEventListener('click',e=>{e.stopPropagation();if(e.target.closest('[data-add-child]')){children=1;renderPax();updatePax();return}const step=e.target.closest('[data-step]');if(step){const d=Number(step.dataset.step);if(step.dataset.pax==='adult')adults=Math.max(1,Math.min(9-children,adults+d));else children=Math.max(0,Math.min(9-adults,children+d));renderPax();updatePax();return}const c=e.target.closest('[data-cabin]');if(c){cabin=c.dataset.cabin;renderPax();updatePax()}});
-  function closeSuggest(){document.querySelectorAll('.search-suggest').forEach(x=>x.hidden=true)}function renderSuggest(input){if(mode==='hotel')return;const box=input.closest('.field').querySelector('.search-suggest'),q=input.value.trim().toLocaleLowerCase(),items=(places[mode]||[]).filter(x=>(x[0]+' '+x[1]).toLocaleLowerCase().includes(q)).slice(0,6);box.innerHTML=items.map(x=>'<button type="button" class="suggest-item" data-value="'+x[0].replace(/"/g,'&quot;')+'"><span class="suggest-main">'+x[0]+'</span><span class="suggest-meta">'+x[1]+'</span></button>').join('');box.hidden=!items.length}
-  [from,to].forEach(input=>{input.addEventListener('focus',()=>{closeSuggest();renderSuggest(input)});input.addEventListener('input',()=>renderSuggest(input));input.closest('.field').querySelector('.search-suggest').addEventListener('click',e=>{const item=e.target.closest('.suggest-item');if(!item)return;input.value=item.dataset.value;item.closest('.search-suggest').hidden=true})});
-  swap.addEventListener('click',()=>{const x=from.value;from.value=to.value;to.value=x});
+  function closeSuggest(){document.querySelectorAll('.search-suggest').forEach(x=>x.hidden=true)}
+  function escapeAttr(v){return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function clearPlaceMeta(input){['placeId','canonical','country','iata'].forEach(k=>delete input.dataset[k])}
+  function renderSuggest(input){
+    if(mode==='hotel')return;
+    const box=input.closest('.field').querySelector('.search-suggest'),q=input.value.trim();
+    let items=[];
+    if(mode==='flight'&&window.TUTU_PLACES){
+      const kind=input===from?'from':'to';
+      const found=q?TUTU_PLACES.search(q,6):TUTU_PLACES.popularFor(kind);
+      items=found.map(p=>{const d=TUTU_PLACES.display(p);return {value:d.name,main:d.name,meta:d.meta,id:p.id,canonical:p.canonical,country:p.country,iata:p.iata.join(',')}})
+    }else{
+      const nq=q.toLocaleLowerCase();
+      items=(places[mode]||[]).filter(x=>(x[0]+' '+x[1]).toLocaleLowerCase().includes(nq)).slice(0,6).map(x=>({value:x[0],main:x[0],meta:x[1]}))
+    }
+    box.innerHTML=items.map(x=>'<button type="button" class="suggest-item" data-value="'+escapeAttr(x.value)+'"'+(x.id?' data-place-id="'+escapeAttr(x.id)+'" data-canonical="'+escapeAttr(x.canonical)+'" data-country="'+escapeAttr(x.country)+'" data-iata="'+escapeAttr(x.iata)+'"':'')+'><span class="suggest-main">'+x.main+'</span><span class="suggest-meta">'+x.meta+'</span></button>').join('');
+    box.hidden=!items.length
+  }
+  [from,to].forEach(input=>{input.addEventListener('focus',()=>{closeSuggest();renderSuggest(input)});input.addEventListener('input',()=>{clearPlaceMeta(input);renderSuggest(input)});input.closest('.field').querySelector('.search-suggest').addEventListener('click',e=>{const item=e.target.closest('.suggest-item');if(!item)return;input.value=item.dataset.value;clearPlaceMeta(input);if(item.dataset.placeId){input.dataset.placeId=item.dataset.placeId;input.dataset.canonical=item.dataset.canonical||'';input.dataset.country=item.dataset.country||'';input.dataset.iata=item.dataset.iata||''}item.closest('.search-suggest').hidden=true})});
+  swap.addEventListener('click',()=>{const keys=['placeId','canonical','country','iata'],x=from.value,meta={};keys.forEach(k=>meta[k]=from.dataset[k]||'');from.value=to.value;to.value=x;keys.forEach(k=>{const v=to.dataset[k]||'';if(v)from.dataset[k]=v;else delete from.dataset[k];if(meta[k])to.dataset[k]=meta[k];else delete to.dataset[k]})});
   function setMode(next,index){if(next==='hotel')return;mode=next;buttons.forEach((b,i)=>{const active=i===index;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active))});const p=mode==='flight'?'flight':mode==='train'?'train':'bus';from.placeholder=L[p+'_from'];to.placeholder=L[p+'_to'];searchBtn.textContent=L[p+'_search'];document.documentElement.dataset.transportMode=mode;document.dispatchEvent(new CustomEvent('transportmodechange',{detail:{mode}}));paxCaption.textContent=mode==='flight'?'Who is flying':'Who is travelling';closeSuggest();closePax();updatePax()}
   buttons.forEach((b,i)=>b.addEventListener('click',()=>setMode(modes[i],i)));document.addEventListener('click',e=>{if(!e.target.closest('.field--place'))closeSuggest();if(!e.target.closest('.field--pax'))closePax()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSuggest();closePax()}});updatePax();
 })();
