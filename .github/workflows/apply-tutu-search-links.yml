@@ -1,0 +1,56 @@
+name: Apply Tutu search links
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-tutu-search-links.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply patch
+        run: python3 tools/patch_tutu_search_links.py
+      - name: Validate JavaScript and integration
+        run: |
+          node --check assets/search-v2.js
+          node --check assets/tutu-link-builder.js
+          grep -q 'TUTU_LINKS.build' assets/search-v2.js
+          grep -q 'tutu-link-builder.js' index.html
+          grep -q 'tutu-link-builder.js' index-en.html
+          grep -q 'tutu-link-builder.js' index-hi.html
+          grep -q 'route\[0\]' assets/tutu-link-builder.js
+          grep -q 'data-child-age' assets/search-v2.js
+          git diff --check
+      - name: Smoke test URL builder
+        run: |
+          node <<'NODE'
+          global.window = {};
+          require('./assets/tutu-link-builder.js');
+          const L = window.TUTU_LINKS;
+          const p=(id,country,canonical,ru)=>({id,country,canonical,name:{ru}});
+          const d=(y,m,day)=>new Date(y,m-1,day);
+          let u=L.build('flight',{from:p('ru-sochi','RU','Sochi','Сочи'),to:p('ru-moscow','RU','Moscow','Москва'),date:d(2026,9,18),adults:3,children:0,childAges:[],cabin:'economy'});
+          if(!u.includes('/f/Sochi/Moskva/') || !u.includes('class=Y') || !u.includes('travelers=3') || !u.includes('route%5B0%5D=78-18092026-491')) throw new Error(u);
+          u=L.build('train',{from:p('ru-kazan','RU','Kazan','Казань'),to:p('ru-moscow','RU','Moscow','Москва'),date:d(2026,9,20),adults:3,children:1,childAges:[6]});
+          if(!u.includes('/poezda/Kazan/Moskva/') || !u.includes('date=20.09.2026') || !u.includes('travelers=3.6')) throw new Error(u);
+          u=L.build('bus',{from:p('ru-moscow','RU','Moscow','Москва'),to:p('ru-gelendzhik','RU','Gelendzhik','Геленджик'),date:d(2026,9,18),adults:3,children:0,childAges:[]});
+          if(!u.includes('from=1447874') || !u.includes('to=1447979') || !u.includes('amount=3')) throw new Error(u);
+          u=L.build('hotel',{destination:p('ru-moscow','RU','Moscow','Москва'),start:d(2026,9,17),end:d(2026,9,18),adults:2,children:0,childAges:[]});
+          if(!u.includes('/c_russia/moscow/') || !u.includes('geo_id=2657260') || !u.includes('room%5B0%5D=2')) throw new Error(u);
+          console.log('URL builder smoke tests passed');
+          NODE
+      - name: Commit working integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/apply-tutu-search-links.yml tools/patch_tutu_search_links.py
+          git add assets/tutu-link-builder.js assets/search-v2.js assets/search-v2.css index.html index-en.html index-hi.html
+          git commit -m "Wire search to Tutu result URLs"
+          git push origin HEAD:main
