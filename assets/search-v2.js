@@ -14,7 +14,7 @@
     ru:{
       from:'Откуда',to:'Куда',when:'Когда',flightWho:'Кто летит',travelWho:'Кто едет',search:'Найти',
       hotelWhere:'Город',hotelDates:'Заезд — выезд',guests:'Кто едет',
-      adults:'Взрослые',adultSub:'От 12 лет',children:'Дети',childSub:'До 12 лет',
+      adults:'Взрослые',adultSub:'От 12 лет',children:'Дети',childSub:'До 18 лет',childAge:'Возраст ребёнка',years:'лет',
       economy:'Эконом',business:'Бизнес',cabin:'Класс обслуживания',
       passenger1:'пассажир',passenger2:'пассажира',passenger5:'пассажиров',
       guest1:'гость',guest2:'гостя',guest5:'гостей',
@@ -23,7 +23,7 @@
     en:{
       from:'From',to:'To',when:'When',flightWho:'Who is flying',travelWho:'Travellers',search:'Search',
       hotelWhere:'City',hotelDates:'Check-in — check-out',guests:'Guests',
-      adults:'Adults',adultSub:'12+ years',children:'Children',childSub:'Under 12',
+      adults:'Adults',adultSub:'12+ years',children:'Children',childSub:'Under 18',childAge:'Child age',years:'years',
       economy:'Economy',business:'Business',cabin:'Cabin class',
       passenger1:'passenger',passenger2:'passengers',passenger5:'passengers',
       guest1:'guest',guest2:'guests',guest5:'guests',
@@ -32,7 +32,7 @@
     hi:{
       from:'कहाँ से',to:'कहाँ तक',when:'तारीख',flightWho:'कौन उड़ रहा है',travelWho:'यात्री',search:'खोजें',
       hotelWhere:'शहर',hotelDates:'चेक-इन — चेक-आउट',guests:'मेहमान',
-      adults:'वयस्क',adultSub:'12 वर्ष और अधिक',children:'बच्चे',childSub:'12 वर्ष से कम',
+      adults:'वयस्क',adultSub:'12 वर्ष और अधिक',children:'बच्चे',childSub:'18 वर्ष से कम',childAge:'बच्चे की उम्र',years:'वर्ष',
       economy:'इकोनॉमी',business:'बिज़नेस',cabin:'यात्रा श्रेणी',
       passenger1:'यात्री',passenger2:'यात्री',passenger5:'यात्री',
       guest1:'मेहमान',guest2:'मेहमान',guest5:'मेहमान',
@@ -41,10 +41,10 @@
   }[pageLang];
 
   const states={
-    flight:{fromText:'',toText:'',from:null,to:null,date:null,adults:1,children:0,cabin:'economy'},
-    train:{fromText:'',toText:'',from:null,to:null,date:null,adults:1,children:0,cabin:null},
-    bus:{fromText:'',toText:'',from:null,to:null,date:null,adults:1,children:0,cabin:null},
-    hotel:{destinationText:'',destination:null,start:null,end:null,adults:2,children:0,cabin:null}
+    flight:{fromText:'',toText:'',from:null,to:null,date:null,adults:1,children:0,childAges:[],cabin:'economy'},
+    train:{fromText:'',toText:'',from:null,to:null,date:null,adults:1,children:0,childAges:[],cabin:null},
+    bus:{fromText:'',toText:'',from:null,to:null,date:null,adults:1,children:0,childAges:[],cabin:null},
+    hotel:{destinationText:'',destination:null,start:null,end:null,adults:2,children:0,childAges:[],cabin:null}
   };
 
   let mode='flight';
@@ -259,8 +259,13 @@
 
   function renderGuestPopover(box){
     const s=states[mode],total=s.adults+s.children;
-    box.innerHTML='<div class="guest-row"><div><div class="guest-name">'+esc(labels.adults)+'</div><div class="guest-sub">'+esc(labels.adultSub)+'</div></div><div class="guest-stepper"><button type="button" data-person="adult" data-step="-1" '+(s.adults<=1?'disabled':'')+'>−</button><output>'+s.adults+'</output><button type="button" data-person="adult" data-step="1" '+(total>=9?'disabled':'')+'>+</button></div></div>'+ 
-      '<div class="guest-row"><div><div class="guest-name">'+esc(labels.children)+'</div><div class="guest-sub">'+esc(labels.childSub)+'</div></div><div class="guest-stepper"><button type="button" data-person="child" data-step="-1" '+(s.children<=0?'disabled':'')+'>−</button><output>'+s.children+'</output><button type="button" data-person="child" data-step="1" '+(total>=9?'disabled':'')+'>+</button></div></div>'+ 
+    if(!Array.isArray(s.childAges))s.childAges=[];
+    while(s.childAges.length<s.children)s.childAges.push(5);
+    if(s.childAges.length>s.children)s.childAges=s.childAges.slice(0,s.children);
+    const ageOptions=value=>Array.from({length:18},(_,age)=>'<option value="'+age+'" '+(Number(value)===age?'selected':'')+'>'+age+' '+esc(labels.years)+'</option>').join('');
+    const agesHtml=s.children?'<div class="child-ages-v2">'+s.childAges.map((age,i)=>'<label class="child-age-v2"><span>'+esc(labels.childAge)+' '+(i+1)+'</span><select data-child-age="'+i+'">'+ageOptions(age)+'</select></label>').join('')+'</div>':'';
+    box.innerHTML='<div class="guest-row"><div><div class="guest-name">'+esc(labels.adults)+'</div><div class="guest-sub">'+esc(labels.adultSub)+'</div></div><div class="guest-stepper"><button type="button" data-person="adult" data-step="-1" '+(s.adults<=1?'disabled':'')+'>−</button><output>'+s.adults+'</output><button type="button" data-person="adult" data-step="1" '+(total>=9?'disabled':'')+'>+</button></div></div>'+
+      '<div class="guest-row"><div><div class="guest-name">'+esc(labels.children)+'</div><div class="guest-sub">'+esc(labels.childSub)+'</div></div><div class="guest-stepper"><button type="button" data-person="child" data-step="-1" '+(s.children<=0?'disabled':'')+'>−</button><output>'+s.children+'</output><button type="button" data-person="child" data-step="1" '+(total>=9?'disabled':'')+'>+</button></div></div>'+agesHtml+
       (mode==='flight'?'<div class="cabin-row"><div class="cabin-title">'+esc(labels.cabin)+'</div><div class="cabin-tabs"><button type="button" data-cabin="economy" class="'+(s.cabin==='economy'?'is-active':'')+'">'+esc(labels.economy)+'</button><button type="button" data-cabin="business" class="'+(s.cabin==='business'?'is-active':'')+'">'+esc(labels.business)+'</button></div></div>':'');
   }
 
@@ -272,13 +277,23 @@
       const wasHidden=box.hidden;closeOverlays(box);
       if(wasHidden){renderGuestPopover(box);box.hidden=false}else box.hidden=true;
     });
+    box.addEventListener('change',e=>{
+      const age=e.target.closest('[data-child-age]');if(!age)return;
+      const s=states[mode],i=Number(age.dataset.childAge);
+      if(!Array.isArray(s.childAges))s.childAges=[];s.childAges[i]=Number(age.value);
+    });
     box.addEventListener('click',e=>{
       e.preventDefault();e.stopPropagation();
       const step=e.target.closest('[data-step]');
       if(step){
         const s=states[mode],delta=Number(step.dataset.step);
         if(step.dataset.person==='adult')s.adults=Math.max(1,Math.min(9-s.children,s.adults+delta));
-        else s.children=Math.max(0,Math.min(9-s.adults,s.children+delta));
+        else{
+          s.children=Math.max(0,Math.min(9-s.adults,s.children+delta));
+          if(!Array.isArray(s.childAges))s.childAges=[];
+          while(s.childAges.length<s.children)s.childAges.push(5);
+          if(s.childAges.length>s.children)s.childAges=s.childAges.slice(0,s.children);
+        }
         field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box);return;
       }
       const cab=e.target.closest('[data-cabin]');
@@ -294,7 +309,21 @@
     });
   }
 
-  function bindForm(){bindPlaces();bindCalendar();bindPax();bindSwap()}
+  function bindSubmit(){
+    const button=form.querySelector('.v2-submit');if(!button)return;
+    button.addEventListener('click',()=>{
+      try{
+        if(!window.TUTU_LINKS){const e=new Error('unsupported');e.code='unsupported';throw e}
+        const url=window.TUTU_LINKS.build(mode,states[mode]);
+        window.location.assign(url);
+      }catch(err){
+        const code=err&&err.code?err.code:'unsupported';
+        alert(window.TUTU_LINKS?window.TUTU_LINKS.message(code,pageLang):code);
+      }
+    });
+  }
+
+  function bindForm(){bindPlaces();bindCalendar();bindPax();bindSwap();bindSubmit()}
 
   function setQuickPlace(role,id){
     const p=TUTU_PLACES.byId.get(id);if(!p)return;
