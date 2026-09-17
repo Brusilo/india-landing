@@ -18,23 +18,7 @@ jobs:
       - name: Add extra blue space to Hindi hero
         shell: bash
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('index-hi.html')
-          text = path.read_text(encoding='utf-8')
-          marker = '</style>'
-          extra = '''
-/* Hindi hero breathing room: keep suitcase position unchanged, extend blue area downward */
-html:lang(hi) .hero{padding-bottom:132px!important}
-@media(min-width:768px){html:lang(hi) .hero{padding-bottom:176px!important}}
-'''
-          if extra.strip() in text:
-              raise SystemExit('Hindi hero spacing already applied')
-          if marker not in text:
-              raise SystemExit('style closing tag not found')
-          text = text.replace(marker, extra + marker, 1)
-          path.write_text(text, encoding='utf-8')
-          PY
+          python3 -c "from pathlib import Path; p=Path('index-hi.html'); t=p.read_text(encoding='utf-8'); m='</style>'; x='\\n/* Hindi hero breathing room */\\nhtml:lang(hi) .hero{padding-bottom:132px!important}\\n@media(min-width:768px){html:lang(hi) .hero{padding-bottom:176px!important}}\\n'; assert x.strip() not in t; assert m in t; p.write_text(t.replace(m,x+m,1),encoding='utf-8')"
       - name: Validate
         shell: bash
         run: |
