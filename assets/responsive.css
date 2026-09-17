@@ -1,4 +1,11 @@
-/* Compact layout only. The existing desktop design stays unchanged above 1100px. */
+/* Compact layout and shared, explicitly scoped icon refinements. */
+/* Match the visual size of the Apple badge to the other store badges. */
+.footer-app-col .stores img[src$="/store-apple.png"] {
+  transform: scale(1.08);
+  transform-origin: center;
+}
+/* Only the transport callout gets a larger illustration. */
+.panel--transport .panel-ico { width: 128px; height: 128px; }
 .mobile-menu-toggle { display: none; }
 
 @media (max-width: 1100px) {
@@ -139,6 +146,11 @@
   .section-head--row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .head-actions { justify-self: end; flex-direction: row; gap: 0; }
   .head-actions__nav { display: none; }
+  /* Remove the entire header-action row, not just the link, on compact screens. */
+  #routes .section-head > .head-actions,
+  #hotels .section-head > .head-actions { display: none; }
+  #routes .section-head--row,
+  #hotels .section-head--row { gap: 0; }
   .see-all { min-height: 36px; font-size: 14px; white-space: normal; }
   .see-all svg { flex: none; }
   .carousel-wrap { min-width: 0; margin-inline: -16px; overflow: hidden; }
@@ -178,6 +190,18 @@
   .panel h2 { font-size: 25px; line-height: 1.2; }
   .panel p { font-size: 15px; line-height: 1.5; margin-top: 10px; }
   .panel-ico { width: 56px; height: 56px; margin-top: 6px; }
+  /* Keep the heading full-width so the larger circle cannot squeeze it. */
+  .panel.panel--transport {
+    grid-template-columns: minmax(0, 1fr) 80px;
+    column-gap: 16px; row-gap: 12px;
+  }
+  .panel--transport > div { display: contents; }
+  .panel--transport h2 { grid-column: 1 / -1; }
+  .panel--transport p { grid-column: 1; margin-top: 0; }
+  .panel.panel--transport .panel-ico {
+    grid-column: 2; grid-row: 2; align-self: center; justify-self: end;
+    width: 80px; height: 80px; margin-top: 0;
+  }
   .faq { max-width: 100%; gap: 8px; }
   .faq-item { padding-inline: 16px; }
   .faq-item summary { min-height: 64px; padding-block: 16px; font-size: 16px; line-height: 1.4; justify-content: space-between; }
@@ -243,6 +267,8 @@
   .panel { padding: 32px; grid-template-columns: minmax(0,1fr) 80px; gap: 24px; }
   .panel h2 { font-size: 30px; }
   .panel-ico { width: 80px; height: 80px; }
+  .panel.panel--transport { grid-template-columns: minmax(0,1fr) 104px; column-gap: 24px; }
+  .panel.panel--transport .panel-ico { width: 104px; height: 104px; }
 }
 
 @media (max-width: 359px) {
@@ -254,6 +280,8 @@
   .section-head h2 { font-size: 24px; }
   .panel { padding: 20px 16px; gap: 12px; grid-template-columns: minmax(0,1fr) 48px; }
   .panel-ico { width: 48px; height: 48px; }
+  .panel.panel--transport { grid-template-columns: minmax(0,1fr) 72px; column-gap: 12px; }
+  .panel.panel--transport .panel-ico { width: 72px; height: 72px; }
   .footer-app-body { grid-template-columns: 112px minmax(0,1fr); gap: 16px; }
   .footer-app-col .qr { width: 112px; height: 112px; }
 }
