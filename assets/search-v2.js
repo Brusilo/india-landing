@@ -180,6 +180,7 @@
     form.querySelectorAll('.v2-field--place').forEach(field=>{
       const input=field.querySelector('.v2-input'),role=field.dataset.role,box=field.querySelector('.search-suggest');
       input.addEventListener('focus',()=>{closeOverlays(box);renderSuggestions(input,role)});
+      input.addEventListener('click',e=>{e.stopPropagation();closeOverlays(box);renderSuggestions(input,role)});
       input.addEventListener('input',()=>{
         const s=states[mode];
         input.removeAttribute('data-place-id');input.removeAttribute('data-canonical');input.removeAttribute('data-country');
@@ -311,6 +312,7 @@
   }
 
   function renderHints(){
+    hints.dataset.mode=mode;
     let a=[],b=[];
     if(mode==='hotel'){
       a=[['ru-moscow'],['ru-saint-petersburg'],['ru-sochi']];

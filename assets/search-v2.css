@@ -19,7 +19,7 @@
   position: relative !important;
   z-index: 20 !important;
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(185px, .78fr) minmax(190px, .82fr) 172px;
+  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(145px, .55fr) minmax(250px, 1.05fr) 172px;
   align-items: stretch;
   gap: 0;
   width: 100%;
@@ -163,9 +163,9 @@
   top: calc(100% + 8px);
   left: 0;
   right: 0;
-  max-height: 330px;
+  max-height: none;
   padding: 8px;
-  overflow: auto;
+  overflow: visible;
   border-radius: 16px;
   background: #fff;
   box-shadow: 0 14px 40px rgba(13, 11, 104, .20);
@@ -235,14 +235,25 @@
 .search-hints.search-hints-v2 {
   position: relative;
   z-index: 4;
-  display: flex !important;
-  gap: 8px;
-  flex-wrap: wrap;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(145px, .55fr) minmax(250px, 1.05fr) 172px;
+  column-gap: 0;
+  row-gap: 8px;
   width: 100%;
   margin-top: 7px;
 }
-.search-hints-v2 .quick-group-v2 { display: flex; gap: 6px; flex-wrap: wrap; }
-.search-hints-v2 .quick-group-v2 + .quick-group-v2 { margin-left: 146px; }
+.search-hints-v2[data-mode="hotel"] {
+  grid-template-columns: minmax(320px, 1.55fr) minmax(300px, .95fr) minmax(220px, .8fr) 172px;
+}
+.search-hints-v2 .quick-group-v2 { display: flex; gap: 6px; flex-wrap: wrap; min-width: 0; }
+.search-hints-v2[data-mode="hotel"] .quick-group-v2:first-child { grid-column: 1; }
+.search-hints-v2[data-mode="hotel"] .quick-group-v2:nth-child(2) { grid-column: 2; }
+.search-hints-v2[data-mode="flight"] .quick-group-v2:first-child,
+.search-hints-v2[data-mode="train"] .quick-group-v2:first-child,
+.search-hints-v2[data-mode="bus"] .quick-group-v2:first-child { grid-column: 1 / 4; }
+.search-hints-v2[data-mode="flight"] .quick-group-v2:nth-child(2),
+.search-hints-v2[data-mode="train"] .quick-group-v2:nth-child(2),
+.search-hints-v2[data-mode="bus"] .quick-group-v2:nth-child(2) { grid-column: 4; }
 .search-hints-v2 .quick-chip-v2 {
   padding: 5px 9px;
   border-radius: 9px;
@@ -276,5 +287,10 @@
   .search-v2 .v2-value,
   .search-v2 .v2-input::placeholder { font-size: 17px !important; }
   .search-v2 .v2-popover { left: 0; right: auto; }
-  .search-hints-v2 .quick-group-v2 + .quick-group-v2 { margin-left: 0; }
+  .search-hints.search-hints-v2,
+  .search-hints-v2[data-mode="hotel"] {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
 }
