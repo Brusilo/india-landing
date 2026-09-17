@@ -56,9 +56,16 @@
   if(routes){
     const see=routes.querySelector('.see-all');if(see)see.href=OFFERS;
     const cta=routes.querySelector('.card--cta');if(cta)cta.href=OFFERS;
-    ['route_r6_combined','route_r7_combined'].forEach(id=>{const x=routes.querySelector('[data-cta="'+id+'"]');if(x)x.remove()});
+    const combinedFallback=new Set(['r6','r7']);
     routes.querySelectorAll('.card[data-transport]').forEach(card=>{
       const id=(card.dataset.cta||'').replace(/^route_/,'').replace(/_combined$/,'');
+      if(combinedFallback.has(id)){
+        const price=card.querySelector('.price');if(price)price.textContent=lang==='ru'?'Уточнить на Туту':lang==='hi'?'टूटू पर देखें':'Check on Tutu';
+        const alt=card.querySelector('.price-alt');if(alt)alt.textContent='';
+        const meta=card.querySelector('.card-meta');if(meta)meta.textContent=lang==='ru'?'Составной маршрут':lang==='hi'?'संयुक्त मार्ग':'Combined route';
+        activate(card,HOME);
+        return;
+      }
       const d=routeData[id];
       if(d){
         const price=card.querySelector('.price');if(price)price.textContent=(lang==='en'?'from ':lang==='hi'?'से ':'от ')+nf(d.price)+' ₽';
