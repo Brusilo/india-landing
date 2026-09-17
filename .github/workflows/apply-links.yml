@@ -1,4 +1,4 @@
-name: Fix decorative artwork placement
+name: Fix decorative artwork layering
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Reposition decorative artwork
+      - name: Fix decorative artwork layering
         shell: bash
         run: |
           python3 - <<'PY'
@@ -21,29 +21,40 @@ jobs:
 
           css = '''
           /* decor-placement-fix */
+          .hero{isolation:isolate}
+          .hero>.hero-decor{z-index:0!important;pointer-events:none!important}
+          .hero>.container{position:relative!important;z-index:2!important}
           .hero>.hero-decor--suitcase{
-            width:360px!important;
-            right:42px!important;
-            top:92px!important;
-            opacity:.62!important;
-            transform:rotate(-5deg)!important;
+            width:330px!important;
+            right:34px!important;
+            top:105px!important;
+            opacity:.88!important;
+            filter:saturate(1.22) brightness(1.18)!important;
+            transform:rotate(-4deg)!important;
           }
+          #routes,#hotels{position:relative!important;overflow:hidden!important;isolation:isolate}
+          #routes>.container,#hotels>.container{position:relative!important;z-index:2!important}
+          #routes>.section-decor,#hotels>.section-decor{z-index:0!important;pointer-events:none!important}
           #routes>.section-decor--ticket{
-            width:290px!important;
-            right:-34px!important;
-            top:72px!important;
-            opacity:.34!important;
-            transform:rotate(8deg)!important;
+            width:230px!important;
+            right:10px!important;
+            top:145px!important;
+            opacity:.72!important;
+            filter:saturate(1.28) brightness(1.08)!important;
+            mix-blend-mode:multiply!important;
+            transform:rotate(7deg)!important;
           }
           #hotels>.section-decor--keys{
-            width:215px!important;
-            left:18px!important;
-            top:72px!important;
-            opacity:.34!important;
-            transform:rotate(-8deg)!important;
+            width:205px!important;
+            left:14px!important;
+            top:118px!important;
+            opacity:.72!important;
+            filter:saturate(1.28) brightness(1.08)!important;
+            mix-blend-mode:multiply!important;
+            transform:rotate(-7deg)!important;
           }
           @media(max-width:899px){
-            .hero>.hero-decor--suitcase{width:220px!important;right:-45px!important;top:150px!important;opacity:.28!important}
+            .hero>.hero-decor--suitcase{width:210px!important;right:-38px!important;top:155px!important;opacity:.46!important}
             #routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none!important}
           }
           '''
@@ -59,7 +70,7 @@ jobs:
                   text = text.replace('</style>', css + '</style>', 1)
               path.write_text(text, encoding='utf-8')
           PY
-      - name: Commit placement fix
+      - name: Commit layering fix
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -68,6 +79,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "fix: position decorative artwork"
+            git commit -m "fix: keep decorative artwork behind content"
             git push
           fi
