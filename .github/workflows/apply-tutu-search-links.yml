@@ -16,7 +16,9 @@ jobs:
         with:
           ref: main
       - name: Apply patch
-        run: python3 tools/patch_tutu_search_links.py
+        run: |
+          python3 tools/patch_tutu_search_links.py
+          sed -i 's/[[:space:]]*$//' assets/search-v2.js
       - name: Validate JavaScript and integration
         run: |
           node --check assets/search-v2.js
