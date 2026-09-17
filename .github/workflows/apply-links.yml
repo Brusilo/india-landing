@@ -1,4 +1,4 @@
-name: Add quick search hints and decorative artwork
+name: Add quick hints and decorative artwork
 
 on:
   push:
@@ -18,82 +18,25 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re, json
-
-          locales = {
-            'index.html': {
-              'today':'Сегодня','tomorrow':'Завтра','quick_label':'Популярные варианты',
-              'cities': {'moscow':'Москва','spb':'Санкт-Петербург','kazan':'Казань','tver':'Тверь','ufa':'Уфа','delhi':'Дели','mumbai':'Мумбаи'}
-            },
-            'index-en.html': {
-              'today':'Today','tomorrow':'Tomorrow','quick_label':'Popular options',
-              'cities': {'moscow':'Moscow','spb':'Saint Petersburg','kazan':'Kazan','tver':'Tver','ufa':'Ufa','delhi':'Delhi','mumbai':'Mumbai'}
-            },
-            'index-hi.html': {
-              'today':'आज','tomorrow':'कल','quick_label':'लोकप्रिय विकल्प',
-              'cities': {'moscow':'मॉस्को','spb':'सेंट पीटर्सबर्ग','kazan':'कज़ान','tver':'त्वेर','ufa':'ऊफ़ा','delhi':'दिल्ली','mumbai':'मुंबई'}
-            }
-          }
-
-          css = r'''
-/* Quick search hints + decorative 3D artwork */
-.search{margin-top:10px}
-.search-hints{width:min(100%,1080px);display:grid;grid-template-columns:minmax(180px,1.05fr) 48px minmax(180px,1.05fr) minmax(145px,.76fr) minmax(190px,.9fr) 190px;gap:0;margin-top:7px;position:relative;z-index:4}
-.quick-group{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}.quick-from{grid-column:1}.quick-to{grid-column:3}.quick-date{grid-column:4}.quick-chip{padding:5px 9px;border-radius:9px;background:rgba(186,97,255,.38);color:#fff;font-size:12px;font-weight:500;line-height:1.15;white-space:nowrap;transition:background .15s ease}.quick-chip:hover{background:rgba(186,97,255,.58)}
-.hero{position:relative;overflow:hidden}.hero>.hero-decor{position:absolute;pointer-events:none;user-select:none;z-index:0}.hero>.hero-decor--suitcase{width:min(34vw,410px);right:max(-70px,calc((100vw - 1180px)/2 - 90px));top:88px;opacity:.48;transform:rotate(-5deg)}.hero>.container{position:relative;z-index:2}
-#routes,#hotels{position:relative;overflow:hidden}#routes>.section-decor,#hotels>.section-decor{position:absolute;pointer-events:none;user-select:none;z-index:0}#routes>.section-decor--ticket{width:275px;right:-52px;top:18px;opacity:.15;transform:rotate(8deg)}#hotels>.section-decor--keys{width:220px;left:-64px;top:48px;opacity:.13;transform:rotate(-10deg)}#routes>.container,#hotels>.container{position:relative;z-index:1}
-@media(max-width:899px){.search-hints{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.quick-group{display:flex}.hero>.hero-decor--suitcase{width:250px;right:-110px;top:135px;opacity:.24}#routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none}}
-'''
-
-          quick_js_template = r'''(function(){
-            const quick=__QUICK__;
-            const from=document.getElementById('f-from'),to=document.getElementById('f-to'),date=document.getElementById('f-date');
-            const fromBox=document.querySelector('.quick-from'),toBox=document.querySelector('.quick-to');
-            if(!fromBox||!toBox) return;
-            function mode(){return document.documentElement.dataset.transportMode||'flight'}
-            function render(){const q=quick[mode()]||quick.flight;fromBox.innerHTML=q.from.map(x=>'<button type="button" class="quick-chip" data-quick-from="'+x+'">'+x+'</button>').join('');toBox.innerHTML=q.to.map(x=>'<button type="button" class="quick-chip" data-quick-to="'+x+'">'+x+'</button>').join('')}
-            document.addEventListener('transportmodechange',render);
-            document.addEventListener('click',e=>{const a=e.target.closest('[data-quick-from]');if(a){from.value=a.dataset.quickFrom;return}const b=e.target.closest('[data-quick-to]');if(b){to.value=b.dataset.quickTo;return}const d=e.target.closest('[data-quick-date]');if(d){const target=new Date();target.setHours(0,0,0,0);target.setDate(target.getDate()+Number(d.dataset.quickDate));const lang=document.documentElement.lang,locale=lang==='en'?'en-GB':lang;const dayFmt=new Intl.DateTimeFormat(locale,{day:'numeric',month:'long'}),weekFmt=new Intl.DateTimeFormat(locale,{weekday:'short'}),pad=n=>String(n).padStart(2,'0');date.value=dayFmt.format(target)+', '+weekFmt.format(target);date.dataset.iso=target.getFullYear()+'-'+pad(target.getMonth()+1)+'-'+pad(target.getDate())}});
-            render();
-          })();'''
-
+          import json
+          locales={'index.html':{'today':'Сегодня','tomorrow':'Завтра','label':'Популярные варианты','c':{'moscow':'Москва','spb':'Санкт-Петербург','kazan':'Казань','tver':'Тверь','ufa':'Уфа','delhi':'Дели','mumbai':'Мумбаи'}},'index-en.html':{'today':'Today','tomorrow':'Tomorrow','label':'Popular options','c':{'moscow':'Moscow','spb':'Saint Petersburg','kazan':'Kazan','tver':'Tver','ufa':'Ufa','delhi':'Delhi','mumbai':'Mumbai'}},'index-hi.html':{'today':'आज','tomorrow':'कल','label':'लोकप्रिय विकल्प','c':{'moscow':'मॉस्को','spb':'सेंट पीटर्सबर्ग','kazan':'कज़ान','tver':'त्वेर','ufa':'ऊफ़ा','delhi':'दिल्ली','mumbai':'मुंबई'}}}
+          css='.search{margin-top:10px}.search-hints{width:min(100%,1080px);display:grid;grid-template-columns:minmax(180px,1.05fr) 48px minmax(180px,1.05fr) minmax(145px,.76fr) minmax(190px,.9fr) 190px;margin-top:7px;position:relative;z-index:4}.quick-group{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}.quick-from{grid-column:1}.quick-to{grid-column:3}.quick-date{grid-column:4}.quick-chip{padding:5px 9px;border-radius:9px;background:rgba(186,97,255,.38);color:#fff;font-size:12px;font-weight:500;line-height:1.15;white-space:nowrap}.quick-chip:hover{background:rgba(186,97,255,.58)}.hero{position:relative;overflow:hidden}.hero>.hero-decor{position:absolute;pointer-events:none;user-select:none;z-index:0}.hero>.hero-decor--suitcase{width:min(34vw,410px);right:max(-70px,calc((100vw - 1180px)/2 - 90px));top:88px;opacity:.48;transform:rotate(-5deg)}.hero>.container{position:relative;z-index:2}#routes,#hotels{position:relative;overflow:hidden}#routes>.section-decor,#hotels>.section-decor{position:absolute;pointer-events:none;user-select:none;z-index:0}#routes>.section-decor--ticket{width:275px;right:-52px;top:18px;opacity:.15;transform:rotate(8deg)}#hotels>.section-decor--keys{width:220px;left:-64px;top:48px;opacity:.13;transform:rotate(-10deg)}#routes>.container,#hotels>.container{position:relative;z-index:1}@media(max-width:899px){.search-hints{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.hero>.hero-decor--suitcase{width:250px;right:-110px;top:135px;opacity:.24}#routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none}}'
+          js_tpl='(function(){const quick=__QUICK__;const from=document.getElementById("f-from"),to=document.getElementById("f-to"),date=document.getElementById("f-date"),fromBox=document.querySelector(".quick-from"),toBox=document.querySelector(".quick-to");if(!fromBox||!toBox)return;function mode(){return document.documentElement.dataset.transportMode||"flight"}function render(){const q=quick[mode()]||quick.flight;fromBox.innerHTML=q.from.map(x=>`<button type="button" class="quick-chip" data-quick-from="${x}">${x}</button>`).join("");toBox.innerHTML=q.to.map(x=>`<button type="button" class="quick-chip" data-quick-to="${x}">${x}</button>`).join("")}document.addEventListener("transportmodechange",render);document.addEventListener("click",e=>{const a=e.target.closest("[data-quick-from]");if(a){from.value=a.dataset.quickFrom;return}const b=e.target.closest("[data-quick-to]");if(b){to.value=b.dataset.quickTo;return}const d=e.target.closest("[data-quick-date]");if(d){const target=new Date();target.setHours(0,0,0,0);target.setDate(target.getDate()+Number(d.dataset.quickDate));const lang=document.documentElement.lang,locale=lang==="en"?"en-GB":lang,dayFmt=new Intl.DateTimeFormat(locale,{day:"numeric",month:"long"}),weekFmt=new Intl.DateTimeFormat(locale,{weekday:"short"}),pad=n=>String(n).padStart(2,"0");date.value=dayFmt.format(target)+", "+weekFmt.format(target);date.dataset.iso=target.getFullYear()+"-"+pad(target.getMonth()+1)+"-"+pad(target.getDate())}});render()})();'
           for filename,t in locales.items():
             p=Path(filename); text=p.read_text(encoding='utf-8')
-            if '/* Quick search hints + decorative 3D artwork */' not in text:
-              text=text.replace('</style>', css+'\n</style>',1)
-
-            if 'hero-decor--suitcase' not in text:
-              text=text.replace('<section class="hero">','<section class="hero">\n  <img class="hero-decor hero-decor--suitcase" src="assets/decor-suitcase.svg" alt="" aria-hidden="true">',1)
-            if 'section-decor--ticket' not in text:
-              text=text.replace('<section class="section" id="routes">','<section class="section" id="routes">\n  <img class="section-decor section-decor--ticket" src="assets/decor-ticket.svg" alt="" aria-hidden="true">',1)
-            if 'section-decor--keys' not in text:
-              text=text.replace('<section class="section" id="hotels">','<section class="section" id="hotels">\n  <img class="section-decor section-decor--keys" src="assets/decor-keys.svg" alt="" aria-hidden="true">',1)
-
+            if 'Quick search hints + decorative 3D artwork' not in text:text=text.replace('</style>','/* Quick search hints + decorative 3D artwork */'+css+'</style>',1)
+            if 'hero-decor--suitcase' not in text:text=text.replace('<section class="hero">','<section class="hero">\n  <img class="hero-decor hero-decor--suitcase" src="assets/decor-suitcase.svg" alt="" aria-hidden="true">',1)
+            if 'section-decor--ticket' not in text:text=text.replace('<section class="section" id="routes">','<section class="section" id="routes">\n  <img class="section-decor section-decor--ticket" src="assets/decor-ticket.svg" alt="" aria-hidden="true">',1)
+            if 'section-decor--keys' not in text:text=text.replace('<section class="section" id="hotels">','<section class="section" id="hotels">\n  <img class="section-decor section-decor--keys" src="assets/decor-keys.svg" alt="" aria-hidden="true">',1)
             if 'class="search-hints"' not in text:
-              hints=(f'<div class="search-hints" aria-label="{t["quick_label"]}">'
-                     '<div class="quick-group quick-from"></div><span></span>'
-                     '<div class="quick-group quick-to"></div>'
-                     f'<div class="quick-group quick-date"><button type="button" class="quick-chip" data-quick-date="0">{t["today"]}</button><button type="button" class="quick-chip" data-quick-date="1">{t["tomorrow"]}</button></div>'
-                     '</div>')
+              hints=f'<div class="search-hints" aria-label="{t["label"]}"><div class="quick-group quick-from"></div><span></span><div class="quick-group quick-to"></div><div class="quick-group quick-date"><button type="button" class="quick-chip" data-quick-date="0">{t["today"]}</button><button type="button" class="quick-chip" data-quick-date="1">{t["tomorrow"]}</button></div></div>'
               text=text.replace('</form>','</form>\n    '+hints,1)
-
             marker="let mode='flight',adults=1,children=0,cabin='economy';"
-            if marker in text and 'dataset.transportMode' not in text:
-              text=text.replace(marker,marker+"document.documentElement.dataset.transportMode=mode;",1)
-            old="paxCaption.textContent=mode==='flight'?"
-            if old in text and "transportmodechange" not in text[text.find('function setMode'):text.find('function initCarousel')]:
-              text=text.replace("paxCaption.textContent=mode==='flight'?", "document.documentElement.dataset.transportMode=mode;document.dispatchEvent(new CustomEvent('transportmodechange',{detail:{mode}}));paxCaption.textContent=mode==='flight'?",1)
-
-            c=t['cities']
-            quick={
-              'flight': {'from':[c['delhi'],c['mumbai'],c['moscow']], 'to':[c['moscow'],c['spb'],c['kazan']]},
-              'train': {'from':[c['moscow'],c['spb'],c['kazan']], 'to':[c['spb'],c['kazan'],c['tver']]},
-              'bus': {'from':[c['moscow'],c['kazan'],c['tver']], 'to':[c['spb'],c['kazan'],c['ufa']]}
-            }
-            qjs=quick_js_template.replace('__QUICK__',json.dumps(quick,ensure_ascii=False))
-            if 'const quick=' not in text:
-              text=text.replace('\nfunction initCarousel', '\n'+qjs+'\n\nfunction initCarousel',1)
-
+            if marker in text and 'dataset.transportMode=mode' not in text:text=text.replace(marker,marker+'document.documentElement.dataset.transportMode=mode;',1)
+            if "paxCaption.textContent=mode==='flight'?" in text and 'transportmodechange' not in text[text.find('function setMode'):text.find('function initCarousel')]:text=text.replace("paxCaption.textContent=mode==='flight'?","document.documentElement.dataset.transportMode=mode;document.dispatchEvent(new CustomEvent('transportmodechange',{detail:{mode}}));paxCaption.textContent=mode==='flight'?",1)
+            c=t['c'];quick={'flight':{'from':[c['delhi'],c['mumbai'],c['moscow']],'to':[c['moscow'],c['spb'],c['kazan']]},'train':{'from':[c['moscow'],c['spb'],c['kazan']],'to':[c['spb'],c['kazan'],c['tver']]},'bus':{'from':[c['moscow'],c['kazan'],c['tver']],'to':[c['spb'],c['kazan'],c['ufa']]}}
+            qjs=js_tpl.replace('__QUICK__',json.dumps(quick,ensure_ascii=False))
+            if 'const quick=' not in text:text=text.replace('\nfunction initCarousel','\n'+qjs+'\nfunction initCarousel',1)
             p.write_text(text,encoding='utf-8')
           PY
       - name: Commit landing UI updates
@@ -102,9 +45,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html index-en.html index-hi.html
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "feat: add quick hints and decorative artwork"
-            git push
-          fi
+          if git diff --cached --quiet; then echo "No changes to commit"; else git commit -m "feat: add quick hints and decorative artwork" && git push; fi
