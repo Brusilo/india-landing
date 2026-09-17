@@ -1,4 +1,4 @@
-name: Fix decorative artwork layering
+name: Fix decorative artwork layout
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Fix decorative artwork layering
+      - name: Refine decorative artwork layout
         shell: bash
         run: |
           python3 - <<'PY'
@@ -21,40 +21,45 @@ jobs:
 
           css = '''
           /* decor-placement-fix */
-          .hero{isolation:isolate}
-          .hero>.hero-decor{z-index:0!important;pointer-events:none!important}
+          .hero{position:relative!important;overflow:hidden!important;isolation:isolate}
           .hero>.container{position:relative!important;z-index:2!important}
+          .hero>.hero-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
           .hero>.hero-decor--suitcase{
-            width:330px!important;
-            right:34px!important;
-            top:105px!important;
-            opacity:.88!important;
-            filter:saturate(1.22) brightness(1.18)!important;
-            transform:rotate(-4deg)!important;
+            width:520px!important;
+            max-width:none!important;
+            right:70px!important;
+            top:92px!important;
+            opacity:.96!important;
+            transform:rotate(-6deg)!important;
           }
+
           #routes,#hotels{position:relative!important;overflow:hidden!important;isolation:isolate}
           #routes>.container,#hotels>.container{position:relative!important;z-index:2!important}
-          #routes>.section-decor,#hotels>.section-decor{z-index:0!important;pointer-events:none!important}
+          #routes>.section-decor,#hotels>.section-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
           #routes>.section-decor--ticket{
-            width:230px!important;
-            right:10px!important;
-            top:145px!important;
-            opacity:.72!important;
-            filter:saturate(1.28) brightness(1.08)!important;
-            mix-blend-mode:multiply!important;
-            transform:rotate(7deg)!important;
+            width:250px!important;
+            max-width:none!important;
+            right:28px!important;
+            top:72px!important;
+            opacity:.84!important;
+            transform:rotate(8deg)!important;
           }
           #hotels>.section-decor--keys{
-            width:205px!important;
-            left:14px!important;
-            top:118px!important;
-            opacity:.72!important;
-            filter:saturate(1.28) brightness(1.08)!important;
-            mix-blend-mode:multiply!important;
-            transform:rotate(-7deg)!important;
+            width:190px!important;
+            max-width:none!important;
+            left:18px!important;
+            top:72px!important;
+            opacity:.82!important;
+            transform:rotate(-8deg)!important;
+          }
+
+          @media(max-width:1200px){
+            .hero>.hero-decor--suitcase{width:430px!important;right:18px!important;top:120px!important}
+            #routes>.section-decor--ticket{width:210px!important;right:12px!important}
+            #hotels>.section-decor--keys{width:170px!important;left:8px!important}
           }
           @media(max-width:899px){
-            .hero>.hero-decor--suitcase{width:210px!important;right:-38px!important;top:155px!important;opacity:.46!important}
+            .hero>.hero-decor--suitcase{width:245px!important;right:-42px!important;top:155px!important;opacity:.58!important}
             #routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none!important}
           }
           '''
@@ -70,7 +75,7 @@ jobs:
                   text = text.replace('</style>', css + '</style>', 1)
               path.write_text(text, encoding='utf-8')
           PY
-      - name: Commit layering fix
+      - name: Commit layout fix
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -79,6 +84,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "fix: keep decorative artwork behind content"
+            git commit -m "fix: refine decorative artwork layout"
             git push
           fi
