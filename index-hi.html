@@ -560,6 +560,18 @@ input:focus{outline:none}
   color:rgba(255,255,255,.58);
   max-width:70ch;
 }
+
+/* Compact transport search v2 */
+.search{position:relative;width:min(100%,1080px);margin-top:20px;padding:0;display:grid;grid-template-columns:minmax(180px,1.05fr) 48px minmax(180px,1.05fr) minmax(145px,.76fr) minmax(190px,.9fr) 190px;align-items:stretch;background:var(--white);border-radius:16px;box-shadow:var(--shadow-md);overflow:visible}
+.search .field{position:relative;min-width:0;min-height:64px;padding:0;border:0;border-right:1px solid var(--line);background:var(--white);display:flex;justify-content:center}
+.search .field:first-child{border-radius:16px 0 0 16px}.search .field input{height:64px;padding:0 18px;font-size:16px;font-weight:500;color:var(--deep-blue);background:transparent}.search .field input::placeholder{color:#62627A;font-weight:500;opacity:1}.search .field--date input{cursor:pointer}
+.search .swap{width:48px;display:grid;place-items:center;background:var(--white);border-right:1px solid var(--line);align-self:stretch}.search .swap span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center}.search .swap:hover span{background:var(--cloud-white)}.search .swap svg{width:20px;height:20px;stroke:#89899D;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.search .field--pax{padding:0;flex:none}.pax-trigger{width:100%;height:64px;padding:8px 16px;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:2px}.pax-caption{font-size:12px;line-height:1.1;color:var(--muted);font-weight:500}.pax-value{font-size:16px;line-height:1.25;color:var(--deep-blue);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn-search{margin:0;height:64px;border-radius:0 16px 16px 0;background:#6F29E8;color:#fff;font-size:16px;font-weight:700;display:grid;place-items:center;padding:0 18px;white-space:nowrap}
+.search-suggest{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:45;background:#fff;border-radius:16px;box-shadow:0 14px 40px rgba(13,11,104,.18);padding:8px;max-height:300px;overflow:auto}.search-suggest[hidden]{display:none}.suggest-item{width:100%;padding:11px 12px;border-radius:11px;text-align:left;display:flex;flex-direction:column;gap:2px}.suggest-item:hover{background:var(--cloud-white)}.suggest-main{font-size:15px;font-weight:600;color:var(--deep-blue)}.suggest-meta{font-size:12px;color:var(--muted)}
+.pax-pop{position:absolute;right:0;top:calc(100% + 8px);z-index:50;width:360px;max-width:calc(100vw - 32px);padding:18px;background:#fff;border-radius:20px;box-shadow:0 14px 40px rgba(13,11,104,.2);color:var(--deep-blue)}.pax-pop[hidden]{display:none}.pax-row{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:8px 0}.pax-name{font-size:16px;font-weight:700}.pax-sub{font-size:13px;color:var(--muted);margin-top:2px}.stepper{display:flex;align-items:center;gap:12px}.stepper button{width:42px;height:42px;border-radius:12px;background:#F1F1F6;font-size:25px;line-height:1;color:var(--deep-blue)}.stepper button:disabled{opacity:.35;cursor:default}.stepper output{width:24px;text-align:center;font-size:18px;font-weight:600}.add-child{margin:8px 0 4px;width:100%;height:46px;border-radius:12px;background:#F0E8FF;color:#6F29E8;font-weight:600;display:none;align-items:center;justify-content:center;gap:8px}.add-child.is-visible{display:flex}.cabin{margin-top:12px;padding-top:14px;border-top:1px solid var(--line)}.cabin-title{font-size:13px;color:var(--muted);margin-bottom:8px}.cabin-tabs{display:grid;grid-template-columns:1fr 1fr;background:#F0F0F6;border-radius:12px;padding:4px;gap:4px}.cabin-tabs button{height:38px;border-radius:9px;color:#77778C;font-weight:600}.cabin-tabs button.is-active{background:#fff;color:var(--deep-blue);box-shadow:0 1px 4px rgba(13,11,104,.08)}.chips{display:none!important}
+@media(max-width:899px){.search{width:100%;display:flex;flex-direction:column;border-radius:16px;overflow:visible}.search .field,.search .swap{border-right:0;border-bottom:1px solid var(--line)}.search .field:first-child{border-radius:16px 16px 0 0}.search .swap{display:none}.search .field input,.pax-trigger{height:58px}.btn-search{height:54px;border-radius:0 0 16px 16px}.pax-pop{left:0;right:auto}}
+
 </style>
 </head>
 <body>
@@ -620,37 +632,7 @@ input:focus{outline:none}
       </button>
     </div>
 
-    <form class="search" onsubmit="return false">
-      <div class="field">
-        <label for="f-from">कहाँ से</label>
-        <input id="f-from" type="text" placeholder="शहर या स्टेशन" autocomplete="off">
-      </div>
-      <div class="swap" aria-hidden="true">
-        <span><svg viewBox="0 0 24 24"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span>
-      </div>
-      <div class="field">
-        <label for="f-to">कहाँ तक</label>
-        <input id="f-to" type="text" placeholder="शहर या स्टेशन" autocomplete="off">
-      </div>
-      <div class="field">
-        <label for="f-date">तारीख़</label>
-        <input id="f-date" type="text" placeholder="तारीख़ चुनें" autocomplete="off">
-      </div>
-      <div class="field field--pax">
-        <label>यात्री</label>
-        <span class="value">1 यात्री</span>
-      </div>
-      <button type="button" class="btn-search">खोजें</button>
-    </form>
-
-    <div class="chips">
-      <span class="chip">दिल्ली</span>
-      <span class="chip">मुंबई</span>
-      <span class="chip">मॉस्को</span>
-      <span class="chip">कज़ान</span>
-      <span class="chip">ऊफ़ा</span>
-      <span class="chip">त्वेर</span>
-    </div>
+    <form class="search" onsubmit="return false"><div class="field field--place" data-kind="from"><input id="f-from" type="text" placeholder="शहर या एयरपोर्ट" aria-label="कहाँ से" autocomplete="off"><div class="search-suggest" hidden></div></div><button class="swap" type="button" aria-label="स्थान बदलें"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span></button><div class="field field--place" data-kind="to"><input id="f-to" type="text" placeholder="शहर या एयरपोर्ट" aria-label="कहाँ तक" autocomplete="off"><div class="search-suggest" hidden></div></div><div class="field field--date"><input id="f-date" type="text" placeholder="तारीख़" aria-label="तारीख़" autocomplete="off"></div><div class="field field--pax"><button type="button" class="pax-trigger" aria-haspopup="dialog" aria-expanded="false"><span class="pax-caption">यात्री</span><span class="pax-value">1 यात्री, इकोनॉमी</span></button><div class="pax-pop" role="dialog" hidden></div></div><button type="button" class="btn-search">फ़्लाइट खोजें</button></form>
   </div>
 </section>
 
@@ -999,17 +981,20 @@ document.getElementById('faq-list').innerHTML = CONFIG.faq.map(f => `
   </details>`).join('');
 
 (function(){
-  const buttons = document.querySelectorAll('.transport button');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => {
-        b.classList.remove('is-active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      btn.classList.add('is-active');
-      btn.setAttribute('aria-selected', 'true');
-    });
-  });
+  const buttons=[...document.querySelectorAll('.transport button')], modes=['hotel','flight','train','bus'];
+  const places={"flight": [["मॉस्को", "सभी एयरपोर्ट · MOW"], ["सेंट पीटर्सबर्ग", "पुल्कोवो · LED"], ["कज़ान", "कज़ान एयरपोर्ट · KZN"], ["दिल्ली", "इंदिरा गांधी · DEL"], ["मुंबई", "छत्रपति शिवाजी · BOM"]], "train": [["मॉस्को", "लेनिनग्राद्स्की स्टेशन"], ["मॉस्को", "कज़ान्स्की स्टेशन"], ["सेंट पीटर्सबर्ग", "मॉस्कोव्स्की स्टेशन"], ["कज़ान", "कज़ान-पास."], ["त्वेर", "रेलवे स्टेशन"]], "bus": [["मॉस्को", "सेंट्रल बस स्टेशन"], ["सेंट पीटर्सबर्ग", "ओब्वोद्नी बस स्टेशन"], ["कज़ान", "वोस्तोच्नी बस स्टेशन"], ["ऊफ़ा", "साउथ बस स्टेशन"], ["त्वेर", "बस स्टेशन"]]}, L={"flight_search": "फ़्लाइट खोजें", "train_search": "ट्रेन खोजें", "bus_search": "बस खोजें", "flight_from": "शहर या एयरपोर्ट", "flight_to": "शहर या एयरपोर्ट", "train_from": "शहर या स्टेशन", "train_to": "शहर या स्टेशन", "bus_from": "शहर या बस स्टेशन", "bus_to": "शहर या बस स्टेशन", "adult": "वयस्क", "adult_sub": "12 साल और अधिक", "child": "बच्चे", "child_sub": "12 साल से कम", "cabin": "यात्रा श्रेणी", "economy": "इकोनॉमी", "business": "बिज़नेस"};
+  const from=document.getElementById('f-from'),to=document.getElementById('f-to'),searchBtn=document.querySelector('.btn-search'),swap=document.querySelector('.search .swap'),paxTrigger=document.querySelector('.pax-trigger'),paxValue=document.querySelector('.pax-value'),paxPop=document.querySelector('.pax-pop');
+  let mode='flight',adults=1,children=0,cabin='economy';
+  function plural(n){const lang=document.documentElement.lang;if(lang==='ru'){const m=n%10,d=n%100;return d>=11&&d<=14?'пассажиров':m===1?'пассажир':m>=2&&m<=4?'пассажира':'пассажиров'}if(lang==='en')return n===1?'passenger':'passengers';return 'यात्री'}
+  function updatePax(){const total=adults+children;paxValue.textContent=total+' '+plural(total)+(mode==='flight'?', '+(cabin==='economy'?L.economy:L.business):'')}
+  function renderPax(){const childRow=children>0?'<div class="pax-row"><div><div class="pax-name">'+L.child+'</div><div class="pax-sub">'+L.child_sub+'</div></div><div class="stepper"><button type="button" data-pax="child" data-step="-1">−</button><output>'+children+'</output><button type="button" data-pax="child" data-step="1">+</button></div></div>':'';const cabinBlock=mode==='flight'?'<div class="cabin"><div class="cabin-title">'+L.cabin+'</div><div class="cabin-tabs"><button type="button" data-cabin="economy" class="'+(cabin==='economy'?'is-active':'')+'">'+L.economy+'</button><button type="button" data-cabin="business" class="'+(cabin==='business'?'is-active':'')+'">'+L.business+'</button></div></div>':'';paxPop.innerHTML='<div class="pax-row"><div><div class="pax-name">'+L.adult+'</div><div class="pax-sub">'+L.adult_sub+'</div></div><div class="stepper"><button type="button" data-pax="adult" data-step="-1">−</button><output>'+adults+'</output><button type="button" data-pax="adult" data-step="1">+</button></div></div><button type="button" class="add-child '+(children===0?'is-visible':'')+'" data-add-child>＋ '+L.child+'</button>'+childRow+cabinBlock;paxPop.querySelectorAll('[data-step]').forEach(b=>{const total=adults+children;if(b.dataset.pax==='adult'&&b.dataset.step==='-1'&&adults<=1)b.disabled=true;if(b.dataset.step==='1'&&total>=9)b.disabled=true})}
+  function closePax(){paxPop.hidden=true;paxTrigger.setAttribute('aria-expanded','false')}paxTrigger.addEventListener('click',()=>{if(paxPop.hidden){renderPax();paxPop.hidden=false;paxTrigger.setAttribute('aria-expanded','true')}else closePax()});
+  paxPop.addEventListener('click',e=>{e.stopPropagation();if(e.target.closest('[data-add-child]')){children=1;renderPax();updatePax();return}const step=e.target.closest('[data-step]');if(step){const d=Number(step.dataset.step);if(step.dataset.pax==='adult')adults=Math.max(1,Math.min(9-children,adults+d));else children=Math.max(0,Math.min(9-adults,children+d));renderPax();updatePax();return}const c=e.target.closest('[data-cabin]');if(c){cabin=c.dataset.cabin;renderPax();updatePax()}});
+  function closeSuggest(){document.querySelectorAll('.search-suggest').forEach(x=>x.hidden=true)}function renderSuggest(input){if(mode==='hotel')return;const box=input.closest('.field').querySelector('.search-suggest'),q=input.value.trim().toLocaleLowerCase(),items=(places[mode]||[]).filter(x=>(x[0]+' '+x[1]).toLocaleLowerCase().includes(q)).slice(0,6);box.innerHTML=items.map(x=>'<button type="button" class="suggest-item" data-value="'+x[0].replace(/"/g,'&quot;')+'"><span class="suggest-main">'+x[0]+'</span><span class="suggest-meta">'+x[1]+'</span></button>').join('');box.hidden=!items.length}
+  [from,to].forEach(input=>{input.addEventListener('focus',()=>{closeSuggest();renderSuggest(input)});input.addEventListener('input',()=>renderSuggest(input));input.closest('.field').querySelector('.search-suggest').addEventListener('click',e=>{const item=e.target.closest('.suggest-item');if(!item)return;input.value=item.dataset.value;item.closest('.search-suggest').hidden=true})});
+  swap.addEventListener('click',()=>{const x=from.value;from.value=to.value;to.value=x});
+  function setMode(next,index){if(next==='hotel')return;mode=next;buttons.forEach((b,i)=>{const active=i===index;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active))});const p=mode==='flight'?'flight':mode==='train'?'train':'bus';from.placeholder=L[p+'_from'];to.placeholder=L[p+'_to'];searchBtn.textContent=L[p+'_search'];closeSuggest();closePax();updatePax()}
+  buttons.forEach((b,i)=>b.addEventListener('click',()=>setMode(modes[i],i)));document.addEventListener('click',e=>{if(!e.target.closest('.field--place'))closeSuggest();if(!e.target.closest('.field--pax'))closePax()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSuggest();closePax()}});updatePax();
 })();
 
 function initCarousel(rowId, navSel){
