@@ -32,18 +32,22 @@
 
   html:lang(ru) .hero, html:lang(en) .hero, html:lang(hi) .hero {
     position: relative !important; min-height: 0 !important; height: auto !important;
-    padding: 12px 0 44px !important;
+    padding: 24px 0 44px !important;
     /* Clip the decorative image horizontally without clipping form expansion. */
     overflow-x: clip !important; overflow-y: visible !important;
   }
+  /* Let the headline lead; the suitcase is decoration, not a separate column. */
   .hero h1 {
-    max-width: calc(100% - 112px); min-height: 150px;
-    font-size: clamp(29px, 7.8vw, 36px); line-height: 1.12; letter-spacing: -.025em;
+    max-width: 100%; min-height: 0;
+    font-size: clamp(36px, 10.7vw, 48px); line-height: 1.08; letter-spacing: -.025em;
   }
   html:lang(hi) .hero h1 { line-height: 1.26; }
   .hero > .hero-decor--suitcase {
-    width: 232px !important; height: auto !important; right: -48px !important;
-    top: -28px !important; bottom: auto !important; opacity: 1 !important; transform: none !important;
+    width: clamp(300px, 92vw, 400px) !important; height: auto !important; right: -88px !important;
+    top: -36px !important; bottom: auto !important; opacity: .48 !important; transform: none !important;
+    /* Fade the artwork before it reaches the transport controls. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 94%);
+    mask-image: linear-gradient(to bottom, #000 25%, transparent 94%);
   }
   .hero-sub { max-width: none; margin-top: 10px; font-size: 16px; line-height: 1.5; }
   .pills {
@@ -143,9 +147,11 @@
     overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity;
     scroll-padding-inline: 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
   }
-  .row > * { flex: 0 0 clamp(220px, 74vw, 300px); scroll-snap-align: start; min-width: 0; }
+  /* One complete card plus half of the next one on phones. */
+  .row > * { flex: 0 0 calc((100% + 4px) / 1.5); scroll-snap-align: start; min-width: 0; }
+  .row .card-media { aspect-ratio: 1.8; }
   .card { border-radius: 20px; border: 0; background: #f5f4fa; box-shadow: none; }
-  .card-body { padding: 16px; gap: 7px; }
+  .card-body { padding: 14px; gap: 7px; }
   .route-name, .hotel-name { font-size: 18px; line-height: 1.3; overflow-wrap: anywhere; }
   .price-row { gap: 4px 8px; }
   .price, .hotel-price { font-size: 20px; line-height: 1.3; }
@@ -208,8 +214,8 @@
 
 @media (min-width: 600px) and (max-width: 1100px) {
   .container { padding-inline: 24px; }
-  .hero h1 { max-width: calc(100% - 160px); min-height: 156px; font-size: 42px; }
-  .hero > .hero-decor--suitcase { width: 260px !important; top: -30px !important; right: max(0px, calc((100vw - 768px)/2)) !important; }
+  .hero h1 { max-width: 560px; min-height: 0; font-size: 48px; }
+  .hero > .hero-decor--suitcase { width: 400px !important; top: -42px !important; right: max(-40px, calc((100vw - 848px)/2)) !important; }
   .transport { gap: 16px; max-width: 420px; }
   .transport .lbl { font-size: 14px; }
   .pills { margin-inline: -24px; padding-inline: 24px; scroll-padding-inline: 24px; }
@@ -229,6 +235,7 @@
   .section-head h2 { font-size: 30px; }
   .carousel-wrap { margin-inline: -24px; }
   .row, .stage .row { padding-inline: 24px; scroll-padding-inline: 24px; }
+  .row > * { flex-basis: 300px; }
   .stage { margin-inline: 0; padding: 28px 24px; }
   .tiles--3 { grid-template-columns: repeat(3,minmax(0,1fr)); }
   .tiles--3 > :last-child { grid-column: auto; }
