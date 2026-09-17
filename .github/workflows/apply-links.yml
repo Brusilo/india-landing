@@ -1,4 +1,4 @@
-name: Mount decorative artwork
+name: Fix quick hints and PNG artwork
 
 on:
   push:
@@ -9,29 +9,70 @@ permissions:
   contents: write
 
 jobs:
-  apply-artwork:
+  apply-fix:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Insert decorative images
+      - name: Fix hints and artwork
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          for filename in ('index.html','index-en.html','index-hi.html'):
-            p=Path(filename); text=p.read_text(encoding='utf-8')
-            if '<img class="hero-decor hero-decor--suitcase"' not in text:
-              text=text.replace('<section class="hero">','<section class="hero">\n  <img class="hero-decor hero-decor--suitcase" src="assets/decor-suitcase.svg" alt="" aria-hidden="true">',1)
-            if '<img class="section-decor section-decor--ticket"' not in text:
-              text=text.replace('<section class="section" id="routes">','<section class="section" id="routes">\n  <img class="section-decor section-decor--ticket" src="assets/decor-ticket.svg" alt="" aria-hidden="true">',1)
-            if '<img class="section-decor section-decor--keys"' not in text:
-              text=text.replace('<section class="section" id="hotels">','<section class="section" id="hotels">\n  <img class="section-decor section-decor--keys" src="assets/decor-keys.svg" alt="" aria-hidden="true">',1)
-            p.write_text(text,encoding='utf-8')
+          import re, json
+
+          locales = {
+            'index.html': {
+              'quick': {
+                'flight': {'from':['Дели','Мумбаи'], 'to':['Москва','Санкт-Петербург']},
+                'train': {'from':['Москва','Санкт-Петербург'], 'to':['Казань','Тверь']},
+                'bus': {'from':['Москва','Казань'], 'to':['Санкт-Петербург','Тверь']},
+              }
+            },
+            'index-en.html': {
+              'quick': {
+                'flight': {'from':['Delhi','Mumbai'], 'to':['Moscow','Saint Petersburg']},
+                'train': {'from':['Moscow','Saint Petersburg'], 'to':['Kazan','Tver']},
+                'bus': {'from':['Moscow','Kazan'], 'to':['Saint Petersburg','Tver']},
+              }
+            },
+            'index-hi.html': {
+              'quick': {
+                'flight': {'from':['दिल्ली','मुंबई'], 'to':['मॉस्को','सेंट पीटर्सबर्ग']},
+                'train': {'from':['मॉस्को','सेंट पीटर्सबर्ग'], 'to':['कज़ान','त्वेर']},
+                'bus': {'from':['मॉस्को','कज़ान'], 'to':['सेंट पीटर्सबर्ग','त्वेर']},
+              }
+            },
+          }
+
+          css_override = '.search-hints{width:min(100%,1080px);display:grid;grid-template-columns:minmax(180px,1.05fr) 48px minmax(180px,1.05fr) minmax(145px,.76fr) minmax(190px,.9fr) 190px;margin-top:6px;align-items:start}.quick-group{display:flex;gap:6px;flex-wrap:nowrap}.quick-from{grid-column:1}.quick-to{grid-column:3}.quick-date{grid-column:4}.quick-chip{font-weight:400}.hero>.hero-decor--suitcase{width:min(36vw,430px);right:-70px;top:82px;opacity:.42}.section-decor--ticket{opacity:.18}.section-decor--keys{opacity:.16}@media(max-width:899px){.search-hints{display:flex;flex-wrap:wrap}.quick-group{flex-wrap:wrap}}'
+
+          for filename, cfg in locales.items():
+            p = Path(filename)
+            text = p.read_text(encoding='utf-8')
+
+            text = text.replace('assets/decor-suitcase.svg', 'assets/decor-suitcase.png')
+            text = text.replace('assets/decor-ticket.svg', 'assets/decor-ticket.png')
+            text = text.replace('assets/decor-keys.svg', 'assets/decor-keys.png')
+
+            quick_json = json.dumps(cfg['quick'], ensure_ascii=False)
+            text, n = re.subn(r'const quick=\{.*?\};const from=', 'const quick='+quick_json+';const from=', text, count=1, flags=re.S)
+            if n != 1:
+              raise RuntimeError(f'quick hints JS not found in {filename}')
+
+            if '/* quick-hints-final */' not in text:
+              text = text.replace('</style>', '/* quick-hints-final */'+css_override+'</style>', 1)
+
+            p.write_text(text, encoding='utf-8')
           PY
-      - name: Commit artwork placement
+      - name: Commit fixes
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html index-en.html index-hi.html
-          if git diff --cached --quiet; then echo "No changes to commit"; else git commit -m "fix: place decorative artwork" && git push; fi
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "fix: align quick hints and restore PNG artwork"
+            git push
+          fi
