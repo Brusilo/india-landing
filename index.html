@@ -573,30 +573,42 @@ input:focus{outline:none}
 @media(max-width:899px){.search{width:100%;display:flex;flex-direction:column;border-radius:16px;overflow:visible}.search .field,.search .swap{border-right:0;border-bottom:1px solid var(--line)}.search .field:first-child{border-radius:16px 16px 0 0}.search .swap{display:none}.search .field input,.pax-trigger{height:58px}.btn-search{height:54px;border-radius:0 0 16px 16px}.pax-pop{left:0;right:auto}}
 
 /* Quick search hints + decorative 3D artwork */.search{margin-top:10px}.search-hints{width:min(100%,1080px);display:grid;grid-template-columns:minmax(180px,1.05fr) 48px minmax(180px,1.05fr) minmax(145px,.76fr) minmax(190px,.9fr) 190px;margin-top:7px;position:relative;z-index:4}.quick-group{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}.quick-from{grid-column:1}.quick-to{grid-column:3}.quick-date{grid-column:4}.quick-chip{padding:5px 9px;border-radius:9px;background:rgba(186,97,255,.38);color:#fff;font-size:12px;font-weight:500;line-height:1.15;white-space:nowrap}.quick-chip:hover{background:rgba(186,97,255,.58)}.hero{position:relative;overflow:hidden}.hero>.hero-decor{position:absolute;pointer-events:none;user-select:none;z-index:0}.hero>.hero-decor--suitcase{width:min(34vw,410px);right:max(-70px,calc((100vw - 1180px)/2 - 90px));top:88px;opacity:.48;transform:rotate(-5deg)}.hero>.container{position:relative;z-index:2}#routes,#hotels{position:relative;overflow:hidden}#routes>.section-decor,#hotels>.section-decor{position:absolute;pointer-events:none;user-select:none;z-index:0}#routes>.section-decor--ticket{width:275px;right:-52px;top:18px;opacity:.15;transform:rotate(8deg)}#hotels>.section-decor--keys{width:220px;left:-64px;top:48px;opacity:.13;transform:rotate(-10deg)}#routes>.container,#hotels>.container{position:relative;z-index:1}@media(max-width:899px){.search-hints{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.hero>.hero-decor--suitcase{width:250px;right:-110px;top:135px;opacity:.24}#routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none}}/* quick-hints-final */.search-hints{width:min(100%,1080px);display:grid;grid-template-columns:minmax(180px,1.05fr) 48px minmax(180px,1.05fr) minmax(145px,.76fr) minmax(190px,.9fr) 190px;margin-top:6px;align-items:start}.quick-group{display:flex;gap:6px;flex-wrap:nowrap}.quick-from{grid-column:1}.quick-to{grid-column:3}.quick-date{grid-column:4}.quick-chip{font-weight:400}.hero>.hero-decor--suitcase{width:min(36vw,430px);right:-70px;top:82px;opacity:.42}.section-decor--ticket{opacity:.18}.section-decor--keys{opacity:.16}@media(max-width:899px){.search-hints{display:flex;flex-wrap:wrap}.quick-group{flex-wrap:wrap}}
+
 /* decor-placement-fix */
+.hero{isolation:isolate}
+.hero>.hero-decor{z-index:0!important;pointer-events:none!important}
+.hero>.container{position:relative!important;z-index:2!important}
 .hero>.hero-decor--suitcase{
-  width:360px!important;
-  right:42px!important;
-  top:92px!important;
-  opacity:.62!important;
-  transform:rotate(-5deg)!important;
+  width:330px!important;
+  right:34px!important;
+  top:105px!important;
+  opacity:.88!important;
+  filter:saturate(1.22) brightness(1.18)!important;
+  transform:rotate(-4deg)!important;
 }
+#routes,#hotels{position:relative!important;overflow:hidden!important;isolation:isolate}
+#routes>.container,#hotels>.container{position:relative!important;z-index:2!important}
+#routes>.section-decor,#hotels>.section-decor{z-index:0!important;pointer-events:none!important}
 #routes>.section-decor--ticket{
-  width:290px!important;
-  right:-34px!important;
-  top:72px!important;
-  opacity:.34!important;
-  transform:rotate(8deg)!important;
+  width:230px!important;
+  right:10px!important;
+  top:145px!important;
+  opacity:.72!important;
+  filter:saturate(1.28) brightness(1.08)!important;
+  mix-blend-mode:multiply!important;
+  transform:rotate(7deg)!important;
 }
 #hotels>.section-decor--keys{
-  width:215px!important;
-  left:18px!important;
-  top:72px!important;
-  opacity:.34!important;
-  transform:rotate(-8deg)!important;
+  width:205px!important;
+  left:14px!important;
+  top:118px!important;
+  opacity:.72!important;
+  filter:saturate(1.28) brightness(1.08)!important;
+  mix-blend-mode:multiply!important;
+  transform:rotate(-7deg)!important;
 }
 @media(max-width:899px){
-  .hero>.hero-decor--suitcase{width:220px!important;right:-45px!important;top:150px!important;opacity:.28!important}
+  .hero>.hero-decor--suitcase{width:210px!important;right:-38px!important;top:155px!important;opacity:.46!important}
   #routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none!important}
 }
 </style>
