@@ -1,0 +1,51 @@
+name: Extend Hindi hero
+
+on:
+  push:
+    paths:
+      - '.github/workflows/extend-hindi-hero.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  adjust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Add extra blue space to Hindi hero
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('index-hi.html')
+          text = path.read_text(encoding='utf-8')
+          marker = '</style>'
+          extra = '''
+/* Hindi hero breathing room: keep suitcase position unchanged, extend blue area downward */
+html:lang(hi) .hero{padding-bottom:132px!important}
+@media(min-width:768px){html:lang(hi) .hero{padding-bottom:176px!important}}
+'''
+          if extra.strip() in text:
+              raise SystemExit('Hindi hero spacing already applied')
+          if marker not in text:
+              raise SystemExit('style closing tag not found')
+          text = text.replace(marker, extra + marker, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Validate
+        shell: bash
+        run: |
+          grep -q 'html:lang(hi) .hero{padding-bottom:132px!important}' index-hi.html
+          grep -q 'padding-bottom:176px!important' index-hi.html
+          git diff --check
+      - name: Commit changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-hi.html
+          git commit -m "Extend Hindi hero blue space"
+          git push origin HEAD:main
