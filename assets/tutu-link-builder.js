@@ -76,6 +76,8 @@
     'ru-yuzhno-sakhalinsk':'Yuzhno-Sakhalinsk',
     'ru-khabarovsk':'Habarovsk',
     'ru-makhachkala':'Mahachkala',
+    'ru-grozny':'Grozniy',
+    'ru-astrakhan':'Astrahan',
     'in-delhi':'Deli',
     'in-bengaluru':'Bangalor',
     'in-hyderabad':'Haydarabad',
