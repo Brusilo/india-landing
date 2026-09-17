@@ -575,46 +575,49 @@ input:focus{outline:none}
 /* Quick search hints + decorative 3D artwork */.search{margin-top:10px}.search-hints{width:min(100%,1080px);display:grid;grid-template-columns:minmax(180px,1.05fr) 48px minmax(180px,1.05fr) minmax(145px,.76fr) minmax(190px,.9fr) 190px;margin-top:7px;position:relative;z-index:4}.quick-group{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}.quick-from{grid-column:1}.quick-to{grid-column:3}.quick-date{grid-column:4}.quick-chip{padding:5px 9px;border-radius:9px;background:rgba(186,97,255,.38);color:#fff;font-size:12px;font-weight:500;line-height:1.15;white-space:nowrap}.quick-chip:hover{background:rgba(186,97,255,.58)}.hero{position:relative;overflow:hidden}.hero>.hero-decor{position:absolute;pointer-events:none;user-select:none;z-index:0}.hero>.hero-decor--suitcase{width:min(34vw,410px);right:max(-70px,calc((100vw - 1180px)/2 - 90px));top:88px;opacity:.48;transform:rotate(-5deg)}.hero>.container{position:relative;z-index:2}#routes,#hotels{position:relative;overflow:hidden}#routes>.section-decor,#hotels>.section-decor{position:absolute;pointer-events:none;user-select:none;z-index:0}#routes>.section-decor--ticket{width:275px;right:-52px;top:18px;opacity:.15;transform:rotate(8deg)}#hotels>.section-decor--keys{width:220px;left:-64px;top:48px;opacity:.13;transform:rotate(-10deg)}#routes>.container,#hotels>.container{position:relative;z-index:1}@media(max-width:899px){.search-hints{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.hero>.hero-decor--suitcase{width:250px;right:-110px;top:135px;opacity:.24}#routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none}}/* quick-hints-final */.search-hints{width:min(100%,1080px);display:grid;grid-template-columns:minmax(180px,1.05fr) 48px minmax(180px,1.05fr) minmax(145px,.76fr) minmax(190px,.9fr) 190px;margin-top:6px;align-items:start}.quick-group{display:flex;gap:6px;flex-wrap:nowrap}.quick-from{grid-column:1}.quick-to{grid-column:3}.quick-date{grid-column:4}.quick-chip{font-weight:400}.hero>.hero-decor--suitcase{width:min(36vw,430px);right:-70px;top:82px;opacity:.42}.section-decor--ticket{opacity:.18}.section-decor--keys{opacity:.16}@media(max-width:899px){.search-hints{display:flex;flex-wrap:wrap}.quick-group{flex-wrap:wrap}}
 
 
+
 /* decor-placement-fix */
 .hero{position:relative!important;overflow:hidden!important;isolation:isolate}
 .hero>.container{position:relative!important;z-index:2!important}
 .hero>.hero-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
 .hero>.hero-decor--suitcase{
-  width:520px!important;
+  width:560px!important;
   max-width:none!important;
-  right:70px!important;
-  top:92px!important;
-  opacity:.96!important;
-  transform:rotate(-6deg)!important;
+  right:72px!important;
+  top:18px!important;
+  opacity:1!important;
+  transform:rotate(-5deg)!important;
 }
 
-#routes,#hotels{position:relative!important;overflow:hidden!important;isolation:isolate}
+#routes,#hotels{position:relative!important;isolation:isolate}
+#routes{overflow:visible!important}
+#hotels{overflow:hidden!important}
 #routes>.container,#hotels>.container{position:relative!important;z-index:2!important}
 #routes>.section-decor,#hotels>.section-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
 #routes>.section-decor--ticket{
-  width:250px!important;
+  width:340px!important;
   max-width:none!important;
-  right:28px!important;
-  top:72px!important;
-  opacity:.84!important;
-  transform:rotate(8deg)!important;
+  right:36px!important;
+  top:104px!important;
+  opacity:.96!important;
+  transform:rotate(5deg)!important;
 }
 #hotels>.section-decor--keys{
-  width:190px!important;
+  width:245px!important;
   max-width:none!important;
-  left:18px!important;
-  top:72px!important;
-  opacity:.82!important;
-  transform:rotate(-8deg)!important;
+  left:16px!important;
+  top:62px!important;
+  opacity:.94!important;
+  transform:rotate(-7deg)!important;
 }
 
 @media(max-width:1200px){
-  .hero>.hero-decor--suitcase{width:430px!important;right:18px!important;top:120px!important}
-  #routes>.section-decor--ticket{width:210px!important;right:12px!important}
-  #hotels>.section-decor--keys{width:170px!important;left:8px!important}
+  .hero>.hero-decor--suitcase{width:470px!important;right:8px!important;top:40px!important}
+  #routes>.section-decor--ticket{width:285px!important;right:18px!important;top:112px!important}
+  #hotels>.section-decor--keys{width:210px!important;left:6px!important}
 }
 @media(max-width:899px){
-  .hero>.hero-decor--suitcase{width:245px!important;right:-42px!important;top:155px!important;opacity:.58!important}
+  .hero>.hero-decor--suitcase{width:245px!important;right:-35px!important;top:92px!important;opacity:.72!important}
   #routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none!important}
 }
 </style>
@@ -639,7 +642,7 @@ input:focus{outline:none}
 </header>
 
 <section class="hero">
-  <img class="hero-decor hero-decor--suitcase" src="assets/decor-suitcase.png" alt="" aria-hidden="true">
+  <img class="hero-decor hero-decor--suitcase" src="assets/чемодан.png" alt="" aria-hidden="true">
   <div class="container">
     <h1><span class="accent">Cheap</span> tickets across Russia</h1>
     <p class="hero-sub">Buses, trains and flights across the country, plus international flights back home.</p>
@@ -684,7 +687,7 @@ input:focus{outline:none}
 </section>
 
 <section class="section" id="routes">
-  <img class="section-decor section-decor--ticket" src="assets/decor-ticket.png" alt="" aria-hidden="true">
+  <img class="section-decor section-decor--ticket" src="assets/билет.png" alt="" aria-hidden="true">
   <div class="container">
     <div class="section-head section-head--row">
       <div>
@@ -771,7 +774,7 @@ input:focus{outline:none}
 </section>
 
 <section class="section" id="hotels">
-  <img class="section-decor section-decor--keys" src="assets/decor-keys.png" alt="" aria-hidden="true">
+  <img class="section-decor section-decor--keys" src="assets/ключи.png" alt="" aria-hidden="true">
   <div class="container">
     <div class="stage">
       <div class="section-head section-head--row">
