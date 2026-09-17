@@ -1,0 +1,99 @@
+name: Wire multilingual place search
+
+on:
+  push:
+    paths:
+      - '.github/workflows/wire-multilingual-search.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  wire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Patch shared multilingual autocomplete
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          files = [Path('index.html'), Path('index-en.html'), Path('index-hi.html')]
+          include_old = '<script>\nconst CONFIG = {'
+          include_new = '<script src="assets/search-places.js"></script>\n<script>\nconst CONFIG = {'
+          old_render = '''  function closeSuggest(){document.querySelectorAll('.search-suggest').forEach(x=>x.hidden=true)}function renderSuggest(input){if(mode==='hotel')return;const box=input.closest('.field').querySelector('.search-suggest'),q=input.value.trim().toLocaleLowerCase(),items=(places[mode]||[]).filter(x=>(x[0]+' '+x[1]).toLocaleLowerCase().includes(q)).slice(0,6);box.innerHTML=items.map(x=>'<button type="button" class="suggest-item" data-value="'+x[0].replace(/"/g,'&quot;')+'"><span class="suggest-main">'+x[0]+'</span><span class="suggest-meta">'+x[1]+'</span></button>').join('');box.hidden=!items.length}
+  [from,to].forEach(input=>{input.addEventListener('focus',()=>{closeSuggest();renderSuggest(input)});input.addEventListener('input',()=>renderSuggest(input));input.closest('.field').querySelector('.search-suggest').addEventListener('click',e=>{const item=e.target.closest('.suggest-item');if(!item)return;input.value=item.dataset.value;item.closest('.search-suggest').hidden=true})});
+  swap.addEventListener('click',()=>{const x=from.value;from.value=to.value;to.value=x});'''
+          new_render = '''  function closeSuggest(){document.querySelectorAll('.search-suggest').forEach(x=>x.hidden=true)}
+  function escapeAttr(v){return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function clearPlaceMeta(input){['placeId','canonical','country','iata'].forEach(k=>delete input.dataset[k])}
+  function renderSuggest(input){
+    if(mode==='hotel')return;
+    const box=input.closest('.field').querySelector('.search-suggest'),q=input.value.trim();
+    let items=[];
+    if(mode==='flight'&&window.TUTU_PLACES){
+      const kind=input===from?'from':'to';
+      const found=q?TUTU_PLACES.search(q,6):TUTU_PLACES.popularFor(kind);
+      items=found.map(p=>{const d=TUTU_PLACES.display(p);return {value:d.name,main:d.name,meta:d.meta,id:p.id,canonical:p.canonical,country:p.country,iata:p.iata.join(',')}})
+    }else{
+      const nq=q.toLocaleLowerCase();
+      items=(places[mode]||[]).filter(x=>(x[0]+' '+x[1]).toLocaleLowerCase().includes(nq)).slice(0,6).map(x=>({value:x[0],main:x[0],meta:x[1]}))
+    }
+    box.innerHTML=items.map(x=>'<button type="button" class="suggest-item" data-value="'+escapeAttr(x.value)+'"'+(x.id?' data-place-id="'+escapeAttr(x.id)+'" data-canonical="'+escapeAttr(x.canonical)+'" data-country="'+escapeAttr(x.country)+'" data-iata="'+escapeAttr(x.iata)+'"':'')+'><span class="suggest-main">'+x.main+'</span><span class="suggest-meta">'+x.meta+'</span></button>').join('');
+    box.hidden=!items.length
+  }
+  [from,to].forEach(input=>{input.addEventListener('focus',()=>{closeSuggest();renderSuggest(input)});input.addEventListener('input',()=>{clearPlaceMeta(input);renderSuggest(input)});input.closest('.field').querySelector('.search-suggest').addEventListener('click',e=>{const item=e.target.closest('.suggest-item');if(!item)return;input.value=item.dataset.value;clearPlaceMeta(input);if(item.dataset.placeId){input.dataset.placeId=item.dataset.placeId;input.dataset.canonical=item.dataset.canonical||'';input.dataset.country=item.dataset.country||'';input.dataset.iata=item.dataset.iata||''}item.closest('.search-suggest').hidden=true})});
+  swap.addEventListener('click',()=>{const keys=['placeId','canonical','country','iata'],x=from.value,meta={};keys.forEach(k=>meta[k]=from.dataset[k]||'');from.value=to.value;to.value=x;keys.forEach(k=>{const v=to.dataset[k]||'';if(v)from.dataset[k]=v;else delete from.dataset[k];if(meta[k])to.dataset[k]=meta[k];else delete to.dataset[k]})});'''
+
+          for path in files:
+              text = path.read_text(encoding='utf-8')
+              if 'assets/search-places.js' not in text:
+                  if include_old not in text:
+                      raise SystemExit(f'Main script marker not found in {path}')
+                  text = text.replace(include_old, include_new, 1)
+              if old_render not in text:
+                  raise SystemExit(f'Old autocomplete block not found in {path}')
+              text = text.replace(old_render, new_render, 1)
+              path.write_text(text, encoding='utf-8')
+
+          db=Path('assets/search-places.js')
+          text=db.read_text(encoding='utf-8')
+          text=text.replace("['KG','Бишкек','Bishkek','बिश्केक','BSZ','Frunze Фрунзе',1]", "['KG','Бишкек','Bishkek','बिश्केक','FRU','Manas Frunze Фрунзе',1]")
+          text=text.replace("['KG','Баткен','Batken','बतकेन','БAT','',4]", "['KG','Баткен','Batken','बतकेन','BTC','',4]")
+          db.write_text(text,encoding='utf-8')
+          PY
+      - name: Validate multilingual matching
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          global.window=global;
+          global.document={documentElement:{lang:'ru'}};
+          vm.runInThisContext(fs.readFileSync('assets/search-places.js','utf8'));
+          const m1=TUTU_PLACES.search('मॉस्को',6)[0];
+          if(!m1||m1.id!=='ru-moscow'||TUTU_PLACES.display(m1).name!=='Москва')throw new Error('Hindi to Russian lookup failed');
+          document.documentElement.lang='en';
+          const m2=TUTU_PLACES.search('Москва',6)[0];
+          if(!m2||TUTU_PLACES.display(m2).name!=='Moscow')throw new Error('Russian to English lookup failed');
+          document.documentElement.lang='hi';
+          const m3=TUTU_PLACES.search('Moscow',6)[0];
+          if(!m3||TUTU_PLACES.display(m3).name!=='मॉस्को')throw new Error('English to Hindi lookup failed');
+          if(TUTU_PLACES.places.filter(x=>x.country==='CN').length!==10)throw new Error('China must contain exactly 10 cities');
+          if(TUTU_PLACES.popularFor('to').length!==6)throw new Error('Popular suggestions must contain 6 cities');
+          console.log('Places:',TUTU_PLACES.places.length,'China:',TUTU_PLACES.places.filter(x=>x.country==='CN').length);
+          NODE
+          grep -q 'assets/search-places.js' index.html
+          grep -q 'assets/search-places.js' index-en.html
+          grep -q 'assets/search-places.js' index-hi.html
+          git diff --check
+      - name: Commit changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html index-en.html index-hi.html assets/search-places.js
+          git commit -m "Implement multilingual destination autocomplete"
+          git push origin HEAD:main
