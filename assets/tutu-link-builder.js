@@ -221,7 +221,14 @@
   }
 
   function buildTrain(s){return buildRailLike(s)}
-  function buildBus(s){return buildRailLike(s)}
+  function buildBus(s){
+  requireValue(s.from,'from');
+  requireValue(s.to,'to');
+  requireValue(s.date,'date');
+  if(samePlace(s.from,s.to))fail('sameCity');
+  if(!supports('bus',s.from)||!supports('bus',s.to))unsupported();
+  return 'https://bus.tutu.ru/raspisanie/gorod_'+encodeURIComponent(railSlug(s.from))+'/gorod_'+encodeURIComponent(railSlug(s.to))+'/';
+}
 
   function build(mode,state){
     if(mode==='hotel')return buildHotel(state);

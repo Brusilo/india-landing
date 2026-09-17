@@ -105,6 +105,7 @@ input:focus{outline:none}
 .head-actions__nav{display:flex;align-items:center}
 .filters-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
 .filters-bar .filters{margin-bottom:0;min-width:0}
+.filters-bar--nav-only{justify-content:flex-end}
 
 .see-all{
   color:var(--berry-purple);font-weight:600;font-size:15px;
@@ -645,7 +646,7 @@ body{position:relative!important}
 html:lang(hi) .hero{padding-bottom:132px!important}
 @media(min-width:768px){html:lang(hi) .hero{padding-bottom:176px!important}}
 </style>
-<link rel="stylesheet" href="assets/search-v2.css?v=20260917-tutu-links-8">
+<link rel="stylesheet" href="assets/search-v2.css?v=20260917-tutu-links-9">
 </head>
 <body>
 
@@ -721,7 +722,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
       </div>
       <div class="head-actions">
         <div class="head-actions__see">
-          <a class="see-all" href="#">
+          <a class="see-all" href="https://www.tutu.ru/juicy-offers/">
             सभी रूट
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
           </a>
@@ -729,12 +730,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
       </div>
     </div>
 
-    <div class="filters-bar">
-      <div class="filters" role="tablist" aria-label="रूट फ़िल्टर">
-        <button type="button" class="is-active" role="tab" aria-selected="true">सभी</button>
-        <button type="button" role="tab" aria-selected="false">ट्रेन</button>
-        <button type="button" role="tab" aria-selected="false">फ़्लाइट</button>
-      </div>
+    <div class="filters-bar filters-bar--nav-only">
       <div class="carousel-nav" data-carousel="routes">
         <button type="button" aria-label="पिछला">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19 8 12l7-7"/></svg>
@@ -809,7 +805,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
         </div>
         <div class="head-actions">
           <div class="head-actions__see">
-            <a class="see-all" href="#">
+            <a class="see-all" href="https://hotel.tutu.ru/c_russia/moscow/">
               सभी होटल
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
             </a>
@@ -962,11 +958,11 @@ html:lang(hi) .hero{padding-bottom:132px!important}
   </div>
 </footer>
 
-<script src="assets/search-places.js"></script>
+<script src="assets/search-places.js?v=20260917-places-9"></script>
 <script>
 const CONFIG = {
   currency: '₽',
-  rubToInr: 1.135,
+  rubToInr: 1.133,
 
   routes: [
     { id:'r1',  from:'मॉस्को',           to:'मुंबई',     typeLine:'कनेक्टिंग फ़्लाइट',    transport:'flight', combined:false, price:'25 538', duration:'11 घं 10 मि', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
@@ -1186,7 +1182,8 @@ initCarousel('hotels-row', 'hotels');
 })();
 </script>
 
-<script src="assets/tutu-link-builder.js?v=20260917-tutu-links-8"></script>
-<script src="assets/search-v2.js?v=20260917-tutu-links-8"></script>
+<script src="assets/tutu-link-builder.js?v=20260917-tutu-links-9"></script>
+<script src="assets/search-v2.js?v=20260917-tutu-links-9"></script>
+<script src="assets/card-links.js?v=20260917-links-9"></script>
 </body>
 </html>

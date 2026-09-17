@@ -318,20 +318,26 @@
   }
 
   function bindSubmit(){
-    const button=form.querySelector('.v2-submit');if(!button)return;
-    button.addEventListener('click',()=>{
-      try{
-        if(!window.TUTU_LINKS){const e=new Error('unsupported');e.code='unsupported';throw e}
-        const url=window.TUTU_LINKS.build(mode,states[mode]);
-        window.location.assign(url);
-      }catch(err){
-        const code=err&&err.code?err.code:'unsupported';
-        alert(window.TUTU_LINKS?window.TUTU_LINKS.message(code,pageLang):code);
-      }
-    });
-  }
+  const button=form.querySelector('.v2-submit');if(!button)return;
+  button.addEventListener('click',()=>{
+    const state=states[mode];
+    const unknown=mode==='hotel'
+      ? !!(state.destinationText&&state.destinationText.trim())&&!state.destination
+      : (!!(state.fromText&&state.fromText.trim())&&!state.from)||!!(state.toText&&state.toText.trim())&&!state.to;
+    if(unknown){window.location.assign('https://www.tutu.ru/');return}
+    try{
+      if(!window.TUTU_LINKS){const e=new Error('unsupported');e.code='unsupported';throw e}
+      const url=window.TUTU_LINKS.build(mode,state);
+      window.location.assign(url);
+    }catch(err){
+      const code=err&&err.code?err.code:'unsupported';
+      if(code==='unsupported'){window.location.assign('https://www.tutu.ru/');return}
+      alert(window.TUTU_LINKS?window.TUTU_LINKS.message(code,pageLang):code);
+    }
+  });
+}
 
-  function bindForm(){bindPlaces();bindCalendar();bindPax();bindSwap();bindSubmit()}
+function bindForm(){bindPlaces();bindCalendar();bindPax();bindSwap();bindSubmit()}
 
   function setQuickPlace(role,id){
     const p=TUTU_PLACES.byId.get(id);if(!p)return;

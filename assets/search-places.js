@@ -129,6 +129,19 @@
     ['RU','Тольятти','Tolyatti','तोल्यात्ती','','Togliatti',121],
     ['RU','Набережные Челны','Naberezhnye Chelny','नाबेरेझ्निये चेल्नी','','Naberezhnye Chelny',122],
 
+    // Russia — resort destinations available on Tutu Hotels
+    ['RU','Адлер','Adler','एडलर','','Sochi Airport AER Адлер',123],
+    ['RU','Туапсе','Tuapse','तुआप्से','','',124],
+    ['RU','Лоо','Loo','लू','','',125],
+    ['RU','Дагомыс','Dagomys','दागोमिस','','',126],
+    ['RU','Красная Поляна','Krasnaya Polyana','क्रास्नाया पोल्याना','','',127],
+    ['RU','Джубга','Dzhubga','जुबगा','','',128],
+    ['RU','Домбай','Dombay','दोम्बाय','','',129],
+    ['RU','Ольгинка','Olginka','ओल्गिंका','','',130],
+    ['RU','Архипо-Осиповка','Arkhipo-Osipovka','आर्खिपो-ओसिपोव्का','','Arkhipo Osipovka',131],
+    ['RU','Эстосадок','Estosadok','एस्तोसादोक','','Esto-Sadok Эсто-Садок',132],
+    ['RU','Бетта','Betta','बेट्टा','','',133],
+
     // India — international and high-demand nodes
     ['IN','Дели','Delhi','दिल्ली','DEL','New Delhi Dilli Нью-Дели',1],
     ['IN','Мумбаи','Mumbai','मुंबई','BOM','Bombay Бомбей',2],

@@ -105,6 +105,7 @@ input:focus{outline:none}
 .head-actions__nav{display:flex;align-items:center}
 .filters-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
 .filters-bar .filters{margin-bottom:0;min-width:0}
+.filters-bar--nav-only{justify-content:flex-end}
 
 .see-all{
   color:var(--berry-purple);font-weight:600;font-size:15px;
@@ -641,7 +642,7 @@ body{position:relative!important}
   .footer-logo{margin-bottom:20px!important}
 }
 </style>
-<link rel="stylesheet" href="assets/search-v2.css?v=20260917-tutu-links-8">
+<link rel="stylesheet" href="assets/search-v2.css?v=20260917-tutu-links-9">
 </head>
 <body>
 
@@ -717,7 +718,7 @@ body{position:relative!important}
       </div>
       <div class="head-actions">
         <div class="head-actions__see">
-          <a class="see-all" href="#">
+          <a class="see-all" href="https://www.tutu.ru/juicy-offers/">
             Все направления
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
           </a>
@@ -725,12 +726,7 @@ body{position:relative!important}
       </div>
     </div>
 
-    <div class="filters-bar">
-      <div class="filters" role="tablist" aria-label="Фильтр маршрутов">
-        <button type="button" class="is-active" role="tab" aria-selected="true">Все</button>
-        <button type="button" role="tab" aria-selected="false">Поезда</button>
-        <button type="button" role="tab" aria-selected="false">Самолёты</button>
-      </div>
+    <div class="filters-bar filters-bar--nav-only">
       <div class="carousel-nav" data-carousel="routes">
         <button type="button" aria-label="Назад">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19 8 12l7-7"/></svg>
@@ -805,7 +801,7 @@ body{position:relative!important}
         </div>
         <div class="head-actions">
           <div class="head-actions__see">
-            <a class="see-all" href="#">
+            <a class="see-all" href="https://hotel.tutu.ru/c_russia/moscow/">
               Все отели
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
             </a>
@@ -958,11 +954,11 @@ body{position:relative!important}
   </div>
 </footer>
 
-<script src="assets/search-places.js"></script>
+<script src="assets/search-places.js?v=20260917-places-9"></script>
 <script>
 const CONFIG = {
   currency: '₽',
-  rubToInr: 1.135,
+  rubToInr: 1.133,
 
   routes: [
     { id:'r1',  from:'Москва',           to:'Мумбаи',     typeLine:'рейс с пересадкой',    transport:'flight', combined:false, price:'25 538', duration:'11 ч 10 мин', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
@@ -1182,7 +1178,8 @@ initCarousel('hotels-row', 'hotels');
 })();
 </script>
 
-<script src="assets/tutu-link-builder.js?v=20260917-tutu-links-8"></script>
-<script src="assets/search-v2.js?v=20260917-tutu-links-8"></script>
+<script src="assets/tutu-link-builder.js?v=20260917-tutu-links-9"></script>
+<script src="assets/search-v2.js?v=20260917-tutu-links-9"></script>
+<script src="assets/card-links.js?v=20260917-links-9"></script>
 </body>
 </html>
