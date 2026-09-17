@@ -3,7 +3,7 @@ name: Fix hotel empty date style
 on:
   push:
     paths:
-      - '.github/workflows/fix-hotel-empty-date-style.yml'
+      - .github/workflows/fix-hotel-empty-date-style.yml
 
 permissions:
   contents: write
@@ -15,65 +15,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Force hotel empty date placeholder style
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-
-          css_path = Path('assets/search-v2.css')
-          css = css_path.read_text(encoding='utf-8')
-          old = '''/* Hotel empty-state fields match the neutral placeholder style. */
-.search-v2[data-mode="hotel"] .v2-field--date:not(.has-value) .v2-value {
-  font-weight: 400 !important;
-  color: #74748a !important;
-}
-'''
-          new = '''/* Hotel empty-state date must look exactly like an unfilled text placeholder. */
-.search.search-v2[data-mode="hotel"] .v2-field--date:not(.has-value) .v2-value {
-  font-family: var(--font) !important;
-  font-size: 18px !important;
-  font-weight: 400 !important;
-  line-height: 1.2 !important;
-  color: #74748a !important;
-  opacity: 1 !important;
-}
-@media (max-width: 899px) {
-  .search.search-v2[data-mode="hotel"] .v2-field--date:not(.has-value) .v2-value {
-    font-size: 17px !important;
-  }
-}
-'''
-          if old in css:
-              css = css.replace(old, new, 1)
-          else:
-              css += '\n' + new
-          css_path.write_text(css, encoding='utf-8')
-
-          version='20260917-hotel-date-placeholder-2'
-          for name in ['index.html','index-en.html','index-hi.html']:
-              p=Path(name)
-              s=p.read_text(encoding='utf-8')
-              s=re.sub(r'assets/search-v2\.css(?:\?v=[^"\']+)?', 'assets/search-v2.css?v='+version, s)
-              p.write_text(s, encoding='utf-8')
-          PY
+      - name: Apply patch
+        run: python3 .github/scripts/fix_hotel_empty_date.py
       - name: Validate
-        shell: bash
         run: |
-          grep -q 'hotel-date-placeholder-2' index.html
-          grep -q 'hotel-date-placeholder-2' index-en.html
-          grep -q 'hotel-date-placeholder-2' index-hi.html
-          grep -q 'font-size: 18px !important' assets/search-v2.css
-          grep -q 'font-weight: 400 !important' assets/search-v2.css
-          grep -q 'color: #74748a !important' assets/search-v2.css
+          grep -q 'hotel-date-placeholder-3' index.html
+          grep -q 'hotel-date-placeholder-3' index-en.html
+          grep -q 'hotel-date-placeholder-3' index-hi.html
           git diff --check
-      - name: Commit and clean up
-        shell: bash
+      - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git rm .github/workflows/fix-hotel-empty-date-style.yml
+          git rm .github/workflows/fix-hotel-empty-date-style.yml .github/scripts/fix_hotel_empty_date.py
           git add assets/search-v2.css index.html index-en.html index-hi.html
           git commit -m "Match hotel empty date to placeholder style"
           git push origin HEAD:main
