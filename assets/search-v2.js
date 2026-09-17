@@ -54,7 +54,8 @@
 
   const form=document.createElement('form');
   form.className='search search-v2';
-  form.setAttribute('onsubmit','return false');
+  form.noValidate=true;
+  form.addEventListener('submit',e=>{e.preventDefault();submitSearch()});
   oldForm.replaceWith(form);
 
   const hints=document.createElement('div');
@@ -101,8 +102,8 @@
   function placeField(role,caption,placeholder,text,place){
     return '<div class="v2-field v2-field--place '+(text?'has-value':'')+'" data-role="'+role+'">'+
       '<span class="v2-caption">'+esc(caption)+'</span>'+
-      '<input class="v2-input" type="text" autocomplete="off" value="'+esc(text)+'" placeholder="'+esc(placeholder)+'" aria-label="'+esc(caption)+'"'+selectedPlaceAttrs(place)+'>'+
-      '<div class="search-suggest" hidden></div></div>';
+      '<input class="v2-input" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest-'+role+'" maxlength="128" value="'+esc(text)+'" placeholder="'+esc(placeholder)+'" aria-label="'+esc(caption)+'"'+selectedPlaceAttrs(place)+'>'+
+      '<div class="search-suggest" role="listbox" id="suggest-'+role+'" hidden></div></div>';
   }
 
   function dateField(caption,value){
@@ -122,7 +123,7 @@
       form.innerHTML=placeField('destination',labels.hotelWhere,labels.hotelWhere,s.destinationText,s.destination)+
         dateField(labels.hotelDates,formatRange(s.start,s.end))+
         paxField(labels.guests)+
-        '<button type="button" class="v2-submit">'+esc(labels.search)+'</button>';
+        '<button type="submit" class="v2-submit">'+esc(labels.search)+'</button>';
     }else{
       const who=mode==='flight'?labels.flightWho:labels.travelWho;
       form.innerHTML=placeField('from',labels.from,labels.from,s.fromText,s.from)+
@@ -130,7 +131,7 @@
         placeField('to',labels.to,labels.to,s.toText,s.to)+
         dateField(labels.when,formatSingle(s.date))+
         paxField(who)+
-        '<button type="button" class="v2-submit">'+esc(labels.search)+'</button>';
+        '<button type="submit" class="v2-submit">'+esc(labels.search)+'</button>';
     }
     bindForm();
     renderHints();
@@ -155,17 +156,23 @@
 
   function renderSuggestions(input,role){
     const field=input.closest('.v2-field--place'),box=field.querySelector('.search-suggest'),q=input.value.trim();
-    const pool=q?TUTU_PLACES.search(q,30):preferredPlaces(role);
-    const results=pool.filter(p=>!window.TUTU_LINKS||window.TUTU_LINKS.supports(mode,p)).slice(0,6);
-    box.innerHTML=results.map(p=>{
+    const allowed=p=>!window.TUTU_LINKS||window.TUTU_LINKS.supports(mode,p);
+    const results=q?TUTU_PLACES.search(q,6,allowed):preferredPlaces(role).filter(allowed).slice(0,6);
+    box.innerHTML=results.map((p,i)=>{
       const d=TUTU_PLACES.display(p,pageLang);
-      return '<button type="button" class="suggest-item" data-place-id="'+esc(p.id)+'"><span class="suggest-main">'+esc(d.name)+'</span><span class="suggest-meta">'+esc(d.meta)+'</span></button>';
+      return '<button type="button" class="suggest-item" role="option" aria-selected="false" id="option-'+role+'-'+i+'" data-place-id="'+esc(p.id)+'"><span class="suggest-main">'+esc(d.name)+'</span><span class="suggest-meta">'+esc(d.meta)+'</span></button>';
     }).join('');
-    box.hidden=!results.length;
+    box.dataset.active='-1';box.hidden=!results.length;
+    input.setAttribute('aria-expanded',String(!box.hidden));input.removeAttribute('aria-activedescendant');
   }
 
   function closeOverlays(except){
-    form.querySelectorAll('.search-suggest,.v2-calendar,.v2-popover').forEach(x=>{if(x!==except)x.hidden=true});
+    form.querySelectorAll('.search-suggest,.v2-calendar,.v2-popover').forEach(x=>{
+      if(x===except)return;
+      x.hidden=true;
+      const input=x.parentElement.querySelector('.v2-input');
+      if(input){input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant')}
+    });
   }
 
   function setPlace(role,place,input){
@@ -198,11 +205,26 @@
         else{s.to=null;s.toText=input.value}
         renderSuggestions(input,role);
       });
+      input.addEventListener('keydown',e=>{
+        if(e.isComposing)return;
+        if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+          e.preventDefault();if(box.hidden)renderSuggestions(input,role);
+          const items=[...box.querySelectorAll('[data-place-id]')];if(!items.length)return;
+          const old=Number(box.dataset.active??-1);
+          const next=old<0?(e.key==='ArrowDown'?0:items.length-1):(old+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;
+          box.dataset.active=String(next);
+          items.forEach((item,i)=>item.setAttribute('aria-selected',String(i===next)));
+          input.setAttribute('aria-activedescendant',items[next].id);
+        }else if(e.key==='Enter'&&!box.hidden&&Number(box.dataset.active)>=0){
+          e.preventDefault();const item=box.querySelectorAll('[data-place-id]')[Number(box.dataset.active)];
+          if(item){setPlace(role,TUTU_PLACES.byId.get(item.dataset.placeId),input);closeOverlays()}
+        }else if(e.key==='Escape'||e.key==='Tab')closeOverlays();
+      });
       box.addEventListener('click',e=>{
         e.preventDefault();e.stopPropagation();
         const item=e.target.closest('[data-place-id]');if(!item)return;
         const p=TUTU_PLACES.byId.get(item.dataset.placeId);if(!p)return;
-        setPlace(role,p,input);box.hidden=true;
+        setPlace(role,p,input);closeOverlays();
       });
     });
   }
@@ -291,6 +313,7 @@
       if(!Array.isArray(s.childAges))s.childAges=[];s.childAges[i]=Number(age.value);
     });
     box.addEventListener('click',e=>{
+      if(e.target.closest('select,option')){e.stopPropagation();return}
       e.preventDefault();e.stopPropagation();
       const step=e.target.closest('[data-step]');
       if(step){
@@ -317,27 +340,29 @@
     });
   }
 
-  function bindSubmit(){
-  const button=form.querySelector('.v2-submit');if(!button)return;
-  button.addEventListener('click',()=>{
-    const state=states[mode];
-    const unknown=mode==='hotel'
-      ? !!(state.destinationText&&state.destinationText.trim())&&!state.destination
-      : (!!(state.fromText&&state.fromText.trim())&&!state.from)||!!(state.toText&&state.toText.trim())&&!state.to;
+  function submitSearch(){
+    const state=states[mode],roles=mode==='hotel'?['destination']:['from','to'];
+    // Exact multilingual names are enough; partial/ambiguous input is never guessed.
+    roles.forEach(role=>{
+      if(state[role])return;
+      const p=TUTU_PLACES.resolveExact(state[role+'Text'],p=>!window.TUTU_LINKS||TUTU_LINKS.supports(mode,p));
+      const input=form.querySelector('[data-role="'+role+'"] input');
+      if(p&&input)setPlace(role,p,input);
+    });
+    const unknown=roles.some(role=>String(state[role+'Text']||'').trim()&&!state[role]);
     if(unknown){window.location.assign('https://www.tutu.ru/');return}
     try{
-      if(!window.TUTU_LINKS){const e=new Error('unsupported');e.code='unsupported';throw e}
+      if(!window.TUTU_LINKS){window.location.assign('https://www.tutu.ru/');return}
       const url=window.TUTU_LINKS.build(mode,state);
       window.location.assign(url);
     }catch(err){
       const code=err&&err.code?err.code:'unsupported';
       if(code==='unsupported'){window.location.assign('https://www.tutu.ru/');return}
-      alert(window.TUTU_LINKS?window.TUTU_LINKS.message(code,pageLang):code);
+      alert(window.TUTU_LINKS.message(code,pageLang));
     }
-  });
-}
+  }
 
-function bindForm(){bindPlaces();bindCalendar();bindPax();bindSwap();bindSubmit()}
+  function bindForm(){bindPlaces();bindCalendar();bindPax();bindSwap()}
 
   function setQuickPlace(role,id){
     const p=TUTU_PLACES.byId.get(id);if(!p)return;

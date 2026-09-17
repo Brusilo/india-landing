@@ -8,124 +8,11 @@
     CN:'china',AE:'united_arab_emirates',QA:'qatar',TR:'turkey'
   };
 
-  // Verified from current public Tutu result links.
-  const aviaId={
-    'ru-moscow':491,
-    'ru-saint-petersburg':75,
-    'ru-sochi':78,
-    'ru-kazan':33,
-    'ru-yekaterinburg':29,
-    'ru-novosibirsk':58,
-    'ru-irkutsk':31,
-    'ru-anapa':10,
-    'ru-chelyabinsk':98,
-    'ru-krasnodar':39,
-    'ru-samara':74,
-    'ru-ufa':93,
-    'ru-krasnoyarsk':6,
-    'ru-omsk':62,
-    'ru-perm':68,
-    'ru-tyumen':86,
-    'ru-vladivostok':21,
-    'ru-khabarovsk':95,
-    'ru-kaliningrad':34,
-    'ru-makhachkala':46,
-    'ru-mineralnye-vody':47,
-    'ru-volgograd':23,
-    'in-delhi':216,
-    'in-mumbai':158,
-    'in-goa':199,
-    'in-kolkata':255,
-    'in-kochi':278,
-    'in-ahmedabad':2616,
-    'in-jaipur':2648,
-    'in-amritsar':2614,
-    'in-varanasi':2631,
-    'in-lucknow':2677,
-    'in-guwahati':2639,
-    'in-bhubaneswar':2628,
-    'in-hyderabad':2727,
-    'in-chennai':2732,
-    'ae-dubai':230,
-    'tr-istanbul':419,
-    'am-yerevan':236,
-    'az-baku':136,
-    'qa-doha':227,
-    'kg-osh':358,
-    'uz-tashkent':424
-  };
-
-  const hotelGeoId={
-    'ru-moscow':2657260,
-    'in-delhi':2657045,
-    'az-baku':2656975,
-    'qa-doha':2657053
-  };
-
-  // Tutu uses its own historical transliteration in route paths.
-  const aviaSlugOverride={
-    'ru-moscow':'Moskva',
-    'ru-saint-petersburg':'Sankt-peterburg',
-    'ru-yekaterinburg':'Ekaterinburg',
-    'ru-nizhny-novgorod':'Nijniy_novgorod',
-    'ru-mineralnye-vody':'Mineralnie_vodi',
-    'ru-yoshkar-ola':'Yoshkar-ola',
-    'ru-gorno-altaysk':'Gorno-altaysk',
-    'ru-ulan-ude':'Ulan-ude',
-    'ru-petropavlovsk-kamchatsky':'Petropavlovsk-Kamchatskiy',
-    'ru-yuzhno-sakhalinsk':'Yuzhno-Sakhalinsk',
-    'ru-khabarovsk':'Habarovsk',
-    'ru-makhachkala':'Mahachkala',
-    'ru-grozny':'Grozniy',
-    'ru-astrakhan':'Astrahan',
-    'in-delhi':'Deli',
-    'in-bengaluru':'Bangalor',
-    'in-hyderabad':'Haydarabad',
-    'in-kolkata':'Kalkutta',
-    'in-kochi':'Kochin',
-    'in-ahmedabad':'Ahmadabad',
-    'in-jaipur':'Djaypur',
-    'in-lucknow':'Lakhnau',
-    'in-guwahati':'Guvahati',
-    'in-pune':'Puna',
-    'in-bhubaneswar':'Bhubaneshvar',
-    'in-mangaluru':'Mangalor',
-    'in-srinagar':'Shrinagar',
-    'in-coimbatore':'Koimbatur',
-    'in-port-blair':'Port-bler',
-    'in-visakhapatnam':'Vishakhapatnam',
-    'in-thiruvananthapuram':'Trivandrum',
-    'in-kozhikode':'Kojikode',
-    'ae-dubai':'Dubay',
-    'tr-istanbul':'Stambul',
-    'am-yerevan':'Erevan'
-  };
-
-  const railSlugOverride={
-    'ru-moscow':'Moskva',
-    'ru-saint-petersburg':'Sankt-Peterburg',
-    'ru-yekaterinburg':'Ekaterinburg',
-    'ru-nizhny-novgorod':'Nizhnij-Novgorod',
-    'ru-mineralnye-vody':'Mineralnye_Vody',
-    'ru-veliky-novgorod':'Novgorod',
-    'ru-yoshkar-ola':'Ioshkar-Ola',
-    'ru-oryol':'Orel',
-    'ru-grozny':'Groznyy',
-    'ru-gorno-altaysk':'Gorno-Altaysk',
-    'ru-ulan-ude':'Ulan-Ude',
-    'ru-petropavlovsk-kamchatsky':'Petropavlovsk-Kamchatskiy',
-    'ru-yuzhno-sakhalinsk':'Yuzhno-Sakhalinsk'
-  };
-
-  const hotelSlugOverride={
-    'ru-moscow':'moscow',
-    'ru-saint-petersburg':'saint_petersburg',
-    'ru-yekaterinburg':'ekaterinburg',
-    'in-delhi':'delhi',
-    'in-mumbai':'mumbai',
-    'in-kochi':'cochin',
-    'in-bengaluru':'bangalore'
-  };
+  const HOME='https://www.tutu.ru/';
+  // No unverified spelling is ever emitted as a destination URL.
+  const destinations=window.TUTU_DESTINATIONS||{flight:{},train:{},bus:{},hotel:{}};
+  const aviaId=Object.fromEntries(Object.entries(destinations.flight).map(([id,d])=>[id,d[1]]));
+  const hotelGeoId=Object.fromEntries(Object.entries(destinations.hotel).filter(([,d])=>d[2]).map(([id,d])=>[id,d[2]]));
 
   const railCountries=new Set(['RU','BY','KZ','UZ','KG','TJ','AM','AZ','MD','GE']);
 
@@ -135,31 +22,27 @@
   function fallbackSlug(place,separator='-'){
     return asciiWords(place&&place.canonical).join(separator);
   }
-  function aviaSlug(place){
-    if(!place)return '';
-    return aviaSlugOverride[place.id]||fallbackSlug(place,'-');
-  }
-  function railSlug(place){
-    if(!place)return '';
-    return railSlugOverride[place.id]||fallbackSlug(place,'-');
-  }
-  function hotelSlug(place){
-    if(!place)return '';
-    if(hotelSlugOverride[place.id])return hotelSlugOverride[place.id];
-    return asciiWords(place.canonical).map(x=>x.toLowerCase()).join('_');
-  }
+  function aviaSlug(place){return place?(destinations.flight[place.id]?.[0]||fallbackSlug(place,'-')):''}
+  function railSlug(place){return place?(destinations.train[place.id]||fallbackSlug(place,'-')):''}
+  function hotelSlug(place){return place?(destinations.hotel[place.id]?.[1]||fallbackSlug(place,'_').toLowerCase()):''}
 
   function pad(n){return String(n).padStart(2,'0')}
   function iso(d){return d?d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()):''}
   function dotted(d){return d?pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear():''}
   function compact(d){return d?pad(d.getDate())+pad(d.getMonth()+1)+d.getFullYear():''}
-  function total(s){return Math.max(1,Number(s.adults||0)+Number(s.children||0))}
-  function travelerToken(s){
-    const adults=Math.max(1,Number(s.adults||1));
-    const count=Math.max(0,Number(s.children||0));
-    const ages=(s.childAges||[]).slice(0,count).map(x=>Math.max(0,Math.min(17,Number(x))));
-    while(ages.length<count)ages.push(5);
-    return [adults].concat(ages).join('.');
+  function passengerData(s){
+    const adults=Number(s.adults??1),children=Number(s.children??0);
+    if(!Number.isInteger(adults)||adults<1||!Number.isInteger(children)||children<0||adults+children>9)fail('passengers');
+    const ages=(s.childAges||[]).slice(0,children).map(Number);
+    if(ages.length!==children||ages.some(age=>!Number.isInteger(age)||age<0||age>17))fail('passengers');
+    return {adults,children,ages};
+  }
+  function total(s){const p=passengerData(s);return p.adults+p.children}
+  function travelerToken(s){const p=passengerData(s);return [p.adults,...p.ages].join('.')}
+  function requireDate(value,code){
+    if(!value||typeof value.getTime!=='function'||!Number.isFinite(value.getTime()))fail(code);
+    const today=new Date();today.setHours(0,0,0,0);
+    if(value<today)fail(code);
   }
   function requireValue(value,code){if(!value){const e=new Error(code);e.code=code;throw e}}
   function fail(code){const e=new Error(code);e.code=code;throw e}
@@ -181,54 +64,45 @@
 
   function buildHotel(s){
     requireValue(s.destination,'destination');
-    requireValue(s.start,'hotelDates');
-    requireValue(s.end,'hotelDates');
+    requireDate(s.start,'hotelDates');requireDate(s.end,'hotelDates');
     if(s.end<=s.start)fail('hotelDates');
-    const place=s.destination;
-    if(!supports('hotel',place))unsupported();
+    const token=travelerToken(s),place=s.destination,d=destinations.hotel[place.id];
+    if(!supports('hotel',place)||!d)return HOME;
     const q={check_in:iso(s.start),check_out:iso(s.end),details_params:''};
-    if(hotelGeoId[place.id])q.geo_id=hotelGeoId[place.id];
+    if(d[2])q.geo_id=d[2];
     q.geo_name=(place.name&&place.name.ru)||place.canonical;
-    q.geo_type='locality';
-    q.resultId='';
-    q['room[0]']=total(s);
-    return 'https://hotel.tutu.ru/c_'+countrySlug[place.country]+'/'+hotelSlug(place)+'/?'+params(q);
+    q.geo_type='locality';q.resultId='';q['room[0]']=token;
+    return 'https://hotel.tutu.ru/c_'+d[0]+'/'+d[1]+'/?'+params(q);
   }
 
+  function routeState(s,mode){
+    requireValue(s.from,'from');requireValue(s.to,'to');requireDate(s.date,'date');
+    if(samePlace(s.from,s.to))fail('sameCity');
+    const token=travelerToken(s);
+    return supports(mode,s.from)&&supports(mode,s.to)?token:null;
+  }
   function buildAvia(s){
-    requireValue(s.from,'from');
-    requireValue(s.to,'to');
-    requireValue(s.date,'date');
-    if(samePlace(s.from,s.to))fail('sameCity');
-    if(!supports('flight',s.from)||!supports('flight',s.to))unsupported();
-    const q={class:s.cabin==='business'?'C':'Y',travelers:travelerToken(s)};
-    const fromId=aviaId[s.from.id],toId=aviaId[s.to.id];
-    if(fromId&&toId){
-      q['route[0]']=fromId+'-'+compact(s.date)+'-'+toId;
-      q.search_extension='avia';
-    }
-    return 'https://avia.tutu.ru/f/'+encodeURIComponent(aviaSlug(s.from))+'/'+encodeURIComponent(aviaSlug(s.to))+'/?'+params(q);
+    const token=routeState(s,'flight'),from=destinations.flight[s.from.id],to=destinations.flight[s.to.id];
+    if(!token||!from||!to)return HOME;
+    const q={class:s.cabin==='business'?'C':'Y',travelers:token};
+    q['route[0]']=from[1]+'-'+compact(s.date)+'-'+to[1];q.search_extension='avia';
+    return 'https://avia.tutu.ru/f/'+encodeURIComponent(from[0])+'/'+encodeURIComponent(to[0])+'/?'+params(q);
   }
-
-  function buildRailLike(s){
-    requireValue(s.from,'from');
-    requireValue(s.to,'to');
-    requireValue(s.date,'date');
-    if(samePlace(s.from,s.to))fail('sameCity');
-    if(!supports('train',s.from)||!supports('train',s.to))unsupported();
-    const q={date:dotted(s.date),travelers:travelerToken(s)};
-    return 'https://www.tutu.ru/poezda/'+encodeURIComponent(railSlug(s.from))+'/'+encodeURIComponent(railSlug(s.to))+'/?'+params(q);
+  function buildTrain(s){
+    const token=routeState(s,'train'),from=destinations.train[s.from.id],to=destinations.train[s.to.id];
+    if(!token||!from||!to)return HOME;
+    return 'https://www.tutu.ru/poezda/'+encodeURIComponent(from)+'/'+encodeURIComponent(to)+'/?'+params({date:dotted(s.date),travelers:token});
   }
-
-  function buildTrain(s){return buildRailLike(s)}
   function buildBus(s){
-  requireValue(s.from,'from');
-  requireValue(s.to,'to');
-  requireValue(s.date,'date');
-  if(samePlace(s.from,s.to))fail('sameCity');
-  if(!supports('bus',s.from)||!supports('bus',s.to))unsupported();
-  return 'https://bus.tutu.ru/raspisanie/gorod_'+encodeURIComponent(railSlug(s.from))+'/gorod_'+encodeURIComponent(railSlug(s.to))+'/';
-}
+    const token=routeState(s,'bus'),from=destinations.bus[s.from.id],to=destinations.bus[s.to.id];
+    if(!token)return HOME;
+    if(!from||!to){
+      // The previously agreed rail fallback keeps the date and passenger ages.
+      // If neither mapping is known, buildTrain safely returns the official home.
+      return buildTrain(s);
+    }
+    return 'https://bus.tutu.ru/raspisanie/gorod_'+encodeURIComponent(from[0])+'/gorod_'+encodeURIComponent(to[0])+'/?'+params({from:from[1],to:to[1],date:dotted(s.date),travelers:token,amount:total(s)});
+  }
 
   function build(mode,state){
     if(mode==='hotel')return buildHotel(state);
@@ -239,16 +113,18 @@
   }
 
   function isExact(mode,state){
-    if(mode==='flight')return !!(state&&state.from&&state.to&&aviaId[state.from.id]&&aviaId[state.to.id]);
-    return true;
+    if(!state)return false;
+    if(mode==='hotel')return !!(state.destination&&destinations.hotel[state.destination.id]);
+    const table=destinations[mode];
+    return !!(table&&state.from&&state.to&&table[state.from.id]&&table[state.to.id]);
   }
 
   const messages={
-    ru:{from:'Выберите город отправления из подсказок.',to:'Выберите город назначения из подсказок.',destination:'Выберите город из подсказок.',date:'Выберите дату поездки.',hotelDates:'Выберите корректные даты заезда и выезда.',sameCity:'Города отправления и назначения должны отличаться.',unsupported:'Для этого вида транспорта выбранный город пока не поддерживается.'},
-    en:{from:'Select the departure city from the suggestions.',to:'Select the destination city from the suggestions.',destination:'Select a city from the suggestions.',date:'Select a travel date.',hotelDates:'Select valid check-in and check-out dates.',sameCity:'Departure and destination cities must be different.',unsupported:'This city is not supported for the selected transport yet.'},
-    hi:{from:'सुझावों में से प्रस्थान शहर चुनें।',to:'सुझावों में से गंतव्य शहर चुनें।',destination:'सुझावों में से शहर चुनें।',date:'यात्रा की तारीख चुनें।',hotelDates:'चेक-इन और चेक-आउट की सही तारीखें चुनें।',sameCity:'प्रस्थान और गंतव्य शहर अलग होने चाहिए।',unsupported:'चुने गए परिवहन के लिए यह शहर अभी समर्थित नहीं है।'}
+    ru:{passengers:'Проверьте число пассажиров и возраст детей.',from:'Выберите город отправления из подсказок.',to:'Выберите город назначения из подсказок.',destination:'Выберите город из подсказок.',date:'Выберите дату поездки.',hotelDates:'Выберите корректные даты заезда и выезда.',sameCity:'Города отправления и назначения должны отличаться.',unsupported:'Для этого вида транспорта выбранный город пока не поддерживается.'},
+    en:{passengers:'Check the number of travellers and the ages of children.',from:'Select the departure city from the suggestions.',to:'Select the destination city from the suggestions.',destination:'Select a city from the suggestions.',date:'Select a travel date.',hotelDates:'Select valid check-in and check-out dates.',sameCity:'Departure and destination cities must be different.',unsupported:'This city is not supported for the selected transport yet.'},
+    hi:{passengers:'यात्रियों की संख्या और बच्चों की उम्र जाँचें।',from:'सुझावों में से प्रस्थान शहर चुनें।',to:'सुझावों में से गंतव्य शहर चुनें।',destination:'सुझावों में से शहर चुनें।',date:'यात्रा की तारीख चुनें।',hotelDates:'चेक-इन और चेक-आउट की सही तारीखें चुनें।',sameCity:'प्रस्थान और गंतव्य शहर अलग होने चाहिए।',unsupported:'चुने गए परिवहन के लिए यह शहर अभी समर्थित नहीं है।'}
   };
   function message(code,lang){const l=messages[lang]||messages.ru;return l[code]||l.unsupported}
 
-  window.TUTU_LINKS={build,message,supports,isExact,aviaSlug,railSlug,hotelSlug,travelerToken,aviaId,hotelGeoId,countrySlug};
+  window.TUTU_LINKS={build,message,supports,isExact,aviaSlug,railSlug,hotelSlug,travelerToken,aviaId,hotelGeoId,countrySlug,destinations};
 })();

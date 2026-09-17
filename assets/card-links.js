@@ -40,11 +40,9 @@
   }
   function resolvePlace(text){
     if(!window.TUTU_PLACES)return null;
-    const q=String(text||'').trim();if(!q)return null;
-    const norm=q.toLocaleLowerCase();
-    const list=TUTU_PLACES.search(q,20)||[];
-    return list.find(p=>[p.canonical,p.name&&p.name.ru,p.name&&p.name.en,p.name&&p.name.hi].filter(Boolean).some(x=>String(x).toLocaleLowerCase()===norm))||list[0]||null;
+    return TUTU_PLACES.resolveExact(text);
   }
+
   function routeUrl(card){
     const name=card.querySelector('.route-name');if(!name)return HOME;
     const parts=name.textContent.split('–').map(x=>x.trim());if(parts.length!==2)return HOME;

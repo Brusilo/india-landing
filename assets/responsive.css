@@ -296,10 +296,12 @@
 }
 
 
-/* Desktop ticket: lift by 25px, preserving its size and rotation. */
+/* Desktop ticket: lift by 65px in total, preserving its size and rotation. */
 @media (min-width: 1101px) {
-  #routes > .section-decor--ticket { top: 3px !important; }
+  /* Decorative artwork must not create horizontal page scrolling. */
+  html, body { overflow-x: clip; }
+  #routes > .section-decor--ticket { top: -37px !important; }
 }
 @media (min-width: 1101px) and (max-width: 1200px) {
-  #routes > .section-decor--ticket { top: 5px !important; }
+  #routes > .section-decor--ticket { top: -35px !important; }
 }

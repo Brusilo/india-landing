@@ -1,0 +1,68 @@
+{
+  "date": "2026-09-17",
+  "baseline": "ea84ee0ef2484798d2cc8d0176418e8d57bd6b39",
+  "data": {
+    "assertions": 13748,
+    "cityCount": 276,
+    "nameVariants": 2484,
+    "localeInvariantLinks": 2817,
+    "coverage": {
+      "flight": 219,
+      "train": 222,
+      "bus": 222,
+      "hotel": 276
+    },
+    "resolved": {
+      "flight": 219,
+      "train": 141,
+      "bus": 38,
+      "hotel": 273
+    },
+    "fallbacks": {
+      "bus": 184,
+      "train": 81,
+      "hotel": 3
+    },
+    "verifiedAviaIds": 219,
+    "allPassed": true,
+    "externalAvailabilityTested": false
+  },
+  "browser": {
+    "scenarios": 120,
+    "assertions": 2802,
+    "layoutCases": 30,
+    "failures": [],
+    "engine": "Chromium offline fixture; outgoing navigation recorded"
+  },
+  "edgeAssertions": 99,
+  "calendarAssertions": 60,
+  "static": {
+    "index.html": {
+      "duplicateIds": 0,
+      "missingLocalAssets": []
+    },
+    "index-en.html": {
+      "duplicateIds": 0,
+      "missingLocalAssets": []
+    },
+    "index-hi.html": {
+      "duplicateIds": 0,
+      "missingLocalAssets": []
+    }
+  },
+  "confirmedCityRegistry": {
+    "flight": 219,
+    "train": 141,
+    "hotel": 273,
+    "bus": 38
+  },
+  "initialPublicCitySweep": {
+    "cases": 939,
+    "http200": 619,
+    "http404": 305,
+    "readErrors": 15
+  },
+  "bookingTested": false,
+  "physicalDevicesTested": false,
+  "metrikaInstalled": false
+}

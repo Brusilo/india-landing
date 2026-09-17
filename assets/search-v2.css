@@ -180,6 +180,7 @@
   flex-direction: column;
   gap: 2px;
 }
+.search-v2 .suggest-item[aria-selected="true"],
 .search-v2 .suggest-item:hover,
 .search-v2 .suggest-item:focus-visible { background: #edefff; }
 .search-v2 .suggest-main { font-family: var(--font); font-size: 16px; font-weight: 600; color: #0d0b68; }
