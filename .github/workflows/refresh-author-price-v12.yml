@@ -1,0 +1,44 @@
+name: Refresh Author Taganka price v12
+
+on:
+  push:
+    paths:
+      - '.github/workflows/refresh-author-price-v12.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh price and cache
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('assets/card-links.js')
+          s=p.read_text(encoding='utf-8')
+          assert "rating:'8,4',price:3178" in s
+          s=s.replace("rating:'8,4',price:3178","rating:'8,4',price:4122",1)
+          p.write_text(s,encoding='utf-8')
+          for fn in ['index.html','index-en.html','index-hi.html']:
+              p=Path(fn); h=p.read_text(encoding='utf-8')
+              assert 'assets/card-links.js?v=20260917-links-11' in h
+              p.write_text(h.replace('assets/card-links.js?v=20260917-links-11','assets/card-links.js?v=20260917-links-12'),encoding='utf-8')
+          Path('.github/workflows/refresh-author-price-v12.yml').unlink()
+          PY
+      - name: Validate
+        run: |
+          node --check assets/card-links.js
+          grep -q 'price:4122' assets/card-links.js
+          grep -q '20260917-links-12' index.html
+          grep -q '20260917-links-12' index-en.html
+          grep -q '20260917-links-12' index-hi.html
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Refresh Author Taganka price v12'
+          git push
