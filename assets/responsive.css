@@ -115,9 +115,9 @@
   .search.search-v2 .cabin-tabs button { height: 44px; }
   .child-age-v2 { gap: 8px; }
   .child-age-v2 select { min-width: 92px; max-width: 50%; height: 44px; font-size: 16px; }
+  /* Hide quick city/date chips on compact screens; keep city autocomplete. */
   .search-hints.search-hints-v2, .search-hints.search-hints-v2[data-mode="hotel"] {
-    display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px 10px;
-    margin-top: 10px; width: 100%;
+    display: none !important;
   }
   .search-hints.search-hints-v2 .quick-group-v2 { grid-column: auto; flex-wrap: wrap; gap: 6px; }
   .search-hints.search-hints-v2 .quick-group-v2--date,
