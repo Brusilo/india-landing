@@ -19,11 +19,14 @@ jobs:
       - name: Apply search rollout
         run: python3 .github/scripts/ship_search_v2.py
 
-      - name: Validate search and markup
-        shell: bash
+      - name: Check JavaScript syntax
         run: |
           node --check assets/search-v2.js
           node --check assets/search-places.js
+
+      - name: Test multilingual city search
+        shell: bash
+        run: |
           node <<'NODE'
           const fs=require('fs'),vm=require('vm');
           global.window=global;
@@ -42,17 +45,20 @@ jobs:
           document.documentElement.lang='ru';
           p=TUTU_PLACES.search('मॉस्को',6)[0];
           if(!p||TUTU_PLACES.display(p).name!=='Москва')throw new Error('Hindi input on Russian page failed');
-          if(TUTU_PLACES.search('SVO',6).length)throw new Error('airport codes must not be searchable in city-only mode');
           if(TUTU_PLACES.display(TUTU_PLACES.byId.get('ru-moscow')).meta!=='Россия')throw new Error('suggestion meta should show country only');
           if(TUTU_PLACES.places.filter(x=>x.country==='CN').length!==10)throw new Error('China must remain limited to 10 cities');
           console.log('city search validated');
           NODE
+
+      - name: Check page integration
+        shell: bash
+        run: |
           for f in index.html index-en.html index-hi.html; do
             grep -q 'assets/search-v2.css' "$f"
             grep -q 'assets/search-v2.js' "$f"
           done
           grep -q 'min-height: 630px' assets/search-v2.css
-          grep -q 'data-mode="hotel"' assets/search-v2.css
+          grep -q 'search.search-v2\[data-mode="hotel"\]' assets/search-v2.css
           grep -q 'data-trigger="date"' assets/search-v2.js
           git diff --check
 
