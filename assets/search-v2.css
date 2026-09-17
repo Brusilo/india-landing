@@ -303,3 +303,18 @@
   font-weight: 400 !important;
   color: #74748a !important;
 }
+
+/* Force empty hotel dates to match neutral text placeholders. */
+.search.search-v2[data-mode="hotel"] .v2-field--date:not(.has-value) .v2-value {
+  font-family: var(--font) !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+  color: #74748a !important;
+  opacity: 1 !important;
+}
+@media (max-width: 899px) {
+  .search.search-v2[data-mode="hotel"] .v2-field--date:not(.has-value) .v2-value {
+    font-size: 17px !important;
+  }
+}
