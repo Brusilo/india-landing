@@ -19,12 +19,6 @@
     'in-delhi':216
   };
 
-  const busId={
-    'ru-moscow':1447874,
-    'ru-gelendzhik':1447979,
-    'ru-loo':2082727
-  };
-
   const hotelGeoId={
     'ru-moscow':2657260,
     'in-delhi':2657045
@@ -114,13 +108,13 @@
     return 'https://www.tutu.ru/poezda/'+encodeURIComponent(transportSlug(s.from))+'/'+encodeURIComponent(transportSlug(s.to))+'/?'+params(q);
   }
 
+  // Bus mode intentionally opens the equivalent train-results route.
+  // Tutu lets the user switch transport on the results page, while this avoids
+  // relying on opaque per-city bus IDs and gives our city database wider coverage.
   function buildBus(s){
     requireValue(s.from,'from');requireValue(s.to,'to');requireValue(s.date,'date');
-    const q={};
-    if(busId[s.from.id])q.from=busId[s.from.id];
-    if(busId[s.to.id])q.to=busId[s.to.id];
-    q.date=dotted(s.date);q.travelers=travelerToken(s);q.amount=total(s);
-    return 'https://bus.tutu.ru/raspisanie/gorod_'+encodeURIComponent(transportSlug(s.from))+'/gorod_'+encodeURIComponent(transportSlug(s.to))+'/?'+params(q);
+    const q={date:dotted(s.date),travelers:travelerToken(s)};
+    return 'https://www.tutu.ru/poezda/'+encodeURIComponent(transportSlug(s.from))+'/'+encodeURIComponent(transportSlug(s.to))+'/?'+params(q);
   }
 
   function build(mode,state){
@@ -138,5 +132,5 @@
   };
   function message(code,lang){const l=messages[lang]||messages.ru;return l[code]||l.unsupported}
 
-  window.TUTU_LINKS={build,message,transportSlug,hotelSlug,travelerToken,aviaId,busId,hotelGeoId};
+  window.TUTU_LINKS={build,message,transportSlug,hotelSlug,travelerToken,aviaId,hotelGeoId};
 })();
