@@ -1,0 +1,244 @@
+name: Ship unified search v2
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ship-search-v2.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  ship:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Fix interactive popover markup
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('assets/search-v2.js')
+          text = path.read_text(encoding='utf-8')
+
+          text = re.sub(
+              r"  function dateField\(caption,value\)\{.*?\n  \}\n\n  function paxField",
+              """  function dateField(caption,value){
+    return '<div class=\"v2-field v2-field--date '+(value?'has-value':'')+'\" data-role=\"date\">'+
+      '<button type=\"button\" class=\"v2-trigger\" data-trigger=\"date\" aria-haspopup=\"dialog\"><span class=\"v2-caption\">'+esc(caption)+'</span><span class=\"v2-value\">'+esc(value||caption)+'</span></button><div class=\"v2-calendar\" hidden></div></div>';
+  }
+
+  function paxField""",
+              text,
+              count=1,
+              flags=re.S,
+          )
+
+          text = re.sub(
+              r"  function paxField\(caption\)\{.*?\n  \}\n\n  function renderForm",
+              """  function paxField(caption){
+    return '<div class=\"v2-field v2-field--always-caption v2-field--pax\" data-role=\"pax\">'+
+      '<button type=\"button\" class=\"v2-trigger\" data-trigger=\"pax\" aria-haspopup=\"dialog\"><span class=\"v2-caption\">'+esc(caption)+'</span><span class=\"v2-value\">'+esc(travellerValue())+'</span></button><div class=\"v2-popover\" hidden></div></div>';
+  }
+
+  function renderForm""",
+              text,
+              count=1,
+              flags=re.S,
+          )
+
+          text = re.sub(
+              r"  function bindCalendar\(\)\{.*?\n  \}\n\n  function renderGuestPopover",
+              """  function bindCalendar(){
+    const field=form.querySelector('.v2-field--date');if(!field)return;
+    const trigger=field.querySelector('[data-trigger=\"date\"]'),box=field.querySelector('.v2-calendar');
+    trigger.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      const wasHidden=box.hidden;
+      closeOverlays(box);
+      if(wasHidden){
+        const s=states[mode],focusDate=mode==='hotel'?(s.start||today):(s.date||today);
+        calendarView=new Date(focusDate.getFullYear(),focusDate.getMonth(),1);
+        renderCalendar(box);box.hidden=false;
+      }else box.hidden=true;
+    });
+    box.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      const nav=e.target.closest('.cal-nav');
+      if(nav){calendarView=new Date(calendarView.getFullYear(),calendarView.getMonth()+Number(nav.dataset.step),1);renderCalendar(box);return}
+      const day=e.target.closest('.cal-day');
+      if(!day||day.disabled)return;
+      const chosen=parseIso(day.dataset.date),s=states[mode];
+      if(mode==='hotel'){
+        if(!s.start||s.end||chosen<=s.start){s.start=chosen;s.end=null}
+        else{s.end=chosen}
+      }else{s.date=chosen}
+      field.classList.add('has-value');
+      field.querySelector('.v2-value').textContent=mode==='hotel'?formatRange(s.start,s.end):formatSingle(s.date);
+      renderCalendar(box);
+      if(mode!=='hotel'||s.end)box.hidden=true;
+      renderHints();
+    });
+  }
+
+  function renderGuestPopover""",
+              text,
+              count=1,
+              flags=re.S,
+          )
+
+          text = re.sub(
+              r"  function bindPax\(\)\{.*?\n  \}\n\n  function bindSwap",
+              """  function bindPax(){
+    const field=form.querySelector('.v2-field--pax');if(!field)return;
+    const trigger=field.querySelector('[data-trigger=\"pax\"]'),box=field.querySelector('.v2-popover');
+    trigger.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      const wasHidden=box.hidden;closeOverlays(box);
+      if(wasHidden){renderGuestPopover(box);box.hidden=false}else box.hidden=true;
+    });
+    box.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      const step=e.target.closest('[data-step]');
+      if(step){
+        const s=states[mode],delta=Number(step.dataset.step);
+        if(step.dataset.person==='adult')s.adults=Math.max(1,Math.min(9-s.children,s.adults+delta));
+        else s.children=Math.max(0,Math.min(9-s.adults,s.children+delta));
+        field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box);return;
+      }
+      const cab=e.target.closest('[data-cabin]');
+      if(cab){states[mode].cabin=cab.dataset.cabin;field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box)}
+    });
+  }
+
+  function bindSwap""",
+              text,
+              count=1,
+              flags=re.S,
+          )
+
+          path.write_text(text, encoding='utf-8')
+
+          css = Path('assets/search-v2.css')
+          c = css.read_text(encoding='utf-8')
+          marker = '.search-v2 .v2-field--interactive { cursor: pointer; text-align: left; }'
+          addition = '''
+.search-v2 .v2-trigger {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  text-align: left;
+  color: inherit;
+}
+'''
+          if addition.strip() not in c:
+              if marker not in c:
+                  raise SystemExit('CSS trigger marker not found')
+              c = c.replace(marker, marker + '\n' + addition, 1)
+          css.write_text(c, encoding='utf-8')
+          PY
+
+      - name: Make place search city-only and multilingual
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('assets/search-places.js')
+          text = path.read_text(encoding='utf-8')
+
+          old = "const search=normalize([ru,en,hi,iata,aliases,C[country].ru,C[country].en,C[country].hi].join(' '));"
+          new = "const search=normalize([ru,en,hi,aliases,C[country].ru,C[country].en,C[country].hi].join(' '));"
+          if old not in text:
+              raise SystemExit('Search index marker not found')
+          text = text.replace(old, new, 1)
+
+          old = "function display(p,l=lang()){return {name:p.name[l]||p.name.en,meta:[countryName(p.country,l),p.iata.join(', ')].filter(Boolean).join(' · ')}}"
+          new = "function display(p,l=lang()){return {name:p.name[l]||p.name.en,meta:countryName(p.country,l)}}"
+          if old not in text:
+              raise SystemExit('Display marker not found')
+          text = text.replace(old, new, 1)
+
+          old = "const fields=[p.name.ru,p.name.en,p.name.hi,p.canonical,...p.iata,...p.aliases].map(normalize).filter(Boolean);"
+          new = "const fields=[p.name.ru,p.name.en,p.name.hi,p.canonical,...p.aliases.filter(a=>!/^\\w{3}$/.test(a)||a!==a.toUpperCase())].map(normalize).filter(Boolean);"
+          if old not in text:
+              raise SystemExit('Search fields marker not found')
+          text = text.replace(old, new, 1)
+
+          old = "    if(best===99 && p.search.includes(q))best=.42;\n"
+          if old not in text:
+              raise SystemExit('Fallback search marker not found')
+          text = text.replace(old, '', 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Link unified search on all language pages
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          for name in ['index.html','index-en.html','index-hi.html']:
+              path=Path(name)
+              text=path.read_text(encoding='utf-8')
+              css='<link rel="stylesheet" href="assets/search-v2.css">'
+              js='<script src="assets/search-v2.js"></script>'
+              if css not in text:
+                  text=text.replace('</head>',css+'\n</head>',1)
+              if js not in text:
+                  text=text.replace('</body>',js+'\n</body>',1)
+              path.write_text(text,encoding='utf-8')
+          PY
+
+      - name: Validate search and markup
+        shell: bash
+        run: |
+          node --check assets/search-v2.js
+          node --check assets/search-places.js
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          global.window=global;
+          global.document={documentElement:{lang:'ru'}};
+          vm.runInThisContext(fs.readFileSync('assets/search-places.js','utf8'));
+          let p=TUTU_PLACES.search('москва',6)[0];
+          if(!p||p.id!=='ru-moscow')throw new Error('lowercase Russian city search failed');
+          p=TUTU_PLACES.search('moscow',6)[0];
+          if(!p||p.id!=='ru-moscow')throw new Error('lowercase English city search failed');
+          document.documentElement.lang='en';
+          p=TUTU_PLACES.search('москва',6)[0];
+          if(!p||TUTU_PLACES.display(p).name!=='Moscow')throw new Error('Russian input on English page failed');
+          document.documentElement.lang='hi';
+          p=TUTU_PLACES.search('Moscow',6)[0];
+          if(!p||TUTU_PLACES.display(p).name!=='मॉस्को')throw new Error('English input on Hindi page failed');
+          document.documentElement.lang='ru';
+          p=TUTU_PLACES.search('मॉस्को',6)[0];
+          if(!p||TUTU_PLACES.display(p).name!=='Москва')throw new Error('Hindi input on Russian page failed');
+          if(TUTU_PLACES.search('SVO',6).length)throw new Error('airport codes must not be searchable in city-only mode');
+          if(TUTU_PLACES.display(TUTU_PLACES.byId.get('ru-moscow')).meta!=='Россия')throw new Error('suggestion meta should show country only');
+          if(TUTU_PLACES.places.filter(x=>x.country==='CN').length!==10)throw new Error('China must remain limited to 10 cities');
+          console.log('city search validated');
+          NODE
+          for f in index.html index-en.html index-hi.html; do
+            grep -q 'assets/search-v2.css' "$f"
+            grep -q 'assets/search-v2.js' "$f"
+          done
+          grep -q 'min-height: 630px' assets/search-v2.css
+          grep -q 'data-mode="hotel"' assets/search-v2.css
+          git diff --check
+
+      - name: Commit rollout
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/search-v2.js assets/search-v2.css assets/search-places.js index.html index-en.html index-hi.html
+          git commit -m "Unify multilingual city search and hotel form"
+          git push origin HEAD:main
