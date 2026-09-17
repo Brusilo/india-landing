@@ -32,7 +32,9 @@
 
   html:lang(ru) .hero, html:lang(en) .hero, html:lang(hi) .hero {
     position: relative !important; min-height: 0 !important; height: auto !important;
-    padding: 12px 0 44px !important; overflow: visible !important;
+    padding: 12px 0 44px !important;
+    /* Clip the decorative image horizontally without clipping form expansion. */
+    overflow-x: clip !important; overflow-y: visible !important;
   }
   .hero h1 {
     max-width: calc(100% - 112px); min-height: 150px;
