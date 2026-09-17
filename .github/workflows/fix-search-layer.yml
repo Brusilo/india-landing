@@ -1,0 +1,64 @@
+name: Fix search dropdown layer
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-search-layer.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Raise search above next section
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          files = [Path('index.html'), Path('index-en.html'), Path('index-hi.html')]
+          for path in files:
+              text = path.read_text(encoding='utf-8')
+              old_container = '.hero>.container{position:relative!important;z-index:2!important}'
+              new_container = '.hero>.container{position:relative!important;z-index:5!important}'
+              if old_container not in text:
+                  raise SystemExit(f'Hero container rule not found in {path}')
+              text = text.replace(old_container, new_container, 1)
+
+              old_suggest = 'z-index:45;background:#fff;border-radius:16px;'
+              new_suggest = 'z-index:1000;background:#fff;border-radius:16px;'
+              if old_suggest not in text:
+                  raise SystemExit(f'Suggestion z-index rule not found in {path}')
+              text = text.replace(old_suggest, new_suggest, 1)
+
+              marker = '.search-suggest[hidden]{display:none}'
+              extra = '.search{position:relative!important;z-index:20!important;overflow:visible!important}.search .field--place{overflow:visible!important}'
+              if extra not in text:
+                  if marker not in text:
+                      raise SystemExit(f'Search suggestion marker not found in {path}')
+                  text = text.replace(marker, marker + extra, 1)
+
+              path.write_text(text, encoding='utf-8')
+          PY
+      - name: Validate
+        shell: bash
+        run: |
+          grep -q 'hero>.container{position:relative!important;z-index:5!important}' index.html
+          grep -q 'z-index:1000;background:#fff;border-radius:16px;' index.html
+          grep -q 'search{position:relative!important;z-index:20!important;overflow:visible!important}' index.html
+          grep -q 'hero>.container{position:relative!important;z-index:5!important}' index-en.html
+          grep -q 'hero>.container{position:relative!important;z-index:5!important}' index-hi.html
+          git diff --check
+      - name: Commit changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html index-en.html index-hi.html
+          git commit -m "Fix search dropdown stacking"
+          git push origin HEAD:main
