@@ -1,0 +1,40 @@
+name: Apply FAQ and language v26
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-faq-language-v26.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wire shared FAQ and language script
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          tag = '<script src="assets/site-language-faq-v26.js"></script>'
+          for name in ('index.html', 'index-en.html', 'index-hi.html'):
+              p = Path(name)
+              s = p.read_text(encoding='utf-8')
+              if tag not in s:
+                  if '</head>' not in s:
+                      raise SystemExit(f'missing </head> in {name}')
+                  s = s.replace('</head>', tag + '\n</head>', 1)
+                  p.write_text(s, encoding='utf-8')
+          PY
+          git diff --check
+          grep -q 'site-language-faq-v26.js' index.html
+          grep -q 'site-language-faq-v26.js' index-en.html
+          grep -q 'site-language-faq-v26.js' index-hi.html
+      - name: Commit production wiring and remove installer
+        shell: bash
+        run: |
+          rm .github/workflows/apply-faq-language-v26.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'feat: publish corrected multilingual FAQ and language routing'
+          git push
