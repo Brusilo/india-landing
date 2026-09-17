@@ -1,0 +1,16 @@
+const fs=require('fs'),vm=require('vm');
+global.window=global;
+global.document={documentElement:{lang:'ru'}};
+vm.runInThisContext(fs.readFileSync('assets/search-places.js','utf8'));
+let m=TUTU_PLACES.search('मॉस्को',6)[0];
+if(!m||m.id!=='ru-moscow'||TUTU_PLACES.display(m).name!=='Москва')throw new Error('Hindi to Russian lookup failed');
+document.documentElement.lang='en';
+m=TUTU_PLACES.search('Москва',6)[0];
+if(!m||TUTU_PLACES.display(m).name!=='Moscow')throw new Error('Russian to English lookup failed');
+document.documentElement.lang='hi';
+m=TUTU_PLACES.search('Moscow',6)[0];
+if(!m||TUTU_PLACES.display(m).name!=='मॉस्को')throw new Error('English to Hindi lookup failed');
+if(TUTU_PLACES.places.filter(x=>x.country==='CN').length!==10)throw new Error('China must contain exactly 10 cities');
+if(TUTU_PLACES.popularFor('to').length!==6||TUTU_PLACES.popularFor('from').length!==6)throw new Error('Popular suggestions must contain 6 cities');
+if(TUTU_PLACES.places.length<200)throw new Error('Place database is unexpectedly small');
+console.log('Validated places:',TUTU_PLACES.places.length);
