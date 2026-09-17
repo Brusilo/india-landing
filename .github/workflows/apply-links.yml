@@ -1,4 +1,4 @@
-name: Apply verified landing links
+name: Apply localized copy updates
 
 on:
   push:
@@ -9,80 +9,38 @@ permissions:
   contents: write
 
 jobs:
-  apply-links:
+  apply-copy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Update links in localized pages
+      - name: Update localized copy
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
 
-          top_urls = [
-              'https://www.tutu.ru/juicy-offers/',
-              'https://provereno.tutu.ru/',
-              'https://www.tutu.ru/2read/',
-              'https://www.tutu.ru/geo/',
-          ]
+          replacements = {
+              'index.html': {
+                  'Автобусы, поезда и самолёты по всей России. И обратный билет домой в Индию.': 'Автобусы, поезда и самолёты по всей стране. И международные рейсы обратно домой.',
+                  'Отели, хостелы и апартаменты в России и Индии': 'Отели, хостелы и апартаменты для всей поездки.',
+              },
+              'index-en.html': {
+                  'Buses, trains and flights across Russia, plus your ticket back home to India.': 'Buses, trains and flights across the country, plus international flights back home.',
+                  'Hotels, hostels and apartments in Russia and India': 'Hotels, hostels and apartments for your whole trip.',
+              },
+              'index-hi.html': {
+                  'पूरे रूस में बसें, ट्रेनें और उड़ानें। और भारत वापस घर जाने का टिकट।': 'पूरे देश में बस, ट्रेन और फ़्लाइट — और घर वापसी के लिए अंतरराष्ट्रीय उड़ानें।',
+                  'रूस और भारत में होटल, हॉस्टल और अपार्टमेंट': 'पूरी यात्रा के लिए होटल, हॉस्टल और अपार्टमेंट।',
+              },
+          }
 
-          footer_urls = [
-              'https://apps.apple.com/ru/app/жд-билеты-отели-авиабилеты/id1296791829',
-              'https://play.google.com/store/apps/details?id=ru.tutu.tutu_emp',
-              'https://appgallery.huawei.com/?referrer=appmetrica_tracking_id%3D388656529861044970%26ym_tracking_id%3D12590289799764343143#/app/C100925545',
-              'https://www.rustore.ru/catalog/app/ru.tutu.tutu_emp',
-              'https://c.tutu.ru/',
-              'https://c.tutu.ru/hr',
-              'https://c.tutu.ru/#contacts',
-              'https://www.tutu.ru/news_own/',
-              'https://www.tutu.ru/2read/legal_information/',
-              'https://c.tutu.ru/certificates',
-              'https://www.tutu.ru/2read/benefits/plyushki/',
-              'https://www.tutu.ru/geo/',
-              'https://c.tutu.ru/partners',
-              'https://partner.tutu.ru/hotels',
-              'https://c.tutu.ru/adv',
-              'https://advcake.ru/lp/tutu/',
-              'https://www.tutu.ru/2read/',
-              'https://www.tutu.ru/feedback.php',
-              'https://t.me/tutu_travel',
-              'https://vk.ru/tu_tu_ru',
-              'https://youtube.com/@tutu_ru',
-          ]
-
-          def replace_hrefs(section, urls):
-              it = iter(urls)
-              count = 0
-              def repl(match):
-                  nonlocal count
-                  try:
-                      url = next(it)
-                  except StopIteration:
-                      return match.group(0)
-                  count += 1
-                  return f'href="{url}"'
-              updated = re.sub(r'href="[^"]*"', repl, section)
-              if count != len(urls):
-                  raise RuntimeError(f'Expected {len(urls)} links, replaced {count}')
-              return updated
-
-          for filename in ('index.html', 'index-en.html', 'index-hi.html'):
+          for filename, reps in replacements.items():
               path = Path(filename)
               text = path.read_text(encoding='utf-8')
-
-              m = re.search(r'<nav class="top-nav".*?</nav>', text, flags=re.S)
-              if not m:
-                  raise RuntimeError(f'top-nav not found in {filename}')
-              top = replace_hrefs(m.group(0), top_urls)
-              text = text[:m.start()] + top + text[m.end():]
-
-              m = re.search(r'<footer class="footer">.*?</footer>', text, flags=re.S)
-              if not m:
-                  raise RuntimeError(f'footer not found in {filename}')
-              footer = replace_hrefs(m.group(0), footer_urls)
-              text = text[:m.start()] + footer + text[m.end():]
-
+              for old, new in reps.items():
+                  if old not in text:
+                      raise RuntimeError(f'Expected text not found in {filename}: {old}')
+                  text = text.replace(old, new, 1)
               path.write_text(text, encoding='utf-8')
           PY
       - name: Commit updated pages
@@ -94,6 +52,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "fix: wire verified landing links"
+            git commit -m "copy: refine hero and hotel messaging"
             git push
           fi
