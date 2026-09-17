@@ -1,0 +1,58 @@
+name: Verify Tutu link builder v4
+
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-link-builder-v4.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Refresh cache version
+        run: |
+          sed -i 's/tutu-links-3/tutu-links-4/g' index.html index-en.html index-hi.html
+      - name: Validate link builder
+        run: |
+          node --check assets/tutu-link-builder.js
+          node - <<'NODE'
+          global.window={};
+          require('./assets/tutu-link-builder.js');
+          const L=window.TUTU_LINKS;
+          const p=(id,country,canonical,ru)=>({id,country,canonical,name:{ru}});
+          const d=(y,m,day)=>new Date(y,m-1,day);
+          const base={adults:3,children:0,childAges:[],cabin:'economy'};
+          let u=L.build('flight',{...base,from:p('ru-sochi','RU','Sochi','Сочи'),to:p('ru-moscow','RU','Moscow','Москва'),date:d(2026,9,18)});
+          if(!u.includes('/f/Sochi/Moskva/')||!u.includes('route%5B0%5D=78-18092026-491'))throw Error(u);
+          u=L.build('flight',{...base,from:p('in-delhi','IN','Delhi','Дели'),to:p('in-mumbai','IN','Mumbai','Мумбаи'),date:d(2026,9,20)});
+          if(!u.includes('/f/Deli/Mumbai/')||!u.includes('route%5B0%5D=216-20092026-158'))throw Error(u);
+          u=L.build('flight',{...base,from:p('in-delhi','IN','Delhi','Дели'),to:p('in-goa','IN','Goa','Гоа'),date:d(2026,9,20)});
+          if(!u.includes('route%5B0%5D=216-20092026-199'))throw Error(u);
+          u=L.build('flight',{...base,from:p('in-delhi','IN','Delhi','Дели'),to:p('in-kochi','IN','Kochi','Кочи'),date:d(2026,9,20)});
+          if(!u.includes('/f/Deli/Kochin/')||!u.includes('route%5B0%5D=216-20092026-278'))throw Error(u);
+          u=L.build('flight',{...base,from:p('in-pune','IN','Pune','Пуна'),to:p('ru-moscow','RU','Moscow','Москва'),date:d(2026,9,20)});
+          if(!u.includes('/f/Puna/Moskva/')||u.includes('route%5B0%5D='))throw Error(u);
+          u=L.build('train',{from:p('ru-moscow','RU','Moscow','Москва'),to:p('ru-nizhny-novgorod','RU','Nizhny Novgorod','Нижний Новгород'),date:d(2026,9,20),adults:2,children:0,childAges:[]});
+          if(!u.includes('/poezda/Moskva/Nizhnij-Novgorod/')||!u.includes('date=20.09.2026'))throw Error(u);
+          u=L.build('bus',{from:p('ru-kazan','RU','Kazan','Казань'),to:p('ru-moscow','RU','Moscow','Москва'),date:d(2026,9,20),adults:3,children:1,childAges:[6]});
+          if(!u.includes('/poezda/Kazan/Moskva/')||!u.includes('travelers=3.6'))throw Error(u);
+          if(L.aviaSlug(p('in-kozhikode','IN','Kozhikode','Кожикоде'))!=='Kojikode')throw Error('Kojikode slug');
+          if(L.aviaSlug(p('in-port-blair','IN','Port Blair','Порт-Блэр'))!=='Port-bler')throw Error('Port-bler slug');
+          if(L.aviaSlug(p('in-visakhapatnam','IN','Visakhapatnam','Вишакхапатнам'))!=='Vishakhapatnam')throw Error('Vishakhapatnam slug');
+          console.log('builder v4 OK');
+          NODE
+          git diff --check
+      - name: Commit cache bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/verify-link-builder-v4.yml
+          git add index.html index-en.html index-hi.html
+          git commit -m "Refresh Tutu link builder cache v4"
+          git push origin HEAD:main
