@@ -297,3 +297,9 @@
     gap: 8px;
   }
 }
+
+/* Hotel empty-state fields match the neutral placeholder style. */
+.search-v2[data-mode="hotel"] .v2-field--date:not(.has-value) .v2-value {
+  font-weight: 400 !important;
+  color: #74748a !important;
+}

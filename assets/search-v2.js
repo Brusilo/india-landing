@@ -13,7 +13,7 @@
   const labels={
     ru:{
       from:'Откуда',to:'Куда',when:'Когда',flightWho:'Кто летит',travelWho:'Кто едет',search:'Найти',
-      hotelWhere:'Город или направление',hotelDates:'Заезд — выезд',guests:'Кто едет',
+      hotelWhere:'Город',hotelDates:'Заезд — выезд',guests:'Кто едет',
       adults:'Взрослые',adultSub:'От 12 лет',children:'Дети',childSub:'До 12 лет',
       economy:'Эконом',business:'Бизнес',cabin:'Класс обслуживания',
       passenger1:'пассажир',passenger2:'пассажира',passenger5:'пассажиров',
@@ -22,7 +22,7 @@
     },
     en:{
       from:'From',to:'To',when:'When',flightWho:'Who is flying',travelWho:'Travellers',search:'Search',
-      hotelWhere:'City or destination',hotelDates:'Check-in — check-out',guests:'Guests',
+      hotelWhere:'City',hotelDates:'Check-in — check-out',guests:'Guests',
       adults:'Adults',adultSub:'12+ years',children:'Children',childSub:'Under 12',
       economy:'Economy',business:'Business',cabin:'Cabin class',
       passenger1:'passenger',passenger2:'passengers',passenger5:'passengers',
@@ -31,7 +31,7 @@
     },
     hi:{
       from:'कहाँ से',to:'कहाँ तक',when:'तारीख',flightWho:'कौन उड़ रहा है',travelWho:'यात्री',search:'खोजें',
-      hotelWhere:'शहर या गंतव्य',hotelDates:'चेक-इन — चेक-आउट',guests:'मेहमान',
+      hotelWhere:'शहर',hotelDates:'चेक-इन — चेक-आउट',guests:'मेहमान',
       adults:'वयस्क',adultSub:'12 वर्ष और अधिक',children:'बच्चे',childSub:'12 वर्ष से कम',
       economy:'इकोनॉमी',business:'बिज़नेस',cabin:'यात्रा श्रेणी',
       passenger1:'यात्री',passenger2:'यात्री',passenger5:'यात्री',
