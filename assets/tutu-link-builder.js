@@ -111,8 +111,10 @@
   const hotelSlugOverride={
     'ru-moscow':'moscow',
     'ru-saint-petersburg':'saint_petersburg',
+    'ru-yekaterinburg':'ekaterinburg',
     'in-delhi':'delhi',
     'in-mumbai':'mumbai',
+    'in-kochi':'cochin',
     'in-bengaluru':'bangalore'
   };
 
