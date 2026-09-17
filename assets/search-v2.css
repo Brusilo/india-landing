@@ -317,7 +317,3 @@
 .child-ages-v2{display:grid;gap:8px;margin:6px 0 10px;padding-top:8px;border-top:1px solid #e6e7f3}
 .child-age-v2{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:13px;color:#8c8ca1}
 .child-age-v2 select{min-width:112px;height:36px;padding:0 10px;border:1px solid #e6e7f3;border-radius:9px;background:#fff;color:#0d0b68;font:500 14px var(--font);outline:none}
-
-
-/* Route section spacing after removing transport filters. */
-#routes .section-head { margin-top: 16px; }
