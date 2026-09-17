@@ -576,49 +576,59 @@ input:focus{outline:none}
 
 
 
+
 /* decor-placement-fix */
 .hero{position:relative!important;overflow:hidden!important;isolation:isolate}
 .hero>.container{position:relative!important;z-index:2!important}
 .hero>.hero-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
 .hero>.hero-decor--suitcase{
-  width:560px!important;
+  width:640px!important;
   max-width:none!important;
-  right:72px!important;
-  top:18px!important;
+  right:34px!important;
+  top:-22px!important;
   opacity:1!important;
   transform:rotate(-5deg)!important;
 }
 
-#routes,#hotels{position:relative!important;isolation:isolate}
-#routes{overflow:visible!important}
-#hotels{overflow:hidden!important}
+#routes,#hotels{position:relative!important;overflow:visible!important;isolation:isolate}
 #routes>.container,#hotels>.container{position:relative!important;z-index:2!important}
 #routes>.section-decor,#hotels>.section-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
 #routes>.section-decor--ticket{
-  width:340px!important;
+  width:385px!important;
   max-width:none!important;
-  right:36px!important;
-  top:104px!important;
-  opacity:.96!important;
+  right:-54px!important;
+  top:92px!important;
+  opacity:.98!important;
   transform:rotate(5deg)!important;
 }
 #hotels>.section-decor--keys{
-  width:245px!important;
+  width:275px!important;
   max-width:none!important;
-  left:16px!important;
-  top:62px!important;
-  opacity:.94!important;
+  left:-14px!important;
+  top:52px!important;
+  opacity:.98!important;
   transform:rotate(-7deg)!important;
 }
 
+.footer{padding-top:30px!important;padding-bottom:30px!important}
+.footer-logo{margin-bottom:22px!important}
+.footer-grid{gap:28px 32px!important;padding-bottom:30px!important;margin-bottom:20px!important}
+@media(min-width:1024px){
+  .footer{padding-top:30px!important;padding-bottom:32px!important}
+  .footer-logo{margin-bottom:24px!important}
+  .footer-grid{gap:30px 36px!important;padding-bottom:32px!important;margin-bottom:20px!important}
+}
+
 @media(max-width:1200px){
-  .hero>.hero-decor--suitcase{width:470px!important;right:8px!important;top:40px!important}
-  #routes>.section-decor--ticket{width:285px!important;right:18px!important;top:112px!important}
-  #hotels>.section-decor--keys{width:210px!important;left:6px!important}
+  .hero>.hero-decor--suitcase{width:535px!important;right:-4px!important;top:4px!important}
+  #routes>.section-decor--ticket{width:325px!important;right:-42px!important;top:100px!important}
+  #hotels>.section-decor--keys{width:235px!important;left:-12px!important;top:56px!important}
 }
 @media(max-width:899px){
-  .hero>.hero-decor--suitcase{width:245px!important;right:-35px!important;top:92px!important;opacity:.72!important}
+  .hero>.hero-decor--suitcase{width:260px!important;right:-34px!important;top:72px!important;opacity:.78!important}
   #routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none!important}
+  .footer{padding-top:24px!important}
+  .footer-logo{margin-bottom:20px!important}
 }
 </style>
 </head>
