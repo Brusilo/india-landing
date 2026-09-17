@@ -1,4 +1,4 @@
-name: Simplify transport search labels
+name: Refine transport search labels
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Simplify search placeholders and button copy
+      - name: Refine search button and passenger label
         shell: bash
         run: |
           python3 - <<'PY'
@@ -21,36 +21,35 @@ jobs:
           import re
 
           locales = {
-              'index.html': {'from':'Откуда','to':'Куда','find':'Найти'},
-              'index-en.html': {'from':'From','to':'To','find':'Find'},
-              'index-hi.html': {'from':'कहाँ से','to':'कहाँ तक','find':'खोजें'},
+              'index.html': {'flight':'Кто летит','travel':'Кто едет'},
+              'index-en.html': {'flight':'Who is flying','travel':'Who is travelling'},
+              'index-hi.html': {'flight':'कौन उड़ रहा है','travel':'कौन यात्रा कर रहा है'},
           }
 
           for filename, t in locales.items():
               path = Path(filename)
               text = path.read_text(encoding='utf-8')
 
-              text, n1 = re.subn(r'(<input id="f-from"[^>]*placeholder=")[^"]*(")', lambda m: m.group(1)+t['from']+m.group(2), text, count=1)
-              text, n2 = re.subn(r'(<input id="f-to"[^>]*placeholder=")[^"]*(")', lambda m: m.group(1)+t['to']+m.group(2), text, count=1)
-              text, n3 = re.subn(r'(<button type="button" class="btn-search">)[^<]*(</button>)', lambda m: m.group(1)+t['find']+m.group(2), text, count=1)
-              if (n1,n2,n3) != (1,1,1):
-                  raise RuntimeError(f'Could not update initial search copy in {filename}: {(n1,n2,n3)}')
+              text, n1 = re.subn(r'(\.btn-search\{[^}]*font-weight:)700', r'\g<1>400', text, count=1)
+              text, n2 = re.subn(r'(<span class="pax-caption">)[^<]*(</span>)', lambda m: m.group(1)+t['flight']+m.group(2), text, count=1)
+              if n1 != 1 or n2 != 1:
+                  raise RuntimeError(f'Initial search UI update failed in {filename}: {(n1,n2)}')
 
-              text = re.sub(r'(\.pax-caption\{[^}]*font-weight:)500', r'\g<1>400', text, count=1)
+              marker = "const from=document.getElementById('f-from'),to=document.getElementById('f-to'),searchBtn=document.querySelector('.btn-search'),swap=document.querySelector('.search .swap'),paxTrigger=document.querySelector('.pax-trigger'),paxValue=document.querySelector('.pax-value'),paxPop=document.querySelector('.pax-pop');"
+              replacement = "const from=document.getElementById('f-from'),to=document.getElementById('f-to'),searchBtn=document.querySelector('.btn-search'),swap=document.querySelector('.search .swap'),paxTrigger=document.querySelector('.pax-trigger'),paxCaption=document.querySelector('.pax-caption'),paxValue=document.querySelector('.pax-value'),paxPop=document.querySelector('.pax-pop');"
+              if marker not in text:
+                  raise RuntimeError(f'Passenger JS marker missing in {filename}')
+              text = text.replace(marker, replacement, 1)
 
-              for key, value in [
-                  ('flight_from', t['from']), ('train_from', t['from']), ('bus_from', t['from']),
-                  ('flight_to', t['to']), ('train_to', t['to']), ('bus_to', t['to']),
-                  ('flight_search', t['find']), ('train_search', t['find']), ('bus_search', t['find']),
-              ]:
-                  pattern = r'("' + re.escape(key) + r'"\s*:\s*")[^"]*(")'
-                  text, count = re.subn(pattern, lambda m, v=value: m.group(1)+v+m.group(2), text, count=1)
-                  if count != 1:
-                      raise RuntimeError(f'{key} not updated in {filename}')
+              old = "function setMode(next,index){if(next==='hotel')return;mode=next;buttons.forEach((b,i)=>{const active=i===index;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active))});const p=mode==='flight'?'flight':mode==='train'?'train':'bus';from.placeholder=L[p+'_from'];to.placeholder=L[p+'_to'];searchBtn.textContent=L[p+'_search'];closeSuggest();closePax();updatePax()}"
+              new = "function setMode(next,index){if(next==='hotel')return;mode=next;buttons.forEach((b,i)=>{const active=i===index;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active))});const p=mode==='flight'?'flight':mode==='train'?'train':'bus';from.placeholder=L[p+'_from'];to.placeholder=L[p+'_to'];searchBtn.textContent=L[p+'_search'];paxCaption.textContent=mode==='flight'?" + repr(t['flight']) + ":" + repr(t['travel']) + ";closeSuggest();closePax();updatePax()}"
+              if old not in text:
+                  raise RuntimeError(f'setMode marker missing in {filename}')
+              text = text.replace(old, new, 1)
 
               path.write_text(text, encoding='utf-8')
           PY
-      - name: Commit simplified search copy
+      - name: Commit refined search UI
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -59,6 +58,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "fix: simplify search field labels"
+            git commit -m "fix: refine search button and passenger label"
             git push
           fi
