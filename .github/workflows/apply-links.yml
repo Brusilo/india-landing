@@ -21,18 +21,21 @@ jobs:
 
           css = '''
           /* decor-placement-fix */
-          .hero{position:relative!important;overflow:hidden!important;isolation:isolate!important}
+          body{position:relative!important}
+          .top{position:relative!important;z-index:4!important}
+          .hero{position:static!important;overflow:visible!important;isolation:auto!important}
           .hero>.container{position:relative!important;z-index:2!important}
           .hero>.hero-decor{position:absolute!important;z-index:1!important;pointer-events:none!important;user-select:none!important;image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important}
           .hero>.hero-decor--suitcase{
-            width:680px!important;
+            width:640px!important;
             max-width:none!important;
-            right:-20px!important;
-            top:auto!important;
-            bottom:10px!important;
+            right:-10px!important;
+            top:72px!important;
+            bottom:auto!important;
             opacity:1!important;
             transform:rotate(-5deg)!important;
           }
+          .hero + .section{position:relative!important;z-index:3!important}
 
           #routes,#hotels{position:relative!important;overflow:visible!important;isolation:isolate}
           #routes>.container,#hotels>.container{position:relative!important;z-index:2!important}
@@ -64,12 +67,12 @@ jobs:
           }
 
           @media(max-width:1200px){
-            .hero>.hero-decor--suitcase{width:560px!important;right:-28px!important;top:auto!important;bottom:10px!important}
+            .hero>.hero-decor--suitcase{width:540px!important;right:-18px!important;top:72px!important;bottom:auto!important}
             #routes>.section-decor--ticket{width:340px!important;right:-45px!important;top:30px!important}
             #hotels>.section-decor--keys{width:250px!important;left:-28px!important;top:46px!important}
           }
           @media(max-width:899px){
-            .hero>.hero-decor--suitcase{width:270px!important;right:-42px!important;top:auto!important;bottom:8px!important;opacity:.82!important}
+            .hero>.hero-decor--suitcase{width:260px!important;right:-38px!important;top:96px!important;bottom:auto!important;opacity:.82!important}
             #routes>.section-decor--ticket,#hotels>.section-decor--keys{display:none!important}
             .footer{padding-top:24px!important}
             .footer-logo{margin-bottom:20px!important}
@@ -104,6 +107,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "fix: anchor suitcase to hero lower edge"
+            git commit -m "fix: set stable suitcase position from page top"
             git push
           fi
