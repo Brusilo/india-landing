@@ -10,82 +10,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install tested responsive assets and locale wiring
+        with:
+          fetch-depth: 2
+      - name: Install integrity-checked responsive bundle
         shell: bash
         run: |
           python3 - <<'PY'
-          import base64, gzip, hashlib, json
-          from pathlib import Path
-          payload = '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'
-          # Verify the locally browser-tested bundle before touching any site file.
-          raw = gzip.decompress(base64.b64decode(payload))
-          assert hashlib.sha256(raw).hexdigest() == '6e2e92e49a9f2841bee50289615632f0ee5e8f993bd847734c71cd40eed524b5'
-          files = json.loads(raw)
-          assert set(files) == {'assets/responsive.css', 'assets/responsive.js'}
-          for name, text in files.items():
-              path = Path(name)
-              assert not path.exists(), name + ' already exists; review before replacing'
-              path.write_text(text, encoding='utf-8')
-          css = '<link rel="stylesheet" href="assets/responsive.css?v=20260917-mobile-1">\n'
-          js = '<script src="assets/responsive.js?v=20260917-mobile-1"></script>\n'
-          for name in ['index.html', 'index-en.html', 'index-hi.html']:
-              path = Path(name)
-              before = path.read_text(encoding='utf-8')
-              assert 'assets/responsive.' not in before
-              assert before.count('</head>') == before.count('</body>') == 1
-              after = before.replace('</head>', css + '</head>', 1).replace('</body>', js + '</body>', 1)
-              assert after.replace(css, '', 1).replace(js, '', 1) == before
-              path.write_text(after, encoding='utf-8')
-          Path('docs').mkdir(exist_ok=True)
-          Path('docs/responsive-checks.md').write_text('''# Responsive layout verification
-          
-          Baseline: 599fe345610e2f69faf748a52f84848d098bac3f.
-          Scope: presentation and compact-screen interaction only. Existing sections,
-          copy, city data, prices, link builders and destinations are unchanged.
-          
-          ## Breakpoints
-          - 320-599 CSS px: phone layout, vertical search, swipeable carousels.
-          - 600-1100 CSS px: compact/tablet layout with a two-column search.
-          - Above 1100 CSS px: original desktop layout and original header/footer DOM.
-          No user-agent redirects and no separate mobile URLs.
-          
-          ## Browser checks run locally before publishing
-          Chromium with Playwright, actual project assets rendered offline.
-          132 form scenarios: RU / EN / HI x hotel / flight / train / bus x
-          320, 360, 375, 390, 414, 480, 600, 768, 820, 1024 and 1100 CSS px.
-          
-          Verified: viewport containment, empty grey date placeholders, six initial
-          suggestions remaining open after tap, search in all three scripts, city
-          selection, swapping cities, single/range dates, adults and child age,
-          service class, and form state passed to the unchanged URL builder.
-          Navigation was intercepted; this was not a new live Tutu availability test.
-          
-          Real emulated touch swipes moved both carousels in all three locales.
-          Header menus and footer accordions work. Resizing restores the original
-          desktop DOM without losing selected search values.
-          
-          Full-page desktop screenshots at 1440 px were pixel-identical to the
-          baseline for RU, EN and HI. Original page copy and card contents were
-          also compared after mobile-to-desktop resizing.
-          
-          These are Chromium browser-emulation checks, not physical iOS/Android
-          device or Safari/WebKit testing.
-          ''', encoding='utf-8')
-          Path('.github/workflows/mobile-responsive-v15.yml').unlink()
-          print('Responsive assets installed; all existing HTML content preserved.')
+          import subprocess, textwrap
+          # Recover the prepared installer and correct one transcription byte.
+          prepared = subprocess.check_output(['git', 'show', '98281e408163a0626aec5e14a0a9f35218c939f9:.github/workflows/mobile-responsive-v15.yml'], text=True)
+          script = prepared.split("          python3 - <<'PY'\n", 1)[1].split('\n          PY\n', 1)[0]
+          script = textwrap.dedent(script)
+          assert script.count('I9dcowPvh') == 1
+          script = script.replace('I9dcowPvh', 'I9cowPvh')
+          # The installer's SHA-256 check must pass before it writes any file.
+          exec(compile(script, 'verified-mobile-installer', 'exec'), {})
           PY
-      - name: Validate JavaScript and locale includes
+      - name: Validate JavaScript and all three pages
         run: |
           node --check assets/responsive.js
           node --check assets/search-v2.js
           python3 - <<'PY'
           from pathlib import Path
+          import hashlib
+          expected = {'assets/responsive.css': 'd4f21fb719783829293cb082eb99bc35e1d43c3035dadbf7edc125eb1eac5f62', 'assets/responsive.js': '2e68ca497c0f14dc77a8b65798f29c08fffab010bcbb6d4d3d4d872a9f5020e1'}
+          for name, digest in expected.items():
+              assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest
           for name in ['index.html', 'index-en.html', 'index-hi.html']:
               text = Path(name).read_text(encoding='utf-8')
               assert text.count('assets/responsive.css?v=20260917-mobile-1') == 1
               assert text.count('assets/responsive.js?v=20260917-mobile-1') == 1
               assert 'name="viewport"' in text
-          print('RU / EN / HI wiring OK')
+          print('Tested asset hashes and RU / EN / HI includes match.')
           PY
       - name: Commit responsive layout
         run: |
