@@ -8,6 +8,7 @@
     CN:'china',AE:'united_arab_emirates',QA:'qatar',TR:'turkey'
   };
 
+  // Verified from current public Tutu result links.
   const aviaId={
     'ru-moscow':491,
     'ru-saint-petersburg':75,
@@ -19,13 +20,26 @@
     'ru-anapa':10,
     'ru-chelyabinsk':98,
     'ru-krasnodar':39,
+    'ru-samara':74,
+    'ru-ufa':93,
+    'ru-krasnoyarsk':6,
+    'ru-omsk':62,
+    'ru-perm':68,
+    'ru-tyumen':86,
+    'ru-vladivostok':21,
+    'ru-khabarovsk':95,
+    'ru-kaliningrad':34,
+    'ru-makhachkala':46,
+    'ru-mineralnye-vody':47,
+    'ru-volgograd':23,
     'in-delhi':216,
     'ae-dubai':230,
     'tr-istanbul':419,
     'am-yerevan':236,
     'az-baku':136,
     'qa-doha':227,
-    'kg-osh':358
+    'kg-osh':358,
+    'uz-tashkent':424
   };
 
   const hotelGeoId={
@@ -35,19 +49,26 @@
     'qa-doha':2657053
   };
 
+  // Tutu uses its own historical transliteration in route paths.
   const aviaSlugOverride={
     'ru-moscow':'Moskva',
     'ru-saint-petersburg':'Sankt-peterburg',
     'ru-yekaterinburg':'Ekaterinburg',
+    'ru-nizhny-novgorod':'Nijniy_novgorod',
     'ru-mineralnye-vody':'Mineralnie_vodi',
     'ru-yoshkar-ola':'Yoshkar-ola',
     'ru-gorno-altaysk':'Gorno-altaysk',
     'ru-ulan-ude':'Ulan-ude',
     'ru-petropavlovsk-kamchatsky':'Petropavlovsk-Kamchatskiy',
     'ru-yuzhno-sakhalinsk':'Yuzhno-Sakhalinsk',
+    'ru-khabarovsk':'Habarovsk',
+    'ru-makhachkala':'Mahachkala',
     'in-delhi':'Deli',
-    'in-bengaluru':'Bangalore',
-    'in-kolkata':'Kolkata',
+    'in-bengaluru':'Bangalor',
+    'in-hyderabad':'Haydarabad',
+    'in-kolkata':'Kalkutta',
+    'in-ahmedabad':'Ahmadabad',
+    'in-jaipur':'Djaypur',
     'in-thiruvananthapuram':'Trivandrum',
     'in-kozhikode':'Kozhikode',
     'ae-dubai':'Dubay',
@@ -59,7 +80,9 @@
     'ru-moscow':'Moskva',
     'ru-saint-petersburg':'Sankt-Peterburg',
     'ru-yekaterinburg':'Ekaterinburg',
-    'ru-mineralnye-vody':'Mineralnie_vodi',
+    'ru-nizhny-novgorod':'Nizhnij-Novgorod',
+    'ru-mineralnye-vody':'Mineralnye_Vody',
+    'ru-veliky-novgorod':'Novgorod',
     'ru-yoshkar-ola':'Yoshkar-Ola',
     'ru-gorno-altaysk':'Gorno-Altaysk',
     'ru-ulan-ude':'Ulan-Ude',
@@ -110,7 +133,9 @@
     return [adults].concat(ages).join('.');
   }
   function requireValue(value,code){if(!value){const e=new Error(code);e.code=code;throw e}}
-  function unsupported(){const e=new Error('unsupported');e.code='unsupported';throw e}
+  function fail(code){const e=new Error(code);e.code=code;throw e}
+  function unsupported(){fail('unsupported')}
+  function samePlace(a,b){return !!(a&&b&&a.id&&b.id&&a.id===b.id)}
   function params(obj){
     const p=new URLSearchParams();
     Object.entries(obj).forEach(([k,v])=>{if(v!==undefined&&v!==null)p.set(k,String(v))});
@@ -129,6 +154,7 @@
     requireValue(s.destination,'destination');
     requireValue(s.start,'hotelDates');
     requireValue(s.end,'hotelDates');
+    if(s.end<=s.start)fail('hotelDates');
     const place=s.destination;
     if(!supports('hotel',place))unsupported();
     const q={check_in:iso(s.start),check_out:iso(s.end),details_params:''};
@@ -144,6 +170,7 @@
     requireValue(s.from,'from');
     requireValue(s.to,'to');
     requireValue(s.date,'date');
+    if(samePlace(s.from,s.to))fail('sameCity');
     if(!supports('flight',s.from)||!supports('flight',s.to))unsupported();
     const q={class:s.cabin==='business'?'C':'Y',travelers:travelerToken(s)};
     const fromId=aviaId[s.from.id],toId=aviaId[s.to.id];
@@ -158,6 +185,7 @@
     requireValue(s.from,'from');
     requireValue(s.to,'to');
     requireValue(s.date,'date');
+    if(samePlace(s.from,s.to))fail('sameCity');
     if(!supports('train',s.from)||!supports('train',s.to))unsupported();
     const q={date:dotted(s.date),travelers:travelerToken(s)};
     return 'https://www.tutu.ru/poezda/'+encodeURIComponent(railSlug(s.from))+'/'+encodeURIComponent(railSlug(s.to))+'/?'+params(q);
@@ -180,9 +208,9 @@
   }
 
   const messages={
-    ru:{from:'Выберите город отправления из подсказок.',to:'Выберите город назначения из подсказок.',destination:'Выберите город из подсказок.',date:'Выберите дату поездки.',hotelDates:'Выберите даты заезда и выезда.',unsupported:'Для этого вида транспорта выбранный город пока не поддерживается.'},
-    en:{from:'Select the departure city from the suggestions.',to:'Select the destination city from the suggestions.',destination:'Select a city from the suggestions.',date:'Select a travel date.',hotelDates:'Select check-in and check-out dates.',unsupported:'This city is not supported for the selected transport yet.'},
-    hi:{from:'सुझावों में से प्रस्थान शहर चुनें।',to:'सुझावों में से गंतव्य शहर चुनें।',destination:'सुझावों में से शहर चुनें।',date:'यात्रा की तारीख चुनें।',hotelDates:'चेक-इन और चेक-आउट की तारीखें चुनें।',unsupported:'चुने गए परिवहन के लिए यह शहर अभी समर्थित नहीं है।'}
+    ru:{from:'Выберите город отправления из подсказок.',to:'Выберите город назначения из подсказок.',destination:'Выберите город из подсказок.',date:'Выберите дату поездки.',hotelDates:'Выберите корректные даты заезда и выезда.',sameCity:'Города отправления и назначения должны отличаться.',unsupported:'Для этого вида транспорта выбранный город пока не поддерживается.'},
+    en:{from:'Select the departure city from the suggestions.',to:'Select the destination city from the suggestions.',destination:'Select a city from the suggestions.',date:'Select a travel date.',hotelDates:'Select valid check-in and check-out dates.',sameCity:'Departure and destination cities must be different.',unsupported:'This city is not supported for the selected transport yet.'},
+    hi:{from:'सुझावों में से प्रस्थान शहर चुनें।',to:'सुझावों में से गंतव्य शहर चुनें।',destination:'सुझावों में से शहर चुनें।',date:'यात्रा की तारीख चुनें।',hotelDates:'चेक-इन और चेक-आउट की सही तारीखें चुनें।',sameCity:'प्रस्थान और गंतव्य शहर अलग होने चाहिए।',unsupported:'चुने गए परिवहन के लिए यह शहर अभी समर्थित नहीं है।'}
   };
   function message(code,lang){const l=messages[lang]||messages.ru;return l[code]||l.unsupported}
 
