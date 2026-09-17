@@ -66,7 +66,6 @@
   color: inherit;
 }
 
-
 .search-v2 .v2-caption {
   display: none;
   min-height: 16px;
@@ -298,14 +297,8 @@
   }
 }
 
-/* Hotel empty-state fields match the neutral placeholder style. */
-.search-v2[data-mode="hotel"] .v2-field--date:not(.has-value) .v2-value {
-  font-weight: 400 !important;
-  color: #74748a !important;
-}
-
-/* Force empty hotel dates to match neutral text placeholders. */
-.search.search-v2[data-mode="hotel"] .v2-field--date:not(.has-value) .v2-value {
+/* Empty date fields in every mode must match ordinary text placeholders. */
+.search.search-v2 .v2-field--date:not(.has-value) .v2-value {
   font-family: var(--font) !important;
   font-size: 18px !important;
   font-weight: 400 !important;
@@ -314,7 +307,7 @@
   opacity: 1 !important;
 }
 @media (max-width: 899px) {
-  .search.search-v2[data-mode="hotel"] .v2-field--date:not(.has-value) .v2-value {
+  .search.search-v2 .v2-field--date:not(.has-value) .v2-value {
     font-size: 17px !important;
   }
 }
