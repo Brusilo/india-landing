@@ -138,17 +138,25 @@
   }
 
   function preferredPlaces(role){
-    const ids=mode==='hotel'
-      ?['ru-moscow','ru-saint-petersburg','ru-sochi','in-delhi','in-mumbai','ru-kazan']
-      :role==='from'
+    let ids;
+    if(mode==='hotel'){
+      ids=['ru-moscow','ru-saint-petersburg','ru-sochi','in-delhi','in-mumbai','ru-kazan'];
+    }else if(mode==='flight'){
+      ids=role==='from'
         ?['in-delhi','in-mumbai','in-bengaluru','ru-moscow','ru-saint-petersburg','ru-kazan']
         :['ru-moscow','ru-saint-petersburg','ru-kazan','ru-sochi','in-delhi','in-mumbai'];
+    }else{
+      ids=role==='from'
+        ?['ru-moscow','ru-saint-petersburg','ru-kazan','ru-sochi','ru-samara','ru-nizhny-novgorod']
+        :['ru-moscow','ru-saint-petersburg','ru-kazan','ru-sochi','ru-samara','ru-yekaterinburg'];
+    }
     return ids.map(id=>TUTU_PLACES.byId.get(id)).filter(Boolean);
   }
 
   function renderSuggestions(input,role){
     const field=input.closest('.v2-field--place'),box=field.querySelector('.search-suggest'),q=input.value.trim();
-    const results=(q?TUTU_PLACES.search(q,6):preferredPlaces(role)).slice(0,6);
+    const pool=q?TUTU_PLACES.search(q,30):preferredPlaces(role);
+    const results=pool.filter(p=>!window.TUTU_LINKS||window.TUTU_LINKS.supports(mode,p)).slice(0,6);
     box.innerHTML=results.map(p=>{
       const d=TUTU_PLACES.display(p,pageLang);
       return '<button type="button" class="suggest-item" data-place-id="'+esc(p.id)+'"><span class="suggest-main">'+esc(d.name)+'</span><span class="suggest-meta">'+esc(d.meta)+'</span></button>';
