@@ -124,6 +124,24 @@
     }).join('');
   }
 
+  /* Promo code copy button. */
+  document.addEventListener('click', function (event) {
+    const button = event.target.closest('.promo-strip__copy');
+    if (!button) return;
+    const code = button.getAttribute('data-promo-code');
+    if (!code) return;
+    const original = button.getAttribute('data-default-label') || button.textContent;
+    button.setAttribute('data-default-label', original);
+    const copied = button.getAttribute('data-copied-label') || 'Copied';
+    const showCopied = function () {
+      button.textContent = copied;
+      window.setTimeout(function () { button.textContent = original; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(showCopied).catch(function () {});
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.lang a[hreflang]').forEach(function (link) {
       link.addEventListener('click', function () { saveLanguage(link.getAttribute('hreflang')); });
