@@ -659,7 +659,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 @media(min-width:768px){html:lang(hi) .hero{padding-bottom:176px!important}}
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20260917-audit-25">
-<link rel="stylesheet" href="assets/responsive.css?v=20260918-promo-5">
+<link rel="stylesheet" href="assets/responsive.css?v=20260918-hotel-inr-1">
 <script src="assets/site-language-faq-v26.js?v=20260918-promo-1"></script>
 </head>
 <body>
@@ -1061,7 +1061,11 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
   </article>`;
 }).join('') + CTA_CARD;
 
-document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => `
+document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
+  const rub = toRub(h.price);
+  const inr = Math.round(rub * CONFIG.rubToInr);
+  const inrFmt = inr.toLocaleString('en-IN');
+  return `
   <article class="card" data-cta="hotel_${h.id}">
     <div class="card-media" style="background:${h.gradient}">
       ${h.rating ? `<span class="rating">${h.rating}</span>` : ''}
@@ -1070,9 +1074,13 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => `
       <p class="hotel-top">${h.city}${h.distance ? ` · ${h.distance}` : ''}</p>
       <p class="hotel-name">${h.name}</p>
       <p class="hotel-meta">${h.type}${h.reviews ? ` · ${h.reviews}` : ''}</p>
-      <p class="hotel-price">${fmtNum(toRub(h.price))} ${CONFIG.currency} <span>प्रति रात</span></p>
+      <div class="price-row hotel-price-row">
+        <span class="price">${fmtNum(rub)} ${CONFIG.currency} <span class="hotel-night">प्रति रात</span></span>
+        <span class="price-alt">≈ ₹${inrFmt}</span>
+      </div>
     </div>
-  </article>`).join('') + CTA_CARD;
+  </article>`;
+}).join('') + CTA_CARD;
 
 document.getElementById('faq-list').innerHTML = CONFIG.faq.map(f => `
   <details class="faq-item">
