@@ -1,15 +1,15 @@
 # Tutu — India landing (stage 1)
 
 A single-page marketing landing for Tutu, aimed at Indian students living in Russia.
-The page exists in three languages — Russian (`index.html`), English (`index-en.html`) and
-Hindi (`index-hi.html`) — linked from the language switcher in the header. This is a **demand test**, not a working product — every CTA
+The page exists in three languages — English (`index.html`, the default), Russian (`index-ru.html`) and
+Hindi (`index-hi.html`) — linked from the language switcher in the header. `index-en.html` is kept as a legacy redirect to the English root page. This is a **demand test**, not a working product — every CTA
 will eventually link out to tutu.ru.
 
 **Stage 1 is a static layout: everything is visible and styled, nothing is interactive.**
 
 ## Running it
 
-Open `index.html` in a browser. It needs no build step and no npm.
+Open `index.html` in a browser for the default English version. It needs no build step and no npm.
 
 Fonts and logos are loaded by relative path, so if you open the file straight from disk
 some browsers may block them — serving the folder over any local HTTP server avoids that.
@@ -17,9 +17,10 @@ some browsers may block them — serving the folder over any local HTTP server a
 ## Structure
 
 ```
-index.html                  Russian page: markup + inline CSS + CONFIG (prices in ₽)
-index-en.html               English page, same structure (prices in ₹)
-index-hi.html               Hindi page, same structure (prices in ₹)
+index.html                  English page (default)
+index-ru.html               Russian page
+index-hi.html               Hindi page
+index-en.html               Legacy redirect to index.html
 fonts/                      Tutu Sans (WOFF2) — regular 400, medium 500, demibold 600, bold 700
 assets/
   logo-tutu-white.png       wordmark used in the header and footer
