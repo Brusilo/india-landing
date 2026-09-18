@@ -5,25 +5,11 @@
   const LANGUAGE_KEY = 'india-landing-language';
   const lang = document.documentElement.lang === 'hi' ? 'hi' : document.documentElement.lang === 'en' ? 'en' : 'ru';
 
-  function readLanguage() {
-    try { return localStorage.getItem(LANGUAGE_KEY); } catch (_) { return null; }
-  }
   function saveLanguage(value) {
     try { localStorage.setItem(LANGUAGE_KEY, value); } catch (_) {}
   }
 
-  /* The root document is Russian for backwards compatibility, but a new visitor
-     lands on English. An explicit language choice always wins and is remembered. */
-  if (lang === 'ru') {
-    const file = location.pathname.split('/').pop();
-    const isRootDocument = file === '' || file === 'index.html';
-    const saved = readLanguage();
-    if (isRootDocument && saved !== 'ru') {
-      const target = saved === 'hi' ? 'index-hi.html' : 'index-en.html';
-      location.replace(target + location.search + location.hash);
-      return;
-    }
-  }
+  /* index.html is the English default. Russian and Hindi use dedicated URLs. */
 
   const FAQ = {
     ru: [
