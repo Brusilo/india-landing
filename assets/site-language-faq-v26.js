@@ -33,7 +33,7 @@
       },
       {
         q: 'Что делать, если в имени на билете ошибка?',
-        a: 'Не рассчитывайте, что опечатка точно не помешает поездке: правила зависят от вида билета и перевозчика. Если заметили ошибку, как можно раньше обратитесь в поддержку Туту. Для авиабилетов имя и фамилия должны совпадать с загранпаспортом, а возможность и стоимость исправления определяет авиакомпания.'
+        a: 'Правила зависят от вида билета и перевозчика. Если заметили ошибку, как можно раньше обратитесь в поддержку Туту. Для авиабилетов имя и фамилия должны совпадать с загранпаспортом, а возможность и стоимость исправления определяет авиакомпания.'
       },
       {
         q: 'Нужна ли регистрация при заселении в отель?',
@@ -63,7 +63,7 @@
       },
       {
         q: 'What should I do if my name is wrong on the ticket?',
-        a: 'Do not assume that a typo will always be accepted: the rules depend on the ticket type and carrier. Contact Tutu support as soon as you notice an error. For flights, the first and last name on the ticket should match the passport used for travel; whether a correction is possible and whether it costs extra depends on the airline.'
+        a: 'The rules depend on the ticket type and carrier. Contact Tutu support as soon as you notice an error. For flights, the first and last name on the ticket should match the passport used for travel; whether a correction is possible and whether it costs extra depends on the airline.'
       },
       {
         q: 'Do foreign guests need registration when staying at a hotel?',
@@ -93,7 +93,7 @@
       },
       {
         q: 'अगर टिकट में नाम गलत हो तो क्या करें?',
-        a: 'यह न मानें कि छोटी गलती हमेशा स्वीकार कर ली जाएगी: नियम टिकट के प्रकार और परिवहन कंपनी पर निर्भर करते हैं। गलती दिखते ही Tutu सहायता से संपर्क करें। फ्लाइट टिकट में नाम और उपनाम यात्रा के लिए इस्तेमाल किए जाने वाले पासपोर्ट से मेल खाने चाहिए; सुधार संभव है या नहीं और उसका शुल्क कितना होगा, यह एयरलाइन तय करती है।'
+        a: 'नियम टिकट के प्रकार और परिवहन कंपनी पर निर्भर करते हैं। गलती दिखते ही Tutu सहायता से संपर्क करें। फ्लाइट टिकट में नाम और उपनाम यात्रा के लिए इस्तेमाल किए जाने वाले पासपोर्ट से मेल खाने चाहिए; सुधार संभव है या नहीं और उसका शुल्क कितना होगा, यह एयरलाइन तय करती है।'
       },
       {
         q: 'होटल में ठहरने पर विदेशी मेहमानों का पंजीकरण जरूरी है?',
