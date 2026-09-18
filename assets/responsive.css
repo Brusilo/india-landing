@@ -410,3 +410,14 @@
   #faq .section-head{text-align:center}
   #faq .faq{margin-inline:auto}
 }
+
+/* Hotel price: primary RUB + muted approximate INR */
+.hotel-price-row{
+  margin-top:auto;
+  padding-top:8px;
+}
+.hotel-price-row .hotel-night{
+  font-size:14.5px;
+  font-weight:400;
+  color:var(--muted);
+}
