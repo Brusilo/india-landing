@@ -356,6 +356,11 @@
   border-radius:12px;
   background:#00C95E;
   color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
   font-family:var(--font);
   font-size:17px;
   font-weight:600;
@@ -437,6 +442,11 @@
     font-size:16px;
     font-weight:600;
     flex:0 1 auto;
+  }
+  html:lang(ru) .promo-strip__copy.is-copied{
+    padding-inline:4px;
+    font-size:13px;
+    letter-spacing:-.02em;
   }
   .promo-strip__offer{
     min-width:0;
