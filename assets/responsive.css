@@ -326,12 +326,35 @@
 }
 .promo-strip__action{
   min-width:0;
+  position:relative;
+  overflow:hidden;
   padding:22px 28px;
   display:flex;
   align-items:center;
   justify-content:flex-start;
   gap:12px;
   background:#fff;
+}
+
+.promo-strip__action::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+    url("билетик скидка.png"),
+    url("билетик скидка.png");
+  background-repeat:no-repeat,no-repeat;
+  background-size:150px auto,96px auto;
+  background-position:-24px 54%,82% 118%;
+  opacity:.075;
+  filter:grayscale(.15) brightness(1.16);
+}
+.promo-strip__code,
+.promo-strip__copy{
+  position:relative;
+  z-index:1;
 }
 .promo-strip__code{
   min-height:50px;
@@ -422,6 +445,11 @@
     gap:6px;
     justify-content:flex-start;
     flex-wrap:nowrap;
+  }
+  .promo-strip__action::before{
+    background-size:112px auto,72px auto;
+    background-position:-22px 52%,94% 122%;
+    opacity:.065;
   }
   .promo-strip__code{
     min-width:0;
