@@ -655,7 +655,7 @@ body{position:relative!important}
 }
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20260917-audit-25">
-<link rel="stylesheet" href="assets/responsive.css?v=20260918-hotel-inr-1">
+<link rel="stylesheet" href="assets/responsive.css?v=20260921-route-promo-1">
 <script src="assets/site-language-faq-v26.js?v=20260918-promo-1"></script>
 </head>
 <body>
@@ -725,6 +725,21 @@ body{position:relative!important}
   </div>
 </section>
 
+<section class="section promo-section">
+  <div class="container">
+    <div class="promo-strip" role="region" aria-label="Promo code INDIA10">
+      <div class="promo-strip__action">
+        <div class="promo-strip__code" aria-label="Promo code">INDIA10</div>
+        <button type="button" class="promo-strip__copy" data-promo-code="INDIA10" data-copied-label="Copied">Copy</button>
+      </div>
+      <div class="promo-strip__offer">
+        <h3><span class="promo-title-desktop">Extra savings for your trip</span><span class="promo-title-mobile">10% off tickets &amp; hotels</span></h3>
+        <p>Get <strong>10% off tickets and hotels</strong> with promo code INDIA10.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="routes">
   <img class="section-decor section-decor--ticket" src="assets/билет.png" alt="" aria-hidden="true">
   <div class="container">
@@ -773,16 +788,6 @@ body{position:relative!important}
 
 <section class="section section--cloud">
   <div class="container">
-    <div class="promo-strip" role="region" aria-label="Promo code INDIA10">
-      <div class="promo-strip__action">
-        <div class="promo-strip__code" aria-label="Promo code">INDIA10</div>
-        <button type="button" class="promo-strip__copy" data-promo-code="INDIA10" data-copied-label="Copied">Copy code</button>
-      </div>
-      <div class="promo-strip__offer">
-        <h3>Extra savings for your trip</h3>
-        <p>Get <strong>10% off tickets and hotels</strong> with promo code INDIA10.</p>
-      </div>
-    </div>
     <div class="section-head"><h2>Travelling as a group</h2></div>
     <div class="tiles tiles--3">
       <article class="tile">
@@ -992,22 +997,20 @@ const CONFIG = {
     { id:'r3',  from:'Moscow',           to:'Yoshkar-Ola', typeLine:'train',                transport:'train',  combined:false, price:'1 874',  duration:'13 h 30 min', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
     { id:'r4',  from:'Delhi',             to:'Moscow',     typeLine:'direct flight',          transport:'flight', combined:false, price:'25 004', duration:'6 h 30 min',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
     { id:'r5',  from:'Moscow',           to:'Delhi',       typeLine:'direct flight',          transport:'flight', combined:false, price:'16 048', duration:'6 h 05 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
-    { id:'r6',  from:'Sheremetyevo',      to:'Tver',      typeLine:'Aeroexpress + train', transport:'train',  combined:true,  price:'1 200',  duration:'3 h 30 min',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
-    { id:'r7',  from:'St Petersburg',  to:'Yoshkar-Ola', typeLine:'train + bus',      transport:'train',  combined:true,  price:'5 369',  duration:'27 h 30 min', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r6',  from:'Moscow',           to:'Tver',        typeLine:'bus',                 transport:'bus',    combined:false, price:'690',    duration:'1 h 55 min',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
+    { id:'r7',  from:'St Petersburg',    to:'Yoshkar-Ola', typeLine:'train with transfer', transport:'train',  combined:false, price:'10 033', duration:'41 h 12 min', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
     { id:'r8',  from:'Ufa',              to:'Kazan',     typeLine:'bus',              transport:'bus',    combined:false, price:'1 668',  duration:'8 h 30 min',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
     { id:'r9',  from:'Moscow',           to:'Sochi',       typeLine:'direct flight',          transport:'flight', combined:false, price:'4 099',  duration:'2 h 35 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' },
     { id:'r10', from:'Kazan',           to:'Yekaterinburg',typeLine:'train',               transport:'train',  combined:false, price:'1 514',  duration:'7 h 15 min',  gradient:'linear-gradient(200deg,#5F94FF 0%,#BA61FF 100%)' }
   ],
 
   hotels: [
-    { id:'h1',  name:'Stereo Mini-Hotel',                     city:'Kazan',          distance:'1.5 km from the centre', rating:'8.4', reviews:'158 reviews', type:'Mini-hotel',   price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
-    { id:'h2',  name:'Grace Amalia',                          city:'Sochi',            distance:'633 m from the beach',   rating:'9.1', reviews:'240 reviews', type:'Guest house', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'h3',  name:'Avtor Taganka Hostel',                  city:'Moscow',          distance:'',                 rating:'8.4', reviews:'',            type:'Hostel',       price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
-    { id:'h4',  name:'Jasminn Hotel, Goa',                    city:'Goa',             distance:'607 m from the centre',  rating:'8.0', reviews:'127 reviews', type:'Hotel',        price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
-    { id:'h5',  name:'Grifon Guest Rooms & Apartments', city:'St Petersburg', distance:'',                 rating:'9.1', reviews:'',            type:'Apartments',  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
-    { id:'h6',  name:'The Fern Residency, Mumbai',            city:'Mumbai',          distance:'2.1 km from the centre', rating:'8.6', reviews:'89 reviews',  type:'Hotel',        price:'5 120', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'h7',  name:'The International by Tunga',            city:'Mumbai',          distance:'1.8 km from the centre', rating:'8.2', reviews:'112 reviews', type:'Hotel',        price:'4 189', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
-    { id:'h8',  name:'Kosmos Hotel, Delhi',                city:'Delhi',            distance:'3.5 km from the centre', rating:'8.1', reviews:'204 reviews',  type:'Hotel',        price:'3 600', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
+    { id:'h1', name:'Otel Bulgar', city:'Kazan', distance:'2.9 km from the centre', rating:'8.3', reviews:'214 reviews', type:'Hotel', price:'3 584', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
+    { id:'h2', name:'Greys Amaliya', city:'Sochi', distance:'633 m to the beach', rating:'9.1', reviews:'240 reviews', type:'Guest house', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'h3', name:'Khostel Avtor Taganka', city:'Moscow', distance:'3 km from the centre', rating:'8.4', reviews:'336 reviews', type:'Hostel', price:'4 122', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
+    { id:'h4', name:'Nomera u Nevy', city:'Saint Petersburg', distance:'5.2 km from the centre', rating:'7.8', reviews:'157 reviews', type:'Hotel', price:'2 199', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
+    { id:'h5', name:'Gostevye komnaty i apartamenty Grifon', city:'Saint Petersburg', distance:'894 m from the centre', rating:'9.1', reviews:'', type:'Apartments', price:'2 400', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
+    { id:'h6', name:'Boyarin', city:'Gelendzhik', distance:'483 m to the beach', rating:'9.5', reviews:'33 reviews', type:'Guest house', price:'2 500', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' }
   ],
 
   faq: [
@@ -1215,7 +1218,7 @@ initCarousel('hotels-row', 'hotels');
 <script src="assets/tutu-destinations.js?v=20260917-audit-25"></script>
 <script src="assets/tutu-link-builder.js?v=20260917-audit-25"></script>
 <script src="assets/search-v2.js?v=20260917-audit-25"></script>
-<script src="assets/card-links.js?v=20260917-audit-25"></script>
+<script src="assets/card-links.js?v=20260921-route-promo-1"></script>
 <script src="assets/responsive.js?v=20260917-metrika-2"></script>
 </body>
 </html>
