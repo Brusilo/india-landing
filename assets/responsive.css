@@ -326,7 +326,7 @@
 }
 .promo-strip__action{
   min-width:0;
-  padding:20px 26px;
+  padding:22px 28px;
   display:flex;
   align-items:center;
   justify-content:flex-start;
@@ -334,8 +334,8 @@
   background:#fff;
 }
 .promo-strip__code{
-  min-height:44px;
-  padding:0 15px;
+  min-height:48px;
+  padding:0 18px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -344,20 +344,20 @@
   background:#fff;
   color:#FF872E;
   font-family:var(--font);
-  font-size:18px;
+  font-size:20px;
   font-weight:700;
   letter-spacing:.04em;
   white-space:nowrap;
 }
 .promo-strip__copy{
-  min-height:44px;
-  padding:0 15px;
+  min-height:48px;
+  padding:0 18px;
   border:0;
   border-radius:12px;
   background:#00C95E;
   color:#fff;
   font-family:var(--font);
-  font-size:16px;
+  font-size:17px;
   font-weight:600;
   line-height:1;
   white-space:nowrap;
@@ -368,7 +368,7 @@
 .promo-strip__copy:active{transform:translateY(1px)}
 .promo-strip__offer{
   min-width:0;
-  padding:20px 30px;
+  padding:22px 32px;
   display:flex;
   flex-direction:column;
   justify-content:center;
