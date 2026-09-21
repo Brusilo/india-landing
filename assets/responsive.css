@@ -407,6 +407,10 @@
     min-height:80px;
     border-radius:20px;
   }
+  html:lang(en) .promo-strip,
+  html:lang(hi) .promo-strip{
+    grid-template-columns:53% 47%;
+  }
   .promo-strip__action{
     min-width:0;
     padding:9px 6px 9px 4px;
