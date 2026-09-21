@@ -659,7 +659,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 @media(min-width:768px){html:lang(hi) .hero{padding-bottom:176px!important}}
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20260917-audit-25">
-<link rel="stylesheet" href="assets/responsive.css?v=20260918-hotel-inr-1">
+<link rel="stylesheet" href="assets/responsive.css?v=20260921-route-promo-1">
 <script src="assets/site-language-faq-v26.js?v=20260918-promo-1"></script>
 </head>
 <body>
@@ -729,6 +729,21 @@ html:lang(hi) .hero{padding-bottom:132px!important}
   </div>
 </section>
 
+<section class="section promo-section">
+  <div class="container">
+    <div class="promo-strip" role="region" aria-label="प्रोमो कोड INDIA10">
+      <div class="promo-strip__action">
+        <div class="promo-strip__code" aria-label="प्रोमो कोड">INDIA10</div>
+        <button type="button" class="promo-strip__copy" data-promo-code="INDIA10" data-copied-label="कॉपी हो गया">कॉपी</button>
+      </div>
+      <div class="promo-strip__offer">
+        <h3><span class="promo-title-desktop">अपनी यात्रा पर अतिरिक्त बचत</span><span class="promo-title-mobile">टिकट और होटल पर 10% छूट</span></h3>
+        <p>प्रोमो कोड INDIA10 से <strong>टिकट और होटल पर 10% की छूट</strong> पाएं।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="routes">
   <img class="section-decor section-decor--ticket" src="assets/билет.png" alt="" aria-hidden="true">
   <div class="container">
@@ -777,16 +792,6 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 
 <section class="section section--cloud">
   <div class="container">
-    <div class="promo-strip" role="region" aria-label="प्रोमो कोड INDIA10">
-      <div class="promo-strip__action">
-        <div class="promo-strip__code" aria-label="प्रोमो कोड">INDIA10</div>
-        <button type="button" class="promo-strip__copy" data-promo-code="INDIA10" data-copied-label="कॉपी हो गया">कोड कॉपी करें</button>
-      </div>
-      <div class="promo-strip__offer">
-        <h3>अपनी यात्रा पर अतिरिक्त बचत</h3>
-        <p>प्रोमो कोड INDIA10 से <strong>टिकट और होटल पर 10% की छूट</strong> पाएं।</p>
-      </div>
-    </div>
     <div class="section-head"><h2>ग्रुप में यात्रा</h2></div>
     <div class="tiles tiles--3">
       <article class="tile">
@@ -996,22 +1001,20 @@ const CONFIG = {
     { id:'r3',  from:'मॉस्को',           to:'योश्कर-ओला', typeLine:'ट्रेन',                transport:'train',  combined:false, price:'1 874',  duration:'13 घं 30 मि', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
     { id:'r4',  from:'दिल्ली',             to:'मॉस्को',     typeLine:'सीधी फ़्लाइट',          transport:'flight', combined:false, price:'25 004', duration:'6 घं 30 मि',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
     { id:'r5',  from:'मॉस्को',           to:'दिल्ली',       typeLine:'सीधी फ़्लाइट',          transport:'flight', combined:false, price:'16 048', duration:'6 घं 05 मि',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
-    { id:'r6',  from:'शेरेमेतेवो',      to:'त्वेर',      typeLine:'एयरोएक्सप्रेस + ट्रेन', transport:'train',  combined:true,  price:'1 200',  duration:'3 घं 30 मि',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
-    { id:'r7',  from:'सेंट पीटर्सबर्ग',  to:'योश्कर-ओला', typeLine:'ट्रेन + बस',      transport:'train',  combined:true,  price:'5 369',  duration:'27 घं 30 मि', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r6',  from:'मॉस्को',           to:'त्वेर',       typeLine:'बस',                  transport:'bus',    combined:false, price:'690',    duration:'1 घं 55 मि',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
+    { id:'r7',  from:'सेंट पीटर्सबर्ग',  to:'योश्कर-ओला', typeLine:'ट्रांसफ़र वाली ट्रेन', transport:'train', combined:false, price:'10 033', duration:'41 घं 12 मि', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
     { id:'r8',  from:'ऊफ़ा',              to:'कज़ान',     typeLine:'बस',              transport:'bus',    combined:false, price:'1 668',  duration:'8 घं 30 मि',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
     { id:'r9',  from:'मॉस्को',           to:'सोची',       typeLine:'सीधी फ़्लाइट',          transport:'flight', combined:false, price:'4 099',  duration:'2 घं 35 मि',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' },
     { id:'r10', from:'कज़ान',           to:'येकातेरिनबर्ग',typeLine:'ट्रेन',               transport:'train',  combined:false, price:'1 514',  duration:'7 घं 15 मि',  gradient:'linear-gradient(200deg,#5F94FF 0%,#BA61FF 100%)' }
   ],
 
   hotels: [
-    { id:'h1',  name:'Stereo Mini-Hotel',                     city:'कज़ान',          distance:'सेंटर से 1.5 किमी', rating:'8.4', reviews:'158 रिव्यू', type:'मिनी होटल',   price:'2 080', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
-    { id:'h2',  name:'Grace Amalia',                          city:'सोची',            distance:'बीच से 633 मीटर',   rating:'9.1', reviews:'240 रिव्यू', type:'गेस्ट हाउस', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'h3',  name:'Avtor Taganka Hostel',                  city:'मॉस्को',          distance:'',                 rating:'8.4', reviews:'',            type:'हॉस्टल',       price:'3 178', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
-    { id:'h4',  name:'Jasminn Hotel, Goa',                    city:'गोवा',             distance:'सेंटर से 607 मीटर',  rating:'8.0', reviews:'127 रिव्यू', type:'होटल',        price:'4 234', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
-    { id:'h5',  name:'Grifon Guest Rooms & Apartments', city:'सेंट पीटर्सबर्ग', distance:'',                 rating:'9.1', reviews:'',            type:'अपार्टमेंट',  price:'4 619', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
-    { id:'h6',  name:'The Fern Residency, Mumbai',            city:'मुंबई',          distance:'सेंटर से 2.1 किमी', rating:'8.6', reviews:'89 रिव्यू',  type:'होटल',        price:'5 120', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'h7',  name:'The International by Tunga',            city:'मुंबई',          distance:'सेंटर से 1.8 किमी', rating:'8.2', reviews:'112 रिव्यू', type:'होटल',        price:'4 189', gradient:'linear-gradient(120deg,#5F94FF 0%,#BA61FF 100%)' },
-    { id:'h8',  name:'Kosmos Hotel, Delhi',                city:'दिल्ली',            distance:'सेंटर से 3.5 किमी', rating:'8.1', reviews:'204 रिव्यू',  type:'होटल',        price:'3 600', gradient:'linear-gradient(170deg,#5F94FF 0%,#BA61FF 80%)' }
+    { id:'h1', name:'Otel Bulgar', city:'कज़ान', distance:'केंद्र से 2.9 किमी', rating:'8.3', reviews:'214 समीक्षाएँ', type:'होटल', price:'3 584', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
+    { id:'h2', name:'Greys Amaliya', city:'सोची', distance:'समुद्र तट से 633 मी', rating:'9.1', reviews:'240 समीक्षाएँ', type:'गेस्ट हाउस', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'h3', name:'Khostel Avtor Taganka', city:'मॉस्को', distance:'केंद्र से 3 किमी', rating:'8.4', reviews:'336 समीक्षाएँ', type:'हॉस्टल', price:'4 122', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
+    { id:'h4', name:'Nomera u Nevy', city:'सेंट पीटर्सबर्ग', distance:'केंद्र से 5.2 किमी', rating:'7.8', reviews:'157 समीक्षाएँ', type:'होटल', price:'2 199', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
+    { id:'h5', name:'Gostevye komnaty i apartamenty Grifon', city:'सेंट पीटर्सबर्ग', distance:'केंद्र से 894 मी', rating:'9.1', reviews:'', type:'अपार्टमेंट', price:'2 400', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
+    { id:'h6', name:'Boyarin', city:'गेलेंदझिक', distance:'समुद्र तट से 483 मी', rating:'9.5', reviews:'33 समीक्षाएँ', type:'गेस्ट हाउस', price:'2 500', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' }
   ],
 
   faq: [
@@ -1219,7 +1222,7 @@ initCarousel('hotels-row', 'hotels');
 <script src="assets/tutu-destinations.js?v=20260917-audit-25"></script>
 <script src="assets/tutu-link-builder.js?v=20260917-audit-25"></script>
 <script src="assets/search-v2.js?v=20260917-audit-25"></script>
-<script src="assets/card-links.js?v=20260917-audit-25"></script>
+<script src="assets/card-links.js?v=20260921-route-promo-1"></script>
 <script src="assets/responsive.js?v=20260917-metrika-2"></script>
 </body>
 </html>
