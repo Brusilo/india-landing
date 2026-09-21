@@ -343,8 +343,8 @@
   height:auto;
   pointer-events:none;
   user-select:none;
-  opacity:.16;
-  filter:brightness(1.24) saturate(.88);
+  opacity:.18;
+  filter:brightness(1.38) saturate(.94);
 }
 .promo-ticket-art--1{
   width:138px;
@@ -361,12 +361,12 @@
 .promo-ticket-art--3{
   width:92px;
   left:61%;
-  bottom:-37px;
+  bottom:-14px;
   transform:rotate(-9deg);
 }
 .promo-ticket-art--4{
   width:74px;
-  right:-18px;
+  right:-28px;
   top:7px;
   transform:rotate(12deg);
 }
@@ -466,8 +466,8 @@
     flex-wrap:nowrap;
   }
   .promo-ticket-art{
-    opacity:.15;
-    filter:brightness(1.22) saturate(.88);
+    opacity:.17;
+    filter:brightness(1.34) saturate(.92);
   }
   .promo-ticket-art--1{
     width:84px;
@@ -484,8 +484,8 @@
   .promo-ticket-art--3{
     width:56px;
     left:auto;
-    right:-13px;
-    bottom:-22px;
+    right:-15px;
+    bottom:-10px;
     transform:rotate(-10deg);
   }
   .promo-ticket-art--4{display:none}
