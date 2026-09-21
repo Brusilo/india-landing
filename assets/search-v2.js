@@ -21,7 +21,7 @@
       prev:'Предыдущий месяц',next:'Следующий месяц'
     },
     en:{
-      from:'From',to:'To',when:'When',flightWho:'Who is flying',travelWho:'Travellers',swap:'Swap places',search:'Search',
+      from:'From',to:'To',when:'When',flightWho:'Travellers',travelWho:'Travellers',swap:'Swap places',search:'Search',
       hotelWhere:'City',hotelDates:'Check-in — check-out',guests:'Guests',
       adults:'Adults',adultSub:'12+ years',children:'Children',childSub:'Under 18',childAge:'Child age',years:'years',
       economy:'Economy',business:'Business',cabin:'Cabin class',
@@ -30,10 +30,10 @@
       prev:'Previous month',next:'Next month'
     },
     hi:{
-      from:'कहाँ से',to:'कहाँ तक',when:'तारीख़',flightWho:'कौन यात्रा कर रहा है',travelWho:'यात्री',swap:'स्थान बदलें',search:'खोजें',
+      from:'कहाँ से',to:'कहाँ तक',when:'तारीख़',flightWho:'यात्री',travelWho:'यात्री',swap:'आपस में बदलें',search:'खोजें',
       hotelWhere:'शहर',hotelDates:'चेक-इन — चेक-आउट',guests:'मेहमान',
-      adults:'वयस्क',adultSub:'12 साल और अधिक',children:'बच्चे',childSub:'18 साल से कम',childAge:'बच्चे की उम्र',years:'साल',
-      economy:'इकोनॉमी',business:'बिज़नेस',cabin:'यात्रा की श्रेणी',
+      adults:'वयस्क',adultSub:'12 साल या उससे ज़्यादा',children:'बच्चे',childSub:'18 साल से कम',childAge:'बच्चे की उम्र',years:'साल',
+      economy:'इकोनॉमी',business:'बिज़नेस',cabin:'केबिन क्लास',
       passenger1:'यात्री',passenger2:'यात्री',passenger5:'यात्री',
       guest1:'मेहमान',guest2:'मेहमान',guest5:'मेहमान',
       prev:'पिछला महीना',next:'अगला महीना'

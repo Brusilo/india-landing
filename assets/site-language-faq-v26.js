@@ -15,7 +15,7 @@
     ru: [
       {
         q: 'Какие карты принимаются для оплаты авиабилетов?',
-        a: 'К оплате принимаются карты, выпущенные в России, странах СНГ, Прибалтике и большинстве стран Европы. Оплата также возможна виртуальной, предоплаченной картой VISA Virtual.'
+        a: 'К оплате принимаются карты, выпущенные в России, странах СНГ, Прибалтике и большинстве стран Европы. Оплата также возможна виртуальной, предоплаченной картой Visa Virtual.'
       },
       {
         q: 'Что делать, если в имени на билете ошибка?',
@@ -45,14 +45,14 @@
     en: [
       {
         q: 'Which cards can I use to pay for flights?',
-        a: 'Cards issued in Russia, CIS countries, the Baltic states and most European countries are accepted. You can also pay with a prepaid VISA Virtual card.'
+        a: 'Cards issued in Russia, CIS countries, the Baltic states and most European countries are accepted. You can also pay with a prepaid Visa Virtual card.'
       },
       {
         q: 'What should I do if my name is wrong on the ticket?',
         a: 'The rules depend on the ticket type and carrier. Contact Tutu support as soon as you notice an error. For flights, the first and last name on the ticket should match the passport used for travel; whether a correction is possible and whether it costs extra depends on the airline.'
       },
       {
-        q: 'Do foreign guests need registration when staying at a hotel?',
+        q: 'Do foreign guests need to register when staying at a hotel?',
         a: 'In Russia, hotels and other accommodation providers register foreign guests for migration purposes. If you stay in an apartment or other private accommodation, the host or landlord is normally the receiving party. Check the required documents and any registration fee with your accommodation.'
       },
       {
@@ -65,7 +65,7 @@
       },
       {
         q: 'How much baggage can I take?',
-        a: 'Baggage limits depend on the carrier and fare. For flights, cabin-baggage and checked-baggage conditions are shown with the fare; on buses, baggage may be charged separately. Check the conditions for your specific ticket before paying.'
+        a: 'Baggage limits depend on the carrier and fare. For flights, cabin baggage and checked baggage allowances are shown with the fare; on buses, baggage may be charged separately. Check the conditions for your specific ticket before paying.'
       },
       {
         q: 'Can I refund or exchange a ticket?',
@@ -75,7 +75,7 @@
     hi: [
       {
         q: 'फ़्लाइट टिकट के भुगतान के लिए कौन-से कार्ड स्वीकार किए जाते हैं?',
-        a: 'रूस, CIS देशों, बाल्टिक देशों और यूरोप के अधिकांश देशों में जारी किए गए कार्ड स्वीकार किए जाते हैं। VISA Virtual प्रीपेड कार्ड से भी भुगतान किया जा सकता है।'
+        a: 'रूस, CIS देशों, बाल्टिक देशों और यूरोप के अधिकांश देशों में जारी किए गए कार्ड स्वीकार किए जाते हैं। Visa Virtual प्रीपेड कार्ड से भी भुगतान किया जा सकता है।'
       },
       {
         q: 'अगर टिकट में नाम गलत हो तो क्या करें?',
@@ -87,7 +87,7 @@
       },
       {
         q: 'प्लात्सकार्ट और कूपे में क्या अंतर है?',
-        a: 'प्लात्सकार्ट डिब्बे में आम तौर पर 54 सोने की जगहें होती हैं और हिस्से खुले होते हैं। कूपे डिब्बे में आम तौर पर 32 या 36 जगहें होती हैं और हर बंद होने वाले कूपे में चार बर्थ होती हैं। कूपे में यात्री कम और निजता अधिक होती है, इसलिए यह आम तौर पर महँगा होता है।'
+        a: 'प्लात्सकार्ट डिब्बे में आम तौर पर 54 बर्थ होती हैं और सोने की जगहें खुले सेक्शन में होती हैं। कूपे में आम तौर पर 32 या 36 बर्थ होती हैं, और हर बंद कूपे में चार बर्थ होती हैं। कूपे में यात्री कम होते हैं और ज़्यादा प्राइवेसी मिलती है, इसलिए यह आम तौर पर महँगा होता है।'
       },
       {
         q: 'एयरपोर्ट से दूसरे शहर कैसे जाएँ?',
@@ -99,7 +99,7 @@
       },
       {
         q: 'क्या टिकट वापस या बदला जा सकता है?',
-        a: 'यह परिवहन के प्रकार, कंपनी और किराये के नियमों पर निर्भर करता है। टिकट रिफंडेबल है या नॉन-रिफंडेबल, यह खरीद से पहले दिखाया जाता है। खरीद के बाद उपलब्ध विकल्प Tutu वेबसाइट या ऐप में आपके ऑर्डर में दिखेंगे; कुछ टिकटों में बदलाव के लिए पहले पुराना टिकट रिफंड करके नया टिकट खरीदना पड़ता है।'
+        a: 'यह परिवहन के प्रकार, कंपनी और किराये के नियमों पर निर्भर करता है। टिकट रिफंडेबल है या नॉन-रिफंडेबल, यह बुकिंग से पहले दिखाया जाता है। बुकिंग के बाद उपलब्ध विकल्प Tutu वेबसाइट या ऐप में आपके ऑर्डर में दिखेंगे; कुछ टिकटों में बदलाव के लिए पहले पुराना टिकट रिफंड करके नया टिकट खरीदना पड़ता है।'
       }
     ]
   };
