@@ -13,7 +13,7 @@
 }
 .mobile-menu-toggle { display: none; }
 
-@media (max-width: 1100px), (hover: none) and (pointer: coarse) {
+@media (max-width: 1100px) {
   html, body { min-width: 0; width: 100%; overflow-x: clip; }
   body { -webkit-text-size-adjust: 100%; }
   .container { width: 100%; max-width: 768px; padding-inline: 16px; }
@@ -245,7 +245,7 @@
   .footer .legal { font-size: 12px; font-weight: 400; line-height: 1.7; overflow-wrap: anywhere; }
 }
 
-@media (min-width: 600px) and (max-width: 1100px) and (min-device-width: 600px) {
+@media (min-width: 600px) and (max-width: 1100px) {
   .container { padding-inline: 24px; }
   .hero h1 { max-width: 560px; min-height: 0; font-size: 48px; }
   .hero > .hero-decor--suitcase { width: 400px !important; top: -42px !important; right: max(-40px, calc((100vw - 848px)/2)) !important; }
@@ -625,7 +625,11 @@
   color:var(--deep-blue);
   overflow-wrap:anywhere;
 }
-@media(max-width:1100px), (hover:none) and (pointer:coarse){
+@media(min-width:1101px){
+  .hero{padding-bottom:16px!important}
+  html:lang(hi) .hero{padding-bottom:16px!important}
+}
+@media(max-width:1100px){
   .reviews-carousel-wrap{
     margin-inline:-16px;
     overflow:hidden;
@@ -663,7 +667,7 @@
     font-size:15px;
   }
 }
-@media(min-width:600px) and (max-width:1100px) and (min-device-width:600px){
+@media(min-width:600px) and (max-width:1100px){
   .reviews-carousel-wrap{margin-inline:-24px}
   .reviews-row{
     padding-inline:24px;
@@ -688,9 +692,25 @@
   background:var(--cloud-white);
 }
 
-/* Phone: hotel and review carousel backgrounds are true edge-to-edge strips.
-   The section keeps its normal height; only side gutters/radii are removed. */
-@media(max-width:767px), (hover:none) and (pointer:coarse) and (max-device-width:599px){
+/* Phone: hotel and review carousel backgrounds run edge-to-edge with no side rounding. */
+@media(max-width:599px){
+  #hotels .stage,
+  .reviews-stage{
+    border-radius:0!important;
+  }
+}
+@media(min-width:600px) and (max-width:767px){
+  #hotels .stage,
+  .reviews-stage{
+    margin-inline:-24px!important;
+    border-radius:0!important;
+  }
+}
+
+
+
+/* Mobile carousel stages: full-width background, no side rounding. */
+@media(max-width:599px){
   #hotels > .container,
   .reviews-section > .container{
     max-width:none!important;
@@ -702,53 +722,13 @@
     margin-inline:0!important;
     border-radius:0!important;
   }
+  #hotels .carousel-wrap,
+  .reviews-carousel-wrap{
+    margin-inline:0!important;
+  }
+  #hotels .row,
   .reviews-row{
-    align-items:flex-start;
-  }
-}
-
-/* Desktop layout: shorten the blue hero itself.
-   No fake white overlay and no increase to the following white section. */
-@media(min-width:1101px) and (hover:hover) and (pointer:fine){
-  .hero{
-    position:relative!important;
-    overflow:hidden!important;
-    padding-bottom:8px!important;
-  }
-  html:lang(hi) .hero{
-    padding-bottom:8px!important;
-  }
-  .hero + .promo-section{
-    margin-top:0!important;
-    border-radius:40px 40px 0 0!important;
-  }
-  .hero + .promo-section::before{
-    content:none!important;
-    display:none!important;
-  }
-
-  /* Anchor decorative art to the centered content, not viewport edges.
-     This keeps placement stable when browser zoom changes. */
-  .hero > .hero-decor--suitcase{
-    width:clamp(560px,35vw,680px)!important;
-    left:calc(50% + clamp(220px,16vw,300px))!important;
-    right:auto!important;
-    top:-12px!important;
-    bottom:auto!important;
-    transform:rotate(-5deg)!important;
-  }
-  #routes > .section-decor--ticket{
-    width:clamp(300px,22vw,420px)!important;
-    left:calc(50% + clamp(430px,24vw,520px))!important;
-    right:auto!important;
-    top:-37px!important;
-    transform:rotate(5deg)!important;
-  }
-  #hotels > .section-decor--keys{
-    width:clamp(220px,16vw,300px)!important;
-    left:calc(50% - clamp(590px,36vw,690px))!important;
-    right:auto!important;
-    top:40px!important;
-    transform:rotate(-7deg)!important;
+    padding-inline:16px!important;
+    scroll-padding-inline:16px!important;
   }
 }
