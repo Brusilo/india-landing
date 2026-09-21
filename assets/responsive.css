@@ -732,3 +732,35 @@
     scroll-padding-inline:16px!important;
   }
 }
+
+
+/* Layout fixes 2026-09-21 */
+/* search-v2.css gives the hero a 630px min-height and 104px bottom padding, which left ~100px of empty blue under the search. */
+@media(min-width:1101px){
+  html:lang(ru) .hero, html:lang(en) .hero, html:lang(hi) .hero{min-height:0!important;padding-bottom:80px!important}
+}
+/* Desktop artwork is anchored to the page centre, not the window edges, so zooming or resizing no longer pulls it away from the content.
+   Offsets reproduce the placement at a ~1600px wide page (1920 screen at 120% zoom). */
+@media(min-width:1101px){
+  .hero>.hero-decor--suitcase{width:680px!important;left:calc(50% + 123px)!important;right:auto!important;top:-12px!important}
+  #routes>.section-decor--ticket{width:420px!important;left:calc(50% + 427px)!important;right:auto!important;top:-37px!important}
+  #hotels>.section-decor--keys{width:300px!important;left:calc(50% - 828px)!important;right:auto!important;top:40px!important}
+}
+/* Fractions below 1 made the columns leave a gap on mid-width screens (e.g. a phone in desktop mode). */
+@media(min-width:768px){
+  .promo-strip{grid-template-columns:minmax(340px,42fr) minmax(0,58fr)}
+}
+/* Phone: hotel and review cards start at the same 16px edge as route cards. */
+@media(max-width:599px){
+  #hotels .carousel-wrap,
+  .reviews-carousel-wrap{margin-inline:-16px!important}
+}
+/* Tablet and desktop-mode phones: review cards match the 300px route and hotel cards. */
+@media(min-width:600px) and (max-width:1100px){
+  .review-card{flex-basis:300px}
+}
+/* 768-1100px: the hotel and review panels reach into the container padding so their cards line up with the route cards. */
+@media(min-width:768px) and (max-width:1100px){
+  #hotels .stage,
+  .reviews-stage{margin-inline:-24px}
+}
