@@ -336,22 +336,39 @@
   background:#fff;
 }
 
-.promo-strip__action::before{
-  content:"";
+.promo-ticket-art{
   position:absolute;
-  inset:0;
-  pointer-events:none;
   z-index:0;
-  background-image:
-    url("билетик скидка.png"),
-    url("билетик скидка.png"),
-    url("билетик скидка.png"),
-    url("билетик скидка.png");
-  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat;
-  background-size:150px auto,116px auto,92px auto,72px auto;
-  background-position:-26px 58%,30% -26%,76% 124%,104% 30%;
-  opacity:.14;
-  filter:brightness(1.22) saturate(.9);
+  display:block;
+  height:auto;
+  pointer-events:none;
+  user-select:none;
+  opacity:.16;
+  filter:brightness(1.24) saturate(.88);
+}
+.promo-ticket-art--1{
+  width:138px;
+  left:-24px;
+  top:50%;
+  transform:translateY(-50%) rotate(-7deg);
+}
+.promo-ticket-art--2{
+  width:102px;
+  left:31%;
+  top:-39px;
+  transform:rotate(8deg);
+}
+.promo-ticket-art--3{
+  width:92px;
+  left:61%;
+  bottom:-37px;
+  transform:rotate(-9deg);
+}
+.promo-ticket-art--4{
+  width:74px;
+  right:-18px;
+  top:7px;
+  transform:rotate(12deg);
 }
 .promo-strip__code,
 .promo-strip__copy{
@@ -448,17 +465,30 @@
     justify-content:flex-start;
     flex-wrap:nowrap;
   }
-  .promo-strip__action::before{
-    background-image:
-      url("билетик скидка.png"),
-      url("билетик скидка.png"),
-      url("билетик скидка.png");
-    background-repeat:no-repeat,no-repeat,no-repeat;
-    background-size:106px auto,76px auto,58px auto;
-    background-position:-24px 58%,56% 126%,108% 18%;
-    opacity:.12;
-    filter:brightness(1.2) saturate(.9);
+  .promo-ticket-art{
+    opacity:.15;
+    filter:brightness(1.22) saturate(.88);
   }
+  .promo-ticket-art--1{
+    width:84px;
+    left:-20px;
+    top:52%;
+    transform:translateY(-50%) rotate(-8deg);
+  }
+  .promo-ticket-art--2{
+    width:58px;
+    left:47%;
+    top:-22px;
+    transform:rotate(9deg);
+  }
+  .promo-ticket-art--3{
+    width:56px;
+    left:auto;
+    right:-13px;
+    bottom:-22px;
+    transform:rotate(-10deg);
+  }
+  .promo-ticket-art--4{display:none}
   .promo-strip__code{
     min-width:0;
     min-height:48px;
