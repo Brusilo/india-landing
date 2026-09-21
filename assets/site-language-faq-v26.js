@@ -45,7 +45,7 @@
     en: [
       {
         q: 'Which cards can I use to pay for flights?',
-        a: 'Cards issued in Russia, CIS countries, the Baltic states and most European countries are accepted. You can also pay with a virtual prepaid VISA Virtual card.'
+        a: 'Cards issued in Russia, CIS countries, the Baltic states and most European countries are accepted. You can also pay with a prepaid VISA Virtual card.'
       },
       {
         q: 'What should I do if my name is wrong on the ticket?',
@@ -53,14 +53,14 @@
       },
       {
         q: 'Do foreign guests need registration when staying at a hotel?',
-        a: 'In Russia, a hotel or other accommodation provider registers foreign guests for migration purposes. If you stay in an apartment or other private accommodation, the host or landlord is normally the receiving party. Check the required documents and any registration fee with your accommodation.'
+        a: 'In Russia, hotels and other accommodation providers register foreign guests for migration purposes. If you stay in an apartment or other private accommodation, the host or landlord is normally the receiving party. Check the required documents and any registration fee with your accommodation.'
       },
       {
-        q: 'What is the difference between platzkart and a compartment?',
-        a: 'A platzkart carriage normally has 54 sleeping berths in open sections connected by a common aisle. A compartment carriage usually has 32 or 36 berths, with four berths in each compartment behind a closing door. Compartments have fewer passengers and more privacy, so they are usually more expensive.'
+        q: 'What is the difference between platskart and kupe?',
+        a: 'A platskart carriage normally has 54 sleeping berths in open sections connected by a common aisle. A kupe carriage usually has 32 or 36 berths, with four berths in each closed compartment. Kupe carriages have fewer passengers and more privacy, so they are usually more expensive.'
       },
       {
-        q: 'How can I continue from an airport to another city?',
+        q: 'How do I get from the airport to another city?',
         a: 'Tutu lets you search for flights, trains and buses. If there is no direct option, build the trip from separate segments and leave enough time for the connection.'
       },
       {
@@ -75,14 +75,14 @@
     hi: [
       {
         q: 'फ्लाइट टिकट के भुगतान के लिए कौन-से कार्ड स्वीकार किए जाते हैं?',
-        a: 'रूस, CIS देशों, बाल्टिक देशों और यूरोप के अधिकांश देशों में जारी किए गए कार्ड स्वीकार किए जाते हैं। वर्चुअल प्रीपेड VISA Virtual कार्ड से भी भुगतान किया जा सकता है।'
+        a: 'रूस, CIS देशों, बाल्टिक देशों और यूरोप के अधिकांश देशों में जारी किए गए कार्ड स्वीकार किए जाते हैं। VISA Virtual प्रीपेड कार्ड से भी भुगतान किया जा सकता है।'
       },
       {
         q: 'अगर टिकट में नाम गलत हो तो क्या करें?',
         a: 'नियम टिकट के प्रकार और परिवहन कंपनी पर निर्भर करते हैं। गलती दिखते ही Tutu सहायता से संपर्क करें। फ्लाइट टिकट में नाम और उपनाम यात्रा के लिए इस्तेमाल किए जाने वाले पासपोर्ट से मेल खाने चाहिए; सुधार संभव है या नहीं और उसका शुल्क कितना होगा, यह एयरलाइन तय करती है।'
       },
       {
-        q: 'होटल में ठहरने पर विदेशी मेहमानों का पंजीकरण जरूरी है?',
+        q: 'होटल में ठहरने पर विदेशी मेहमानों का पंजीकरण ज़रूरी है?',
         a: 'रूस में होटल या अन्य आवास विदेशी मेहमान का माइग्रेशन पंजीकरण करता है। यदि आप अपार्टमेंट या किसी निजी आवास में ठहरते हैं, तो आम तौर पर मेज़बान या मकान-मालिक यह प्रक्रिया करता है। आवश्यक दस्तावेज़ और संभावित पंजीकरण शुल्क की जानकारी अपने आवास से पहले ही ले लें।'
       },
       {
@@ -91,15 +91,15 @@
       },
       {
         q: 'एयरपोर्ट से दूसरे शहर कैसे जाएँ?',
-        a: 'Tutu पर फ्लाइट, ट्रेन और बस के टिकट खोजे जा सकते हैं। यदि सीधा विकल्प न मिले, तो यात्रा को अलग-अलग हिस्सों में बनाएँ और कनेक्शन के लिए पर्याप्त समय रखें।'
+        a: 'Tutu पर फ़्लाइट, ट्रेन और बस के टिकट खोजे जा सकते हैं। अगर सीधा विकल्प न मिले, तो यात्रा को अलग-अलग हिस्सों में बाँटकर बुक करें और कनेक्शन के लिए पर्याप्त समय रखें।'
       },
       {
-        q: 'मैं कितना सामान ले जा सकता हूँ?',
+        q: 'कितना सामान साथ ले जा सकते हैं?',
         a: 'सामान की सीमा परिवहन कंपनी और किराये के नियमों पर निर्भर करती है। फ्लाइट के लिए हैंड बैगेज और चेक-इन बैगेज की शर्तें किराया चुनते समय दिखाई जाती हैं; बस में सामान के लिए अलग शुल्क हो सकता है। भुगतान से पहले अपने टिकट की शर्तें जरूर जाँचें।'
       },
       {
-        q: 'क्या टिकट वापस या बदल सकता हूँ?',
-        a: 'यह परिवहन के प्रकार, कंपनी और किराये के नियमों पर निर्भर करता है। रिफंड योग्य और नॉन-रिफंडेबल शर्तें खरीद से पहले दिखाई जाती हैं। खरीद के बाद उपलब्ध विकल्प Tutu वेबसाइट या ऐप में आपके ऑर्डर में दिखेंगे; कुछ टिकटों में बदलाव पुराने टिकट का रिफंड करके नया टिकट खरीदने के रूप में किया जाता है।'
+        q: 'क्या टिकट वापस या बदला जा सकता है?',
+        a: 'यह परिवहन के प्रकार, कंपनी और किराये के नियमों पर निर्भर करता है। टिकट रिफंडेबल है या नॉन-रिफंडेबल, यह खरीद से पहले दिखाया जाता है। खरीद के बाद उपलब्ध विकल्प Tutu वेबसाइट या ऐप में आपके ऑर्डर में दिखेंगे; कुछ टिकटों में बदलाव के लिए पहले पुराना टिकट रिफंड करके नया टिकट खरीदना पड़ता है।'
       }
     ]
   };
