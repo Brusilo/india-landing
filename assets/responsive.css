@@ -307,47 +307,53 @@
 }
 
 
-/* Promo code strip + desktop FAQ centering (2026-09-18) */
+/* Promo code strip: compact placement between search and routes. */
+.promo-section{
+  padding-top:32px;
+  padding-bottom:0;
+}
+.promo-section + #routes{padding-top:36px}
 .promo-strip{
-  width:100%;
-  margin:0 0 40px;
+  width:min(100%,860px);
+  margin:0 auto;
   display:grid;
-  grid-template-columns:minmax(310px,.82fr) minmax(0,1.18fr);
+  grid-template-columns:minmax(290px,.8fr) minmax(0,1.2fr);
   align-items:stretch;
   overflow:hidden;
-  border-radius:24px;
+  border-radius:22px;
   background:#fff;
-  box-shadow:0 10px 28px rgba(13,11,104,.10);
+  box-shadow:0 8px 24px rgba(13,11,104,.09);
 }
 .promo-strip__action{
   min-width:0;
-  padding:22px 26px;
+  padding:16px 20px;
   display:flex;
   align-items:center;
-  gap:14px;
+  justify-content:center;
+  gap:10px;
   background:#fff;
 }
 .promo-strip__code{
-  min-height:48px;
-  padding:0 18px;
+  min-height:44px;
+  padding:0 15px;
   display:flex;
   align-items:center;
   justify-content:center;
   border:2px dashed #FF872E;
-  border-radius:13px;
+  border-radius:12px;
   background:#fff;
   color:#FF872E;
   font-family:var(--font);
-  font-size:20px;
+  font-size:18px;
   font-weight:700;
   letter-spacing:.04em;
   white-space:nowrap;
 }
 .promo-strip__copy{
-  min-height:48px;
-  padding:0 18px;
+  min-height:44px;
+  padding:0 15px;
   border:0;
-  border-radius:13px;
+  border-radius:12px;
   background:#00C95E;
   color:#fff;
   font-family:var(--font);
@@ -362,11 +368,11 @@
 .promo-strip__copy:active{transform:translateY(1px)}
 .promo-strip__offer{
   min-width:0;
-  padding:22px 32px;
+  padding:16px 26px;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  border-radius:30px 0 0 30px;
+  border-radius:28px 0 0 28px;
   background:#FF872E;
   color:#fff;
 }
@@ -374,37 +380,63 @@
   margin:0;
   color:#fff;
   font-family:var(--font);
-  font-size:24px;
+  font-size:21px;
   font-weight:700;
   line-height:1.18;
 }
 .promo-strip__offer p{
-  margin:6px 0 0;
+  margin:4px 0 0;
   color:rgba(255,255,255,.96);
   font-family:var(--font);
-  font-size:17px;
+  font-size:15px;
   font-weight:400;
-  line-height:1.4;
+  line-height:1.35;
 }
 .promo-strip__offer strong{font-weight:700}
+.promo-title-mobile{display:none}
 @media(min-width:768px){
-  .promo-strip{margin-bottom:56px}
+  .promo-section{padding-top:38px}
+  .promo-section + #routes{padding-top:42px}
 }
 @media(max-width:767px){
-  .promo-strip{grid-template-columns:1fr}
+  .promo-section{padding-top:20px !important}
+  .promo-section + #routes{padding-top:28px}
+  .promo-strip{
+    width:100%;
+    grid-template-columns:50% 50%;
+    border-radius:18px;
+  }
   .promo-strip__action{
-    padding:18px 20px;
-    flex-wrap:wrap;
+    padding:9px 8px;
+    gap:6px;
+    justify-content:space-between;
   }
-  .promo-strip__code,
-  .promo-strip__copy{flex:1 1 140px}
+  .promo-strip__code{
+    min-height:38px;
+    padding:0 7px;
+    border-width:1.5px;
+    border-radius:10px;
+    font-size:13px;
+    letter-spacing:.025em;
+  }
+  .promo-strip__copy{
+    min-height:38px;
+    padding:0 7px;
+    border-radius:10px;
+    font-size:11px;
+  }
   .promo-strip__offer{
-    padding:20px;
-    border-radius:24px 24px 0 0;
-    grid-row:1;
+    padding:9px 11px;
+    border-radius:18px 0 0 18px;
+    grid-row:auto;
   }
-  .promo-strip__offer h3{font-size:22px}
-  .promo-strip__offer p{font-size:16px}
+  .promo-strip__offer h3{
+    font-size:13px;
+    line-height:1.18;
+  }
+  .promo-title-desktop{display:none}
+  .promo-title-mobile{display:inline}
+  .promo-strip__offer p{display:none}
 }
 @media(min-width:900px){
   #faq .section-head{text-align:center}
