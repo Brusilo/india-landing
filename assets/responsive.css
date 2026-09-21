@@ -675,3 +675,56 @@
   }
   .review-card{flex-basis:44%}
 }
+
+
+/* Reviews use the same full-width stage treatment as hotels, with the site's deep blue. */
+.reviews-stage{
+  width:100%;
+  background:var(--deep-blue);
+}
+.reviews-stage .review-card{
+  background:var(--white);
+}
+.reviews-stage .carousel-nav button{
+  border-color:rgba(255,255,255,.22);
+}
+.reviews-stage .carousel-nav button:hover:not(:disabled){
+  background:var(--cloud-white);
+}
+
+/* Phone: hotel and review carousel backgrounds run edge-to-edge with no side rounding. */
+@media(max-width:599px){
+  #hotels .stage,
+  .reviews-stage{
+    border-radius:0!important;
+  }
+}
+@media(min-width:600px) and (max-width:767px){
+  #hotels .stage,
+  .reviews-stage{
+    margin-inline:-24px!important;
+    border-radius:0!important;
+  }
+}
+
+/* Desktop: visually bring the white background closer to search without moving any content. */
+@media(min-width:1101px){
+  .hero + .promo-section{
+    border-radius:0!important;
+  }
+  .hero + .promo-section::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:-84px;
+    height:84px;
+    background:var(--white);
+    border-radius:40px 40px 0 0;
+    pointer-events:none;
+  }
+  .hero + .promo-section > .container{
+    position:relative;
+    z-index:1;
+  }
+}
