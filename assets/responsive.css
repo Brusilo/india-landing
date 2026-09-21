@@ -344,12 +344,14 @@
   z-index:0;
   background-image:
     url("билетик скидка.png"),
+    url("билетик скидка.png"),
+    url("билетик скидка.png"),
     url("билетик скидка.png");
-  background-repeat:no-repeat,no-repeat;
-  background-size:150px auto,96px auto;
-  background-position:-24px 54%,82% 118%;
-  opacity:.075;
-  filter:grayscale(.15) brightness(1.16);
+  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat;
+  background-size:150px auto,116px auto,92px auto,72px auto;
+  background-position:-26px 58%,30% -26%,76% 124%,104% 30%;
+  opacity:.14;
+  filter:brightness(1.22) saturate(.9);
 }
 .promo-strip__code,
 .promo-strip__copy{
@@ -447,9 +449,15 @@
     flex-wrap:nowrap;
   }
   .promo-strip__action::before{
-    background-size:112px auto,72px auto;
-    background-position:-22px 52%,94% 122%;
-    opacity:.065;
+    background-image:
+      url("билетик скидка.png"),
+      url("билетик скидка.png"),
+      url("билетик скидка.png");
+    background-repeat:no-repeat,no-repeat,no-repeat;
+    background-size:106px auto,76px auto,58px auto;
+    background-position:-24px 58%,56% 126%,108% 18%;
+    opacity:.12;
+    filter:brightness(1.2) saturate(.9);
   }
   .promo-strip__code{
     min-width:0;
