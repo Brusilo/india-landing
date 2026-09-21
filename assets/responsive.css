@@ -444,9 +444,9 @@
     flex:0 1 auto;
   }
   html:lang(ru) .promo-strip__copy.is-copied{
-    padding-inline:4px;
-    font-size:13px;
-    letter-spacing:-.02em;
+    padding-inline:3px;
+    font-size:15px;
+    letter-spacing:-.025em;
   }
   .promo-strip__offer{
     min-width:0;
