@@ -571,7 +571,7 @@
 }
 .reviews-row::-webkit-scrollbar{display:none}
 .review-card{
-  flex:0 0 calc((100% - 40px) / 3);
+  flex:0 0 clamp(280px,29vw,330px);
   min-width:0;
   min-height:210px;
   padding:24px;
@@ -673,5 +673,5 @@
     padding-inline:24px;
     scroll-padding-inline:24px;
   }
-  .review-card{flex-basis:calc((100% - 12px) / 2)}
+  .review-card{flex-basis:44%}
 }
