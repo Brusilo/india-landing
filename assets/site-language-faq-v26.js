@@ -134,8 +134,12 @@
     button.setAttribute('data-default-label', original);
     const copied = button.getAttribute('data-copied-label') || 'Copied';
     const showCopied = function () {
+      button.classList.add('is-copied');
       button.textContent = copied;
-      window.setTimeout(function () { button.textContent = original; }, 1600);
+      window.setTimeout(function () {
+        button.classList.remove('is-copied');
+        button.textContent = original;
+      }, 1600);
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(code).then(showCopied).catch(function () {});
