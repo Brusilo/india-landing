@@ -660,7 +660,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20260917-audit-25">
 <link rel="stylesheet" href="assets/responsive.css?v=20260921-copy-fit-1">
-<script src="assets/site-language-faq-v26.js?v=20260921-translation-audit-1"></script>
+<script src="assets/site-language-faq-v26.js?v=20260921-translation-audit-2"></script>
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1093,7 +1093,7 @@ document.getElementById('faq-list').innerHTML = CONFIG.faq.map(f => `
 
 (function(){
   const buttons=[...document.querySelectorAll('.transport button')], modes=['hotel','flight','train','bus'];
-  const places={"flight": [["मॉस्को", "सभी एयरपोर्ट · MOW"], ["सेंट पीटर्सबर्ग", "पुल्कोवो · LED"], ["कज़ान", "कज़ान एयरपोर्ट · KZN"], ["दिल्ली", "इंदिरा गांधी · DEL"], ["मुंबई", "छत्रपति शिवाजी · BOM"]], "train": [["मॉस्को", "लेनिनग्राद्स्की स्टेशन"], ["मॉस्को", "कज़ान्स्की स्टेशन"], ["सेंट पीटर्सबर्ग", "मॉस्कोव्स्की स्टेशन"], ["कज़ान", "कज़ान-पास."], ["त्वेर", "रेलवे स्टेशन"]], "bus": [["मॉस्को", "सेंट्रल बस स्टेशन"], ["सेंट पीटर्सबर्ग", "ओब्वोद्नी बस स्टेशन"], ["कज़ान", "वोस्तोच्नी बस स्टेशन"], ["ऊफ़ा", "साउथ बस स्टेशन"], ["त्वेर", "बस स्टेशन"]]}, L={"flight_search": "खोजें", "train_search": "खोजें", "bus_search": "खोजें", "flight_from": "कहाँ से", "flight_to": "कहाँ तक", "train_from": "कहाँ से", "train_to": "कहाँ तक", "bus_from": "कहाँ से", "bus_to": "कहाँ तक", "adult": "वयस्क", "adult_sub": "12 साल और अधिक", "child": "बच्चे", "child_sub": "12 साल से कम", "cabin": "यात्रा श्रेणी", "economy": "इकोनॉमी", "business": "बिज़नेस"};
+  const places={"flight": [["मॉस्को", "सभी एयरपोर्ट · MOW"], ["सेंट पीटर्सबर्ग", "पुल्कोवो · LED"], ["कज़ान", "कज़ान एयरपोर्ट · KZN"], ["दिल्ली", "इंदिरा गांधी · DEL"], ["मुंबई", "छत्रपति शिवाजी · BOM"]], "train": [["मॉस्को", "लेनिनग्राद्स्की स्टेशन"], ["मॉस्को", "कज़ान्स्की स्टेशन"], ["सेंट पीटर्सबर्ग", "मॉस्कोव्स्की स्टेशन"], ["कज़ान", "कज़ान-पास."], ["त्वेर", "रेलवे स्टेशन"]], "bus": [["मॉस्को", "सेंट्रल बस स्टेशन"], ["सेंट पीटर्सबर्ग", "ओब्वोद्नी बस स्टेशन"], ["कज़ान", "वोस्तोच्नी बस स्टेशन"], ["ऊफ़ा", "साउथ बस स्टेशन"], ["त्वेर", "बस स्टेशन"]]}, L={"flight_search": "खोजें", "train_search": "खोजें", "bus_search": "खोजें", "flight_from": "कहाँ से", "flight_to": "कहाँ तक", "train_from": "कहाँ से", "train_to": "कहाँ तक", "bus_from": "कहाँ से", "bus_to": "कहाँ तक", "adult": "वयस्क", "adult_sub": "12 साल और अधिक", "child": "बच्चे", "child_sub": "12 साल से कम", "cabin": "यात्रा की श्रेणी", "economy": "इकोनॉमी", "business": "बिज़नेस"};
   const from=document.getElementById('f-from'),to=document.getElementById('f-to'),searchBtn=document.querySelector('.btn-search'),swap=document.querySelector('.search .swap'),paxTrigger=document.querySelector('.pax-trigger'),paxCaption=document.querySelector('.pax-caption'),paxValue=document.querySelector('.pax-value'),paxPop=document.querySelector('.pax-pop');
   let mode='flight',adults=1,children=0,cabin='economy';document.documentElement.dataset.transportMode=mode;
   function plural(n){const lang=document.documentElement.lang;if(lang==='ru'){const m=n%10,d=n%100;return d>=11&&d<=14?'пассажиров':m===1?'пассажир':m>=2&&m<=4?'пассажира':'пассажиров'}if(lang==='en')return n===1?'passenger':'passengers';return 'यात्री'}
