@@ -30,7 +30,7 @@
     h6:{name:{ru:'Боярин',en:'Boyarin',hi:'Boyarin'},city:{ru:'Геленджик',en:'Gelendzhik',hi:'गेलेंदझिक'},top:{ru:'Геленджик · 483 м до пляжа',en:'Gelendzhik · 483 m to the beach',hi:'गेलेंदझिक · समुद्र तट से 483 मी'},meta:{ru:'Гостевой дом · 33 отзыва',en:'Guest house · 33 reviews',hi:'गेस्ट हाउस · 33 समीक्षाएँ'},rating:9.5,price:2500,url:'https://hotel.tutu.ru/h_gostevoy_dom_boyarin/'}
   };
 
-  const nf=n=>Number(n).toLocaleString(lang==='en'?'en-GB':lang==='hi'?'en-IN':'ru-RU');
+  const nf=n=>String(Math.trunc(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g,'\u202F');
   const duration=(h,m)=>lang==='ru'?(h+' ч'+(m?' '+m+' мин':'')):lang==='hi'?(h+' घं'+(m?' '+m+' मि':'')):(h+' h'+(m?' '+m+' min':''));
   const tomorrow=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+1);return d};
   const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
@@ -65,7 +65,7 @@
       const d=routeData[id];
       if(d){
         const price=card.querySelector('.price');if(price)price.textContent=lang==='en'?'from '+nf(d.price)+' ₽':lang==='hi'?nf(d.price)+' ₽ से':'от '+nf(d.price)+' ₽';
-        const alt=card.querySelector('.price-alt');if(alt)alt.textContent='≈ ₹'+Math.round(d.price*RUB_TO_INR).toLocaleString('en-IN');
+        const alt=card.querySelector('.price-alt');if(alt)alt.textContent='≈ ₹'+nf(Math.round(d.price*RUB_TO_INR));
         const meta=card.querySelector('.card-meta');if(meta)meta.textContent=duration(d.h,d.m);
       }
       activate(card,verifiedRouteUrls[id]||routeUrl(card));
@@ -83,7 +83,7 @@
       const name=card.querySelector('.hotel-name');if(name)name.textContent=d.name[lang];
       const meta=card.querySelector('.hotel-meta');if(meta)meta.textContent=d.meta[lang];
       const rating=card.querySelector('.rating');if(rating){if(d.rating)rating.textContent=lang==='ru'?String(d.rating).replace('.',','):String(d.rating);else rating.remove()}
-      const price=card.querySelector('.hotel-price-row');if(price)price.innerHTML='<span class="price">'+nf(d.price)+' ₽ <span class="hotel-night">'+(lang==='ru'?'за ночь':lang==='hi'?'प्रति रात':'per night')+'</span></span><span class="price-alt">≈ ₹'+Math.round(d.price*RUB_TO_INR).toLocaleString('en-IN')+'</span>';
+      const price=card.querySelector('.hotel-price-row');if(price)price.innerHTML='<span class="price">'+nf(d.price)+' ₽ <span class="hotel-night">'+(lang==='ru'?'за ночь':lang==='hi'?'प्रति रात':'per night')+'</span></span><span class="price-alt">≈ ₹'+nf(Math.round(d.price*RUB_TO_INR))+'</span>';
       activate(card,d.url);
     });
     const cta=hotelRow.querySelector('.card--cta');if(cta)cta.href=hotelAllUrl();
