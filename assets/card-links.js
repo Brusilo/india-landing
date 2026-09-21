@@ -3,23 +3,31 @@
   'use strict';
   const HOME='https://www.tutu.ru/';
   const OFFERS='https://www.tutu.ru/juicy-offers/';
-  const RUB_TO_INR=1.13262;
+  const RUB_TO_INR=1.13917;
   const lang=document.documentElement.lang==='hi'?'hi':document.documentElement.lang==='en'?'en':'ru';
   const routeData={
-    r1:{price:15783,h:10,m:10},
-    r2:{price:1574,h:12,m:37},
-    r3:{price:1681,h:14,m:27},
-    r4:{price:29996,h:6,m:30},
-    r5:{price:16539,h:6,m:10},
-    r6:{price:690,h:1,m:55},
-    r7:{price:10033,h:41,m:12},
-    r8:{price:2070,h:8,m:0},
-    r9:{price:2746,h:3,m:30},
-    r10:{price:1659,h:12,m:9}
+    r1:{price:29870,h:6,m:30},
+    r2:{price:16539,h:6,m:10},
+    r3:{price:25528,h:8,m:50},
+    r4:{price:10611,h:8,m:25},
+    r5:{price:6650,h:6,m:55},
+    r6:{price:1197,h:4,m:0},
+    r7:{price:1694,h:12,m:46},
+    r8:{price:2087,h:14,m:10},
+    r9:{price:1681,h:14,m:27},
+    r10:{price:2693,h:3,m:30}
   };
   const verifiedRouteUrls={
-    r6:'https://bus.tutu.ru/raspisanie/gorod_Moskva/gorod_Tver/?from=1447874&to=1369087&date=23.09.2026&travelers=1&amount=1',
-    r7:'https://www.tutu.ru/poezda/Sankt-Peterburg/Yoshkar-Ola/?date=21.09.2026&travelers=1.6&search_extension=train&hotel_geo_id=2656872&hotel_flow_id=50323936'
+    r1:'https://avia.tutu.ru/f/Deli/Moskva/',
+    r2:'https://avia.tutu.ru/f/Moskva/Deli/',
+    r3:'https://avia.tutu.ru/f/Deli/Ekaterinburg/',
+    r4:'https://avia.tutu.ru/f/Goa/Moskva/',
+    r5:'https://avia.tutu.ru/f/Goa/Ekaterinburg/',
+    r6:'https://www.tutu.ru/poezda/Moskva/Sankt-Peterburg/',
+    r7:'https://www.tutu.ru/poezda/Ekaterinburg/Kazan/',
+    r8:'https://www.tutu.ru/poezda/Ekaterinburg/Ufa/',
+    r9:'https://www.tutu.ru/poezda/Moskva/Yoshkar-Ola/',
+    r10:'https://avia.tutu.ru/f/Moskva/Sochi/'
   };
   const hotels={
     h1:{name:{ru:'Отель Булгар',en:'Otel Bulgar',hi:'Otel Bulgar'},city:{ru:'Казань',en:'Kazan',hi:'कज़ान'},top:{ru:'Казань · 2,9 км от центра',en:'Kazan · 2.9 km from the centre',hi:'कज़ान · केंद्र से 2.9 किमी'},meta:{ru:'Отель · 214 отзывов',en:'Hotel · 214 reviews',hi:'होटल · 214 समीक्षाएँ'},rating:8.3,price:3584,url:'https://hotel.tutu.ru/h_otel_bulgar/'},

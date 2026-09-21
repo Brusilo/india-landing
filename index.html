@@ -1066,16 +1066,16 @@ const CONFIG = {
   rubToInr: 1.133,
 
   routes: [
-    { id:'r1',  from:'Moscow',           to:'Mumbai',     typeLine:'connecting flight',    transport:'flight', combined:false, price:'25 538', duration:'11 h 10 min', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
-    { id:'r2',  from:'Moscow',           to:'Kazan',     typeLine:'overnight train',         transport:'train',  combined:false, price:'1 874',  duration:'11 h 40 min', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r3',  from:'Moscow',           to:'Yoshkar-Ola', typeLine:'train',                transport:'train',  combined:false, price:'1 874',  duration:'13 h 30 min', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r4',  from:'Delhi',             to:'Moscow',     typeLine:'direct flight',          transport:'flight', combined:false, price:'25 004', duration:'6 h 30 min',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'r5',  from:'Moscow',           to:'Delhi',       typeLine:'direct flight',          transport:'flight', combined:false, price:'16 048', duration:'6 h 05 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
-    { id:'r6',  from:'Moscow',           to:'Tver',        typeLine:'bus',                 transport:'bus',    combined:false, price:'690',    duration:'1 h 55 min',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
-    { id:'r7',  from:'Saint Petersburg',    to:'Yoshkar-Ola', typeLine:'train with one change', transport:'train',  combined:false, price:'10 033', duration:'41 h 12 min', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
-    { id:'r8',  from:'Ufa',              to:'Kazan',     typeLine:'bus',              transport:'bus',    combined:false, price:'1 668',  duration:'8 h 30 min',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
-    { id:'r9',  from:'Moscow',           to:'Sochi',       typeLine:'direct flight',          transport:'flight', combined:false, price:'4 099',  duration:'2 h 35 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' },
-    { id:'r10', from:'Kazan',           to:'Yekaterinburg',typeLine:'train',               transport:'train',  combined:false, price:'1 514',  duration:'7 h 15 min',  gradient:'linear-gradient(200deg,#5F94FF 0%,#BA61FF 100%)' }
+    { id:'r1',  from:'Delhi',            to:'Moscow',          typeLine:'direct flight',         transport:'flight', combined:false, price:'29 870', duration:'6 h 30 min',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'r2',  from:'Moscow',           to:'Delhi',           typeLine:'direct flight',         transport:'flight', combined:false, price:'16 539', duration:'6 h 10 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
+    { id:'r3',  from:'Delhi',            to:'Yekaterinburg',   typeLine:'connecting flight',     transport:'flight', combined:false, price:'25 528', duration:'8 h 50 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r4',  from:'Goa',              to:'Moscow',          typeLine:'direct flight',         transport:'flight', combined:false, price:'10 611', duration:'8 h 25 min',  gradient:'linear-gradient(135deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r5',  from:'Goa',              to:'Yekaterinburg',   typeLine:'direct flight',         transport:'flight', combined:false, price:'6 650',  duration:'6 h 55 min',  gradient:'linear-gradient(135deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r6',  from:'Moscow',           to:'Saint Petersburg',typeLine:'Sapsan train',          transport:'train',  combined:false, price:'1 197',  duration:'4 h',         gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r7',  from:'Yekaterinburg',    to:'Kazan',           typeLine:'train',                 transport:'train',  combined:false, price:'1 694',  duration:'12 h 46 min', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r8',  from:'Yekaterinburg',    to:'Ufa',             typeLine:'train',                 transport:'train',  combined:false, price:'2 087',  duration:'14 h 10 min', gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
+    { id:'r9',  from:'Moscow',           to:'Yoshkar-Ola',     typeLine:'train',                 transport:'train',  combined:false, price:'1 681',  duration:'14 h 27 min', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r10', from:'Moscow',           to:'Sochi',           typeLine:'direct flight',         transport:'flight', combined:false, price:'2 693',  duration:'3 h 30 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' }
   ],
 
   hotels: [
@@ -1292,7 +1292,7 @@ initCarousel('reviews-row', 'reviews');
 <script src="assets/tutu-destinations.js?v=20260917-audit-25"></script>
 <script src="assets/tutu-link-builder.js?v=20260921-translation-audit-2"></script>
 <script src="assets/search-v2.js?v=20260921-translation-audit-2"></script>
-<script src="assets/card-links.js?v=20260921-translation-audit-1"></script>
+<script src="assets/card-links.js?v=20260922-route-refresh-1"></script>
 <script src="assets/responsive.js?v=20260917-metrika-2"></script>
 </body>
 </html>

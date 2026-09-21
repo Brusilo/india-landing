@@ -1066,16 +1066,16 @@ const CONFIG = {
   rubToInr: 1.133,
 
   routes: [
-    { id:'r1',  from:'Москва',           to:'Мумбаи',     typeLine:'рейс с пересадкой',    transport:'flight', combined:false, price:'25 538', duration:'11 ч 10 мин', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
-    { id:'r2',  from:'Москва',           to:'Казань',     typeLine:'ночной поезд',         transport:'train',  combined:false, price:'1 874',  duration:'11 ч 40 мин', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r3',  from:'Москва',           to:'Йошкар-Ола', typeLine:'поезд',                transport:'train',  combined:false, price:'1 874',  duration:'13 ч 30 мин', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r4',  from:'Дели',             to:'Москва',     typeLine:'прямой рейс',          transport:'flight', combined:false, price:'25 004', duration:'6 ч 30 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'r5',  from:'Москва',           to:'Дели',       typeLine:'прямой рейс',          transport:'flight', combined:false, price:'16 048', duration:'6 ч 05 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
-    { id:'r6',  from:'Москва',           to:'Тверь',       typeLine:'автобус',             transport:'bus',    combined:false, price:'690',    duration:'1 ч 55 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 45%,#0D0B68 100%)' },
-    { id:'r7',  from:'Санкт-Петербург',  to:'Йошкар-Ола',  typeLine:'поезд с пересадкой',  transport:'train',  combined:false, price:'10 033', duration:'41 ч 12 мин', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
-    { id:'r8',  from:'Уфа',              to:'Казань',     typeLine:'автобус',              transport:'bus',    combined:false, price:'1 668',  duration:'8 ч 30 мин',  gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
-    { id:'r9',  from:'Москва',           to:'Сочи',       typeLine:'прямой рейс',          transport:'flight', combined:false, price:'4 099',  duration:'2 ч 35 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' },
-    { id:'r10', from:'Казань',           to:'Екатеринбург',typeLine:'поезд',               transport:'train',  combined:false, price:'1 514',  duration:'7 ч 15 мин',  gradient:'linear-gradient(200deg,#5F94FF 0%,#BA61FF 100%)' }
+    { id:'r1',  from:'Дели',             to:'Москва',          typeLine:'прямой рейс',          transport:'flight', combined:false, price:'29 870', duration:'6 ч 30 мин',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'r2',  from:'Москва',           to:'Дели',            typeLine:'прямой рейс',          transport:'flight', combined:false, price:'16 539', duration:'6 ч 10 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
+    { id:'r3',  from:'Дели',             to:'Екатеринбург',    typeLine:'рейс с пересадкой',    transport:'flight', combined:false, price:'25 528', duration:'8 ч 50 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r4',  from:'Гоа',              to:'Москва',          typeLine:'прямой рейс',          transport:'flight', combined:false, price:'10 611', duration:'8 ч 25 мин',  gradient:'linear-gradient(135deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r5',  from:'Гоа',              to:'Екатеринбург',    typeLine:'прямой рейс',          transport:'flight', combined:false, price:'6 650',  duration:'6 ч 55 мин',  gradient:'linear-gradient(135deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r6',  from:'Москва',           to:'Санкт-Петербург', typeLine:'Сапсан',               transport:'train',  combined:false, price:'1 197',  duration:'4 ч',         gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r7',  from:'Екатеринбург',     to:'Казань',          typeLine:'поезд',                transport:'train',  combined:false, price:'1 694',  duration:'12 ч 46 мин', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r8',  from:'Екатеринбург',     to:'Уфа',             typeLine:'поезд',                transport:'train',  combined:false, price:'2 087',  duration:'14 ч 10 мин', gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
+    { id:'r9',  from:'Москва',           to:'Йошкар-Ола',      typeLine:'поезд',                transport:'train',  combined:false, price:'1 681',  duration:'14 ч 27 мин', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r10', from:'Москва',           to:'Сочи',            typeLine:'прямой рейс',          transport:'flight', combined:false, price:'2 693',  duration:'3 ч 30 мин',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' }
   ],
 
   hotels: [
@@ -1292,7 +1292,7 @@ initCarousel('reviews-row', 'reviews');
 <script src="assets/tutu-destinations.js?v=20260917-audit-25"></script>
 <script src="assets/tutu-link-builder.js?v=20260921-translation-audit-2"></script>
 <script src="assets/search-v2.js?v=20260921-translation-audit-2"></script>
-<script src="assets/card-links.js?v=20260921-translation-audit-1"></script>
+<script src="assets/card-links.js?v=20260922-route-refresh-1"></script>
 <script src="assets/responsive.js?v=20260917-metrika-2"></script>
 </body>
 </html>
