@@ -1031,9 +1031,8 @@ const CONFIG = {
   ]
 };
 
-const NUM_LOCALE = document.documentElement.lang === 'ru' ? 'ru-RU' : 'en-IN';
 const toRub = p => parseInt(p.replace(/\s/g, ''), 10);
-const fmtNum = n => n.toLocaleString(NUM_LOCALE);
+const fmtNum = n => String(Math.trunc(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F');
 
 const CTA_CARD = `
   <a class="card card--cta" href="#">
@@ -1044,7 +1043,7 @@ const CTA_CARD = `
 document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
   const rub = parseInt(r.price.replace(/\s/g, ''), 10);
   const inr = Math.round(rub * CONFIG.rubToInr);
-  const inrFmt = inr.toLocaleString('en-IN');
+  const inrFmt = fmtNum(inr);
   return `
   <article class="card" data-cta="route_${r.id}${r.combined ? '_combined' : ''}" data-transport="${r.transport}">
     <div class="card-media" style="background:${r.gradient}"></div>
@@ -1063,7 +1062,7 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
 document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
   const rub = toRub(h.price);
   const inr = Math.round(rub * CONFIG.rubToInr);
-  const inrFmt = inr.toLocaleString('en-IN');
+  const inrFmt = fmtNum(inr);
   return `
   <article class="card" data-cta="hotel_${h.id}">
     <div class="card-media" style="background:${h.gradient}">
@@ -1218,7 +1217,7 @@ initCarousel('hotels-row', 'hotels');
 <script src="assets/tutu-destinations.js?v=20260917-audit-25"></script>
 <script src="assets/tutu-link-builder.js?v=20260921-translation-audit-1"></script>
 <script src="assets/search-v2.js?v=20260921-translation-audit-1"></script>
-<script src="assets/card-links.js?v=20260921-translation-audit-1"></script>
+<script src="assets/card-links.js?v=20260921-price-spacing-1"></script>
 <script src="assets/responsive.js?v=20260917-metrika-2"></script>
 </body>
 </html>
