@@ -314,10 +314,10 @@
 }
 .promo-section + #routes{padding-top:36px}
 .promo-strip{
-  width:min(100%,860px);
-  margin:0 auto;
+  width:100%;
+  margin:0;
   display:grid;
-  grid-template-columns:minmax(290px,.8fr) minmax(0,1.2fr);
+  grid-template-columns:minmax(340px,.42fr) minmax(0,.58fr);
   align-items:stretch;
   overflow:hidden;
   border-radius:22px;
@@ -326,11 +326,11 @@
 }
 .promo-strip__action{
   min-width:0;
-  padding:16px 20px;
+  padding:20px 26px;
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:10px;
+  justify-content:flex-start;
+  gap:12px;
   background:#fff;
 }
 .promo-strip__code{
@@ -368,7 +368,7 @@
 .promo-strip__copy:active{transform:translateY(1px)}
 .promo-strip__offer{
   min-width:0;
-  padding:16px 26px;
+  padding:20px 30px;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -403,36 +403,47 @@
   .promo-section + #routes{padding-top:28px}
   .promo-strip{
     width:100%;
-    grid-template-columns:50% 50%;
+    grid-template-columns:55% 45%;
+    min-height:66px;
     border-radius:18px;
   }
   .promo-strip__action{
-    padding:9px 8px;
-    gap:6px;
-    justify-content:space-between;
+    min-width:0;
+    padding:8px 7px;
+    gap:5px;
+    justify-content:center;
+    flex-wrap:nowrap;
   }
   .promo-strip__code{
-    min-height:38px;
+    min-width:0;
+    min-height:40px;
     padding:0 7px;
     border-width:1.5px;
     border-radius:10px;
     font-size:13px;
-    letter-spacing:.025em;
+    letter-spacing:.02em;
+    flex:0 1 auto;
   }
   .promo-strip__copy{
-    min-height:38px;
-    padding:0 7px;
+    min-width:0;
+    min-height:40px;
+    padding:0 8px;
     border-radius:10px;
-    font-size:11px;
+    font-size:12px;
+    flex:0 1 auto;
   }
   .promo-strip__offer{
-    padding:9px 11px;
+    min-width:0;
+    padding:9px 10px 9px 13px;
     border-radius:18px 0 0 18px;
     grid-row:auto;
+    justify-content:center;
   }
   .promo-strip__offer h3{
     font-size:13px;
-    line-height:1.18;
+    line-height:1.16;
+    letter-spacing:-.01em;
+    overflow-wrap:normal;
   }
   .promo-title-desktop{display:none}
   .promo-title-mobile{display:inline}
