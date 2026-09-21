@@ -655,7 +655,7 @@ body{position:relative!important}
 }
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20260917-audit-25">
-<link rel="stylesheet" href="assets/responsive.css?v=20260921-promo-ticket-art-5">
+<link rel="stylesheet" href="assets/responsive.css?v=20260921-reviews-carousel-1">
 <script src="assets/site-language-faq-v26.js?v=20260921-translation-audit-2"></script>
 </head>
 <body>
@@ -916,6 +916,50 @@ body{position:relative!important}
   </div>
 </section>
 
+<section class="section section--cloud reviews-section" id="reviews">
+  <div class="container">
+    <div class="section-head section-head--row">
+      <div><h2>What travellers say</h2></div>
+      <div class="head-actions">
+        <div class="head-actions__nav">
+          <div class="carousel-nav" data-carousel="reviews">
+            <button type="button" aria-label="Previous reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19 8 12l7-7"/></svg></button>
+            <button type="button" aria-label="Next reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-carousel-wrap">
+      <div class="reviews-row" id="reviews-row">
+        <article class="review-card">
+          <p class="review-card__text">I actually found Tutu through Google when I was looking for a bus to Moscow. The price worked for me, so I booked it there.</p>
+          <p class="review-card__author">Keshav</p>
+        </article>
+        <article class="review-card">
+          <p class="review-card__text">When we travel somewhere with friends, usually one person looks for tickets for everyone. Tutu is often one of the first places we check</p>
+          <p class="review-card__author">Priya</p>
+        </article>
+        <article class="review-card">
+          <p class="review-card__text">Bought tickets here a couple of times, all good</p>
+          <p class="review-card__author">Rahul</p>
+        </article>
+        <article class="review-card">
+          <p class="review-card__text">Russian websites were a bit difficult at first, especially when I didn't know the language well, but I figured this one out pretty quickly</p>
+          <p class="review-card__author">Ishani</p>
+        </article>
+        <article class="review-card">
+          <p class="review-card__text">I use it from time to time, nothing complicated :)</p>
+          <p class="review-card__author">Advait</p>
+        </article>
+        <article class="review-card">
+          <p class="review-card__text">If I see a suitable trip on Tutu, I usually book it straight away. I've done that a few times now, no surprises so far</p>
+          <p class="review-card__author">Ahan</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section section--cloud" id="faq">
   <div class="container">
     <div class="section-head"><h2>Frequently asked questions</h2></div>
@@ -1150,6 +1194,7 @@ function initCarousel(rowId, navSel){
 }
 initCarousel('routes-row', 'routes');
 initCarousel('hotels-row', 'hotels');
+initCarousel('reviews-row', 'reviews');
 
 (function(){
   const input=document.getElementById('f-date');
