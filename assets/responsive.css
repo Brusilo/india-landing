@@ -764,3 +764,16 @@
   #hotels .stage,
   .reviews-stage{margin-inline:-24px}
 }
+/* Desktop: tighter 40px rhythm between blocks and lower callout panels. */
+@media(min-width:1101px){
+  .section{padding-top:40px}
+  .section--cloud,.section:has(+ .section--cloud),.section:has(+ footer){padding-bottom:40px}
+  .promo-section{padding-top:38px}
+  .promo-section + #routes{padding-top:40px}
+  .panel{padding:36px 48px}
+  .panel-ico{width:88px;height:88px}
+  .panel--transport .panel-ico{width:104px;height:104px}
+}
+@media(min-width:1101px){
+  #routes .row{margin-bottom:0}
+}
