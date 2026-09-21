@@ -12,7 +12,7 @@
   const modes=['hotel','flight','train','bus'];
   const labels={
     ru:{
-      from:'Откуда',to:'Куда',when:'Когда',flightWho:'Кто летит',travelWho:'Кто едет',search:'Найти',
+      from:'Откуда',to:'Куда',when:'Когда',flightWho:'Кто летит',travelWho:'Кто едет',swap:'Поменять местами',search:'Найти',
       hotelWhere:'Город',hotelDates:'Заезд — выезд',guests:'Кто едет',
       adults:'Взрослые',adultSub:'От 12 лет',children:'Дети',childSub:'До 18 лет',childAge:'Возраст ребёнка',years:'лет',
       economy:'Эконом',business:'Бизнес',cabin:'Класс обслуживания',
@@ -21,7 +21,7 @@
       prev:'Предыдущий месяц',next:'Следующий месяц'
     },
     en:{
-      from:'From',to:'To',when:'When',flightWho:'Who is flying',travelWho:'Travellers',search:'Search',
+      from:'From',to:'To',when:'When',flightWho:'Who is flying',travelWho:'Travellers',swap:'Swap places',search:'Search',
       hotelWhere:'City',hotelDates:'Check-in — check-out',guests:'Guests',
       adults:'Adults',adultSub:'12+ years',children:'Children',childSub:'Under 18',childAge:'Child age',years:'years',
       economy:'Economy',business:'Business',cabin:'Cabin class',
@@ -30,10 +30,10 @@
       prev:'Previous month',next:'Next month'
     },
     hi:{
-      from:'कहाँ से',to:'कहाँ तक',when:'तारीख',flightWho:'कौन उड़ रहा है',travelWho:'यात्री',search:'खोजें',
+      from:'कहाँ से',to:'कहाँ तक',when:'तारीख़',flightWho:'कौन यात्रा कर रहा है',travelWho:'यात्री',swap:'स्थान बदलें',search:'खोजें',
       hotelWhere:'शहर',hotelDates:'चेक-इन — चेक-आउट',guests:'मेहमान',
-      adults:'वयस्क',adultSub:'12 वर्ष और अधिक',children:'बच्चे',childSub:'18 वर्ष से कम',childAge:'बच्चे की उम्र',years:'वर्ष',
-      economy:'इकोनॉमी',business:'बिज़नेस',cabin:'यात्रा श्रेणी',
+      adults:'वयस्क',adultSub:'12 साल और अधिक',children:'बच्चे',childSub:'18 साल से कम',childAge:'बच्चे की उम्र',years:'साल',
+      economy:'इकोनॉमी',business:'बिज़नेस',cabin:'यात्रा की श्रेणी',
       passenger1:'यात्री',passenger2:'यात्री',passenger5:'यात्री',
       guest1:'मेहमान',guest2:'मेहमान',guest5:'मेहमान',
       prev:'पिछला महीना',next:'अगला महीना'
@@ -127,7 +127,7 @@
     }else{
       const who=mode==='flight'?labels.flightWho:labels.travelWho;
       form.innerHTML=placeField('from',labels.from,labels.from,s.fromText,s.from)+
-        '<button type="button" class="v2-swap" aria-label="Swap"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span></button>'+
+        '<button type="button" class="v2-swap" aria-label="'+esc(labels.swap)+'"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span></button>'+
         placeField('to',labels.to,labels.to,s.toText,s.to)+
         dateField(labels.when,formatSingle(s.date))+
         paxField(who)+
