@@ -1083,12 +1083,12 @@ const CONFIG = {
   ],
 
   hotels: [
-    { id:'h1', name:'Otel Bulgar', city:'कज़ान', distance:'केंद्र से 2.9 किमी', rating:'8.3', reviews:'214 समीक्षाएँ', type:'होटल', price:'3 584', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
-    { id:'h2', name:'Greys Amaliya', city:'सोची', distance:'समुद्र तट से 633 मी', rating:'9.1', reviews:'240 समीक्षाएँ', type:'गेस्ट हाउस', price:'2 300', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
-    { id:'h3', name:'Khostel Avtor Taganka', city:'मॉस्को', distance:'केंद्र से 3 किमी', rating:'8.4', reviews:'336 समीक्षाएँ', type:'हॉस्टल', price:'4 122', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
-    { id:'h4', name:'Nomera u Nevy', city:'सेंट पीटर्सबर्ग', distance:'केंद्र से 5.2 किमी', rating:'7.8', reviews:'157 समीक्षाएँ', type:'होटल', price:'2 199', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
-    { id:'h5', name:'Gostevye komnaty i apartamenty Grifon', city:'सेंट पीटर्सबर्ग', distance:'केंद्र से 894 मी', rating:'9.1', reviews:'', type:'अपार्टमेंट', price:'2 400', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
-    { id:'h6', name:'Boyarin', city:'गेलेंदझिक', distance:'समुद्र तट से 483 मी', rating:'9.5', reviews:'33 समीक्षाएँ', type:'गेस्ट हाउस', price:'2 500', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' }
+    { id:'h1', name:'Otel Bulgar', city:'कज़ान', distance:'केंद्र से 2.9 किमी', rating:'8.3', reviews:'214 समीक्षाएँ', type:'होटल', price:'3 584', img:'assets/hotels/bulgar-kazan.jpg', gradient:'linear-gradient(140deg,#7D71FF 0%,#5F94FF 100%)' },
+    { id:'h2', name:'Greys Amaliya', city:'सोची', distance:'समुद्र तट से 633 मी', rating:'9.1', reviews:'240 समीक्षाएँ', type:'गेस्ट हाउस', price:'2 300', img:'assets/hotels/greys-amaliya-sochi.jpg', gradient:'radial-gradient(120% 120% at 80% 20%,#BA61FF 0%,#0D0B68 75%)' },
+    { id:'h3', name:'Khostel Avtor Taganka', city:'मॉस्को', distance:'केंद्र से 3 किमी', rating:'8.4', reviews:'336 समीक्षाएँ', type:'हॉस्टल', price:'4 122', img:'assets/hotels/avtor-taganka-moscow.jpg', gradient:'linear-gradient(210deg,#5F94FF 0%,#0D0B68 95%)' },
+    { id:'h4', name:'Nomera u Nevy', city:'सेंट पीटर्सबर्ग', distance:'केंद्र से 5.2 किमी', rating:'7.8', reviews:'157 समीक्षाएँ', type:'होटल', price:'2 199', img:'assets/hotels/nomera-u-nevy-spb.jpg', gradient:'linear-gradient(95deg,#0D0B68 0%,#BA61FF 60%,#BA61FF 100%)' },
+    { id:'h5', name:'Gostevye komnaty i apartamenty Grifon', city:'सेंट पीटर्सबर्ग', distance:'केंद्र से 894 मी', rating:'9.1', reviews:'', type:'अपार्टमेंट', price:'2 400', img:'assets/hotels/grifon-spb.jpg', gradient:'radial-gradient(120% 120% at 20% 85%,#5F94FF 0%,#7D71FF 50%,#0D0B68 100%)' },
+    { id:'h6', name:'Boyarin', city:'गेलेंदझिक', distance:'समुद्र तट से 483 मी', rating:'9.5', reviews:'33 समीक्षाएँ', type:'गेस्ट हाउस', price:'2 500', img:'assets/hotels/boyarin-gelendzhik.jpg', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' }
   ],
 
   faq: [
@@ -1143,7 +1143,7 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
   const inrFmt = fmtNum(inr);
   return `
   <article class="card" data-cta="hotel_${h.id}">
-    <div class="card-media" style="background:${h.gradient}">
+    <div class="card-media" style="background:${h.img ? `url('${h.img}') center/cover no-repeat, ` : ''}${h.gradient}">
       ${h.rating ? `<span class="rating">${h.rating}</span>` : ''}
     </div>
     <div class="card-body">
