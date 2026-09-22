@@ -1,9 +1,4 @@
 /* Compact layout and shared, explicitly scoped icon refinements. */
-/* Match the visual size of the Apple badge to the other store badges. */
-.footer-app-col .stores img[src$="/store-apple.png"] {
-  transform: scale(1.08);
-  transform-origin: center;
-}
 /* Only the transport callout gets a larger illustration. */
 .panel--transport .panel-ico {
   width: 128px; height: 128px;
