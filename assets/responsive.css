@@ -799,10 +799,3 @@
 .tiles--2 > .tile{height:100%}
 @media(min-width:768px){.tiles--2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-/* "Get to any city" carries the main routing promise, so give it the weight of a full section. */
-.panel--transport h2{font-size:clamp(26px,4.4vw,40px);line-height:1.12}
-.panel--transport p{font-size:17px}
-@media(min-width:768px){
-  .panel.panel--transport{padding:64px 48px;min-height:340px}
-  .panel--transport p{font-size:18px;margin-top:16px}
-}
