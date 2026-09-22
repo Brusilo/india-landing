@@ -777,8 +777,7 @@
 @media(min-width:1101px){
   #routes .row{margin-bottom:0}
 }
-/* Route and hotel cards: white rim around the card, photo with its own rounded corners. */
-#routes .card:not(.card--cta),#hotels .card:not(.card--cta){border:4px solid #fff;border-radius:24px;background:#f5f4fa;box-shadow:none}
+/* Route and hotel cards: a rim in the card's own colour around a photo with its own rounded corners.
+   The border is transparent, so it shows whatever background the card already has. */
+#routes .card:not(.card--cta),#hotels .card:not(.card--cta){border:4px solid transparent;border-radius:24px}
 #routes .card:not(.card--cta) .card-media,#hotels .card:not(.card--cta) .card-media{border-radius:18px;overflow:hidden}
-/* Routes sit on a white page, so a soft shadow keeps the white rim visible. */
-#routes .card:not(.card--cta){box-shadow:0 2px 14px rgba(13,11,104,.1)}
