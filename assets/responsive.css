@@ -783,3 +783,6 @@
 #routes .card:not(.card--cta) .card-media,#hotels .card:not(.card--cta) .card-media{border-radius:18px;overflow:hidden}
 /* Route cards use a pale grey-blue tint so they stand out on white. */
 #routes .card:not(.card--cta){background:#F3F4FA}
+/* Rupee conversions on route and hotel cards, 1px larger than before. */
+.price-alt{font-size:15.5px}
+@media (max-width: 1100px){.price-alt{font-size:14px}}
