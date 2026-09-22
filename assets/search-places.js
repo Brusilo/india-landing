@@ -320,7 +320,7 @@
     .replace(/[-_/.,()\u2010-\u2015]+/g,' ').replace(/\s+/g,' ').trim();
   // Multiword aliases must remain complete phrases rather than separate tokens.
   const extraAliases={
-    'ru-saint-petersburg':['St Petersburg','St. Petersburg','Sankt Peterburg','Sankt-Peterburg','Saint-Petersburg'],
+    'ru-saint-petersburg':['St Petersburg','St. Petersburg','Sankt Peterburg','Sankt-Peterburg','Saint-Petersburg','पीटर्सबर्ग'],
     'ru-nizhny-novgorod':['Nizhniy Novgorod','Nizhnii Novgorod','Nizhnij Novgorod'],
     'ru-mineralnye-vody':['Mineral Waters','Mineralnie Vodi','Minvody'],
     'ru-khanty-mansiysk':['Khanty Mansiysk'],

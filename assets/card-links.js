@@ -57,11 +57,13 @@
     return TUTU_PLACES.resolveExact(text);
   }
 
-  function routeUrl(card){
-    const name=card.querySelector('.route-name');if(!name)return HOME;
-    const parts=name.textContent.split('–').map(x=>x.trim());if(parts.length!==2)return HOME;
-    const from=resolvePlace(parts[0]),to=resolvePlace(parts[1]);if(!from||!to||!window.TUTU_LINKS)return HOME;
-    try{return TUTU_LINKS.build(card.dataset.transport,{from,to,date:tomorrow(),adults:1,children:0,childAges:[],cabin:'economy'})}catch(_){return HOME}
+  /* A built link carries tomorrow's date; the audited plain URL is the fallback. */
+  function routeUrl(card,fallback){
+    const plain=fallback||HOME;
+    const name=card.querySelector('.route-name');if(!name)return plain;
+    const parts=name.textContent.split('–').map(x=>x.trim());if(parts.length!==2)return plain;
+    const from=resolvePlace(parts[0]),to=resolvePlace(parts[1]);if(!from||!to||!window.TUTU_LINKS)return plain;
+    try{return TUTU_LINKS.build(card.dataset.transport,{from,to,date:tomorrow(),adults:1,children:0,childAges:[],cabin:'economy'})}catch(_){return plain}
   }
 
   const routes=document.getElementById('routes');
@@ -76,7 +78,7 @@
         const alt=card.querySelector('.price-alt');if(alt)alt.textContent='≈ ₹'+nf(Math.round(d.price*RUB_TO_INR));
         const meta=card.querySelector('.card-meta');if(meta)meta.textContent=duration(d.h,d.m);
       }
-      activate(card,verifiedRouteUrls[id]||routeUrl(card));
+      activate(card,routeUrl(card,verifiedRouteUrls[id]));
     });
   }
 
