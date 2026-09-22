@@ -656,7 +656,7 @@ body{position:relative!important}
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20260917-audit-25">
 <script src="assets/site-language-faq-v26.js?v=20260921-translation-audit-3"></script>
-<link rel="stylesheet" href="assets/responsive.css?v=20260921-layout-3">
+<link rel="stylesheet" href="assets/responsive.css?v=20260922-card-rim">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1066,16 +1066,16 @@ const CONFIG = {
   rubToInr: 1.133,
 
   routes: [
-    { id:'r1',  from:'Delhi',            to:'Moscow',          typeLine:'direct flight',         transport:'flight', combined:false, price:'29 870', duration:'6 h 30 min',  gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'r2',  from:'Moscow',           to:'Delhi',           typeLine:'direct flight',         transport:'flight', combined:false, price:'16 539', duration:'6 h 10 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
-    { id:'r3',  from:'Delhi',            to:'Yekaterinburg',   typeLine:'connecting flight',     transport:'flight', combined:false, price:'25 528', duration:'8 h 50 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
-    { id:'r4',  from:'Goa',              to:'Moscow',          typeLine:'direct flight',         transport:'flight', combined:false, price:'10 611', duration:'8 h 25 min',  gradient:'linear-gradient(135deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r5',  from:'Goa',              to:'Yekaterinburg',   typeLine:'direct flight',         transport:'flight', combined:false, price:'6 650',  duration:'6 h 55 min',  gradient:'linear-gradient(135deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r6',  from:'Moscow',           to:'Saint Petersburg',typeLine:'Sapsan train',          transport:'train',  combined:false, price:'1 197',  duration:'4 h',         gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r7',  from:'Yekaterinburg',    to:'Kazan',           typeLine:'train',                 transport:'train',  combined:false, price:'1 694',  duration:'12 h 46 min', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
-    { id:'r8',  from:'Yekaterinburg',    to:'Ufa',             typeLine:'train',                 transport:'train',  combined:false, price:'2 087',  duration:'14 h 10 min', gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
-    { id:'r9',  from:'Moscow',           to:'Yoshkar-Ola',     typeLine:'train',                 transport:'train',  combined:false, price:'1 681',  duration:'14 h 27 min', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r10', from:'Moscow',           to:'Sochi',           typeLine:'direct flight',         transport:'flight', combined:false, price:'2 693',  duration:'3 h 30 min',  gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' }
+    { id:'r1',  from:'Delhi',            to:'Moscow',          typeLine:'direct flight',         transport:'flight', combined:false, price:'29 870', duration:'6 h 30 min',  img:'assets/routes/moscow-kremlin.jpg', gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'r2',  from:'Moscow',           to:'Delhi',           typeLine:'direct flight',         transport:'flight', combined:false, price:'16 539', duration:'6 h 10 min',  img:'assets/routes/delhi-red-fort.jpg', gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
+    { id:'r3',  from:'Delhi',            to:'Yekaterinburg',   typeLine:'connecting flight',     transport:'flight', combined:false, price:'25 528', duration:'8 h 50 min',  img:'assets/routes/yekaterinburg-embankment.jpg', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r4',  from:'Goa',              to:'Moscow',          typeLine:'direct flight',         transport:'flight', combined:false, price:'10 611', duration:'8 h 25 min',  img:'assets/routes/moscow-st-basils.jpg', gradient:'linear-gradient(135deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r5',  from:'Goa',              to:'Yekaterinburg',   typeLine:'direct flight',         transport:'flight', combined:false, price:'6 650',  duration:'6 h 55 min',  img:'assets/routes/yekaterinburg-skyline.jpg', gradient:'linear-gradient(135deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r6',  from:'Moscow',           to:'Saint Petersburg',typeLine:'Sapsan train',          transport:'train',  combined:false, price:'1 197',  duration:'4 h',         img:'assets/routes/saint-petersburg-bridge.jpg', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r7',  from:'Yekaterinburg',    to:'Kazan',           typeLine:'train',                 transport:'train',  combined:false, price:'1 694',  duration:'12 h 46 min', img:'assets/routes/kazan.jpg', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r8',  from:'Yekaterinburg',    to:'Ufa',             typeLine:'train',                 transport:'train',  combined:false, price:'2 087',  duration:'14 h 10 min', img:'assets/routes/ufa.jpg', gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
+    { id:'r9',  from:'Moscow',           to:'Yoshkar-Ola',     typeLine:'train',                 transport:'train',  combined:false, price:'1 681',  duration:'14 h 27 min', img:'assets/routes/yoshkar-ola.jpg', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r10', from:'Moscow',           to:'Sochi',           typeLine:'direct flight',         transport:'flight', combined:false, price:'2 693',  duration:'3 h 30 min',  img:'assets/routes/sochi.jpg', gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' }
   ],
 
   hotels: [
@@ -1120,7 +1120,7 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
   const inrFmt = fmtNum(inr);
   return `
   <article class="card" data-cta="route_${r.id}${r.combined ? '_combined' : ''}" data-transport="${r.transport}">
-    <div class="card-media" style="background:${r.gradient}"></div>
+    <div class="card-media" style="background:${r.img ? `url('${r.img}') center/cover no-repeat, ` : ''}${r.gradient}"></div>
     <div class="card-body">
       <p class="route-name">${r.from} – ${r.to}</p>
       <div class="price-row">
