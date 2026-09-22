@@ -790,3 +790,7 @@
 #routes .card-type{padding-top:0}
 /* Route cards: tighter spacing between the lines of text. */
 #routes .card-body{gap:4px}
+/* Hotel cards: same tighter text spacing as the route cards. */
+#hotels .card-body{gap:4px}
+#hotels .hotel-price-row{padding-top:4px}
+#hotels .card-body{padding-top:8px}
