@@ -786,3 +786,7 @@
 /* Rupee conversions on route and hotel cards, 1px larger than before. */
 .price-alt{font-size:15.5px}
 @media (max-width: 1100px){.price-alt{font-size:14px}}
+/* Route cards: drop the extra spacer above the transport type to shorten the card. */
+#routes .card-type{padding-top:0}
+/* Route cards: tighter spacing between the lines of text. */
+#routes .card-body{gap:4px}
