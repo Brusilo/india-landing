@@ -789,3 +789,7 @@
 #hotels .card-body{gap:4px}
 #hotels .hotel-price-row{padding-top:4px}
 #hotels .card-body{padding-top:8px}
+/* Let the promo tickets run under the orange panel instead of being cut at the white half's edge.
+   The strip itself still clips them at its outer rounded border. */
+.promo-strip__action{overflow:visible}
+.promo-strip__offer{position:relative;z-index:1}
