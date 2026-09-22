@@ -781,3 +781,5 @@
    The border is transparent, so it shows whatever background the card already has. */
 #routes .card:not(.card--cta),#hotels .card:not(.card--cta){border:4px solid transparent;border-radius:24px}
 #routes .card:not(.card--cta) .card-media,#hotels .card:not(.card--cta) .card-media{border-radius:18px;overflow:hidden}
+/* Route cards use a pale grey-blue tint so they stand out on white. */
+#routes .card:not(.card--cta){background:#F3F4FA}
