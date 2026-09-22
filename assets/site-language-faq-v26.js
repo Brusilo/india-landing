@@ -18,20 +18,12 @@
         a: 'К оплате принимаются карты, выпущенные в России, странах СНГ, Прибалтике и большинстве стран Европы. Оплата также возможна виртуальной, предоплаченной картой Visa Virtual.'
       },
       {
-        q: 'Что делать, если в имени на билете ошибка?',
-        a: 'Правила зависят от вида билета и перевозчика. Если заметили ошибку, как можно раньше обратитесь в поддержку Туту. Для авиабилетов имя и фамилия должны совпадать с загранпаспортом, а возможность и стоимость исправления определяет авиакомпания.'
-      },
-      {
-        q: 'Нужна ли регистрация при заселении в отель?',
-        a: 'Если иностранный гость живёт в гостинице или отеле в России, на миграционный учёт его ставит администрация объекта размещения. При проживании в квартире или другом частном жилье это делает принимающая сторона или арендодатель. Уточните у объекта размещения необходимые документы и возможный регистрационный сбор.'
-      },
-      {
-        q: 'Чем отличается плацкарт от купе?',
-        a: 'В плацкарте обычно 54 спальных места, а блоки открыты и соединены общим проходом. В купейном вагоне обычно 32 или 36 мест, по четыре в закрывающемся купе. В купе меньше пассажиров и больше приватности, поэтому оно обычно дороже.'
-      },
-      {
         q: 'Как добраться из аэропорта в другой город?',
         a: 'На Туту можно искать билеты на самолёты, поезда и автобусы. Если прямого варианта нет, соберите поездку из отдельных сегментов и заложите достаточное время на пересадку.'
+      },
+      {
+        q: 'Что делать, если в паспорте нет фамилии или в имени на билете ошибка?',
+        a: 'Впишите имя латиницей точно так, как в паспорте. Отчество иностранцам заполнять не нужно. Если в паспорте нет фамилии, напишите в поддержку до покупки. Небольшие опечатки в транслитерации обычно не мешают посадке, так как главное для проводников и контролёров – номер паспорта. При серьёзной ошибке напишите в поддержку до поездки, и мы поможем исправить данные.'
       },
       {
         q: 'Сколько багажа можно взять с собой?',
@@ -40,6 +32,14 @@
       {
         q: 'Можно ли вернуть или обменять билет?',
         a: 'Это зависит от вида транспорта, перевозчика и тарифа. Возвратные и невозвратные условия показываются до покупки. После покупки доступные действия можно посмотреть в заказе на сайте или в приложении Туту; для некоторых билетов обмен фактически оформляется как возврат и покупка нового билета.'
+      },
+      {
+        q: 'Можно ли купить билет другу или родственнику?',
+        a: 'Да. При оформлении укажите паспортные данные пассажира. В дорогу он берёт тот же паспорт, который указан в билете. После покупки поменять пассажира нельзя.'
+      },
+      {
+        q: 'Чем отличается плацкарт от купе?',
+        a: 'В плацкарте обычно 54 спальных места, а блоки открыты и соединены общим проходом. В купейном вагоне обычно 32 или 36 мест, по четыре в закрывающемся купе. В купе меньше пассажиров и больше приватности, поэтому оно обычно дороже.'
       }
     ],
     en: [
@@ -48,20 +48,12 @@
         a: 'Cards issued in Russia, CIS countries, the Baltic states and most European countries are accepted. You can also pay with a prepaid Visa Virtual card.'
       },
       {
-        q: 'What should I do if my name is wrong on the ticket?',
-        a: 'The rules depend on the ticket type and carrier. Contact Tutu support as soon as you notice an error. For flights, the first and last name on the ticket should match the passport used for travel; whether a correction is possible and whether it costs extra depends on the airline.'
-      },
-      {
-        q: 'Do foreign guests need to register when staying at a hotel?',
-        a: 'In Russia, hotels and other accommodation providers register foreign guests for migration purposes. If you stay in an apartment or other private accommodation, the host or landlord is normally the receiving party. Check the required documents and any registration fee with your accommodation.'
-      },
-      {
-        q: 'What is the difference between platskart and kupe?',
-        a: 'A platskart carriage normally has 54 sleeping berths in open sections connected by a common aisle. A kupe carriage usually has 32 or 36 berths, with four berths in each closed compartment. Kupe carriages have fewer passengers and more privacy, so they are usually more expensive.'
-      },
-      {
         q: 'How do I get from the airport to another city?',
         a: 'Tutu lets you search for flights, trains and buses. If there is no direct option, build the trip from separate segments and leave enough time for the connection.'
+      },
+      {
+        q: 'What if my passport has no surname, or my name is misspelled on the ticket?',
+        a: 'Enter your name in Latin letters exactly as it appears in your passport. Foreign citizens do not need to fill in a patronymic. If your passport has no surname, contact support before booking. Minor transliteration differences usually cause no trouble at boarding, because conductors and inspectors go by your passport number. If the mistake is serious, contact support before your trip and we will help correct your details.'
       },
       {
         q: 'How much baggage can I take?',
@@ -70,6 +62,14 @@
       {
         q: 'Can I refund or exchange a ticket?',
         a: 'It depends on the transport type, carrier and fare. Refundable and non-refundable conditions are shown before purchase. After purchase, available actions are shown in your order on the Tutu website or app; for some tickets, an exchange is handled as a refund followed by a new purchase.'
+      },
+      {
+        q: 'Can I buy a ticket for a friend or relative?',
+        a: 'Yes. Enter the passenger’s passport details when booking. They will need to show the same passport when travelling. The passenger cannot be changed after purchase.'
+      },
+      {
+        q: 'What is the difference between platskart and kupe?',
+        a: 'A platskart carriage normally has 54 sleeping berths in open sections connected by a common aisle. A kupe carriage usually has 32 or 36 berths, with four berths in each closed compartment. Kupe carriages have fewer passengers and more privacy, so they are usually more expensive.'
       }
     ],
     hi: [
@@ -78,20 +78,12 @@
         a: 'रूस, CIS देशों, बाल्टिक देशों और यूरोप के अधिकांश देशों में जारी किए गए कार्ड स्वीकार किए जाते हैं। Visa Virtual प्रीपेड कार्ड से भी भुगतान किया जा सकता है।'
       },
       {
-        q: 'अगर टिकट में नाम गलत हो तो क्या करें?',
-        a: 'नियम टिकट के प्रकार और परिवहन कंपनी पर निर्भर करते हैं। गलती दिखते ही Tutu सहायता से संपर्क करें। फ़्लाइट टिकट में नाम और उपनाम यात्रा के लिए इस्तेमाल किए जाने वाले पासपोर्ट से मेल खाने चाहिए; सुधार संभव है या नहीं और उसका शुल्क कितना होगा, यह एयरलाइन तय करती है।'
-      },
-      {
-        q: 'होटल में ठहरने पर विदेशी मेहमानों का पंजीकरण ज़रूरी है?',
-        a: 'रूस में होटल या अन्य आवास विदेशी मेहमान का माइग्रेशन पंजीकरण करता है। यदि आप अपार्टमेंट या किसी निजी आवास में ठहरते हैं, तो आम तौर पर मेज़बान या मकान-मालिक यह प्रक्रिया करता है। आवश्यक दस्तावेज़ और संभावित पंजीकरण शुल्क की जानकारी अपने आवास से पहले ही ले लें।'
-      },
-      {
-        q: 'प्लात्सकार्ट और कूपे में क्या अंतर है?',
-        a: 'प्लात्सकार्ट डिब्बे में आम तौर पर 54 बर्थ होती हैं और सोने की जगहें खुले सेक्शन में होती हैं। कूपे में आम तौर पर 32 या 36 बर्थ होती हैं, और हर बंद कूपे में चार बर्थ होती हैं। कूपे में यात्री कम होते हैं और ज़्यादा प्राइवेसी मिलती है, इसलिए यह आम तौर पर महँगा होता है।'
-      },
-      {
         q: 'एयरपोर्ट से दूसरे शहर कैसे जाएँ?',
         a: 'Tutu पर फ़्लाइट, ट्रेन और बस के टिकट खोजे जा सकते हैं। अगर सीधा विकल्प न मिले, तो यात्रा को अलग-अलग हिस्सों में बाँटकर बुक करें और कनेक्शन के लिए पर्याप्त समय रखें।'
+      },
+      {
+        q: 'अगर पासपोर्ट में सरनेम नहीं है या टिकट पर नाम में गलती है तो क्या करें?',
+        a: 'नाम लैटिन अक्षरों में ठीक वैसे ही लिखें जैसे पासपोर्ट में है। विदेशी नागरिकों को पैट्रोनिमिक (पिता का नाम) भरने की ज़रूरत नहीं है। अगर पासपोर्ट में सरनेम नहीं है, तो बुकिंग से पहले सपोर्ट से संपर्क करें। ट्रांसलिटरेशन की छोटी गलतियों से आमतौर पर बोर्डिंग में दिक्कत नहीं होती, क्योंकि कंडक्टर और इंस्पेक्टर पासपोर्ट नंबर देखते हैं। बड़ी गलती होने पर यात्रा से पहले सपोर्ट को लिखें, हम जानकारी ठीक करने में मदद करेंगे।'
       },
       {
         q: 'कितना सामान साथ ले जा सकते हैं?',
@@ -100,6 +92,14 @@
       {
         q: 'क्या टिकट वापस या बदला जा सकता है?',
         a: 'यह परिवहन के प्रकार, कंपनी और किराये के नियमों पर निर्भर करता है। टिकट रिफंडेबल है या नॉन-रिफंडेबल, यह बुकिंग से पहले दिखाया जाता है। बुकिंग के बाद उपलब्ध विकल्प Tutu वेबसाइट या ऐप में आपके ऑर्डर में दिखेंगे; कुछ टिकटों में बदलाव के लिए पहले पुराना टिकट रिफंड करके नया टिकट खरीदना पड़ता है।'
+      },
+      {
+        q: 'क्या मैं किसी दोस्त या रिश्तेदार के लिए टिकट खरीद सकता हूँ?',
+        a: 'हाँ। बुकिंग के समय यात्री के पासपोर्ट की जानकारी डालें। यात्रा में उन्हें वही पासपोर्ट दिखाना होगा। खरीदने के बाद यात्री बदला नहीं जा सकता।'
+      },
+      {
+        q: 'प्लात्सकार्ट और कूपे में क्या अंतर है?',
+        a: 'प्लात्सकार्ट डिब्बे में आम तौर पर 54 बर्थ होती हैं और सोने की जगहें खुले सेक्शन में होती हैं। कूपे में आम तौर पर 32 या 36 बर्थ होती हैं, और हर बंद कूपे में चार बर्थ होती हैं। कूपे में यात्री कम होते हैं और ज़्यादा प्राइवेसी मिलती है, इसलिए यह आम तौर पर महँगा होता है।'
       }
     ]
   };
