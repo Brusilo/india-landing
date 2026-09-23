@@ -85,7 +85,8 @@
     const token=routeState(s,'flight'),from=destinations.flight[s.from.id],to=destinations.flight[s.to.id];
     if(!token||!from||!to)return HOME;
     const q={class:s.cabin==='business'?'C':'Y',travelers:token};
-    q['route[0]']=from[1]+'-'+compact(s.date)+'-'+to[1];q.search_extension='avia';
+    // No search_extension: it promises a hotels tab that only Tutu's own search opens.
+    q['route[0]']=from[1]+'-'+compact(s.date)+'-'+to[1];
     return 'https://avia.tutu.ru/f/'+encodeURIComponent(from[0])+'/'+encodeURIComponent(to[0])+'/?'+params(q);
   }
   function buildTrain(s){
