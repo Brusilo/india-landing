@@ -43,7 +43,7 @@ Final registry coverage:
 | Flights | 219 of 219 flight-eligible city records | Unsupported/unknown input goes to Tutu home |
 | Hotels | 273 of 276 city records | Tutu home instead of an unverified hotel path |
 | Trains | 141 of 222 ground-transport-eligible city records | Tutu home instead of an unverified train path |
-| Buses | 38 city records with bus IDs | Verified train fallback, then Tutu home |
+| Buses | 119 city records with bus IDs (2026-09-23: 81 added from Tutu's own /raspisanie/ city index) | Verified train fallback, then Tutu home |
 
 The three hotel records without a confirmed city path are ru-petropavlovsk-kamchatsky, ru-sovetskaya-gavan and kg-issyk-kul. They remain searchable, but do not produce a guessed hotel URL.
 

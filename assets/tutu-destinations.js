@@ -3,9 +3,77 @@
    No transliteration guesses are used as destination URLs. */
 window.TUTU_DESTINATIONS = {
   "bus": {
+    "by-brest": [
+      "Brest",
+      1288162
+    ],
+    "by-gomel": [
+      "Gomel",
+      1290345
+    ],
+    "by-grodno": [
+      "Grodno",
+      1278049
+    ],
+    "by-minsk": [
+      "Minsk",
+      1297863
+    ],
+    "by-mogilev": [
+      "Mogilyov",
+      1281955
+    ],
+    "by-vitebsk": [
+      "Vitebsk",
+      1282079
+    ],
+    "ge-tbilisi": [
+      "Tbilisi",
+      1038838
+    ],
     "kz-aktobe": [
       "Aktobe",
       1642990
+    ],
+    "kz-astana": [
+      "Astana",
+      1644112
+    ],
+    "kz-karaganda": [
+      "Karaganda",
+      1638835
+    ],
+    "kz-kokshetau": [
+      "Kokshetau",
+      1640107
+    ],
+    "kz-kostanay": [
+      "Kostanaj",
+      1639144
+    ],
+    "kz-oral": [
+      "Uralsk",
+      1643365
+    ],
+    "kz-oskemen": [
+      "Ust-Kamenogorsk",
+      1637236
+    ],
+    "kz-pavlodar": [
+      "Pavlodar",
+      1636847
+    ],
+    "kz-petropavl": [
+      "Petropavlovsk",
+      1638506
+    ],
+    "md-chisinau": [
+      "Kishinyov",
+      1273140
+    ],
+    "ru-abakan": [
+      "Abakan",
+      1307267
     ],
     "ru-adler": [
       "Adler",
@@ -15,13 +83,61 @@ window.TUTU_DESTINATIONS = {
       "Anapa",
       1447975
     ],
+    "ru-arkhangelsk": [
+      "Arhangelsk",
+      1339817
+    ],
     "ru-arkhipo-osipovka": [
       "Arhipo-Osipovka",
       1448112
     ],
+    "ru-astrakhan": [
+      "Astrahan",
+      1414159
+    ],
+    "ru-barnaul": [
+      "Barnaul",
+      1305385
+    ],
+    "ru-belgorod": [
+      "Belgorod",
+      1414841
+    ],
+    "ru-belokurikha": [
+      "Belokuriha",
+      1305389
+    ],
+    "ru-blagoveshchensk": [
+      "Blagoveshhensk",
+      1298819
+    ],
+    "ru-bratsk": [
+      "Bratsk",
+      1309617
+    ],
+    "ru-bryansk": [
+      "Bryansk",
+      1410741
+    ],
+    "ru-bugulma": [
+      "Bugulma",
+      1333081
+    ],
     "ru-cheboksary": [
       "Cheboksary",
       1352828
+    ],
+    "ru-chelyabinsk": [
+      "Chelyabinsk",
+      1443462
+    ],
+    "ru-cherepovets": [
+      "Cherepovets",
+      1343753
+    ],
+    "ru-chita": [
+      "Chita",
+      1311973
     ],
     "ru-dagomys": [
       "Dagomys",
@@ -35,9 +151,29 @@ window.TUTU_DESTINATIONS = {
       "Dzhubga",
       1447997
     ],
+    "ru-elista": [
+      "Elista",
+      1414556
+    ],
     "ru-gelendzhik": [
       "Gelendzhik",
       1447979
+    ],
+    "ru-gorno-altaysk": [
+      "Gorno-Altajsk",
+      1307006
+    ],
+    "ru-grozny": [
+      "Groznyj",
+      1438389
+    ],
+    "ru-irkutsk": [
+      "Irkutsk",
+      1309616
+    ],
+    "ru-ivanovo": [
+      "Ivanovo",
+      1444796
     ],
     "ru-izhevsk": [
       "Izhevsk",
@@ -47,25 +183,89 @@ window.TUTU_DESTINATIONS = {
       "Kabardinka",
       1447980
     ],
+    "ru-kaliningrad": [
+      "Kaliningrad",
+      1316549
+    ],
+    "ru-kaluga": [
+      "Kaluga",
+      1419244
+    ],
     "ru-kazan": [
       "Kazan",
       1330021
+    ],
+    "ru-kemerovo": [
+      "Kemerovo",
+      1304322
+    ],
+    "ru-khabarovsk": [
+      "Habarovsk",
+      1315652
+    ],
+    "ru-khanty-mansiysk": [
+      "Hanty-Mansijsk",
+      1784221
     ],
     "ru-kirov": [
       "Kirov",
       1439192
     ],
+    "ru-kislovodsk": [
+      "Kislovodsk",
+      1435840
+    ],
+    "ru-komsomolsk-on-amur": [
+      "Komsomolsk-na-Amure",
+      1315649
+    ],
+    "ru-kostroma": [
+      "Kostroma",
+      1395289
+    ],
+    "ru-kotlas": [
+      "Kotlas",
+      1339854
+    ],
     "ru-krasnodar": [
       "Krasnodar",
       1447972
+    ],
+    "ru-krasnoyarsk": [
+      "Krasnoyarsk",
+      1307744
+    ],
+    "ru-kurgan": [
+      "Kurgan",
+      1378324
+    ],
+    "ru-kursk": [
+      "Kursk",
+      1416451
     ],
     "ru-lazarevskoye": [
       "Lazarevskoe",
       1783862
     ],
+    "ru-lipetsk": [
+      "Lipetsk",
+      1379567
+    ],
     "ru-loo": [
       "Loo",
       2082727
+    ],
+    "ru-magnitogorsk": [
+      "Magnitogorsk",
+      1444474
+    ],
+    "ru-makhachkala": [
+      "Mahachkala",
+      1436995
+    ],
+    "ru-mineralnye-vody": [
+      "Mineralnye-Vody",
+      1435842
     ],
     "ru-moscow": [
       "Moskva",
@@ -75,17 +275,41 @@ window.TUTU_DESTINATIONS = {
       "Naberezhnye-Chelny",
       1330023
     ],
+    "ru-nalchik": [
+      "Nalchik",
+      1439015
+    ],
+    "ru-nizhnekamsk": [
+      "Nizhnekamsk",
+      1330251
+    ],
+    "ru-nizhnevartovsk": [
+      "Nizhnevartovsk",
+      1784213
+    ],
     "ru-nizhny-novgorod": [
       "Nizhnij-Novgorod",
       1427804
+    ],
+    "ru-novokuznetsk": [
+      "Novokuznetsk",
+      1304261
     ],
     "ru-novosibirsk": [
       "Novosibirsk",
       1302713
     ],
+    "ru-omsk": [
+      "Omsk",
+      1301211
+    ],
     "ru-orenburg": [
       "Orenburg",
       1354435
+    ],
+    "ru-oryol": [
+      "Oryol",
+      1407808
     ],
     "ru-penza": [
       "Penza",
@@ -94,6 +318,18 @@ window.TUTU_DESTINATIONS = {
     "ru-perm": [
       "Perm",
       1324708
+    ],
+    "ru-petrozavodsk": [
+      "Petrozavodsk",
+      1329076
+    ],
+    "ru-pskov": [
+      "Pskov",
+      1360894
+    ],
+    "ru-pyatigorsk": [
+      "Pyatigorsk",
+      1435838
     ],
     "ru-ryazan": [
       "Ryazan",
@@ -111,17 +347,57 @@ window.TUTU_DESTINATIONS = {
       "Saransk",
       1432621
     ],
+    "ru-saratov": [
+      "Saratov",
+      1433947
+    ],
+    "ru-smolensk": [
+      "Smolensk",
+      1403603
+    ],
     "ru-sochi": [
       "Sochi",
       1447978
+    ],
+    "ru-sortavala": [
+      "Sortavala",
+      1329612
+    ],
+    "ru-stary-oskol": [
+      "Staryj-Oskol",
+      1414845
+    ],
+    "ru-stavropol": [
+      "Stavropol",
+      1435837
+    ],
+    "ru-surgut": [
+      "Surgut",
+      1784218
     ],
     "ru-syktyvkar": [
       "Syktyvkar",
       1328209
     ],
+    "ru-taganrog": [
+      "Taganrog",
+      1391656
+    ],
+    "ru-tambov": [
+      "Tambov",
+      1382947
+    ],
+    "ru-tobolsk": [
+      "Tobolsk",
+      1299965
+    ],
     "ru-tolyatti": [
       "Tolyatti",
       1321498
+    ],
+    "ru-tomsk": [
+      "Tomsk",
+      1299154
     ],
     "ru-tuapse": [
       "Tuapse",
@@ -131,25 +407,73 @@ window.TUTU_DESTINATIONS = {
       "Tula",
       1422403
     ],
+    "ru-tver": [
+      "Tver",
+      1369087
+    ],
+    "ru-tyumen": [
+      "Tyumen",
+      1299959
+    ],
     "ru-ufa": [
       "Ufa",
       1333152
+    ],
+    "ru-ukhta": [
+      "Uhta",
+      1328210
+    ],
+    "ru-ulyanovsk": [
+      "Ulyanovsk",
+      1351868
+    ],
+    "ru-ust-kut": [
+      "Ust-Kut",
+      1309643
     ],
     "ru-vityazevo": [
       "Vityazevo",
       1447992
     ],
+    "ru-vladikavkaz": [
+      "Vladikavkaz",
+      1438889
+    ],
     "ru-vladimir": [
       "Vladimir",
       1425287
+    ],
+    "ru-vladivostok": [
+      "Vladivostok",
+      1297864
+    ],
+    "ru-volgograd": [
+      "Volgograd",
+      1412651
+    ],
+    "ru-vologda": [
+      "Vologda",
+      1343752
     ],
     "ru-voronezh": [
       "Voronezh",
       1381189
     ],
+    "ru-yaroslavl": [
+      "Yaroslavl",
+      1397799
+    ],
     "ru-yekaterinburg": [
       "Ekaterinburg",
       1322775
+    ],
+    "ru-yessentuki": [
+      "Essentuki",
+      1435996
+    ],
+    "ru-yeysk": [
+      "Ejsk",
+      1447977
     ],
     "ru-yoshkar-ola": [
       "Joshkar-Ola",
