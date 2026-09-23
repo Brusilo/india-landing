@@ -831,3 +831,15 @@
   /* Hindi runs on one line, so it can be larger and sit lower inside that reserved space. */
   html:lang(hi) .hero h1 { font-size: 54px; padding-top: 24px; }
 }
+
+/* Phone search: float the caption above the value, as on desktop, so a filled field
+   keeps its text in the middle instead of pushing it down. */
+@media (max-width: 1100px) {
+  .search.search-v2 .v2-field { position: relative; }
+  .search.search-v2 .v2-caption {
+    position: absolute; top: 6px; left: 16px; right: 16px;
+    min-height: 0; line-height: 1.2;
+  }
+  .search.search-v2 .v2-field[data-role="from"] .v2-caption,
+  .search.search-v2 .v2-field[data-role="to"] .v2-caption { right: 66px; }
+}
