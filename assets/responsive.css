@@ -812,11 +812,11 @@
   .transport .ico img { width: 22px; height: 22px; }
   .search.search-v2 { width: min(100%, 1040px); margin-top: 12px !important; }
   .search-v2 .v2-field { min-height: 58px; padding: 0 18px; justify-content: center; gap: 1px; }
-  /* Reserve the caption line in every field so the value keeps the same size and
-     position whether the field is empty or filled. */
-  .search-v2 .v2-caption { display: block; visibility: hidden; min-height: 0; font-size: 11px; line-height: 1.25; }
+  /* An empty field shows one centred line; a filled one centres the caption and value
+     together, the way the Tutu search does it. */
+  .search-v2 .v2-caption { min-height: 0; font-size: 11px; line-height: 1.25; }
   .search-v2 .v2-field.has-value .v2-caption,
-  .search-v2 .v2-field--always-caption .v2-caption { visibility: visible; }
+  .search-v2 .v2-field--always-caption .v2-caption { display: block; }
   .search-v2 .v2-input,
   .search-v2 .v2-value,
   .search-v2 .v2-input::placeholder { font-size: 16px !important; }
@@ -832,12 +832,12 @@
   html:lang(hi) .hero h1 { font-size: 54px; padding-top: 24px; }
 }
 
-/* Phone search: caption and value sit as one block in the middle of the field,
-   with the caption line reserved so empty and filled fields match. */
+/* Phone search: same rule as desktop — one centred line when empty, caption and
+   value centred together once a value is picked. */
 @media (max-width: 1100px) {
   .search.search-v2 .v2-field { position: relative; }
-  .search.search-v2 .v2-caption { display: block; visibility: hidden; min-height: 0; line-height: 1.25; }
+  .search.search-v2 .v2-caption { min-height: 0; line-height: 1.25; }
   .search.search-v2 .v2-field.has-value .v2-caption,
-  .search.search-v2 .v2-field--always-caption .v2-caption { visibility: visible; }
+  .search.search-v2 .v2-field--always-caption .v2-caption { display: block; }
   .search.search-v2 .v2-field--place:not(.has-value) .v2-input { height: 26px; min-height: 26px; }
 }
