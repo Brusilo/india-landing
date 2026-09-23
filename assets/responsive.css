@@ -811,10 +811,10 @@
   .transport .ico { width: 42px; height: 42px; }
   .transport .ico img { width: 22px; height: 22px; }
   .search.search-v2 { width: min(100%, 1040px); margin-top: 12px !important; }
-  .search-v2 .v2-field { min-height: 58px; padding: 0 18px; justify-content: center; gap: 0; }
+  .search-v2 .v2-field { min-height: 58px; padding: 0 18px; justify-content: center; gap: 1px; }
   /* Reserve the caption line in every field so the value keeps the same size and
      position whether the field is empty or filled. */
-  .search-v2 .v2-caption { position: absolute; top: 7px; left: 18px; right: 18px; display: block; visibility: hidden; min-height: 0; font-size: 11px; line-height: 1.1; }
+  .search-v2 .v2-caption { display: block; visibility: hidden; min-height: 0; font-size: 11px; line-height: 1.25; }
   .search-v2 .v2-field.has-value .v2-caption,
   .search-v2 .v2-field--always-caption .v2-caption { visibility: visible; }
   .search-v2 .v2-input,
@@ -832,14 +832,12 @@
   html:lang(hi) .hero h1 { font-size: 54px; padding-top: 24px; }
 }
 
-/* Phone search: float the caption above the value, as on desktop, so a filled field
-   keeps its text in the middle instead of pushing it down. */
+/* Phone search: caption and value sit as one block in the middle of the field,
+   with the caption line reserved so empty and filled fields match. */
 @media (max-width: 1100px) {
   .search.search-v2 .v2-field { position: relative; }
-  .search.search-v2 .v2-caption {
-    position: absolute; top: 6px; left: 16px; right: 16px;
-    min-height: 0; line-height: 1.2;
-  }
-  .search.search-v2 .v2-field[data-role="from"] .v2-caption,
-  .search.search-v2 .v2-field[data-role="to"] .v2-caption { right: 66px; }
+  .search.search-v2 .v2-caption { display: block; visibility: hidden; min-height: 0; line-height: 1.25; }
+  .search.search-v2 .v2-field.has-value .v2-caption,
+  .search.search-v2 .v2-field--always-caption .v2-caption { visibility: visible; }
+  .search.search-v2 .v2-field--place:not(.has-value) .v2-input { height: 26px; min-height: 26px; }
 }
