@@ -810,7 +810,7 @@
   .transport button { width: 68px; }
   .transport .ico { width: 42px; height: 42px; }
   .transport .ico img { width: 22px; height: 22px; }
-  .search.search-v2 { width: min(100%, 1040px); margin-top: 12px !important; }
+  .search.search-v2 { margin-top: 12px !important; }
   .search-v2 .v2-field { min-height: 58px; padding: 0 18px; justify-content: center; gap: 1px; }
   /* An empty field shows one centred line; a filled one centres the caption and value
      together, the way the Tutu search does it. */
@@ -822,7 +822,7 @@
   .search-v2 .v2-input::placeholder { font-size: 16px !important; }
   .search.search-v2 .v2-field--date:not(.has-value) .v2-value { font-size: 16px !important; }
   .search-v2 .v2-submit { min-height: 58px; }
-  .search-hints.search-hints-v2 { width: min(100%, 1040px); margin-top: 5px; }
+  .search-hints.search-hints-v2 { margin-top: 5px; }
   .search-hints-v2 .quick-chip-v2 { padding: 4px 8px; font-size: 11.5px; }
   .hero > .hero-decor--suitcase { width: 560px !important; top: 6px !important; }
   /* The Hindi title fits on one line while the others need two, which used to make that
