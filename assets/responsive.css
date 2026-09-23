@@ -795,3 +795,6 @@
 .promo-strip__offer{position:relative;z-index:1}
 
 
+
+/* Tile rows share a height, so cards stay equal when one text is longer. */
+.tiles{grid-auto-rows:1fr}
