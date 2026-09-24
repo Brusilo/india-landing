@@ -3,10 +3,10 @@
   'use strict';
   const HOME='https://www.tutu.ru/';
   const OFFERS='https://www.tutu.ru/juicy-offers/';
-  const RUB_TO_INR=1.13917;
+  const RUB_TO_INR=1.12888;
   const lang=document.documentElement.lang==='hi'?'hi':document.documentElement.lang==='en'?'en':'ru';
   const routeData={
-    r1:{price:29870,h:6,m:30},
+    r1:{price:20316,h:6,m:30},
     r2:{price:16539,h:6,m:10},
     r3:{price:25528,h:8,m:50},
     r4:{price:10611,h:8,m:25},
