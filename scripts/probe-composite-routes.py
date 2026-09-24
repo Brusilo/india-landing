@@ -10,6 +10,7 @@ CITIES=[
  ("Belgorod",1414841),("Kursk",1416451),("Voronezh",1381189),("Rostov-na-Donu",1391657),("Joshkar-Ola",1356140),
  ("Cheboksary",1352828),("Saransk",1432621),("Penza",1393941),("Pskov",1360894),("Yaroslavl",1397799),
  ("Ivanovo",1444796),("Tambov",1382947),("Ulyanovsk",1351868),("Arhangelsk",1339817),("Saratov",1433947)
+]
 TRAVEL=(date.today()+timedelta(days=2)).strftime("%d.%m.%Y")
 ctx=ssl.create_default_context()
 headers={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/154 Safari/537.36","Accept-Language":"ru-RU,ru;q=0.9,en;q=0.8"}
