@@ -1,0 +1,686 @@
+{
+  "travel_date": "26.09.2026",
+  "source_note": "Delhi locality ID 2098491 came from a user-verified Tutu deep link; Russian locality IDs are the repository's confirmed bus IDs.",
+  "routes": [
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Tver/?from=2098491&to=1369087&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374709,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "tver": 2
+      },
+      "snippets": [],
+      "city": "Tver",
+      "city_id": 1369087,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Tver/?from=2098491&to=1369087&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Tver/gorod_Deli_2098491/?from=1369087&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374115,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "tver": 2
+      },
+      "snippets": [],
+      "city": "Tver",
+      "city_id": 1369087,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Tver/gorod_Deli_2098491/?from=1369087&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Smolensk/?from=2098491&to=1403603&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374751,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "smolensk": 2
+      },
+      "snippets": [],
+      "city": "Smolensk",
+      "city_id": 1403603,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Smolensk/?from=2098491&to=1403603&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Smolensk/gorod_Deli_2098491/?from=1403603&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374745,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "smolensk": 2
+      },
+      "snippets": [],
+      "city": "Smolensk",
+      "city_id": 1403603,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Smolensk/gorod_Deli_2098491/?from=1403603&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Ryazan/?from=2098491&to=1312827&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374129,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "ryazan": 2
+      },
+      "snippets": [],
+      "city": "Ryazan",
+      "city_id": 1312827,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Ryazan/?from=2098491&to=1312827&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Ryazan/gorod_Deli_2098491/?from=1312827&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374125,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "ryazan": 2
+      },
+      "snippets": [],
+      "city": "Ryazan",
+      "city_id": 1312827,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Ryazan/gorod_Deli_2098491/?from=1312827&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Tula/?from=2098491&to=1422403&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374708,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "tula": 2
+      },
+      "snippets": [],
+      "city": "Tula",
+      "city_id": 1422403,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Tula/?from=2098491&to=1422403&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Tula/gorod_Deli_2098491/?from=1422403&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374105,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "tula": 2
+      },
+      "snippets": [],
+      "city": "Tula",
+      "city_id": 1422403,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Tula/gorod_Deli_2098491/?from=1422403&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Oryol/?from=2098491&to=1407808&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374092,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "oryol": 2
+      },
+      "snippets": [],
+      "city": "Oryol",
+      "city_id": 1407808,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Oryol/?from=2098491&to=1407808&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Oryol/gorod_Deli_2098491/?from=1407808&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374099,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "oryol": 2
+      },
+      "snippets": [],
+      "city": "Oryol",
+      "city_id": 1407808,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Oryol/gorod_Deli_2098491/?from=1407808&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Yaroslavl/?from=2098491&to=1397799&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374136,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "yaro": 2
+      },
+      "snippets": [],
+      "city": "Yaroslavl",
+      "city_id": 1397799,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Yaroslavl/?from=2098491&to=1397799&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Yaroslavl/gorod_Deli_2098491/?from=1397799&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374776,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "yaro": 2
+      },
+      "snippets": [],
+      "city": "Yaroslavl",
+      "city_id": 1397799,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Yaroslavl/gorod_Deli_2098491/?from=1397799&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Saratov/?from=2098491&to=1433947&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374735,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "saratov": 2
+      },
+      "snippets": [],
+      "city": "Saratov",
+      "city_id": 1433947,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Saratov/?from=2098491&to=1433947&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Saratov/gorod_Deli_2098491/?from=1433947&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374749,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "saratov": 2
+      },
+      "snippets": [],
+      "city": "Saratov",
+      "city_id": 1433947,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Saratov/gorod_Deli_2098491/?from=1433947&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Volgograd/?from=2098491&to=1412651&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 376085,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "volgograd": 2
+      },
+      "snippets": [],
+      "city": "Volgograd",
+      "city_id": 1412651,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Volgograd/?from=2098491&to=1412651&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Volgograd/gorod_Deli_2098491/?from=1412651&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374151,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "volgograd": 2
+      },
+      "snippets": [],
+      "city": "Volgograd",
+      "city_id": 1412651,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Volgograd/gorod_Deli_2098491/?from=1412651&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Voronezh/?from=2098491&to=1381189&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374737,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "voronezh": 2
+      },
+      "snippets": [],
+      "city": "Voronezh",
+      "city_id": 1381189,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Voronezh/?from=2098491&to=1381189&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Voronezh/gorod_Deli_2098491/?from=1381189&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374752,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "voronezh": 2
+      },
+      "snippets": [],
+      "city": "Voronezh",
+      "city_id": 1381189,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Voronezh/gorod_Deli_2098491/?from=1381189&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Kursk/?from=2098491&to=1416451&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374114,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "kursk": 2
+      },
+      "snippets": [],
+      "city": "Kursk",
+      "city_id": 1416451,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Kursk/?from=2098491&to=1416451&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Kursk/gorod_Deli_2098491/?from=1416451&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374722,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "kursk": 2
+      },
+      "snippets": [],
+      "city": "Kursk",
+      "city_id": 1416451,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Kursk/gorod_Deli_2098491/?from=1416451&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Penza/?from=2098491&to=1393941&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374101,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "penza": 2
+      },
+      "snippets": [],
+      "city": "Penza",
+      "city_id": 1393941,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Penza/?from=2098491&to=1393941&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Penza/gorod_Deli_2098491/?from=1393941&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374112,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "penza": 2
+      },
+      "snippets": [],
+      "city": "Penza",
+      "city_id": 1393941,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Penza/gorod_Deli_2098491/?from=1393941&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Tambov/?from=2098491&to=1382947&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374121,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "tambov": 2
+      },
+      "snippets": [],
+      "city": "Tambov",
+      "city_id": 1382947,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Tambov/?from=2098491&to=1382947&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Tambov/gorod_Deli_2098491/?from=1382947&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374106,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "tambov": 2
+      },
+      "snippets": [],
+      "city": "Tambov",
+      "city_id": 1382947,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Tambov/gorod_Deli_2098491/?from=1382947&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Joshkar-Ola/?from=2098491&to=1356140&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374151,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "joshkar": 2
+      },
+      "snippets": [],
+      "city": "Joshkar-Ola",
+      "city_id": 1356140,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Joshkar-Ola/?from=2098491&to=1356140&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Joshkar-Ola/gorod_Deli_2098491/?from=1356140&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374762,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "joshkar": 2
+      },
+      "snippets": [],
+      "city": "Joshkar-Ola",
+      "city_id": 1356140,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Joshkar-Ola/gorod_Deli_2098491/?from=1356140&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Cheboksary/?from=2098491&to=1352828&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374804,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "cheboksary": 2
+      },
+      "snippets": [],
+      "city": "Cheboksary",
+      "city_id": 1352828,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Cheboksary/?from=2098491&to=1352828&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Cheboksary/gorod_Deli_2098491/?from=1352828&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374174,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "cheboksary": 2
+      },
+      "snippets": [],
+      "city": "Cheboksary",
+      "city_id": 1352828,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Cheboksary/gorod_Deli_2098491/?from=1352828&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Saransk/?from=2098491&to=1432621&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374126,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "saransk": 2
+      },
+      "snippets": [],
+      "city": "Saransk",
+      "city_id": 1432621,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Saransk/?from=2098491&to=1432621&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Saransk/gorod_Deli_2098491/?from=1432621&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374109,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "saransk": 2
+      },
+      "snippets": [],
+      "city": "Saransk",
+      "city_id": 1432621,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Saransk/gorod_Deli_2098491/?from=1432621&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Nizhnij-Novgorod/?from=2098491&to=1427804&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 376161,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "nizhn": 2
+      },
+      "snippets": [],
+      "city": "Nizhnij-Novgorod",
+      "city_id": 1427804,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Nizhnij-Novgorod/?from=2098491&to=1427804&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Nizhnij-Novgorod/gorod_Deli_2098491/?from=1427804&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374843,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "nizhn": 2
+      },
+      "snippets": [],
+      "city": "Nizhnij-Novgorod",
+      "city_id": 1427804,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Nizhnij-Novgorod/gorod_Deli_2098491/?from=1427804&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Pskov/?from=2098491&to=1360894&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374133,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "pskov": 2
+      },
+      "snippets": [],
+      "city": "Pskov",
+      "city_id": 1360894,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Pskov/?from=2098491&to=1360894&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Pskov/gorod_Deli_2098491/?from=1360894&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374122,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "pskov": 2
+      },
+      "snippets": [],
+      "city": "Pskov",
+      "city_id": 1360894,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Pskov/gorod_Deli_2098491/?from=1360894&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Stavropol/?from=2098491&to=1435837&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374790,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "stavropol": 2
+      },
+      "snippets": [],
+      "city": "Stavropol",
+      "city_id": 1435837,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Stavropol/?from=2098491&to=1435837&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Stavropol/gorod_Deli_2098491/?from=1435837&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374188,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "stavropol": 2
+      },
+      "snippets": [],
+      "city": "Stavropol",
+      "city_id": 1435837,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Stavropol/gorod_Deli_2098491/?from=1435837&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Belgorod/?from=2098491&to=1414841&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374750,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "belgorod": 2
+      },
+      "snippets": [],
+      "city": "Belgorod",
+      "city_id": 1414841,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Belgorod/?from=2098491&to=1414841&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Belgorod/gorod_Deli_2098491/?from=1414841&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374737,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "belgorod": 2
+      },
+      "snippets": [],
+      "city": "Belgorod",
+      "city_id": 1414841,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Belgorod/gorod_Deli_2098491/?from=1414841&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Ulyanovsk/?from=2098491&to=1351868&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374154,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "ulyanovsk": 2
+      },
+      "snippets": [],
+      "city": "Ulyanovsk",
+      "city_id": 1351868,
+      "direction": "delhi_to_city",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Deli_2098491/gorod_Ulyanovsk/?from=2098491&to=1351868&date=26.09.2026&travelers=1&amount=1"
+    },
+    {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://bus.tutu.ru/raspisanie/gorod_Ulyanovsk/gorod_Deli_2098491/?from=1351868&to=2098491&date=26.09.2026&travelers=1&amount=1",
+      "bytes": 374755,
+      "title": "Билеты онлайн и расписание автобусов",
+      "hits": {
+        "маршрут": 2,
+        "дели": 5,
+        "ulyanovsk": 2
+      },
+      "snippets": [],
+      "city": "Ulyanovsk",
+      "city_id": 1351868,
+      "direction": "city_to_delhi",
+      "url": "https://bus.tutu.ru/raspisanie/gorod_Ulyanovsk/gorod_Deli_2098491/?from=1351868&to=2098491&date=26.09.2026&travelers=1&amount=1"
+    }
+  ]
+}
