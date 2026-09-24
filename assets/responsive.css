@@ -841,3 +841,8 @@
   .search.search-v2 .v2-field--always-caption .v2-caption { display: block; }
   .search.search-v2 .v2-field--place:not(.has-value) .v2-input { height: 26px; min-height: 26px; }
 }
+
+/* The hotel location line stays on one row, so it needs a proper ellipsis
+   instead of being cut mid-word (English names are the longest). */
+.hotel-top { overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 430px) { .hotel-top { font-size: 12px; } }
