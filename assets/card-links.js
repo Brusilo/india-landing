@@ -99,7 +99,7 @@
         const inr=Math.round(d.price*RUB_TO_INR);
         const night=lang==='ru'?'за ночь':lang==='hi'?'प्रति रात':'per night';
         if(lang==='ru')price.innerHTML='<span class="price">'+nf(d.price)+' ₽ <span class="hotel-night">'+night+'</span></span><span class="price-alt">≈ ₹'+nf(inr)+'</span>';
-        else if(lang==='hi')price.innerHTML='<span class="price">₹'+nf(inr)+' से <span class="hotel-night">'+night+'</span></span><span class="price-alt">≈ '+nf(d.price)+' ₽</span>';
+        else if(lang==='hi')price.innerHTML='<span class="price">₹'+nf(inr)+' <span class="hotel-night">'+night+'</span></span><span class="price-alt">≈ '+nf(d.price)+' ₽</span>';
         else price.innerHTML='<span class="price">₹'+nf(inr)+' <span class="hotel-night">'+night+'</span></span><span class="price-alt">≈ '+nf(d.price)+' ₽</span>';
       }
       activate(card,d.url);
