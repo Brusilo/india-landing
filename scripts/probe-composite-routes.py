@@ -28,7 +28,7 @@ def fetch(u):
             m=re.search(r"<title[^>]*>(.*?)</title>",text,re.I|re.S)
             if m:title=re.sub(r"\s+"," ",re.sub("<[^>]+>","",m.group(1))).strip()
             low=text.lower()
-            keys=["пересад","составн","маршрут","дели","tver","smolensk","ryazan","tula","oryol","yaro","saratov","volgograd","voronezh","kursk","penza","tambov","joshkar","cheboksary","saransk","nizhn","pskov","stavropol","belgorod","ulyanovsk"]
+            keys=["пересад","составн","маршрут","дели","tver","smolensk","ryazan","tula","oryol","yaro","saratov","voronezh","kursk","penza","tambov","joshkar","cheboksary","saransk","pskov","belgorod","ulyanovsk","rostov","ivanovo","arhangelsk"]
             hits={k:low.count(k) for k in keys if low.count(k)}
             snippets=[]
             for k in ["пересад","составн"]:
