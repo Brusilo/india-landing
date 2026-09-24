@@ -156,7 +156,13 @@
 
   function renderSuggestions(input,role){
     const field=input.closest('.v2-field--place'),box=field.querySelector('.search-suggest'),q=input.value.trim();
-    const allowed=p=>!window.TUTU_LINKS||window.TUTU_LINKS.supports(mode,p);
+    const s=states[mode],other=mode==='hotel'?null:(role==='from'?s.to:s.from);
+    const allowed=p=>{
+      if(!window.TUTU_LINKS)return true;
+      if(mode==='hotel')return TUTU_LINKS.supports(mode,p);
+      if(other)return TUTU_LINKS.canRoute(mode,other,p);
+      return TUTU_LINKS.supports(mode,p)||TUTU_LINKS.supportsCompositeEndpoint(p);
+    };
     const results=q?TUTU_PLACES.search(q,6,allowed):preferredPlaces(role).filter(allowed).slice(0,6);
     box.innerHTML=results.map((p,i)=>{
       const d=TUTU_PLACES.display(p,pageLang);
@@ -345,12 +351,19 @@
     // Exact multilingual names are enough; partial/ambiguous input is never guessed.
     roles.forEach(role=>{
       if(state[role])return;
-      const p=TUTU_PLACES.resolveExact(state[role+'Text'],p=>!window.TUTU_LINKS||TUTU_LINKS.supports(mode,p));
+      const p=TUTU_PLACES.resolveExact(state[role+'Text'],p=>{
+        if(!window.TUTU_LINKS)return true;
+        if(mode==='hotel')return TUTU_LINKS.supports(mode,p);
+        return TUTU_LINKS.supports(mode,p)||TUTU_LINKS.supportsCompositeEndpoint(p);
+      });
       const input=form.querySelector('[data-role="'+role+'"] input');
       if(p&&input)setPlace(role,p,input);
     });
     const unknown=roles.some(role=>String(state[role+'Text']||'').trim()&&!state[role]);
     if(unknown){window.location.assign('https://www.tutu.ru/');return}
+    if(mode!=='hotel'&&state.from&&state.to&&!TUTU_LINKS.canRoute(mode,state.from,state.to)){
+      window.location.assign('https://www.tutu.ru/');return;
+    }
     try{
       if(!window.TUTU_LINKS){window.location.assign('https://www.tutu.ru/');return}
       const url=window.TUTU_LINKS.build(mode,state);

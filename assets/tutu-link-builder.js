@@ -16,6 +16,37 @@
 
   const railCountries=new Set(['RU','BY','KZ','UZ','KG','TJ','AM','AZ','MD','GE']);
 
+  /*
+   * Curated mixed-mode entry points discovered on Tutu's public bus search.
+   * These are deliberately allowlisted, not inferred: all 20 Delhi <-> university-city
+   * pairs were live-checked in both directions on 2026-09-24.
+   */
+  const COMPOSITE_HUB='in-delhi';
+  const compositeCities={
+    'in-delhi':{slug:'Deli_2098491',geo:2098491},
+    'ru-tver':{slug:'Tver',geo:1369087},
+    'ru-ryazan':{slug:'Ryazan',geo:1312827},
+    'ru-smolensk':{slug:'Smolensk',geo:1403603},
+    'ru-tula':{slug:'Tula',geo:1422403},
+    'ru-oryol':{slug:'Oryol',geo:1407808},
+    'ru-belgorod':{slug:'Belgorod',geo:1414841},
+    'ru-kursk':{slug:'Kursk',geo:1416451},
+    'ru-voronezh':{slug:'Voronezh',geo:1381189},
+    'ru-rostov-on-don':{slug:'Rostov-na-Donu',geo:1391657},
+    'ru-yoshkar-ola':{slug:'Joshkar-Ola',geo:1356140},
+    'ru-cheboksary':{slug:'Cheboksary',geo:1352828},
+    'ru-saransk':{slug:'Saransk',geo:1432621},
+    'ru-penza':{slug:'Penza',geo:1393941},
+    'ru-pskov':{slug:'Pskov',geo:1360894},
+    'ru-yaroslavl':{slug:'Yaroslavl',geo:1397799},
+    'ru-ivanovo':{slug:'Ivanovo',geo:1444796},
+    'ru-tambov':{slug:'Tambov',geo:1382947},
+    'ru-ulyanovsk':{slug:'Ulyanovsk',geo:1351868},
+    'ru-arkhangelsk':{slug:'Arhangelsk',geo:1339817},
+    'ru-saratov':{slug:'Saratov',geo:1433947}
+  };
+
+
   function asciiWords(value){
     return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
   }
@@ -62,6 +93,27 @@
     return false;
   }
 
+  function supportsCompositeEndpoint(place){
+    return !!(place&&compositeCities[place.id]);
+  }
+  function supportsCompositePair(a,b){
+    if(!a||!b||samePlace(a,b))return false;
+    return (a.id===COMPOSITE_HUB&&!!compositeCities[b.id])||(b.id===COMPOSITE_HUB&&!!compositeCities[a.id]);
+  }
+  function supportsDirectPair(mode,a,b){
+    if(!a||!b)return false;
+    if(mode==='flight')return !!(destinations.flight[a.id]&&destinations.flight[b.id]);
+    if(mode==='train')return !!(destinations.train[a.id]&&destinations.train[b.id]);
+    if(mode==='bus'){
+      return !!(destinations.bus[a.id]&&destinations.bus[b.id])||
+        !!(destinations.train[a.id]&&destinations.train[b.id]);
+    }
+    return false;
+  }
+  function canRoute(mode,a,b){
+    return supportsDirectPair(mode,a,b)||supportsCompositePair(a,b);
+  }
+
   function buildHotel(s){
     requireValue(s.destination,'destination');
     requireDate(s.start,'hotelDates');requireDate(s.end,'hotelDates');
@@ -105,12 +157,24 @@
     return 'https://bus.tutu.ru/raspisanie/gorod_'+encodeURIComponent(from[0])+'/gorod_'+encodeURIComponent(to[0])+'/?'+params({from:from[1],to:to[1],date:dotted(s.date),travelers:token,amount:total(s)});
   }
 
+  function buildComposite(s){
+    requireValue(s.from,'from');requireValue(s.to,'to');requireDate(s.date,'date');
+    if(samePlace(s.from,s.to))fail('sameCity');
+    if(!supportsCompositePair(s.from,s.to))return HOME;
+    const token=travelerToken(s),from=compositeCities[s.from.id],to=compositeCities[s.to.id];
+    return 'https://bus.tutu.ru/raspisanie/gorod_'+encodeURIComponent(from.slug)+'/gorod_'+encodeURIComponent(to.slug)+'/?'+
+      params({from:from.geo,to:to.geo,date:dotted(s.date),travelers:token,amount:total(s)});
+  }
+
   function build(mode,state){
     if(mode==='hotel')return buildHotel(state);
-    if(mode==='flight')return buildAvia(state);
-    if(mode==='train')return buildTrain(state);
-    if(mode==='bus')return buildBus(state);
-    unsupported();
+    let direct;
+    if(mode==='flight')direct=buildAvia(state);
+    else if(mode==='train')direct=buildTrain(state);
+    else if(mode==='bus')direct=buildBus(state);
+    else unsupported();
+    if(direct!==HOME)return direct;
+    return buildComposite(state);
   }
 
   function isExact(mode,state){
@@ -127,5 +191,5 @@
   };
   function message(code,lang){const l=messages[lang]||messages.ru;return l[code]||l.unsupported}
 
-  window.TUTU_LINKS={build,message,supports,isExact,aviaSlug,railSlug,hotelSlug,travelerToken,aviaId,hotelGeoId,countrySlug,destinations};
+  window.TUTU_LINKS={build,buildComposite,message,supports,supportsCompositeEndpoint,supportsCompositePair,supportsDirectPair,canRoute,isExact,aviaSlug,railSlug,hotelSlug,travelerToken,aviaId,hotelGeoId,countrySlug,destinations,compositeCities};
 })();

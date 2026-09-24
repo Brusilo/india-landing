@@ -2,149 +2,53 @@ name: Research composite Tutu routes
 
 on:
   push:
-    paths:
-      - '.github/workflows/research-composite-routes.yml'
+    branches:
+      - composite-routes-20260924
 
 permissions:
   contents: read
 
 jobs:
-  probe:
+  regression:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate curated Delhi university routes
+      - uses: actions/checkout@v4
+      - name: JavaScript syntax
+        run: |
+          node --check assets/search-places.js
+          node --check assets/tutu-link-builder.js
+          node --check assets/search-v2.js
+      - name: Data and link regression
+        run: node tests/landing-data.cjs . /tmp/landing-data.json
+      - name: Composite UI smoke
         shell: bash
         run: |
           python3 -m pip install --quiet selenium
+          python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/site.log 2>&1 &
           python3 - <<'PY'
-          import json, re, urllib.request, urllib.parse, time
-          from pathlib import Path
+          import time
           from selenium import webdriver
           from selenium.webdriver.chrome.options import Options
+          from selenium.webdriver.common.by import By
 
-          DATE='26.09.2026'
-          DELHI_ID=2098491
-          cities=[
-            ('tver','Tver',1369087,'Тверь'),
-            ('ryazan','Ryazan',1312827,'Рязань'),
-            ('smolensk','Smolensk',1403603,'Смоленск'),
-            ('tula','Tula',1422403,'Тула'),
-            ('oryol','Oryol',1407808,'Орёл'),
-            ('belgorod','Belgorod',1414841,'Белгород'),
-            ('kursk','Kursk',1416451,'Курск'),
-            ('voronezh','Voronezh',1381189,'Воронеж'),
-            ('rostov','Rostov-na-Donu',1391657,'Ростов-на-Дону'),
-            ('yoshkar','Joshkar-Ola',1356140,'Йошкар-Ола'),
-            ('cheboksary','Cheboksary',1352828,'Чебоксары'),
-            ('saransk','Saransk',1432621,'Саранск'),
-            ('penza','Penza',1393941,'Пенза'),
-            ('pskov','Pskov',1360894,'Псков'),
-            ('yaroslavl','Yaroslavl',1397799,'Ярославль'),
-            ('ivanovo','Ivanovo',1444796,'Иваново'),
-            ('tambov','Tambov',1382947,'Тамбов'),
-            ('ulyanovsk','Ulyanovsk',1351868,'Ульяновск'),
-            ('arkhangelsk','Arhangelsk',1339817,'Архангельск'),
-            ('saratov','Saratov',1433947,'Саратов'),
-          ]
-
-          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/154 Safari/537.36'
-          def route_url(slug,cid,reverse=False):
-            if reverse:
-              path=f'gorod_{slug}/gorod_Deli_{DELHI_ID}/'
-              qs={'from':cid,'to':DELHI_ID,'date':DATE,'travelers':'1','amount':'1'}
-            else:
-              path=f'gorod_Deli_{DELHI_ID}/gorod_{slug}/'
-              qs={'from':DELHI_ID,'to':cid,'date':DATE,'travelers':'1','amount':'1'}
-            return 'https://bus.tutu.ru/raspisanie/'+path+'?'+urllib.parse.urlencode(qs)
-
-          def http_check(url,cid):
-            req=urllib.request.Request(url,headers={'User-Agent':UA,'Accept':'text/html,*/*;q=0.8'})
-            with urllib.request.urlopen(req,timeout=45) as r:
-              body=r.read().decode('utf-8','replace')
-              status=r.status; final=r.geturl()
-            title=''
-            m=re.search(r'<title[^>]*>(.*?)</title>',body,re.I|re.S)
-            if m:title=re.sub(r'\s+',' ',m.group(1)).strip()
-            low=body.lower()
-            return {
-              'status':status,'final':final,'size':len(body),'title':title,
-              'has_delhi_id':str(DELHI_ID) in body,'has_city_id':str(cid) in body,
-              'looks_404':('страница не найдена' in low or '<title>404' in low or 'page not found' in low)
-            }
-
-          opts=Options()
-          opts.add_argument('--headless=new')
-          opts.add_argument('--no-sandbox')
-          opts.add_argument('--disable-dev-shm-usage')
-          opts.add_argument('--window-size=1440,1000')
-          driver=webdriver.Chrome(options=opts)
-          driver.set_page_load_timeout(45)
-
-          results=[]
+          o=Options();o.add_argument('--headless=new');o.add_argument('--no-sandbox');o.add_argument('--disable-dev-shm-usage')
+          d=webdriver.Chrome(options=o)
           try:
-            for key,slug,cid,city_ru in cities:
-              item={'key':key,'slug':slug,'id':cid,'city_ru':city_ru}
-              for reverse in (False,True):
-                label='ru_to_delhi' if reverse else 'delhi_to_ru'
-                url=route_url(slug,cid,reverse)
-                item[label]={'url':url}
-                try:
-                  item[label].update(http_check(url,cid))
-                except Exception as e:
-                  item[label]['http_error']=repr(e)
-
-              # Browser-validate Delhi -> city: route form must resolve to Delhi and target city.
-              url=item['delhi_to_ru']['url']
-              try:
-                driver.get(url)
-                time.sleep(2.2)
-                dep=driver.find_elements('css selector','[data-ti="departure-suggest"] input')
-                arr=driver.find_elements('css selector','[data-ti="arrival-suggest"] input')
-                dep_val=dep[0].get_attribute('value') if dep else ''
-                arr_val=arr[0].get_attribute('value') if arr else ''
-                body=driver.find_element('tag name','body').text
-                item['browser']={
-                  'url':driver.current_url,
-                  'title':driver.title,
-                  'departure':dep_val,
-                  'arrival':arr_val,
-                  'body_has_delhi':'Дели' in body or 'Delhi' in body,
-                  'body_has_city':city_ru.lower() in body.lower(),
-                  'error_text':any(x in body.lower() for x in ['страница не найдена','что-то пошло не так','не удалось загрузить'])
-                }
-              except Exception as e:
-                item['browser']={'error':repr(e)}
-
-              h1=item['delhi_to_ru']
-              h2=item['ru_to_delhi']
-              b=item.get('browser',{})
-              item['verified']=(
-                h1.get('status')==200 and h2.get('status')==200 and
-                h1.get('size',0)>100000 and h2.get('size',0)>100000 and
-                not h1.get('looks_404') and not h2.get('looks_404') and
-                h1.get('has_delhi_id') and h1.get('has_city_id') and
-                h2.get('has_delhi_id') and h2.get('has_city_id') and
-                bool(b.get('departure')) and bool(b.get('arrival')) and not b.get('error_text',False)
-              )
-              print('RESULT',json.dumps(item,ensure_ascii=False))
-              results.append(item)
+            d.get('http://127.0.0.1:8000/index-ru.html')
+            for _ in range(30):
+              if d.find_elements(By.CSS_SELECTOR,'.search-v2'):break
+              time.sleep(.2)
+            f=d.find_element(By.CSS_SELECTOR,'[data-role="from"] input')
+            f.send_keys('Дели');time.sleep(.3)
+            d.find_element(By.CSS_SELECTOR,'[data-role="from"] [data-place-id="in-delhi"]').click()
+            t=d.find_element(By.CSS_SELECTOR,'[data-role="to"] input')
+            t.send_keys('Тверь');time.sleep(.3)
+            assert d.find_elements(By.CSS_SELECTOR,'[data-role="to"] [data-place-id="ru-tver"]'), 'Tver composite suggestion missing'
+            f.click();f.clear();f.send_keys('Mumbai');time.sleep(.3)
+            d.find_element(By.CSS_SELECTOR,'[data-role="from"] [data-place-id="in-mumbai"]').click()
+            t.click();t.clear();t.send_keys('Тверь');time.sleep(.3)
+            assert not d.find_elements(By.CSS_SELECTOR,'[data-role="to"] [data-place-id="ru-tver"]'), 'unverified Mumbai-Tver pair leaked'
+            print('COMPOSITE_UI_SMOKE_OK')
           finally:
-            driver.quit()
-
-          summary={
-            'date':DATE,
-            'total':len(results),
-            'verified':sum(1 for x in results if x['verified']),
-            'failed':[x['key'] for x in results if not x['verified']],
-            'results':results
-          }
-          Path('composite-route-audit.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
-          print('SUMMARY',json.dumps({k:summary[k] for k in ['date','total','verified','failed']},ensure_ascii=False))
-          if summary['verified'] < 15:
-            raise SystemExit('Fewer than 15 routes passed verification')
+            d.quit()
           PY
-      - name: Upload route audit
-        uses: actions/upload-artifact@v4
-        with:
-          name: composite-route-audit
-          path: composite-route-audit.json
