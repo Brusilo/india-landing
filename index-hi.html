@@ -1152,8 +1152,8 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
       <p class="hotel-name">${h.name}</p>
       <p class="hotel-meta">${h.type}${h.reviews ? ` · ${h.reviews}` : ''}</p>
       <div class="price-row hotel-price-row">
-        <span class="price">${fmtNum(rub)} ${CONFIG.currency} <span class="hotel-night">प्रति रात</span></span>
-        <span class="price-alt">≈ ₹${inrFmt}</span>
+        <span class="price">₹${inrFmt} <span class="hotel-night">प्रति रात</span></span>
+        <span class="price-alt">≈ ${fmtNum(rub)} ₽</span>
       </div>
     </div>
   </article>`;
@@ -1297,7 +1297,7 @@ initCarousel('reviews-row', 'reviews');
 <script src="assets/tutu-destinations.js?v=20260923-bus-ids"></script>
 <script src="assets/tutu-link-builder.js?v=20260924-composite-routes"></script>
 <script src="assets/search-v2.js?v=20260924-composite-routes"></script>
-<script src="assets/card-links.js?v=20260924-routes-2"></script>
+<script src="assets/card-links.js?v=20260924-hotel-currency-fix"></script>
 <script src="assets/responsive.js?v=20260917-metrika-2"></script>
 </body>
 </html>
