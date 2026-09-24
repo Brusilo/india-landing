@@ -107,3 +107,5 @@
     const cta=hotelRow.querySelector('.card--cta');if(cta)cta.href=hotelAllUrl();
   }
 })();
+
+// pages-deploy-nonce: 20260924-2059
