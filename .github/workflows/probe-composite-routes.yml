@@ -1,0 +1,29 @@
+name: Probe composite Tutu routes
+
+on:
+  push:
+    paths:
+      - 'scripts/probe-composite-routes.py'
+      - '.github/workflows/probe-composite-routes.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe candidate deep links
+        run: python3 scripts/probe-composite-routes.py
+      - name: Commit probe results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/composite-route-probe.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore: record composite route probe"
+            git push
+          fi
