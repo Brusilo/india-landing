@@ -52,5 +52,27 @@ for(const mode of ['flight','train','bus']){assert.throws(()=>L.build(mode,{...s
 for(const s of [{adults:0},{adults:1.2},{adults:10},{children:-1},{children:2,childAges:[3]},{childAges:[NaN]},{childAges:[18]}]){assert.throws(()=>L.travelerToken({...state(moscow),...s}),e=>e.code==='passengers');assertions++;}
 eq(L.travelerToken({adults:3,children:2,childAges:[0,6]}),'3.0.6','infant and child ages retained');
 const avia=new URL(L.build('flight',{...state(P.byId.get('ru-sochi')),to:moscow}));eq(avia.searchParams.get('class'),'C','business cabin');eq(avia.searchParams.get('travelers'),'3.6','flight travellers');ok(/^78-\d{8}-491$/.test(avia.searchParams.get('route[0]')),'flight route IDs and date');
+
+const tver=P.byId.get('ru-tver'),rostov=P.byId.get('ru-rostov-on-don'),mumbai=P.byId.get('in-mumbai');
+ok(tver&&rostov,'composite university cities are searchable');
+eq(Object.keys(L.compositeCities).length,21,'Delhi plus 20 curated university-city endpoints');
+for(const [id,d] of Object.entries(L.compositeCities)){
+ if(id==='in-delhi')continue;
+ const p=P.byId.get(id);ok(p,'curated city exists '+id);ok(L.supportsCompositePair(delhi,p),'Delhi pair allowlisted '+id);
+ const s={...state(delhi),from:delhi,to:p,cabin:'economy'};
+ const u=new URL(L.buildComposite(s));
+ eq(u.hostname,'bus.tutu.ru','composite host '+id);
+ eq(u.searchParams.get('from'),'2098491','Delhi geo ID '+id);
+ eq(u.searchParams.get('to'),String(d.geo),'target geo ID '+id);
+ eq(u.searchParams.get('travelers'),'3.6','composite ages '+id);
+ eq(u.searchParams.get('amount'),'4','composite total '+id);
+ ok(u.pathname.includes('/gorod_Deli_2098491/gorod_'+encodeURIComponent(d.slug)+'/'),'composite path '+id);
+ const rev=new URL(L.buildComposite({...s,from:p,to:delhi}));
+ eq(rev.searchParams.get('from'),String(d.geo),'reverse geo ID '+id);
+ eq(rev.searchParams.get('to'),'2098491','reverse Delhi geo ID '+id);
+}
+ok(L.canRoute('flight',delhi,tver),'Delhi-Tver is routable despite no Tver airport');
+eq(L.build('flight',{...state(delhi),from:delhi,to:tver}),L.buildComposite({...state(delhi),from:delhi,to:tver}),'flight falls back to verified mixed route');
+eq(L.buildComposite({...state(mumbai),from:mumbai,to:tver}),'https://www.tutu.ru/','Mumbai-Tver is not guessed');
 const report={assertions,cityCount:P.places.length,nameVariants:names,localeInvariantLinks:links,coverage,resolved,fallbacks,verifiedAviaIds:Object.keys(L.aviaId).length,allPassed:true,externalAvailabilityTested:false};
 if(process.argv[3])fs.writeFileSync(process.argv[3],JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
