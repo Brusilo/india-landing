@@ -612,12 +612,6 @@
 .review-avatar--pink{background:var(--magenta)}
 .review-avatar--orange{background:var(--orange)}
 .review-avatar--green{background:var(--green)}
-.review-avatar--flag{
-  background:var(--white);
-  border:1px solid var(--line);
-  font-size:22px;
-  font-weight:400;
-}
 .review-card__author{
   min-width:0;
   font-size:16px;
