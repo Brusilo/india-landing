@@ -847,3 +847,12 @@
 .hotel-top { overflow: hidden; text-overflow: ellipsis; }
 /* On phones the line scales with the screen so long city names still fit whole. */
 @media (max-width: 520px) { .hotel-top { font-size: clamp(9px, 2.9vw, 13px); letter-spacing: -0.012em; } }
+
+/* Colour stability across browsers.
+   Some mobile browsers (Chrome's auto dark theme, Samsung Internet) repaint pages that do
+   not declare a scheme: white panels turn black and icons look washed out. Declaring the
+   page as light-only opts out of that repaint, and the explicit backgrounds below keep the
+   white blocks white even when a browser still tries. */
+:root { color-scheme: only light; }
+html, body { background-color: #fff; }
+.promo-section { background-color: #fff; }
