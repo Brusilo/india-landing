@@ -1,0 +1,82 @@
+name: Research composite Tutu routes
+
+on:
+  push:
+    paths:
+      - '.github/workflows/research-composite-routes.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Browser probe
+        shell: bash
+        run: |
+          python3 -m pip install --quiet selenium
+          python3 - <<'PY'
+          import json, time, re
+          from selenium import webdriver
+          from selenium.webdriver.chrome.options import Options
+          from selenium.webdriver.common.keys import Keys
+
+          o=Options()
+          o.add_argument('--headless=new')
+          o.add_argument('--no-sandbox')
+          o.add_argument('--disable-dev-shm-usage')
+          o.add_argument('--window-size=1440,1000')
+          o.set_capability('goog:loggingPrefs', {'performance':'ALL'})
+          d=webdriver.Chrome(options=o)
+          d.set_page_load_timeout(45)
+
+          def snippet(src, needle, radius=1600):
+              low=src.lower(); pos=low.find(needle.lower())
+              if pos<0: return ''
+              return re.sub(r'\s+',' ',src[max(0,pos-radius):pos+radius])
+
+          try:
+              d.get('https://bus.tutu.ru/raspisanie/')
+              time.sleep(3)
+              print('TITLE', d.title)
+              inputs=d.find_elements('css selector','input')
+              for idx,x in enumerate(inputs):
+                  print('INPUT',idx,{k:x.get_attribute(k) for k in ['placeholder','name','type','data-testid','aria-label','class']})
+              text_inputs=[x for x in inputs if (x.get_attribute('type') or 'text') in ('text','search','')]
+              print('TEXT_INPUTS',len(text_inputs))
+              for query in ['Дели','Мумбаи','Delhi','Mumbai']:
+                  # Try likely first route input.
+                  target=None
+                  for x in text_inputs:
+                      ph=(x.get_attribute('placeholder') or '').lower()
+                      ar=(x.get_attribute('aria-label') or '').lower()
+                      if 'откуда' in ph or 'from' in ph or 'откуда' in ar or 'from' in ar:
+                          target=x;break
+                  if target is None and text_inputs: target=text_inputs[0]
+                  if target is None: continue
+                  try:
+                      target.click()
+                      target.send_keys(Keys.CONTROL,'a')
+                      target.send_keys(query)
+                      time.sleep(2.5)
+                      src=d.page_source
+                      print('QUERY',query,'VALUE',target.get_attribute('value'))
+                      for needle in [query,'2098491','Мумбаи','Mumbai','Дели','Deli']:
+                          s=snippet(src,needle,1100)
+                          if s: print('SNIPPET',query,needle,s[:2400])
+                      # Network URLs after typing.
+                      for ent in d.get_log('performance'):
+                          try:
+                              msg=json.loads(ent['message'])['message']
+                              if msg.get('method')=='Network.responseReceived':
+                                  u=msg['params']['response']['url']
+                                  if any(k in u.lower() for k in ['suggest','autocomplete','search','location','locality','city']):
+                                      print('NET',query,msg['params']['response']['status'],u)
+                          except Exception:
+                              pass
+                  except Exception as e:
+                      print('QUERY_ERR',query,repr(e))
+          finally:
+              d.quit()
+          PY
