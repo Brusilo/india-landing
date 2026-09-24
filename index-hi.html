@@ -1151,7 +1151,7 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
       <p class="hotel-name">${h.name}</p>
       <p class="hotel-meta">${h.type}${h.reviews ? ` · ${h.reviews}` : ''}</p>
       <div class="price-row hotel-price-row">
-        <span class="price">${fmtNum(rub)} ${CONFIG.currency} से <span class="hotel-night">प्रति रात</span></span>
+        <span class="price">${fmtNum(rub)} ${CONFIG.currency} <span class="hotel-night">प्रति रात</span></span>
         <span class="price-alt">≈ ₹${inrFmt}</span>
       </div>
     </div>
