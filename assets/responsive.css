@@ -861,10 +861,10 @@ html, body { background-color: #fff; }
    and a shared row for the two dates on phones. */
 @media (min-width: 1101px) {
   .search.search-v2[data-mode="flight"] {
-    grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(132px, .56fr) minmax(132px, .56fr) minmax(212px, .86fr) 150px;
+    grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(150px, .58fr) minmax(150px, .58fr) minmax(224px, .88fr) 138px;
   }
   .search-hints.search-hints-v2[data-mode="flight"] {
-    grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(132px, .56fr) minmax(132px, .56fr) minmax(212px, .86fr) 150px;
+    grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(150px, .58fr) minmax(150px, .58fr) minmax(224px, .88fr) 138px;
   }
 }
 @media (max-width: 1100px) {
