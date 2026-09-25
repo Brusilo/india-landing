@@ -739,7 +739,7 @@
 @media(min-width:1101px){
   .hero>.hero-decor--suitcase{width:680px!important;left:calc(50% + 123px)!important;right:auto!important;top:-12px!important}
   #routes>.section-decor--ticket{width:420px!important;left:calc(50% + 427px)!important;right:auto!important;top:-37px!important}
-  #hotels>.section-decor--keys{width:300px!important;left:calc(50% - 828px)!important;right:auto!important;top:40px!important}
+  #hotels>.section-decor--keys{width:300px!important;left:calc(50% - 812px)!important;right:auto!important;top:40px!important}
 }
 /* Fractions below 1 made the columns leave a gap on mid-width screens (e.g. a phone in desktop mode). */
 @media(min-width:768px){
@@ -824,7 +824,7 @@
   .search-v2 .v2-submit { min-height: 58px; }
   .search-hints.search-hints-v2 { margin-top: 5px; }
   .search-hints-v2 .quick-chip-v2 { padding: 4px 8px; font-size: 11.5px; }
-  .hero > .hero-decor--suitcase { width: 560px !important; top: 6px !important; }
+  .hero > .hero-decor--suitcase { width: 600px !important; top: -14px !important; }
   /* The Hindi title fits on one line while the others need two, which used to make that
      header shorter. Reserving two lines keeps every language aligned below the title. */
   .hero h1 { min-height: calc(46px * 1.05 * 2); }
