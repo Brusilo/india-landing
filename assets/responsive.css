@@ -739,7 +739,7 @@
 @media(min-width:1101px){
   .hero>.hero-decor--suitcase{width:680px!important;left:calc(50% + 123px)!important;right:auto!important;top:-12px!important}
   #routes>.section-decor--ticket{width:420px!important;left:calc(50% + 427px)!important;right:auto!important;top:-37px!important}
-  #hotels>.section-decor--keys{width:300px!important;left:calc(50% - 812px)!important;right:auto!important;top:40px!important}
+  #hotels>.section-decor--keys{width:300px!important;left:calc(50% - 832px)!important;right:auto!important;top:40px!important}
 }
 /* Fractions below 1 made the columns leave a gap on mid-width screens (e.g. a phone in desktop mode). */
 @media(min-width:768px){
