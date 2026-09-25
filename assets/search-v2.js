@@ -12,7 +12,7 @@
   const modes=['hotel','flight','train','bus'];
   const labels={
     ru:{
-      from:'Откуда',to:'Куда',when:'Когда',flightWho:'Кто летит',travelWho:'Кто едет',swap:'Поменять местами',search:'Найти',
+      from:'Откуда',to:'Куда',when:'Когда',back:'Обратно',flightWho:'Кто летит',travelWho:'Кто едет',swap:'Поменять местами',search:'Найти',
       hotelWhere:'Город',hotelDates:'Заезд — выезд',guests:'Кто едет',
       adults:'Взрослые',adultSub:'От 12 лет',children:'Дети',childSub:'До 18 лет',childAge:'Возраст ребёнка',years:'лет',
       economy:'Эконом',business:'Бизнес',cabin:'Класс обслуживания',
@@ -21,7 +21,7 @@
       prev:'Предыдущий месяц',next:'Следующий месяц'
     },
     en:{
-      from:'From',to:'To',when:'When',flightWho:'Travellers',travelWho:'Travellers',swap:'Swap places',search:'Search',
+      from:'From',to:'To',when:'When',back:'Return',flightWho:'Travellers',travelWho:'Travellers',swap:'Swap places',search:'Search',
       hotelWhere:'City',hotelDates:'Check-in — check-out',guests:'Guests',
       adults:'Adults',adultSub:'12+ years',children:'Children',childSub:'Under 18',childAge:'Child age',years:'years',
       economy:'Economy',business:'Business',cabin:'Cabin class',
@@ -30,7 +30,7 @@
       prev:'Previous month',next:'Next month'
     },
     hi:{
-      from:'कहाँ से',to:'कहाँ तक',when:'तारीख़',flightWho:'यात्री',travelWho:'यात्री',swap:'आपस में बदलें',search:'खोजें',
+      from:'कहाँ से',to:'कहाँ तक',when:'तारीख़',back:'वापसी',flightWho:'यात्री',travelWho:'यात्री',swap:'आपस में बदलें',search:'खोजें',
       hotelWhere:'शहर',hotelDates:'चेक-इन — चेक-आउट',guests:'मेहमान',
       adults:'वयस्क',adultSub:'12 साल या उससे ज़्यादा',children:'बच्चे',childSub:'18 साल से कम',childAge:'बच्चे की उम्र',years:'साल',
       economy:'इकोनॉमी',business:'बिज़नेस',cabin:'केबिन क्लास',
@@ -41,7 +41,7 @@
   }[pageLang];
 
   const states={
-    flight:{fromText:'',toText:'',from:null,to:null,date:null,adults:1,children:0,childAges:[],cabin:'economy'},
+    flight:{fromText:'',toText:'',from:null,to:null,date:null,returnDate:null,adults:1,children:0,childAges:[],cabin:'economy'},
     train:{fromText:'',toText:'',from:null,to:null,date:null,adults:1,children:0,childAges:[],cabin:null},
     bus:{fromText:'',toText:'',from:null,to:null,date:null,adults:1,children:0,childAges:[],cabin:null},
     hotel:{destinationText:'',destination:null,start:null,end:null,adults:2,children:0,childAges:[],cabin:null}
@@ -106,9 +106,11 @@
       '<div class="search-suggest" role="listbox" id="suggest-'+role+'" hidden></div></div>';
   }
 
-  function dateField(caption,value){
-    return '<div class="v2-field v2-field--date '+(value?'has-value':'')+'" data-role="date">'+
-      '<button type="button" class="v2-trigger" data-trigger="date" aria-haspopup="dialog"><span class="v2-caption">'+esc(caption)+'</span><span class="v2-value">'+esc(value||caption)+'</span></button><div class="v2-calendar" hidden></div></div>';
+  /* role is 'date' for the outbound leg and 'return' for the optional way back. */
+  function dateField(caption,value,role){
+    role=role||'date';
+    return '<div class="v2-field v2-field--date '+(role==='return'?'v2-field--return ':'')+(value?'has-value':'')+'" data-role="'+role+'">'+
+      '<button type="button" class="v2-trigger" data-trigger="'+role+'" aria-haspopup="dialog"><span class="v2-caption">'+esc(caption)+'</span><span class="v2-value">'+esc(value||caption)+'</span></button><div class="v2-calendar" hidden></div></div>';
   }
 
   function paxField(caption){
@@ -130,6 +132,7 @@
         '<button type="button" class="v2-swap" aria-label="'+esc(labels.swap)+'"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span></button>'+
         placeField('to',labels.to,labels.to,s.toText,s.to)+
         dateField(labels.when,formatSingle(s.date))+
+        (mode==='flight'?dateField(labels.back,formatSingle(s.returnDate),'return'):'')+
         paxField(who)+
         '<button type="submit" class="v2-submit">'+esc(labels.search)+'</button>';
     }
@@ -235,17 +238,23 @@
     });
   }
 
-  function calendarClasses(date,s){
+  function calendarClasses(date,s,role){
     if(mode==='hotel'){
       if(s.start&&+date===+s.start)return ' is-range-start';
       if(s.end&&+date===+s.end)return ' is-range-end';
       if(s.start&&s.end&&date>s.start&&date<s.end)return ' is-in-range';
       return '';
     }
+    if(role==='return'){
+      if(s.date&&+date===+s.date)return ' is-range-start';
+      if(s.returnDate&&+date===+s.returnDate)return ' is-range-end';
+      if(s.date&&s.returnDate&&date>s.date&&date<s.returnDate)return ' is-in-range';
+      return '';
+    }
     return s.date&&+date===+s.date?' is-selected':'';
   }
 
-  function renderCalendar(box){
+  function renderCalendar(box,role){
     const s=states[mode],y=calendarView.getFullYear(),m=calendarView.getMonth();
     const offset=(new Date(y,m,1).getDay()+6)%7,count=new Date(y,m+1,0).getDate();
     const title=monthFmt.format(calendarView);
@@ -253,41 +262,60 @@
     for(let i=0;i<7;i++)html+='<span class="cal-wd">'+esc(weekdayFmt.format(new Date(2024,0,1+i)))+'</span>';
     html+='<span></span>'.repeat(offset);
     for(let d=1;d<=count;d++){
-      const date=new Date(y,m,d),disabled=date<today;
-      html+='<button type="button" class="cal-day'+calendarClasses(date,s)+'" data-date="'+iso(date)+'" '+(disabled?'disabled':'')+'>'+d+'</button>';
+      // The way back can never be earlier than the outbound date.
+      const date=new Date(y,m,d),min=role==='return'&&s.date&&s.date>today?s.date:today,disabled=date<min;
+      html+='<button type="button" class="cal-day'+calendarClasses(date,s,role)+'" data-date="'+iso(date)+'" '+(disabled?'disabled':'')+'>'+d+'</button>';
     }
     box.innerHTML=html+'</div>';
   }
 
   function parseIso(value){const [y,m,d]=value.split('-').map(Number);return new Date(y,m-1,d)}
 
+  function paintDateField(field,role){
+    const s=states[mode];
+    const value=mode==='hotel'?formatRange(s.start,s.end):formatSingle(role==='return'?s.returnDate:s.date);
+    field.classList.toggle('has-value',!!value);
+    field.querySelector('.v2-value').textContent=value||(role==='return'?labels.back:labels.when);
+  }
+
   function bindCalendar(){
-    const field=form.querySelector('.v2-field--date');if(!field)return;
-    const trigger=field.querySelector('[data-trigger="date"]'),box=field.querySelector('.v2-calendar');
+    form.querySelectorAll('.v2-field--date').forEach(field=>bindCalendarField(field,field.dataset.role));
+  }
+
+  function bindCalendarField(field,role){
+    const trigger=field.querySelector('.v2-trigger'),box=field.querySelector('.v2-calendar');
     trigger.addEventListener('click',e=>{
       e.preventDefault();e.stopPropagation();
       const wasHidden=box.hidden;
       closeOverlays(box);
       if(wasHidden){
-        const s=states[mode],focusDate=mode==='hotel'?(s.start||today):(s.date||today);
+        const s=states[mode];
+        const focusDate=mode==='hotel'?(s.start||today):(role==='return'?(s.returnDate||s.date||today):(s.date||today));
         calendarView=new Date(focusDate.getFullYear(),focusDate.getMonth(),1);
-        renderCalendar(box);box.hidden=false;
+        renderCalendar(box,role);box.hidden=false;
       }else box.hidden=true;
     });
     box.addEventListener('click',e=>{
       e.preventDefault();e.stopPropagation();
       const nav=e.target.closest('.cal-nav');
-      if(nav){calendarView=new Date(calendarView.getFullYear(),calendarView.getMonth()+Number(nav.dataset.step),1);renderCalendar(box);return}
+      if(nav){calendarView=new Date(calendarView.getFullYear(),calendarView.getMonth()+Number(nav.dataset.step),1);renderCalendar(box,role);return}
       const day=e.target.closest('.cal-day');
       if(!day||day.disabled)return;
       const chosen=parseIso(day.dataset.date),s=states[mode];
       if(mode==='hotel'){
         if(!s.start||s.end||chosen<=s.start){s.start=chosen;s.end=null}
         else{s.end=chosen}
-      }else{s.date=chosen}
-      field.classList.add('has-value');
-      field.querySelector('.v2-value').textContent=mode==='hotel'?formatRange(s.start,s.end):formatSingle(s.date);
-      renderCalendar(box);
+      }else if(role==='return'){
+        // Clicking the chosen day again drops the return leg, so a one-way search stays easy.
+        s.returnDate=s.returnDate&&+s.returnDate===+chosen?null:chosen;
+      }else{
+        s.date=chosen;
+        if(s.returnDate&&s.returnDate<chosen)s.returnDate=null;
+      }
+      paintDateField(field,role);
+      const other=form.querySelector('.v2-field--date[data-role="'+(role==='return'?'date':'return')+'"]');
+      if(other)paintDateField(other,other.dataset.role);
+      renderCalendar(box,role);
       if(mode!=='hotel'||s.end)box.hidden=true;
       renderHints();
     });
@@ -388,7 +416,7 @@
     const s=states[mode];
     if(mode==='hotel'){
       const end=new Date(start);end.setDate(end.getDate()+(length||1));s.start=start;s.end=end;
-    }else{s.date=start}
+    }else{s.date=start;if(s.returnDate&&s.returnDate<start)s.returnDate=null}
     renderForm();
   }
 

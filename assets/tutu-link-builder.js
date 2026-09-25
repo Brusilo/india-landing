@@ -139,6 +139,12 @@
     const q={class:s.cabin==='business'?'C':'Y',travelers:token};
     // No search_extension: it promises a hotels tab that only Tutu's own search opens.
     q['route[0]']=from[1]+'-'+compact(s.date)+'-'+to[1];
+    // A return date turns the search into a round trip; Tutu reads it as the second leg.
+    if(s.returnDate){
+      requireDate(s.returnDate,'date');
+      if(s.returnDate<s.date)fail('date');
+      q['route[1]']=to[1]+'-'+compact(s.returnDate)+'-'+from[1];
+    }
     return 'https://avia.tutu.ru/f/'+encodeURIComponent(from[0])+'/'+encodeURIComponent(to[0])+'/?'+params(q);
   }
   function buildTrain(s){
