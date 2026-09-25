@@ -824,7 +824,7 @@
   .search-v2 .v2-submit { min-height: 58px; }
   .search-hints.search-hints-v2 { margin-top: 5px; }
   .search-hints-v2 .quick-chip-v2 { padding: 4px 8px; font-size: 11.5px; }
-  .hero > .hero-decor--suitcase { width: 600px !important; top: -14px !important; }
+  .hero > .hero-decor--suitcase { width: 580px !important; top: -14px !important; }
   /* The Hindi title fits on one line while the others need two, which used to make that
      header shorter. Reserving two lines keeps every language aligned below the title. */
   .hero h1 { min-height: calc(46px * 1.05 * 2); }
