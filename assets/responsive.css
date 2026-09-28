@@ -923,20 +923,41 @@ html, body { background-color: #fff; }
   }
   /* The top divider exists only below the inactive half. This visually joins
      the open calendar to the date field it belongs to without using colour. */
-  .search.search-v2[data-mode="flight"] .v2-flight-calendar::before {
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar::before,
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar::after {
     content: "";
     position: absolute;
-    top: 0;
-    height: 1px;
-    width: 50%;
-    background: #e6e7f3;
     pointer-events: none;
   }
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar::before {
+    top: 0;
+    height: 1px;
+    background: #e6e7f3;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar::after {
+    top: -10px;
+    width: 10px;
+    height: 10px;
+  }
   .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="date"]::before {
+    left: calc(50% + 10px);
+    width: calc(50% - 10px);
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="date"]::after {
     left: 50%;
+    border-left: 1px solid #e6e7f3;
+    border-bottom: 1px solid #e6e7f3;
+    border-bottom-left-radius: 10px;
   }
   .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="return"]::before {
     left: 0;
+    width: calc(50% - 10px);
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="return"]::after {
+    left: calc(50% - 10px);
+    border-right: 1px solid #e6e7f3;
+    border-bottom: 1px solid #e6e7f3;
+    border-bottom-right-radius: 10px;
   }
   .search.search-v2[data-mode="flight"] .v2-field--pax { grid-column: 1 / -1; }
 }
