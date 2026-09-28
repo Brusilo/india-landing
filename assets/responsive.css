@@ -926,15 +926,19 @@ html, body { background-color: #fff; }
   .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date[data-role="date"] {
     border-right: 0;
   }
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date[data-role="date"] {
+    z-index: 1;
+  }
   .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date[data-role="date"]::after {
     content: "";
     position: absolute;
     top: 0;
-    right: -1px;
+    right: 0;
     bottom: 8px;
     width: 1px;
     background: #e6e7f3;
     pointer-events: none;
+    z-index: 2;
   }
   .search.search-v2[data-mode="flight"] .v2-flight-calendar::before,
   .search.search-v2[data-mode="flight"] .v2-flight-calendar::after {
