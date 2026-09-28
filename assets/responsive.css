@@ -858,8 +858,8 @@
 html, body { background-color: #fff; }
 .promo-section { background-color: #fff; }
 
-/* Flights carry an optional return date, so that mode needs one column more on desktop
-   and a shared row for the two dates on phones. */
+/* Flights carry an optional return date: desktop keeps separate columns, while the
+   responsive layout gives each date the same full-width picker as other modes. */
 @media (min-width: 1101px) {
   .search.search-v2[data-mode="flight"] {
     grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(150px, .58fr) minmax(150px, .58fr) minmax(224px, .88fr) 138px;
@@ -870,12 +870,6 @@ html, body { background-color: #fff; }
 }
 @media (max-width: 1100px) {
   .search.search-v2[data-mode="flight"] { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 10px; }
-  .search.search-v2[data-mode="flight"] .v2-field--date[data-role="date"] { grid-column: 1; }
-  .search.search-v2[data-mode="flight"] .v2-field--return { grid-column: 2; }
-}
-/* On phones each flight date gets the same full-width treatment as every other
-   date field, so its inline calendar is not squeezed into a half-width column. */
-@media (max-width: 599px) {
   .search.search-v2[data-mode="flight"] .v2-field--date[data-role="date"],
   .search.search-v2[data-mode="flight"] .v2-field--return { grid-column: 1 / -1; }
 }
