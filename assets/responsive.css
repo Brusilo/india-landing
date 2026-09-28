@@ -921,64 +921,53 @@ html, body { background-color: #fff; }
     box-shadow: none;
     overflow: visible;
   }
-  /* The open field flows into the calendar: the rule under the fields covers only the
-     other half, and the centre line turns into it with a rounded corner. */
-  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date[data-role="date"] {
+  /* The divider is two shapes, both anchored to the bottom of the date row, so there is
+     no seam to line up: the open field draws the vertical line plus the corner, and the
+     closed field draws the rule that runs under it. */
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date {
     border-right: 0;
   }
-  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date[data-role="date"] {
-    z-index: 1;
-  }
-  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date[data-role="date"]::after {
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date::after {
     content: "";
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 8px;
-    width: 1px;
-    background: #e6e7f3;
     pointer-events: none;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date.is-calendar-active {
     z-index: 2;
   }
-  .search.search-v2[data-mode="flight"] .v2-flight-calendar::before,
-  .search.search-v2[data-mode="flight"] .v2-flight-calendar::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-  }
-  .search.search-v2[data-mode="flight"] .v2-flight-calendar::before {
-    /* One pixel up so the rule continues the rounded corner instead of stepping below it. */
-    top: -1px;
-    height: 1px;
-    background: #e6e7f3;
-  }
-  .search.search-v2[data-mode="flight"] .v2-flight-calendar::after {
-    top: -8px;
-    width: 8px;
-    height: 8px;
-    box-sizing: border-box;
-  }
-  /* Opened from "when": the rule runs under "return" only. */
-  .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="date"]::before {
-    left: calc(50% + 7px);
-    right: 0;
-  }
-  .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="date"]::after {
-    left: calc(50% - 1px);
+  /* Opened from "when": corner on the left field, rule under "return". */
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open:has([data-role="date"].is-calendar-active) .v2-field--date[data-role="date"]::after {
+    top: 0;
+    bottom: 0;
+    right: -8px;
+    width: 9px;
     border-left: 1px solid #e6e7f3;
     border-bottom: 1px solid #e6e7f3;
     border-bottom-left-radius: 8px;
   }
-  /* Opened from "return": mirrored. */
-  .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="return"]::before {
-    left: 0;
-    right: calc(50% + 7px);
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open:has([data-role="date"].is-calendar-active) .v2-field--return::after {
+    left: 8px;
+    right: 0;
+    bottom: 0;
+    height: 0;
+    border-bottom: 1px solid #e6e7f3;
   }
-  .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="return"]::after {
-    left: calc(50% - 7px);
+  /* Opened from "return": mirrored. */
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open:has([data-role="return"].is-calendar-active) .v2-field--return::after {
+    top: 0;
+    bottom: 0;
+    left: -8px;
+    width: 9px;
     border-right: 1px solid #e6e7f3;
     border-bottom: 1px solid #e6e7f3;
     border-bottom-right-radius: 8px;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open:has([data-role="return"].is-calendar-active) .v2-field--date[data-role="date"]::after {
+    left: 0;
+    right: 8px;
+    bottom: 0;
+    height: 0;
+    border-bottom: 1px solid #e6e7f3;
   }
   .search.search-v2[data-mode="flight"] .v2-field--pax { grid-column: 1 / -1; }
 }
