@@ -128,11 +128,13 @@
         '<button type="submit" class="v2-submit">'+esc(labels.search)+'</button>';
     }else{
       const who=mode==='flight'?labels.flightWho:labels.travelWho;
+      const dates=mode==='flight'
+        ?'<div class="v2-flight-dates">'+dateField(labels.when,formatSingle(s.date))+dateField(labels.back,formatSingle(s.returnDate),'return')+'<div class="v2-calendar v2-flight-calendar" hidden></div></div>'
+        :dateField(labels.when,formatSingle(s.date));
       form.innerHTML=placeField('from',labels.from,labels.from,s.fromText,s.from)+
         '<button type="button" class="v2-swap" aria-label="'+esc(labels.swap)+'"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span></button>'+
         placeField('to',labels.to,labels.to,s.toText,s.to)+
-        dateField(labels.when,formatSingle(s.date))+
-        (mode==='flight'?dateField(labels.back,formatSingle(s.returnDate),'return'):'')+
+        dates+
         paxField(who)+
         '<button type="submit" class="v2-submit">'+esc(labels.search)+'</button>';
     }
@@ -182,6 +184,9 @@
       const input=x.parentElement.querySelector('.v2-input');
       if(input){input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant')}
     });
+    if(!except||!except.classList.contains('v2-flight-calendar')){
+      form.querySelectorAll('.v2-field--date.is-calendar-active').forEach(x=>x.classList.remove('is-calendar-active'));
+    }
   }
 
   function setPlace(role,place,input){
@@ -278,47 +283,95 @@
     field.querySelector('.v2-value').textContent=value||(role==='return'?labels.back:labels.when);
   }
 
+  function compactFlightCalendar(){
+    return mode==='flight'&&window.matchMedia('(max-width: 1100px)').matches;
+  }
+
+  function setCalendarActive(role){
+    form.querySelectorAll('.v2-field--date').forEach(field=>{
+      field.classList.toggle('is-calendar-active',!!role&&field.dataset.role===role);
+    });
+  }
+
+  function handleCalendarClick(e,box,role,field){
+    e.preventDefault();e.stopPropagation();
+    const nav=e.target.closest('.cal-nav');
+    if(nav){
+      calendarView=new Date(calendarView.getFullYear(),calendarView.getMonth()+Number(nav.dataset.step),1);
+      renderCalendar(box,role);
+      return;
+    }
+    const day=e.target.closest('.cal-day');
+    if(!day||day.disabled)return;
+    const chosen=parseIso(day.dataset.date),s=states[mode];
+    if(mode==='hotel'){
+      if(!s.start||s.end||chosen<=s.start){s.start=chosen;s.end=null}
+      else{s.end=chosen}
+    }else if(role==='return'){
+      s.returnDate=s.returnDate&&+s.returnDate===+chosen?null:chosen;
+    }else{
+      s.date=chosen;
+      if(s.returnDate&&s.returnDate<chosen)s.returnDate=null;
+    }
+
+    if(field)paintDateField(field,role);
+    const other=form.querySelector('.v2-field--date[data-role="'+(role==='return'?'date':'return')+'"]');
+    if(other)paintDateField(other,other.dataset.role);
+
+    // On mobile, choosing the outbound flight date immediately turns the same
+    // full-width calendar into the return-date picker instead of closing it.
+    if(mode==='flight'&&box.classList.contains('v2-flight-calendar')&&role==='date'){
+      box.dataset.role='return';
+      setCalendarActive('return');
+      renderCalendar(box,'return');
+      renderHints();
+      return;
+    }
+
+    renderCalendar(box,role);
+    if(mode!=='hotel'||s.end){
+      box.hidden=true;
+      setCalendarActive(null);
+    }
+    renderHints();
+  }
+
   function bindCalendar(){
     form.querySelectorAll('.v2-field--date').forEach(field=>bindCalendarField(field,field.dataset.role));
+    const shared=form.querySelector('.v2-flight-calendar');
+    if(shared){
+      shared.addEventListener('click',e=>{
+        const role=shared.dataset.role||'date';
+        const field=form.querySelector('.v2-field--date[data-role="'+role+'"]');
+        handleCalendarClick(e,shared,role,field);
+      });
+    }
   }
 
   function bindCalendarField(field,role){
-    const trigger=field.querySelector('.v2-trigger'),box=field.querySelector('.v2-calendar');
+    const trigger=field.querySelector('.v2-trigger'),ownBox=field.querySelector('.v2-calendar');
     trigger.addEventListener('click',e=>{
       e.preventDefault();e.stopPropagation();
-      const wasHidden=box.hidden;
+      const shared=compactFlightCalendar()?form.querySelector('.v2-flight-calendar'):null;
+      const box=shared||ownBox;
+      const sameOpen=!box.hidden&&(!shared||box.dataset.role===role);
       closeOverlays(box);
-      if(wasHidden){
-        const s=states[mode];
-        const focusDate=mode==='hotel'?(s.start||today):(role==='return'?(s.returnDate||s.date||today):(s.date||today));
-        calendarView=new Date(focusDate.getFullYear(),focusDate.getMonth(),1);
-        renderCalendar(box,role);box.hidden=false;
-      }else box.hidden=true;
-    });
-    box.addEventListener('click',e=>{
-      e.preventDefault();e.stopPropagation();
-      const nav=e.target.closest('.cal-nav');
-      if(nav){calendarView=new Date(calendarView.getFullYear(),calendarView.getMonth()+Number(nav.dataset.step),1);renderCalendar(box,role);return}
-      const day=e.target.closest('.cal-day');
-      if(!day||day.disabled)return;
-      const chosen=parseIso(day.dataset.date),s=states[mode];
-      if(mode==='hotel'){
-        if(!s.start||s.end||chosen<=s.start){s.start=chosen;s.end=null}
-        else{s.end=chosen}
-      }else if(role==='return'){
-        // Clicking the chosen day again drops the return leg, so a one-way search stays easy.
-        s.returnDate=s.returnDate&&+s.returnDate===+chosen?null:chosen;
-      }else{
-        s.date=chosen;
-        if(s.returnDate&&s.returnDate<chosen)s.returnDate=null;
+      if(sameOpen){
+        box.hidden=true;
+        setCalendarActive(null);
+        return;
       }
-      paintDateField(field,role);
-      const other=form.querySelector('.v2-field--date[data-role="'+(role==='return'?'date':'return')+'"]');
-      if(other)paintDateField(other,other.dataset.role);
+      const s=states[mode];
+      const focusDate=mode==='hotel'?(s.start||today):(role==='return'?(s.returnDate||s.date||today):(s.date||today));
+      calendarView=new Date(focusDate.getFullYear(),focusDate.getMonth(),1);
+      if(shared){
+        box.dataset.role=role;
+        setCalendarActive(role);
+      }
       renderCalendar(box,role);
-      if(mode!=='hotel'||s.end)box.hidden=true;
-      renderHints();
+      box.hidden=false;
     });
+    ownBox.addEventListener('click',e=>handleCalendarClick(e,ownBox,role,field));
   }
 
   function renderGuestPopover(box){
