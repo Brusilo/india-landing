@@ -882,6 +882,7 @@ html, body { background-color: #fff; }
     grid-template-columns: repeat(2, minmax(0, 1fr));
     min-width: 0;
     overflow: visible;
+    border-radius: 16px;
   }
   .search.search-v2[data-mode="flight"] .v2-flight-dates .v2-field--date[data-role="date"] {
     grid-column: 1;
@@ -892,15 +893,18 @@ html, body { background-color: #fff; }
     grid-column: 2;
     border-radius: 0 16px 16px 0;
   }
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date[data-role="date"] {
+    border-radius: 16px 0 0 0;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--return {
+    border-radius: 0 16px 0 0;
+  }
   .search.search-v2[data-mode="flight"] .v2-flight-dates .v2-value {
     font-size: 16px !important;
     white-space: nowrap;
     overflow: hidden;
     overflow-wrap: normal;
     text-overflow: ellipsis;
-  }
-  .search.search-v2[data-mode="flight"] .v2-field--date.is-calendar-active {
-    background: #f7f4ff;
   }
   .search.search-v2[data-mode="flight"] .v2-flight-calendar {
     grid-column: 1 / -1;
@@ -909,13 +913,30 @@ html, body { background-color: #fff; }
     width: 100%;
     max-width: none;
     min-width: 0;
-    margin-top: 10px;
+    margin-top: 0;
     padding: 14px 16px 16px;
     border: 0;
-    border-radius: 16px;
+    border-radius: 0 0 16px 16px;
     background: #fff;
     box-shadow: none;
     overflow: visible;
+  }
+  /* The top divider exists only below the inactive half. This visually joins
+     the open calendar to the date field it belongs to without using colour. */
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 1px;
+    width: 50%;
+    background: #e6e7f3;
+    pointer-events: none;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="date"]::before {
+    left: 50%;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="return"]::before {
+    left: 0;
   }
   .search.search-v2[data-mode="flight"] .v2-field--pax { grid-column: 1 / -1; }
 }
