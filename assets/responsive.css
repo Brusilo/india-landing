@@ -858,11 +858,17 @@
 html, body { background-color: #fff; }
 .promo-section { background-color: #fff; }
 
-/* Flights carry an optional return date: desktop keeps separate columns, while the
-   responsive layout gives each date the same full-width picker as other modes. */
+/* Flights keep outbound and return side by side, but on responsive layouts both
+   controls open one shared full-width calendar underneath the pair. */
 @media (min-width: 1101px) {
   .search.search-v2[data-mode="flight"] {
     grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(150px, .58fr) minmax(150px, .58fr) minmax(224px, .88fr) 138px;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-dates {
+    grid-column: 4 / 6;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-width: 0;
   }
   .search-hints.search-hints-v2[data-mode="flight"] {
     grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) minmax(150px, .58fr) minmax(150px, .58fr) minmax(224px, .88fr) 138px;
@@ -870,11 +876,47 @@ html, body { background-color: #fff; }
 }
 @media (max-width: 1100px) {
   .search.search-v2[data-mode="flight"] { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 10px; }
-  .search.search-v2[data-mode="flight"] .v2-field--date[data-role="date"],
-  .search.search-v2[data-mode="flight"] .v2-field--return { grid-column: 1 / -1; }
-}
-@media (min-width: 600px) and (max-width: 1100px) {
-  /* On tablets the two dates share the row, so the traveller field takes the next one. */
+  .search.search-v2[data-mode="flight"] .v2-flight-dates {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-width: 0;
+    overflow: visible;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-dates .v2-field--date[data-role="date"] {
+    grid-column: 1;
+    border-radius: 16px 0 0 16px;
+    border-right: 1px solid #e6e7f3;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-dates .v2-field--return {
+    grid-column: 2;
+    border-radius: 0 16px 16px 0;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-dates .v2-value {
+    font-size: 16px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-wrap: normal;
+    text-overflow: ellipsis;
+  }
+  .search.search-v2[data-mode="flight"] .v2-field--date.is-calendar-active {
+    background: #f7f4ff;
+  }
+  .search.search-v2[data-mode="flight"] .v2-flight-calendar {
+    grid-column: 1 / -1;
+    position: relative;
+    inset: auto;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin-top: 10px;
+    padding: 14px 16px 16px;
+    border: 0;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: none;
+    overflow: visible;
+  }
   .search.search-v2[data-mode="flight"] .v2-field--pax { grid-column: 1 / -1; }
 }
 
