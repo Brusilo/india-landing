@@ -921,8 +921,8 @@ html, body { background-color: #fff; }
     box-shadow: none;
     overflow: visible;
   }
-  /* One continuous divider: the centre line stops before the bottom edge,
-     then a short 8px quarter-circle turns into the calendar divider. */
+  /* The open field flows into the calendar: the rule under the fields covers only the
+     other half, and the centre line turns into it with a rounded corner. */
   .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date[data-role="date"] {
     border-right: 0;
   }
@@ -953,22 +953,24 @@ html, body { background-color: #fff; }
     height: 8px;
     box-sizing: border-box;
   }
+  /* Opened from "when": the rule runs under "return" only. */
   .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="date"]::before {
-    left: calc(50% + 8px);
-    width: calc(50% - 8px);
+    left: calc(50% + 7px);
+    right: 0;
   }
   .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="date"]::after {
-    left: 50%;
+    left: calc(50% - 1px);
     border-left: 1px solid #e6e7f3;
     border-bottom: 1px solid #e6e7f3;
     border-bottom-left-radius: 8px;
   }
+  /* Opened from "return": mirrored. */
   .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="return"]::before {
     left: 0;
-    width: calc(50% - 8px);
+    right: calc(50% + 7px);
   }
   .search.search-v2[data-mode="flight"] .v2-flight-calendar[data-role="return"]::after {
-    left: calc(50% - 8px);
+    left: calc(50% - 7px);
     border-right: 1px solid #e6e7f3;
     border-bottom: 1px solid #e6e7f3;
     border-bottom-right-radius: 8px;

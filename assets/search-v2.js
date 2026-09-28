@@ -186,6 +186,9 @@
     });
     if(!except||!except.classList.contains('v2-flight-calendar')){
       form.querySelectorAll('.v2-field--date.is-calendar-active').forEach(x=>x.classList.remove('is-calendar-active'));
+      // The group keeps its own flag for the divider, so clear it with the calendar.
+      const group=form.querySelector('.v2-flight-dates');
+      if(group)group.classList.remove('is-calendar-open');
     }
   }
 
