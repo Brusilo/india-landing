@@ -947,7 +947,8 @@ html, body { background-color: #fff; }
     pointer-events: none;
   }
   .search.search-v2[data-mode="flight"] .v2-flight-calendar::before {
-    top: 0;
+    /* One pixel up so the rule continues the rounded corner instead of stepping below it. */
+    top: -1px;
     height: 1px;
     background: #e6e7f3;
   }
