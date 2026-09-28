@@ -291,6 +291,8 @@
     form.querySelectorAll('.v2-field--date').forEach(field=>{
       field.classList.toggle('is-calendar-active',!!role&&field.dataset.role===role);
     });
+    const group=form.querySelector('.v2-flight-dates');
+    if(group)group.classList.toggle('is-calendar-open',!!role);
   }
 
   function handleCalendarClick(e,box,role,field){
