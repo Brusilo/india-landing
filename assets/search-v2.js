@@ -320,17 +320,9 @@
     const other=form.querySelector('.v2-field--date[data-role="'+(role==='return'?'date':'return')+'"]');
     if(other)paintDateField(other,other.dataset.role);
 
-    // On mobile, choosing the outbound flight date immediately turns the same
-    // full-width calendar into the return-date picker instead of closing it.
-    if(mode==='flight'&&box.classList.contains('v2-flight-calendar')&&role==='date'){
-      box.dataset.role='return';
-      setCalendarActive('return');
-      renderCalendar(box,'return');
-      renderHints();
-      return;
-    }
-
     renderCalendar(box,role);
+    // Flight date pickers always close after a date is chosen. Hotels keep the
+    // calendar open until both check-in and check-out have been selected.
     if(mode!=='hotel'||s.end){
       box.hidden=true;
       setCalendarActive(null);
