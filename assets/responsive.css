@@ -996,21 +996,22 @@ html, body { background-color: #fff; }
   }
   .panel--transport h2,
   .panel--transport p { grid-column: 1; position: relative; z-index: 1; }
-  /* The artwork becomes a soft background mark on the right instead of a column. */
-  .panel.panel--transport .panel-ico {
-    /* Clear the old grid placement: for an absolutely positioned grid child it would
-       still define the containing block, which collapsed the artwork. */
-    grid-area: auto;
+  /* The artwork becomes a soft background mark on the right. The circle is drawn in CSS
+     and only the glyphs come from the file, so nothing is scaled up and it stays crisp. */
+  .panel.panel--transport .panel-ico { display: none; }
+  .panel.panel--transport::before {
+    content: "";
     position: absolute;
     top: 50%;
-    left: auto;
     right: -6px;
-    bottom: auto;
     transform: translateY(-50%);
-    width: 120px !important;
-    height: 120px !important;
-    margin: 0;
-    opacity: .5;
+    box-sizing: border-box;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    border: 7px solid #edefff;
+    background: url("icons/transport-mix-glyph.png?v=2") center / 126px 126px no-repeat;
+    opacity: .34;
     pointer-events: none;
   }
 }
