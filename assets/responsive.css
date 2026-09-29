@@ -4,7 +4,9 @@
   width: 128px; height: 128px;
   /* The illustration is a transparent glyph cluster, so the circle itself is a border. */
   box-sizing: border-box;
-  border: 7px solid rgba(237, 239, 255, .5);
+  border: 9px solid rgba(237, 239, 255, .5);
+  /* Padding keeps the glyphs to the same share of the circle as on phones. */
+  padding: 6px;
   border-radius: 50%;
   box-shadow: none;
   object-fit: contain;
@@ -1009,7 +1011,7 @@ html, body { background-color: #fff; }
     content: "";
     position: absolute;
     top: 50%;
-    right: 16px;
+    right: 2px;
     transform: translateY(-50%);
     box-sizing: border-box;
     width: 128px;
