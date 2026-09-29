@@ -2,6 +2,12 @@
 /* Only the transport callout gets a larger illustration. */
 .panel--transport .panel-ico {
   width: 128px; height: 128px;
+  /* The illustration is a transparent glyph cluster, so the circle itself is a border. */
+  box-sizing: border-box;
+  border: 7px solid rgba(237, 239, 255, .5);
+  border-radius: 50%;
+  box-shadow: none;
+  object-fit: contain;
   /* Center within the card rather than offsetting the illustration upward. */
   align-self: center;
   transform: none;
@@ -767,7 +773,7 @@
   .promo-section + #routes{padding-top:40px}
   .panel{padding:36px 48px}
   .panel-ico{width:88px;height:88px}
-  .panel--transport .panel-ico{width:104px;height:104px}
+  .panel--transport .panel-ico{width:128px;height:128px}
 }
 @media(min-width:1101px){
   #routes .row{margin-bottom:0}
@@ -1003,15 +1009,15 @@ html, body { background-color: #fff; }
     content: "";
     position: absolute;
     top: 50%;
-    right: 10px;
+    right: 16px;
     transform: translateY(-50%);
     box-sizing: border-box;
     width: 128px;
     height: 128px;
     border-radius: 50%;
     border: 7px solid #edefff;
-    background: url("icons/transport-mix-glyph.png?v=2") center / 126px 126px no-repeat;
-    opacity: .34;
+    background: url("icons/transport-mix-glyph.png?v=3") center / 98px 98px no-repeat;
+    opacity: .32;
     pointer-events: none;
   }
 }
