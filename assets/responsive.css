@@ -2,14 +2,6 @@
 /* Only the transport callout gets a larger illustration. */
 .panel--transport .panel-ico {
   width: 128px; height: 128px;
-  /* The illustration is a transparent glyph cluster, so the circle itself is a border. */
-  box-sizing: border-box;
-  border: 9px solid rgba(237, 239, 255, .5);
-  /* Padding keeps the glyphs to the same share of the circle as on phones. */
-  padding: 6px;
-  border-radius: 50%;
-  box-shadow: none;
-  object-fit: contain;
   /* Center within the card rather than offsetting the illustration upward. */
   align-self: center;
   transform: none;
@@ -775,7 +767,7 @@
   .promo-section + #routes{padding-top:40px}
   .panel{padding:36px 48px}
   .panel-ico{width:88px;height:88px}
-  .panel--transport .panel-ico{width:128px;height:128px}
+  .panel--transport .panel-ico{width:116px;height:116px}
 }
 @media(min-width:1101px){
   #routes .row{margin-bottom:0}
