@@ -1003,7 +1003,7 @@ html, body { background-color: #fff; }
     content: "";
     position: absolute;
     top: 50%;
-    right: -6px;
+    right: 10px;
     transform: translateY(-50%);
     box-sizing: border-box;
     width: 128px;
