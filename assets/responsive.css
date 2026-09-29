@@ -983,3 +983,34 @@ html, body { background-color: #fff; }
   .transport { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .transport .tours-tab { width: 100%; min-width: 0; min-height: 76px; }
 }
+
+/* On phones the "Get to any city" text was squeezed into a narrow column beside the
+   artwork, leaving a gap under it. The icon now sits next to the heading and the text
+   runs the full width. */
+@media (max-width: 600px) {
+  .panel.panel--transport {
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
+    overflow: hidden;
+  }
+  .panel--transport h2,
+  .panel--transport p { grid-column: 1; position: relative; z-index: 1; }
+  /* The artwork becomes a soft background mark on the right instead of a column. */
+  .panel.panel--transport .panel-ico {
+    /* Clear the old grid placement: for an absolutely positioned grid child it would
+       still define the containing block, which collapsed the artwork. */
+    grid-area: auto;
+    position: absolute;
+    top: 50%;
+    left: auto;
+    right: -6px;
+    bottom: auto;
+    transform: translateY(-50%);
+    width: 120px !important;
+    height: 120px !important;
+    margin: 0;
+    opacity: .5;
+    pointer-events: none;
+  }
+}
