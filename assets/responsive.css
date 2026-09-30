@@ -1011,7 +1011,7 @@ html, body { background-color: #fff; }
     border-radius: 50%;
     border: 7px solid #edefff;
     background: url("icons/transport-mix-glyph.png?v=3") center / 98px 98px no-repeat;
-    opacity: .32;
+    opacity: .288;
     pointer-events: none;
   }
 }
