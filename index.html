@@ -667,6 +667,7 @@ body{position:relative!important}
 <link rel="stylesheet" href="assets/search-v2.css?v=20260925-return-date">
 <script src="assets/site-language-faq-v26.js?v=20260921-translation-audit-3"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20260930b">
+<link rel="stylesheet" href="assets/tutu-system.css?v=26">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -691,7 +692,7 @@ body{position:relative!important}
 </header>
 
 <section class="hero">
-  <img class="hero-decor hero-decor--suitcase" src="assets/чемодан.png" alt="" aria-hidden="true">
+  <img class="hero-decor hero-decor--suitcase" src="assets/art/plane-cloud.webp" alt="" aria-hidden="true">
   <div class="container">
     <h1><span class="accent">Great-value</span> tickets across Russia</h1>
     <p class="hero-sub">Buses, trains and flights across the country, plus international flights back home.</p>
@@ -738,26 +739,23 @@ body{position:relative!important}
       </a>
     </div>
 
-    <form class="search" onsubmit="return false"><div class="field field--place" data-kind="from"><input id="f-from" type="text" placeholder="From" aria-label="From" autocomplete="off"><div class="search-suggest" hidden></div></div><button class="swap" type="button" aria-label="Swap places"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span></button><div class="field field--place" data-kind="to"><input id="f-to" type="text" placeholder="To" aria-label="To" autocomplete="off"><div class="search-suggest" hidden></div></div><div class="field field--date"><input id="f-date" type="text" placeholder="Date" aria-label="Date" autocomplete="off"></div><div class="field field--pax"><button type="button" class="pax-trigger" aria-haspopup="dialog" aria-expanded="false"><span class="pax-caption">Travellers</span><span class="pax-value">1 passenger, Economy</span></button><div class="pax-pop" role="dialog" hidden></div></div><button type="button" class="btn-search">Find</button></form>
+    <form id="search" class="search" onsubmit="return false"><div class="field field--place" data-kind="from"><input id="f-from" type="text" placeholder="From" aria-label="From" autocomplete="off"><div class="search-suggest" hidden></div></div><button class="swap" type="button" aria-label="Swap places"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span></button><div class="field field--place" data-kind="to"><input id="f-to" type="text" placeholder="To" aria-label="To" autocomplete="off"><div class="search-suggest" hidden></div></div><div class="field field--date"><input id="f-date" type="text" placeholder="Date" aria-label="Date" autocomplete="off"></div><div class="field field--pax"><button type="button" class="pax-trigger" aria-haspopup="dialog" aria-expanded="false"><span class="pax-caption">Travellers</span><span class="pax-value">1 passenger, Economy</span></button><div class="pax-pop" role="dialog" hidden></div></div><button type="button" class="btn-search">Find</button></form>
     <div class="search-hints" aria-label="Popular options"><div class="quick-group quick-from"></div><span></span><div class="quick-group quick-to"></div><div class="quick-group quick-date"><button type="button" class="quick-chip" data-quick-date="0">Today</button><button type="button" class="quick-chip" data-quick-date="1">Tomorrow</button></div></div>
   </div>
 </section>
 
 <section class="section promo-section">
   <div class="container">
-    <div class="promo-strip" role="region" aria-label="Promo code INDIA10">
-      <div class="promo-strip__action">
-        <img class="promo-ticket-art promo-ticket-art--1" src="assets/билетик скидка.png" alt="" aria-hidden="true">
-        <img class="promo-ticket-art promo-ticket-art--2" src="assets/билетик скидка.png" alt="" aria-hidden="true">
-        <img class="promo-ticket-art promo-ticket-art--3" src="assets/билетик скидка.png" alt="" aria-hidden="true">
-        <img class="promo-ticket-art promo-ticket-art--4" src="assets/билетик скидка.png" alt="" aria-hidden="true">
-        <div class="promo-strip__code" aria-label="Promo code">INDIA10</div>
-        <button type="button" class="promo-strip__copy" data-promo-code="INDIA10" data-copied-label="Copied">Copy</button>
-      </div>
+    <div class="promo-strip promo-strip--v2" role="region" aria-label="INDIA10">
       <div class="promo-strip__offer">
-        <h3><span class="promo-title-desktop">Save more on your trip</span><span class="promo-title-mobile">Save more!</span></h3>
+        <h3><span class="promo-title-desktop">More savings on your trip</span><span class="promo-title-mobile">More savings!</span></h3>
         <p><span class="promo-title-desktop">10% off tickets and hotels for you and your friends</span><span class="promo-title-mobile">10% off for you and your friends</span></p>
-      </div>
+      
+        <div class="promo-strip__action">
+          <div class="promo-strip__code" aria-label="Promo code">INDIA10</div>
+          <button type="button" class="promo-strip__copy" data-promo-code="INDIA10" data-copied-label="Copied">Copy</button>
+        </div>      </div>
+      <img class="promo-photo" src="assets/photos/friends-selfie.jpg" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
@@ -798,19 +796,19 @@ body{position:relative!important}
 
 <section class="section">
   <div class="container">
-    <div class="panel panel--accent panel--transport">
+    <div class="panel panel--accent panel--transport panel--photo">
       <div>
-        <h2>Get to any city</h2>
-        <p>We'll build the full route with a connection by train or bus. Tutu will show a convenient connection time and station maps to help you find your way easily.</p>
-      </div>
+        <h2><span class="panel-line">Get to</span><span class="panel-badge">any city</span></h2>
+        <p>We will build the full route with its connections. Tutu shows a convenient connection time and station maps to help you find your way.</p>      </div>
       <img class="panel-ico" src="assets/icons/transport-mix.png" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
 
-<section class="section section--cloud">
+<section class="section section--cloud section--group">
   <div class="container">
     <div class="section-head"><h2>Travelling with a group</h2></div>
+    <img class="group-banner" src="assets/photos/friends-map.jpg" alt="" aria-hidden="true">
     <div class="tiles tiles--4">
       <article class="tile">
         <h3>One booking for everyone</h3>
@@ -871,57 +869,41 @@ body{position:relative!important}
   </div>
 </section>
 
-<section class="section section--cloud">
-  <div class="container">
-    <div class="section-head"><h2>Why Tutu</h2></div>
-    <div class="tiles tiles--4">
-      <article class="tile">
-        <h3>Service in English</h3>
-        <p>The mobile app is available in English.</p>
-        <img class="tile-ico" src="assets/icons/chat.png" alt="" aria-hidden="true">
-      </article>
-      <article class="tile">
-        <h3>Everything in one place</h3>
-        <p>Compare prices for flights, trains, buses and hotels in one place.</p>
-        <img class="tile-ico" src="assets/icons/all-transport.png" alt="" aria-hidden="true">
-      </article>
-      <article class="tile">
-        <h3>Pay later</h3>
-        <p>Lock in the ticket price and buy it closer to the trip.</p>
-        <img class="tile-ico" src="assets/icons/pay-later.png" alt="" aria-hidden="true">
-      </article>
-      <article class="tile">
-        <h3>Extra value</h3>
-        <p>Save up to 20% on non-refundable tickets. On your birthday, get up to 30% for you and three friends.</p>
-        <img class="tile-ico" src="assets/icons/discount.png" alt="" aria-hidden="true">
-      </article>
-    </div>
-  </div>
-</section>
-
 <section class="section section--cloud" id="about">
   <div class="container">
-    <div class="section-head"><h2>About us</h2></div>
-    <div class="tiles tiles--4">
-      <article class="tile tile--stat">
-        <div class="stat-num">Since 2003</div>
-        <h3>23 years in business</h3>
-        <p>One of Russia's first travel services.</p>
+    <div class="section-head"><h2>Why Tutu</h2></div>
+    <div class="bento">
+      <article class="bento-cell bento-cell--hero bento-cell--art">
+        <span class="bento-sticker">24/7</span>
+        <h3>Support on hand</h3>
+        <p>Chat, email and phone. We reply in Russian and English, and the mobile app is in English too.</p>
+        <img class="bento-art" src="assets/art/bubbles.webp" alt="" aria-hidden="true">
       </article>
-      <article class="tile tile--stat">
-        <div class="stat-num">42 million</div>
+      <article class="bento-cell bento-cell--stat">
+        <span class="bento-sticker bento-sticker--lime">42 million</span>
         <h3>Travellers</h3>
         <p>That many people have already chosen Tutu.</p>
       </article>
-      <article class="tile tile--stat">
-        <div class="stat-num">10,000+</div>
+      <article class="bento-cell bento-cell--stat">
+        <span class="bento-sticker">Since 2003</span>
+        <h3>23 years in business</h3>
+        <p>One of the first travel services in Russia.</p>
+      </article>
+      <article class="bento-cell bento-cell--w2 bento-cell--art">
+        <h3>Extra value</h3>
+        <p>Save up to 20% on non-refundable tickets. On your birthday, get up to 30% for you and three friends.</p>
+        <img class="bento-art bento-art--cal" src="assets/art/calendar.png" alt="" aria-hidden="true">
+      </article>
+      <article class="bento-cell bento-cell--w2 bento-cell--art">
+        <h3>Pay later</h3>
+        <p>Lock in the ticket price and buy it closer to the trip.</p>
+        <img class="bento-art" src="assets/art/wallet-timer.png" alt="" aria-hidden="true">
+      </article>
+      <article class="bento-cell bento-cell--w2 bento-cell--art">
+        <span class="bento-sticker bento-sticker--lime">10,000+</span>
         <h3>Carriers</h3>
         <p>We work directly with airlines, Russian Railways and bus companies. No middlemen.</p>
-      </article>
-      <article class="tile tile--stat">
-        <div class="stat-num">24/7</div>
-        <h3>Support around the clock</h3>
-        <p>Chat, email and phone. We reply in Russian and English.</p>
+        <img class="bento-art bento-art--plane" src="assets/art/plane-swirl.webp" alt="" aria-hidden="true">
       </article>
     </div>
   </div>
@@ -1007,13 +989,13 @@ body{position:relative!important}
         <h4 class="footer-app-title">Tutu app</h4>
         <div class="footer-app-body">
           <div class="qr">
-            <img src="assets/qr.png" alt="QR code to download the Tutu app">
+            <img src="assets/qr-new.png" alt="QR code to download the Tutu app">
           </div>
           <div class="stores">
-            <a href="https://apps.apple.com/ru/app/жд-билеты-отели-авиабилеты/id1296791829" aria-label="App Store"><img src="assets/icons/store-apple.png?v=3" alt="App Store"></a>
-            <a href="https://play.google.com/store/apps/details?id=ru.tutu.tutu_emp" aria-label="Google Play"><img src="assets/icons/store-google.png" alt="Google Play"></a>
-            <a href="https://appgallery.huawei.com/?referrer=appmetrica_tracking_id%3D388656529861044970%26ym_tracking_id%3D12590289799764343143#/app/C100925545" aria-label="Huawei AppGallery"><img src="assets/icons/store-huawei.png" alt="Huawei AppGallery"></a>
-            <a href="https://www.rustore.ru/catalog/app/ru.tutu.tutu_emp" aria-label="RuStore"><img src="assets/icons/store-rustore.png" alt="RuStore"></a>
+            <a href="https://apps.apple.com/ru/app/жд-билеты-отели-авиабилеты/id1296791829" aria-label="App Store"><img src="assets/store-apple-new.png" alt="App Store"></a>
+            <a href="https://play.google.com/store/apps/details?id=ru.tutu.tutu_emp" aria-label="Google Play"><img src="assets/store-google-new.png" alt="Google Play"></a>
+            <a href="https://appgallery.huawei.com/?referrer=appmetrica_tracking_id%3D388656529861044970%26ym_tracking_id%3D12590289799764343143#/app/C100925545" aria-label="Huawei AppGallery"><img src="assets/store-huawei-new.png" alt="Huawei AppGallery"></a>
+            <a href="https://www.rustore.ru/catalog/app/ru.tutu.tutu_emp" aria-label="RuStore"><img src="assets/store-rustore-new.png" alt="RuStore"></a>
           </div>
         </div>
       </div>
@@ -1047,9 +1029,9 @@ body{position:relative!important}
 
         <h4 class="footer-h4-extra">Follow us</h4>
         <div class="socials">
-          <a href="https://t.me/tutu_travel" aria-label="Telegram"><img class="social" src="assets/icons/telegram.png" alt="Telegram"></a>
-          <a href="https://vk.ru/tu_tu_ru" aria-label="VK"><img class="social" src="assets/icons/vk.png" alt="VK"></a>
-          <a href="https://youtube.com/@tutu_ru" aria-label="YouTube"><img class="social" src="assets/icons/youtube.png" alt="YouTube"></a>
+          <a href="https://t.me/tutu_travel" aria-label="Telegram"><img class="social" src="assets/social-telegram.png" alt="Telegram"></a>
+          <a href="https://vk.ru/tu_tu_ru" aria-label="VK"><img class="social" src="assets/social-vk.png" alt="VK"></a>
+          <a href="https://youtube.com/@tutu_ru" aria-label="YouTube"><img class="social" src="assets/social-youtube.png" alt="YouTube"></a>
         </div>
       </div>
 

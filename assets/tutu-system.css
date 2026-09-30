@@ -1,0 +1,877 @@
+/* Tutu visual system.
+   Values measured on the live tutu.ru (computed styles, not guesses) and
+   cross-checked against the brand book and the ТутуЛенд Figma file.
+   Loaded last; remove the <link> to get the previous look back. */
+
+:root {
+  /* Surfaces */
+  --surface-neutral: #F5F5F9;
+  --surface-neutral-2: #F0F0F7;
+  --surface-brand: #F3F0FF;
+
+  /* Text */
+  --ink: #181C2D;
+  --ink-muted: #555A7A;
+
+  /* Actions */
+  --action: #7028EB;
+  --action-hover: #5F17C5;
+
+  /* Accents, used on badges and stickers only */
+  --strawberry: #FD5623;
+  --tangerine: #FF800A;
+  --rating-green: #48A22B;
+  --lime: #D0FF1A;
+
+  /* Geometry, as the live site uses it */
+  --r-panel: 32px;
+  --r-card: 16px;
+  --r-btn: 12px;
+  --r-pill: 9999px;
+}
+
+/* ---- Typography ----------------------------------------------------------
+   Section headings run 38/1.2 at weight 600 in the dark ink. */
+
+.section-head h2 {
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@media (min-width: 1101px) {
+  .section-head h2 { font-size: 38px; }
+}
+
+.stage .section-head h2,
+.panel--accent h2,
+.panel--dark h2 { color: #fff; }
+
+/* ---- Actions -------------------------------------------------------------
+   The search button is the site's primary action: violet, weight 600. */
+
+.search .btn-search,
+.btn-search {
+  background: var(--action) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
+.search .btn-search:hover,
+.btn-search:hover { background: var(--action-hover) !important; }
+
+/* Secondary actions are pills, the way the live site draws its filters. */
+.see-all {
+  border-radius: var(--r-pill);
+  padding: 9px 16px;
+  background: var(--surface-brand);
+  color: var(--action);
+  font-weight: 500;
+}
+
+.see-all:hover { background: #E7E0FF; }
+
+.stage .see-all,
+.panel--dark .see-all { background: rgba(255, 255, 255, .18); color: #fff; }
+.stage .see-all:hover { background: rgba(255, 255, 255, .28); }
+
+.pill { border-radius: var(--r-pill); }
+.quick-chip { border-radius: var(--r-pill); }
+
+/* ---- Panels and stages ---------------------------------------------------
+   Large feature panels are 32px, never more. */
+
+.panel,
+.stage,
+.promo-strip { border-radius: var(--r-panel); }
+
+.section--cloud { background: transparent; }
+
+.section--cloud > .container {
+  background: var(--surface-neutral);
+  border-radius: var(--r-panel);
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+@media (min-width: 1101px) {
+  .section--cloud > .container { padding: 48px 40px; }
+}
+
+/* The reviews block keeps its own dark stage inside the section. */
+.reviews-section > .container { background: transparent; padding-inline: 16px; }
+@media (min-width: 768px) { .reviews-section > .container { padding-inline: 24px; } }
+
+/* ---- Cards ---------------------------------------------------------------
+   Route and hotel cards: neutral fill, the photo inset with its own radius.
+   Measured on tutu.ru: card 16px, photo inset 4px, 12px under the text. */
+
+#routes .card:not(.card--cta),
+#hotels .card:not(.card--cta) {
+  background: var(--surface-neutral);
+  border: 4px solid transparent;
+  border-radius: 20px;
+}
+
+#routes .card:not(.card--cta) .card-media,
+#hotels .card:not(.card--cta) .card-media { border-radius: var(--r-card); }
+
+.tile { border-radius: 20px; }
+.faq-item { border-radius: var(--r-card); }
+.review-card { border-radius: 20px; }
+
+/* ---- Carousel arrows ------------------------------------------------------ */
+
+.carousel-nav button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface-brand);
+  color: var(--action);
+}
+
+.carousel-nav button:hover { background: #E7E0FF; }
+
+.stage .carousel-nav button { background: rgba(255, 255, 255, .22); color: #fff; }
+.stage .carousel-nav button:hover { background: rgba(255, 255, 255, .34); }
+
+/* ---- Stat stickers -------------------------------------------------------
+   The sticker rule from the review deck: text slanted 16 degrees, the plate
+   turned 8 degrees, caps, heaviest weight available. */
+
+.tile--stat .stat-num {
+  display: inline-block;
+  max-width: 100%;
+  margin-block: 4px 12px;
+  padding: 3px 14px 6px;
+  background: var(--strawberry);
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 12px;
+  transform: rotate(-8deg) skewX(-16deg);
+  transform-origin: left center;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .tile--stat .stat-num { font-size: clamp(17px, 5.4vw, 28px); padding: 3px 12px 6px; }
+}
+
+/* ---- Photo blocks --------------------------------------------------------
+   The Destinations pattern from the landing system: a photo fills the card and
+   a purple panel with a soft edge carries the text over it. Photos come from
+   the Фотобанк board in the review file. */
+
+.panel--photo {
+  position: relative;
+  overflow: hidden;
+  background: #A181FF url("photos/skate-train.jpg") right 38% / cover no-repeat;
+  min-height: 300px;
+  align-items: center;
+}
+
+.panel--photo > div {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+}
+
+.panel--photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, #A181FF 0%, #A181FF 38%, rgba(161, 129, 255, .88) 50%, rgba(161, 129, 255, 0) 72%);
+}
+
+.panel--photo .panel-ico { display: none !important; }
+
+@media (max-width: 900px) {
+  /* On phones the photo becomes a band across the top and the text sits on
+     solid purple underneath, so it stays readable. */
+  .panel.panel--transport.panel--photo {
+    background-image: none;
+    background-color: #A181FF;
+    min-height: 0;
+    padding-top: 186px;
+  }
+
+  .panel.panel--transport.panel--photo::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 170px;
+    border: 0;
+    border-radius: var(--r-panel) var(--r-panel) 0 0;
+    background: url("photos/skate-train.jpg") center 32% / cover no-repeat;
+    opacity: 1;
+    transform: none;
+  }
+
+  .panel--photo > div { max-width: none; }
+}
+
+/* A wide photo band under the group heading, to break up the card grid. */
+.group-banner {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 20px;
+  margin: 0 0 20px;
+}
+
+@media (min-width: 1101px) {
+  .group-banner { height: 260px; margin-bottom: 24px; }
+}
+
+/* ---- Bento --------------------------------------------------------------
+   The Social Proof / Simple Bento pattern from the landing system: purple
+   cells of two widths, numbers on tilted stickers, one 3D prop. */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (min-width: 900px) {
+  .bento { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+}
+
+.bento-cell {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 20px;
+  background: #A181FF;
+  color: #fff;
+}
+
+@media (min-width: 900px) {
+  .bento-cell { padding: 24px; border-radius: 24px; min-height: 176px; }
+}
+
+.bento-cell--w2 { grid-column: span 2; }
+
+.bento-cell h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@media (min-width: 900px) {
+  .bento-cell h3 { font-size: 22px; }
+}
+
+.bento-cell p {
+  margin: 0;
+  max-width: 34ch;
+  color: rgba(255, 255, 255, .92);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (min-width: 900px) {
+  .bento-cell p { font-size: 16px; }
+}
+
+/* Stat cells push the sticker to the top and the caption to the bottom. */
+.bento-cell--stat { justify-content: space-between; }
+.bento-cell--stat p { margin-top: auto; }
+
+/* The support cell reads as one line with the number sitting beside it. */
+.bento-cell--row { flex-direction: row; align-items: center; gap: 16px; }
+.bento-cell--row p { flex: 1; }
+
+.bento-sticker {
+  display: inline-block;
+  align-self: flex-start;
+  margin: 2px 0 6px;
+  padding: 3px 14px 6px;
+  background: var(--strawberry);
+  color: #fff;
+  font-size: clamp(20px, 5.4vw, 30px);
+  font-weight: 700;
+  line-height: 1.15;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: 12px;
+  transform: rotate(-8deg) skewX(-16deg);
+  transform-origin: left center;
+}
+
+.bento-sticker--lime { background: var(--lime, #D0FF1A); color: #181C2D; }
+
+.bento-cell--row .bento-sticker { margin: 0; align-self: center; flex: none; }
+
+/* One 3D prop, bottom right, the way the bento blocks carry an illustration. */
+.bento-art {
+  position: absolute;
+  right: -18px;
+  bottom: -22px;
+  width: 150px;
+  pointer-events: none;
+  user-select: none;
+  transform: rotate(-8deg);
+}
+
+@media (min-width: 900px) {
+  .bento-art { width: 190px; right: -24px; bottom: -28px; }
+  .bento-cell--art p { max-width: 60%; }
+}
+
+/* ---- Bento, second pass -------------------------------------------------- */
+
+.bento-sticker--sm { font-size: clamp(16px, 4vw, 22px); padding: 2px 11px 5px; margin-top: auto; }
+
+/* Cells that carry a 3D prop keep their text clear of it. */
+.bento-cell--art p { max-width: 62%; }
+.bento-cell--art h3 { max-width: 70%; }
+
+@media (max-width: 600px) {
+  .bento-cell--art p,
+  .bento-cell--art h3 { max-width: 100%; }
+  .bento-cell--art { padding-bottom: 96px; }
+  .bento-art { width: 130px; right: -12px; bottom: -14px; }
+}
+
+/* ---- Carousel arrows, readable ------------------------------------------- */
+
+.carousel-nav button {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: #fff;
+  color: var(--action);
+  box-shadow: 0 2px 10px rgba(13, 11, 104, .12);
+}
+
+.carousel-nav button svg { stroke: currentColor; stroke-width: 2.2; width: 20px; height: 20px; }
+.carousel-nav button:hover { background: var(--action); color: #fff; }
+
+.stage .carousel-nav button { background: #fff; color: var(--action); }
+.stage .carousel-nav button:hover { background: var(--ink); color: #fff; }
+
+/* ---- FAQ ------------------------------------------------------------------
+   Full width inside the section card, a chevron on the right, the way the
+   landing system draws its accordion. */
+
+.faq { max-width: none; }
+
+.faq-item { background: #fff; border-radius: var(--r-card); padding-inline: 20px; }
+
+@media (min-width: 1101px) { .faq-item { padding-inline: 24px; } }
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.faq-plus {
+  order: 2;
+  flex: none;
+  width: 11px;
+  height: 11px;
+  margin: 0 2px 4px 0;
+  background: none !important;
+  border: 0;
+  border-right: 2.2px solid var(--action);
+  border-bottom: 2.2px solid var(--action);
+  border-radius: 0 0 2px 0;
+  transform: rotate(45deg);
+  transition: transform .18s ease;
+}
+
+.faq-plus::before,
+.faq-plus::after { display: none !important; }
+
+.faq-item[open] .faq-plus { transform: rotate(-135deg); margin-bottom: 0; margin-top: 4px; }
+
+.faq-item > p { color: var(--ink-muted); }
+
+/* The FAQ heading lines up with every other section heading. */
+#faq .section-head { text-align: left; }
+
+.faq-item > p { padding-left: 0; margin-left: 0; }
+
+/* ---- Bento, third pass ---------------------------------------------------
+   An asymmetric composition rather than a row of equal boxes: one tall hero
+   cell, two narrow number cells beside it, then wide cells underneath. */
+
+@media (min-width: 900px) {
+  .bento-cell--hero { grid-column: span 2; grid-row: span 2; }
+  .bento-cell--hero h3 { font-size: 26px; }
+  .bento-cell--hero .bento-art { width: 230px; right: -20px; bottom: -24px; }
+}
+
+.bento-cell--hero { grid-column: span 2; }
+
+.bento-cell h3 { order: 2; }
+.bento-cell p { order: 3; }
+.bento-cell .bento-sticker { order: 1; }
+.bento-cell .bento-art { order: 4; }
+
+.bento-cell--stat { justify-content: flex-start; }
+.bento-cell--stat p { margin-top: 0; }
+
+.bento-art--cal { width: 120px; right: 6px; bottom: -10px; transform: rotate(6deg); }
+@media (min-width: 900px) { .bento-art--cal { width: 150px; right: 10px; } }
+
+.bento-art--plane { width: 130px; right: -6px; bottom: -6px; transform: rotate(0deg); }
+@media (min-width: 900px) { .bento-art--plane { width: 170px; right: -10px; bottom: -10px; } }
+
+/* ---- Promo strip ---------------------------------------------------------
+   Text, code and two actions on the left, a photo filling the right. */
+
+.promo-strip--v2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  overflow: hidden;
+  background: var(--surface-neutral);
+  padding: 0;
+}
+
+@media (min-width: 860px) {
+  .promo-strip--v2 { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); }
+}
+
+.promo-strip--v2 .promo-strip__offer {
+  order: 2;
+  background: none;
+  color: var(--ink);
+  padding: 24px 20px 26px;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+@media (min-width: 860px) {
+  .promo-strip--v2 .promo-strip__offer { order: 1; padding: 36px 40px; justify-content: center; }
+}
+
+.promo-strip--v2 .promo-strip__offer h3 { margin: 0; color: var(--ink); font-size: 24px; font-weight: 600; line-height: 1.2; }
+@media (min-width: 1101px) { .promo-strip--v2 .promo-strip__offer h3 { font-size: 30px; } }
+.promo-strip--v2 .promo-strip__offer p { margin: 0; color: var(--ink-muted); font-size: 15px; line-height: 1.5; }
+
+.promo-strip--v2 .promo-strip__action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 0;
+  background: none;
+}
+
+.promo-strip--v2 .promo-strip__code {
+  padding: 9px 16px;
+  border: 1.5px dashed var(--strawberry);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--strawberry);
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.promo-strip--v2 .promo-strip__copy {
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: var(--action);
+  color: #fff;
+  font-weight: 600;
+}
+
+.promo-strip--v2 .promo-strip__copy:hover { background: var(--action-hover); }
+
+.promo-strip__links { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.promo-btn {
+  padding: 10px 20px;
+  border-radius: var(--r-pill);
+  background: #fff;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 1px 4px rgba(13, 11, 104, .08);
+}
+
+.promo-btn:hover { background: var(--surface-brand); color: var(--action); }
+
+.promo-photo {
+  order: 1;
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+@media (min-width: 860px) {
+  .promo-photo { order: 2; height: 100%; min-height: 260px; }
+}
+
+/* The old ticket confetti is no longer part of this block. */
+.promo-strip--v2 .promo-ticket-art { display: none; }
+
+/* A long single word like "Путешественников" has to fit the narrow stat cell. */
+@media (max-width: 600px) {
+  .bento-cell--stat h3 { font-size: 14px; letter-spacing: -0.015em; }
+  .bento-cell--stat p { font-size: 13px; }
+}
+
+/* =========================================================================
+   Fourth pass: white page, reshaped panel and bento, narrower promo.
+   ========================================================================= */
+
+/* ---- Everything sits on white; only cards carry a fill. ------------------ */
+
+.section--cloud > .container {
+  background: transparent;
+  border-radius: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+@media (min-width: 1101px) {
+  .section--cloud > .container { padding-inline: 24px; }
+}
+
+/* ---- Promo strip: narrower, flat, photo curving toward the text ---------- */
+
+.promo-strip--v2 {
+  max-width: 1000px;
+  margin-inline: auto;
+  background: #fff;
+  box-shadow: none;
+  border: 1px solid #ECECF4;
+}
+
+@media (min-width: 860px) {
+  .promo-strip--v2 { grid-template-columns: minmax(0, 1fr) minmax(0, .72fr); }
+  .promo-photo { border-radius: 140px 0 0 140px; }
+}
+
+.promo-strip--v2 .promo-strip__offer { gap: 12px; }
+
+/* ---- Transport panel: the hero pattern from the landing system ----------- */
+
+.panel--photo {
+  padding: 0;
+  min-height: 0;
+  display: block;
+  background: #A181FF url("photos/skate-train.jpg") right 38% / cover no-repeat;
+}
+
+.panel--photo::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 66%;
+  background: #A181FF;
+  border-radius: 0 44% 44% 0 / 0 54% 46% 0;
+}
+
+.panel--photo > div {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  padding: 44px 40px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.panel--photo h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0;
+  line-height: 1;
+}
+
+.panel-line {
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(30px, 4.2vw, 46px);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.panel-badge {
+  display: inline-block;
+  padding: 4px 16px 8px;
+  background: var(--strawberry);
+  color: #fff;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(24px, 3.2vw, 38px);
+  line-height: 1.05;
+  border-radius: 12px;
+  transform: rotate(-3deg);
+}
+
+.panel--photo p { color: rgba(255, 255, 255, .95); margin: 0; max-width: 34ch; }
+
+.panel-cta {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 13px 28px;
+  border-radius: var(--r-btn);
+  background: var(--strawberry);
+  color: #fff;
+  font-weight: 600;
+}
+
+.panel-cta:hover { background: var(--tangerine); }
+
+@media (max-width: 900px) {
+  .panel.panel--transport.panel--photo {
+    background: transparent;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .panel.panel--transport.panel--photo::before {
+    content: "";
+    position: static;
+    display: block;
+    width: auto;
+    height: 210px;
+    border-radius: var(--r-panel);
+    background: url("photos/skate-train.jpg") center 32% / cover no-repeat;
+  }
+
+  .panel--photo > div {
+    max-width: none;
+    margin: -34px 12px 0;
+    padding: 24px 22px 26px;
+    border-radius: var(--r-panel);
+    background: #A181FF;
+    align-items: center;
+    text-align: center;
+  }
+
+  .panel--photo h2 { align-items: center; }
+  .panel--photo p { max-width: none; }
+  .panel-cta { width: 100%; text-align: center; }
+}
+
+/* ---- Bento: less regular silhouettes ------------------------------------ */
+
+.bento-cell { border-radius: 24px; }
+.bento-cell--hero { border-radius: 24px 24px 96px 24px; }
+.bento-cell--stat:nth-of-type(2) { border-radius: 24px 96px 24px 24px; }
+.bento-cell--stat:nth-of-type(3) { border-radius: 96px 24px 24px 24px; }
+.bento-cell--w2:nth-of-type(4) { border-radius: 24px 24px 24px 96px; }
+.bento-cell--w2:nth-of-type(5) { border-radius: 96px 24px 24px 24px; }
+.bento-cell--w2:nth-of-type(6) { border-radius: 24px 24px 96px 24px; }
+
+@media (max-width: 600px) {
+  .bento-cell--hero { border-radius: 24px 24px 72px 24px; }
+  .bento-cell--stat:nth-of-type(2) { border-radius: 24px 64px 24px 24px; }
+  .bento-cell--stat:nth-of-type(3) { border-radius: 64px 24px 24px 24px; }
+}
+
+/* ---- Group banner, a touch narrower -------------------------------------- */
+
+@media (min-width: 900px) {
+  .group-banner { max-width: 840px; margin-inline: auto; }
+}
+
+/* ---- Footer assets ------------------------------------------------------- */
+
+.footer-app-col .qr { border-radius: 12px; background: #fff; }
+.social { width: 40px; height: 40px; border-radius: 12px; }
+
+.panel-cta, .promo-btn { text-decoration: none; }
+
+/* =========================================================================
+   Fifth pass: cards readable on the white page, cleaner phone panel,
+   promo as a rounded frame, bento layering.
+   ========================================================================= */
+
+/* ---- Cards need a fill now that the sections are white ------------------- */
+
+.section--cloud .tile, .tile { background: var(--surface-neutral); }
+.faq-item { background: var(--surface-neutral); }
+.faq-item[open] { background: var(--surface-neutral-2); }
+
+/* ---- The banner keeps the block width and loses height instead ----------- */
+
+.group-banner { max-width: none; height: 168px; }
+@media (min-width: 1101px) { .group-banner { height: 200px; } }
+
+/* ---- QR back to its earlier size ---------------------------------------- */
+
+.footer-app-col .qr { padding: 8px; }
+@media (max-width: 600px) { .footer-app-col .qr { width: 112px; height: 112px; } }
+
+/* ---- Promo: narrower, photo as a rounded frame inside the card ----------- */
+
+.promo-strip--v2 { max-width: 880px; }
+
+@media (min-width: 860px) {
+  .promo-strip--v2 { grid-template-columns: minmax(0, 1fr) 300px; padding: 16px 16px 16px 0; align-items: stretch; }
+  .promo-photo { border-radius: 24px; height: 100%; min-height: 220px; }
+}
+
+@media (max-width: 859px) {
+  .promo-strip--v2 { padding: 14px; }
+  .promo-photo { border-radius: 20px; height: 150px; }
+}
+
+/* ---- The phone panel joins up: full-width card over the photo ------------ */
+
+@media (max-width: 900px) {
+  .panel.panel--transport.panel--photo::before { height: 200px; border-radius: 24px; }
+  .panel--photo > div { margin: -40px 0 0; border-radius: 28px; }
+}
+
+/* ---- Bento layering: art above the text, stickers above the art ---------- */
+
+.bento-cell h3,
+.bento-cell p { position: relative; z-index: 1; }
+
+.bento-art { z-index: 2; }
+
+.bento-sticker { position: relative; z-index: 3; }
+
+/* =========================================================================
+   Sixth pass: promo at block width, art and stickers above the grid,
+   even rhythm between sections, smaller hero plane.
+   ========================================================================= */
+
+/* ---- Promo: same width as every other block, but a shallower box --------- */
+
+.promo-strip--v2 { max-width: none; }
+
+@media (min-width: 860px) {
+  .promo-strip--v2 {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    padding: 12px 12px 12px 0;
+    align-items: center;
+  }
+  .promo-strip--v2 .promo-strip__offer { padding: 18px 32px; gap: 8px; }
+  .promo-strip--v2 .promo-strip__offer h3 { font-size: 26px; }
+  .promo-photo { height: 148px; min-height: 0; border-radius: 20px; }
+}
+
+@media (max-width: 859px) {
+  .promo-photo { height: 132px; }
+}
+
+/* ---- Bento: props and stickers break out of their cells ------------------ */
+
+.bento-cell { overflow: visible; }
+.bento-cell--art { z-index: 1; }
+.bento-art { z-index: 4; }
+.bento-sticker { z-index: 5; }
+
+.bento-cell--art { isolation: auto; }
+
+
+/* ---- Stickers a touch larger --------------------------------------------- */
+
+.bento-sticker { font-size: clamp(22px, 5.8vw, 34px); padding: 4px 16px 7px; }
+.bento-sticker--sm { font-size: clamp(18px, 4.4vw, 24px); }
+
+/* ---- Even rhythm between the information blocks -------------------------- */
+
+.section { padding-top: 56px !important; padding-bottom: 0 !important; }
+.section:last-of-type { padding-bottom: 0 !important; }
+
+@media (max-width: 900px) {
+  .section { padding-top: 40px !important; }
+}
+
+/* ---- Hero plane: smaller, and clear of the edge on phones ---------------- */
+
+.hero > .hero-decor--suitcase { width: min(29vw, 350px) !important; right: -40px !important; top: 74px !important; }
+
+@media (max-width: 899px) {
+  .hero > .hero-decor--suitcase { width: 186px !important; right: 4px !important; top: 126px !important; }
+}
+
+/* ---- QR a little larger on phones ---------------------------------------- */
+
+@media (max-width: 600px) { .footer-app-col .qr { width: 136px; height: 136px; } }
+
+/* =========================================================================
+   Seventh pass.
+   ========================================================================= */
+
+/* ---- Promo: grey card, photo the full height of the plaque --------------- */
+
+.promo-strip--v2 {
+  background: var(--surface-neutral);
+  border: 0;
+  padding: 0;
+  grid-template-columns: minmax(0, 1fr) 132px;
+  align-items: stretch;
+}
+
+@media (min-width: 860px) {
+  .promo-strip--v2 { grid-template-columns: minmax(0, 1fr) 360px; padding: 0; }
+  .promo-strip--v2 .promo-strip__offer { padding: 26px 32px; }
+}
+
+.promo-strip--v2 .promo-strip__offer {
+  order: 1;
+  padding: 18px 16px;
+  justify-content: center;
+}
+
+.promo-photo {
+  order: 2;
+  height: 100%;
+  min-height: 0;
+  border-radius: 0 var(--r-panel) var(--r-panel) 0;
+  object-position: center 40%;
+}
+
+@media (min-width: 860px) { .promo-photo { border-radius: 0 var(--r-panel) var(--r-panel) 0; } }
+
+/* Phones keep the same two-column shape rather than stacking. */
+@media (max-width: 859px) {
+  .promo-strip--v2 .promo-strip__offer h3 { font-size: 19px; }
+  .promo-strip--v2 .promo-strip__offer p { font-size: 13px; }
+  .promo-strip--v2 .promo-strip__code { padding: 7px 11px; font-size: 14px; }
+  .promo-strip--v2 .promo-strip__copy { padding: 8px 13px; font-size: 14px; }
+  .promo-strip--v2 .promo-strip__action { gap: 7px; }
+}
+
+/* ---- The long plane-train is trimmed by its own cell --------------------- */
+
+.bento-cell:has(.bento-art--plane) { overflow: hidden; }
+.bento-art--plane { right: -10px; bottom: -14px; width: 150px; }
+@media (min-width: 900px) { .bento-art--plane { width: 200px; right: -14px; bottom: -18px; } }
+
+/* ---- Hero plane: 20% larger and further right on desktop ----------------- */
+
+.hero > .hero-decor--suitcase { width: min(34vw, 456px) !important; right: -62px !important; }
+
+/* ---- The phone panel: text left aligned, photo tucked further under ------ */
+
+@media (max-width: 900px) {
+  .panel--photo > div { align-items: flex-start; text-align: left; margin-top: -48px; }
+  .panel--photo h2 { align-items: flex-start; }
+}
