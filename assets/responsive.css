@@ -254,7 +254,8 @@
   .search.search-v2 .v2-field[data-role="to"] { grid-column: 2; padding-right: 16px; padding-left: 36px; border: 0; border-radius: 16px; }
   .search.search-v2 .v2-field--date { grid-column: 1; }
   .search.search-v2 .v2-field--pax { grid-column: 2; }
-  .search.search-v2 .v2-field { justify-content: flex-start; }
+  /* Centre the field text vertically, the way it sits on desktop. */
+  .search.search-v2 .v2-field { justify-content: center; }
   .search.search-v2 .v2-field--place .v2-input { min-height: 26px; }
   .search.search-v2 .v2-field--place:not(.has-value) .v2-input { margin-top: 0; }
   .search.search-v2 .v2-swap, .search.search-v2:has(.search-suggest:not([hidden])) .v2-swap { left: calc(50% - 22px); top: 11px; right: auto; }
