@@ -5,6 +5,7 @@
   /* Center within the card rather than offsetting the illustration upward. */
   align-self: center;
   transform: none;
+  opacity: 1;
 }
 .mobile-menu-toggle { display: none; }
 
