@@ -875,3 +875,171 @@
   .panel--photo > div { align-items: flex-start; text-align: left; margin-top: -48px; }
   .panel--photo h2 { align-items: flex-start; }
 }
+
+/* ---- Hero plane, final placement -----------------------------------------
+   Scoped by width: the desktop rule above this was unconditional and was
+   leaking onto phones, which pushed the plane off the right edge. */
+
+@media (min-width: 900px) {
+  .hero > .hero-decor--suitcase { width: min(34vw, 456px) !important; right: -86px !important; top: 74px !important; }
+}
+
+@media (max-width: 899px) {
+  .hero > .hero-decor--suitcase { width: 186px !important; right: 6px !important; top: 126px !important; }
+}
+
+/* =========================================================================
+   Eighth pass: promo photo as an inset rounded panel, roomier promo on
+   phones, a bigger plane sitting higher there.
+   ========================================================================= */
+
+.promo-strip--v2 { padding: 10px; }
+
+.promo-photo {
+  border-radius: 20px;
+  height: 100%;
+  object-position: center 38%;
+}
+
+@media (min-width: 860px) {
+  .promo-strip--v2 { grid-template-columns: minmax(0, 1fr) 440px; padding: 12px; }
+  .promo-strip--v2 .promo-strip__offer { padding: 18px 24px 18px 22px; }
+  .promo-photo { border-radius: 24px; }
+}
+
+/* Phones: give the photo a real share of the card and the text room to breathe. */
+@media (max-width: 859px) {
+  .promo-strip--v2 { grid-template-columns: minmax(0, 1fr) 38%; padding: 10px; gap: 10px; }
+  .promo-strip--v2 .promo-strip__offer { padding: 8px 4px 8px 10px; gap: 9px; }
+  .promo-strip--v2 .promo-strip__offer h3 { font-size: 20px; }
+  .promo-strip--v2 .promo-strip__offer p { font-size: 13px; line-height: 1.4; }
+  .promo-photo { border-radius: 18px; min-height: 150px; }
+}
+
+/* ---- Phone plane: larger and higher -------------------------------------- */
+
+@media (max-width: 899px) {
+  .hero > .hero-decor--suitcase { width: 224px !important; right: 2px !important; top: 96px !important; }
+}
+
+/* =========================================================================
+   Ninth pass: the city panel uses the cabin photo and the brand blob.
+   ========================================================================= */
+
+.panel--photo {
+  background: #A181FF url("photos/plane-window.webp") right center / cover no-repeat;
+}
+
+/* The purple shape is the artwork from the landing system, stretched to the
+   width the text needs rather than approximated with a border radius. */
+.panel--photo::before {
+  width: 62%;
+  background: url("art/panel-blob.png") left center / 100% 100% no-repeat;
+  border-radius: 0;
+}
+
+@media (min-width: 1200px) { .panel--photo::before { width: 58%; } }
+
+@media (max-width: 900px) {
+  .panel.panel--transport.panel--photo {
+    background: transparent;
+  }
+
+  .panel.panel--transport.panel--photo::before {
+    width: auto;
+    height: 200px;
+    border-radius: 24px;
+    background: url("photos/plane-window.webp") center 40% / cover no-repeat;
+  }
+}
+
+/* The cabin photo is zoomed and offset so the traveller sits clear of the
+   purple shape rather than behind it. */
+@media (min-width: 901px) {
+  .panel--photo { background-size: 150% auto; background-position: 5% 24%; }
+}
+
+/* =========================================================================
+   Tenth pass.
+   ========================================================================= */
+
+/* The promo photo fills the card height: the column was centring instead of
+   stretching, which left a gap above and below the image. */
+@media (min-width: 860px) {
+  .promo-strip--v2 { align-items: stretch; }
+  .promo-photo { align-self: stretch; height: 100%; }
+}
+
+/* A wider frame on the cabin photo, so the traveller is not so close up. */
+@media (min-width: 901px) {
+  .panel--photo { background-size: 125% auto; background-position: 0% 15%; }
+  .panel--photo::before { width: 56%; }
+}
+
+@media (min-width: 1200px) { .panel--photo::before { width: 53%; } }
+
+/* Plane: higher on both, and a touch further right on desktop. */
+@media (min-width: 900px) {
+  .hero > .hero-decor--suitcase { right: -104px !important; top: 56px !important; }
+}
+
+@media (max-width: 899px) {
+  .hero > .hero-decor--suitcase { top: 80px !important; }
+}
+
+/* =========================================================================
+   Eleventh pass.
+   ========================================================================= */
+
+@media (min-width: 900px) {
+  .hero > .hero-decor--suitcase { right: -124px !important; }
+}
+
+/* Wider still on the cabin photo, with the purple shape pulled back to match. */
+@media (min-width: 901px) {
+  .panel--photo { background-size: 112% auto; background-position: 0% 12%; }
+  .panel--photo::before { width: 52%; }
+}
+
+@media (min-width: 1200px) { .panel--photo::before { width: 49%; } }
+
+/* The phone panel centres its text again. */
+@media (max-width: 900px) {
+  .panel--photo > div { align-items: center; text-align: center; }
+  .panel--photo h2 { align-items: center; }
+}
+
+/* ---- The phone panel uses its own blob rather than a plain rounded box --- */
+
+@media (max-width: 900px) {
+  .panel--photo > div {
+    background: url("art/panel-blob-mobile.png") center top / 100% 100% no-repeat;
+    border-radius: 0;
+    padding: 34px 22px 28px;
+    margin-top: -46px;
+  }
+}
+
+/* ---- Promo photo flush with the card -------------------------------------
+   The card had 12px of padding, so the photo stopped short of the top and
+   bottom edges. The padding moves onto the text column and the photo runs the
+   full height, its right corners matching the card's own radius. */
+
+.promo-strip--v2 { padding: 0; }
+
+.promo-photo {
+  height: 100%;
+  border-radius: 20px var(--r-panel) var(--r-panel) 20px;
+}
+
+@media (min-width: 860px) {
+  .promo-strip--v2 { padding: 0; grid-template-columns: minmax(0, 1fr) 440px; }
+  .promo-strip--v2 .promo-strip__offer { padding: 28px 28px 28px 34px; }
+  .promo-photo { border-radius: 24px var(--r-panel) var(--r-panel) 24px; }
+}
+
+@media (max-width: 859px) {
+  .promo-strip--v2 { grid-template-columns: minmax(0, 1fr) 38%; gap: 0; }
+  .promo-strip--v2 .promo-strip__offer { padding: 16px 12px 16px 16px; }
+  .promo-photo { border-radius: 18px var(--r-panel) var(--r-panel) 18px; }
+}
