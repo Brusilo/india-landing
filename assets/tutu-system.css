@@ -1955,3 +1955,24 @@
   /* The English stat plates ("42 MILLION", "SINCE 2003") are longer. */
   :lang(en) .bento .bento-cell--stat .bento-sticker { font-size: clamp(17px, 5.2vw, 26px); }
 }
+
+/* =========================================================================
+   Thirty-eighth pass (phones): "all the way" tucked up under "English",
+   the wallet lower, and the extra-savings and carriers cards shorter. Their
+   text gets a wider column, and the plane is trimmed by its card.
+   ========================================================================= */
+
+@media (max-width: 899px) {
+  .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: -16px; }
+
+  .bento .bento-cell.bento-pos-tr .bento-art { bottom: -18px; }
+
+  .bento .bento-cell.bento-pos-bl { padding-bottom: 14px; }
+  .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(80px, 23vw, 110px); }
+  .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(108px, 31vw, 140px); right: -12px; bottom: -18px; }
+  .bento .bento-cell.bento-pos-bl .bento-sticker { margin-top: 18px; }
+
+  .bento .bento-cell.bento-pos-r { overflow: hidden; padding-bottom: 14px; }
+  .bento .bento-cell.bento-pos-r h3 { padding-right: clamp(92px, 28vw, 124px); }
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 150px; right: -44px; bottom: -34px; }
+}
