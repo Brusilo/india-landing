@@ -1327,3 +1327,20 @@
 }
 
 .promo-photo { object-position: 50% 82%; }
+
+/* =========================================================================
+   Seventeenth pass: the suitcase lower and further right on desktop, and
+   smaller type and buttons in the promo on phones.
+   ========================================================================= */
+
+@media (min-width: 900px) {
+  .hero > .hero-decor--suitcase { top: 40px !important; right: -196px !important; }
+}
+
+@media (max-width: 859px) {
+  .promo-strip--v2 .promo-strip__offer h3 { font-size: 17px; line-height: 1.2; }
+  .promo-strip--v2 .promo-strip__offer p { font-size: 12px; line-height: 1.35; }
+  .promo-strip--v2 .promo-strip__action { gap: 6px; }
+  .promo-strip--v2 .promo-strip__code { padding: 5px 9px; font-size: 13px; }
+  .promo-strip--v2 .promo-strip__copy { padding: 5px 11px; font-size: 13px; }
+}
