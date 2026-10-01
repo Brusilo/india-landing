@@ -1350,3 +1350,73 @@
 @media (min-width: 1101px) {
   .hero > .hero-decor--suitcase { left: calc(50% + 173px) !important; right: auto !important; }
 }
+
+/* =========================================================================
+   Eighteenth pass: route cards as white tiles with the photo inset, the
+   route as "A → B", the price with a −20% tag and the old price struck
+   through. The same −20% sits as a sticker beside the section heading.
+   ========================================================================= */
+
+#routes .card.card--route {
+  background: #fff;
+  border: 0;
+  border-radius: 22px;
+  padding: 6px;
+  box-shadow: 0 2px 14px rgba(13, 11, 104, .08), 0 0 0 1px rgba(13, 11, 104, .05);
+}
+
+#routes .card--route .card-media {
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  padding: 0;
+}
+
+#routes .card--route .card-body { padding: 16px 12px 12px; gap: 0; }
+
+#routes .card--route .route-name {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -.01em;
+}
+
+.route-price {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+#routes .card--route .price { font-size: 20px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+
+.route-discount,
+.route-sticker {
+  display: inline-block;
+  background: var(--strawberry);
+  color: #fff;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  transform: rotate(-6deg) skewX(-12deg);
+}
+
+.route-discount { padding: 4px 7px 5px; border-radius: 6px; font-size: 13px; }
+
+.route-old-price {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--ink-muted);
+  text-decoration-thickness: 1px;
+}
+
+.route-sticker {
+  margin-left: 6px;
+  padding: .12em .32em .16em;
+  border-radius: .26em;
+  font-size: .72em;
+  font-weight: 600;
+  vertical-align: .08em;
+}
