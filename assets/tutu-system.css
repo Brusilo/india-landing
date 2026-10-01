@@ -1870,3 +1870,46 @@
 @media (min-width: 900px) and (max-width: 1199px) {
   .bento .bento-cell .bento-sticker.bento-sticker--text { font-size: 19px; padding: 4px 12px 6px; }
 }
+
+/* =========================================================================
+   Thirty-sixth pass (desktop): bigger body text and stickers, the English
+   pair tighter, larger message and wallet props, the extra-savings and
+   10 000+ stickers lower, and the plane raised and trimmed by its card.
+   ========================================================================= */
+
+@media (min-width: 900px) {
+  .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(20px, 2.3vw, 30px); }
+
+  /* English, all the way: bigger, and the second plate tucked up. */
+  .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: clamp(22px, 2.8vw, 40px); }
+  .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: -12px; }
+  .bento .bento-cell.bento-pos-tl .bento-art { width: 78%; max-height: 42%; right: 4px; bottom: 4px; }
+
+  /* Since 2003. */
+  .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(30px, 4.2vw, 60px); }
+
+  /* Lock in the price: a larger wallet. */
+  .bento .bento-cell.bento-pos-tr h3 { padding-right: 32%; }
+  .bento .bento-cell.bento-pos-tr .bento-art { width: 52%; max-height: none; right: -14px; bottom: -26px; }
+
+  /* Extra savings: bigger and lower. */
+  .bento .bento-cell.bento-pos-bl .bento-sticker.bento-sticker--text { font-size: clamp(22px, 2.9vw, 42px); margin-top: 26px; }
+
+  /* 10 000+: bigger and lower, the text follows; the plane sits higher
+     and the card trims whatever runs past its edge. */
+  .bento .bento-cell.bento-pos-r { overflow: hidden; }
+  .bento .bento-cell.bento-pos-r .bento-sticker { font-size: clamp(32px, 4.2vw, 60px); margin-top: 22px; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 250px; right: -46px; bottom: 0; }
+}
+
+/* Up to 1100px the container is 720px and the columns ~230px: the bigger
+   stickers and the plane step down to fit. */
+@media (min-width: 900px) and (max-width: 1100px) {
+  .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: 19px; }
+  .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: -6px; }
+  .bento .bento-cell.bento-pos-bl .bento-sticker.bento-sticker--text { font-size: 21px; margin-top: 18px; }
+  .bento .bento-cell.bento-pos-tc .bento-sticker,
+  .bento .bento-cell.bento-pos-r .bento-sticker { font-size: 32px; }
+  .bento .bento-cell.bento-pos-r .bento-sticker { margin-top: 14px; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 160px; right: -30px; bottom: 0; }
+}
