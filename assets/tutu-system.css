@@ -1466,3 +1466,11 @@
 @media (min-width: 860px) {
   .promo-strip--v2 { grid-template-columns: minmax(280px, 1fr) minmax(0, 1fr); }
 }
+
+/* =========================================================================
+   Twenty-second pass: 3D icons on the group-travel tiles. The renders carry
+   generous empty margins, so they sit larger and closer to the corner.
+   ========================================================================= */
+
+.tile .tile-ico { width: 76px; height: 76px; right: 8px; bottom: 8px; object-fit: contain; }
+.tiles--4 .tile { padding-bottom: 90px; }
