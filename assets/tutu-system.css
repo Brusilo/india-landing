@@ -2166,3 +2166,22 @@
   :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker,
   :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { margin-top: 0.56em; }
 }
+
+/* =========================================================================
+   Forty-seventh pass (PC): the 3D props larger again, and the carriers card
+   sets its copy as a narrow column on the left with a big plane on the right
+   (the plane is still trimmed to the card by an inset matching its overhang).
+   ========================================================================= */
+
+@media (min-width: 1101px) {
+  .bento .bento-cell.bento-pos-tl .bento-art { width: 92%; max-height: 52%; right: -8px; bottom: -44px; }
+  .bento .bento-cell.bento-pos-tr .bento-art { width: 54%; right: -16px; bottom: -22px; }
+  .bento .bento-cell.bento-pos-tr h3 { padding-right: 40%; }
+  .bento .bento-cell.bento-pos-bl .bento-art { width: 31%; }
+
+  .bento .bento-cell.bento-pos-r h3 { padding-right: 46%; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane {
+    width: 300px; right: -70px; bottom: 0;
+    clip-path: inset(0 70px 0 0 round 0 0 24px 0);
+  }
+}
