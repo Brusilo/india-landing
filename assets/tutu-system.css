@@ -1669,8 +1669,8 @@
 }
 
 /* `.section` and `.section:last-of-type` zero this with !important above. */
-.section.section:has(+ footer) { padding-bottom: 40px !important; }
-@media (min-width: 768px) { .section.section:has(+ footer) { padding-bottom: 64px !important; } }
+.section.section:has(+ footer) { padding-bottom: 56px !important; }
+@media (max-width: 900px) { .section.section:has(+ footer) { padding-bottom: 40px !important; } }
 
 /* =========================================================================
    Thirty-first pass: brand colours and a few phone fixes.
@@ -2071,4 +2071,25 @@
   /* "42 MILLION" and "SINCE 2003" are longer than their Russian plates. */
   :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker,
   :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(26px, 3vw, 44px); margin-top: 0.4em; }
+}
+
+/* =========================================================================
+   Forty-second pass: between 900 and 1100px the hero suitcase was pushed
+   246px past the right edge, so only a sliver showed. It is anchored to the
+   page centre there too, the way it is from 1101px, and sits at the right
+   of the 768px content column.
+   ========================================================================= */
+
+@media (min-width: 900px) and (max-width: 1100.98px) {
+  .hero > .hero-decor--suitcase {
+    width: clamp(250px, 30vw, 330px) !important;
+    left: calc(50% + 150px) !important;
+    right: auto !important;
+    top: 24px !important;
+  }
+}
+
+@media (max-width: 699.98px) {
+  /* The calendar a touch bigger and further right. */
+  .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(140px, 43vw, 200px); right: -24px; }
 }
