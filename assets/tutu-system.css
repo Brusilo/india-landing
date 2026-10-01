@@ -2110,3 +2110,16 @@
   /* The narrowest phones keep a smaller photo so the code and button fit. */
   .promo-strip--v2 { grid-template-columns: minmax(0, 1fr) 34%; }
 }
+
+/* =========================================================================
+   Forty-fourth pass: "Get to / any city" is half the length of the Russian
+   heading at the same size, so on the English page it runs larger.
+   ========================================================================= */
+
+:lang(en) .panel--photo .panel-line { font-size: 64px; }
+:lang(en) .panel--photo .panel-badge { font-size: 54px; }
+
+@media (max-width: 900px) {
+  :lang(en) .panel--photo .panel-line { font-size: 36px; }
+  :lang(en) .panel--photo .panel-badge { font-size: 28px; }
+}
