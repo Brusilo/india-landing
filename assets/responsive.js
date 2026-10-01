@@ -127,3 +127,17 @@
   }, true);
   syncLayout();
 })();
+
+/* Carousel arrows sit on the carousel itself, centred on the cards at its
+   left and right edges, rather than in the section heading. The buttons keep
+   the handlers the page script bound to them; only their place changes. */
+(function () {
+  'use strict';
+  document.querySelectorAll('.carousel-nav[data-carousel]').forEach(function (nav) {
+    const row = document.getElementById(nav.dataset.carousel + '-row');
+    if (!row || !row.parentElement) return;
+    row.parentElement.classList.add('has-carousel-arrows');
+    nav.classList.add('carousel-nav--overlay');
+    row.parentElement.appendChild(nav);
+  });
+})();

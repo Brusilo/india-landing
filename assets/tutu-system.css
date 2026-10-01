@@ -1247,3 +1247,72 @@
 @media (max-width: 899px) {
   .hero > .hero-decor--suitcase { top: 58px !important; }
 }
+
+/* =========================================================================
+   Fifteenth pass.
+   ========================================================================= */
+
+/* ---- Suitcase higher and further right on desktop ------------------------ */
+
+@media (min-width: 900px) {
+  .hero > .hero-decor--suitcase { top: 14px !important; right: -176px !important; }
+}
+
+/* ---- Promo: slimmer still ------------------------------------------------- */
+
+@media (min-width: 860px) {
+  .promo-strip--v2 .promo-strip__offer { padding: 12px 28px 12px 34px; gap: 4px; }
+  .promo-strip--v2 .promo-strip__offer h3 { font-size: 24px; }
+  .promo-strip--v2 .promo-strip__action { margin-top: 6px; }
+  .promo-strip--v2 .promo-strip__code,
+  .promo-strip--v2 .promo-strip__copy { padding-block: 8px; }
+}
+
+@media (max-width: 859px) {
+  .promo-strip--v2 .promo-strip__offer { padding: 10px 10px 10px 16px; gap: 4px; }
+  .promo-strip--v2 .promo-strip__action { margin-top: 4px; }
+  .promo-strip--v2 .promo-strip__code,
+  .promo-strip--v2 .promo-strip__copy { padding-block: 6px; }
+}
+
+/* ---- Carousel arrows on the carousel ---------------------------------------
+   As on tutu.ru: white rounds with a soft shadow, centred on the cards and
+   straddling the strip's edges. An arrow with nowhere to go is hidden. */
+
+@media (min-width: 1024px) {
+  .head-actions__nav { display: none; }
+
+  .has-carousel-arrows { position: relative; overflow: visible; }
+
+  .carousel-nav.carousel-nav--overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: block;
+    pointer-events: none;
+  }
+
+  .has-carousel-arrows .carousel-nav--overlay button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--ink);
+    box-shadow: 0 2px 12px rgba(13, 11, 104, .18);
+    pointer-events: auto;
+    transition: opacity .2s ease, background .15s ease;
+  }
+
+  .has-carousel-arrows .carousel-nav--overlay button:first-child { left: -20px; }
+  .has-carousel-arrows .carousel-nav--overlay button:last-child { right: -20px; }
+
+  .has-carousel-arrows .carousel-nav--overlay button svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; }
+
+  .has-carousel-arrows .carousel-nav--overlay button:hover:not(:disabled) { background: #E7E0FF; color: var(--ink); }
+
+  .has-carousel-arrows .carousel-nav--overlay button:disabled { opacity: 0; pointer-events: none; }
+}
