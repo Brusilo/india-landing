@@ -1555,3 +1555,80 @@
 @media (max-width: 600px) {
   .panel.panel--transport.panel--photo::before { background-size: auto 106%; }
 }
+
+/* =========================================================================
+   Twenty-eighth pass: the suitcase 50px further right on desktop, a tighter
+   purple stage round the hotels, and hotel cards in the route-card style:
+   white tile, inset photo with the city on a chip, rating and reviews, then
+   the price with a straight discount tag, the rupee estimate and the old
+   price struck through in one line with its rupee figure.
+   ========================================================================= */
+
+@media (min-width: 1101px) {
+  .hero > .hero-decor--suitcase { left: calc(50% + 223px) !important; }
+}
+
+#hotels .stage { padding: 20px 12px 16px; }
+#hotels .stage .section-head { margin-bottom: 12px; padding-inline: 4px; }
+
+@media (min-width: 768px) {
+  #hotels .stage { padding: 28px 24px 24px; }
+  #hotels .stage .section-head { margin-bottom: 16px; padding-inline: 0; }
+}
+
+#hotels .card.card--hotel {
+  background: #fff;
+  border: 0;
+  border-radius: 22px;
+  padding: 6px;
+  box-shadow: none;
+}
+
+#hotels .card--hotel .card-media {
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  padding: 8px;
+  align-items: flex-start;
+}
+
+.hotel-city {
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+#hotels .card--hotel .card-body { padding: 14px 12px 12px; gap: 0; }
+
+.hotel-score { display: flex; align-items: center; gap: 8px; }
+
+.hotel-rating {
+  padding: 4px 7px;
+  border-radius: 8px;
+  background: var(--rating-green);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.hotel-reviews { font-size: 14px; color: var(--ink-muted); }
+
+#hotels .card--hotel .hotel-name {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#hotels .card--hotel .price { font-size: 20px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+#hotels .card--hotel .hotel-night { font-size: 14px; font-weight: 400; color: var(--ink-muted); }

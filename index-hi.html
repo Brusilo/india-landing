@@ -671,7 +671,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 <link rel="stylesheet" href="assets/search-v2.css?v=20260925-return-date">
 <script src="assets/site-language-faq-v26.js?v=20260921-translation-audit-3"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20260930b">
-<link rel="stylesheet" href="assets/tutu-system.css?v=81">
+<link rel="stylesheet" href="assets/tutu-system.css?v=82">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1046,6 +1046,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 const CONFIG = {
   currency: '₽',
   routeDiscount: 20,
+  hotelDiscount: 10,
   rubToInr: 1.12888,
 
   routes: [
@@ -1118,21 +1119,24 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
 
 document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
   const rub = toRub(h.price);
-  const inr = Math.round(rub * CONFIG.rubToInr);
-  const inrFmt = fmtNum(inr);
+  const oldRub = Math.round(rub / (1 - CONFIG.hotelDiscount / 100));
   return `
-  <article class="card" data-cta="hotel_${h.id}">
+  <article class="card card--hotel" data-cta="hotel_${h.id}">
     <div class="card-media" style="background:${h.img ? `url('${h.img}') center/cover no-repeat, ` : ''}${h.gradient}">
-      ${h.rating ? `<span class="rating">${h.rating}</span>` : ''}
+      <span class="hotel-city">${h.city}</span>
     </div>
     <div class="card-body">
-      <p class="hotel-top">${h.city}${h.distance ? ` · ${h.distance}` : ''}</p>
-      <p class="hotel-name">${h.name}</p>
-      <p class="hotel-meta">${h.type}${h.reviews ? ` · ${h.reviews}` : ''}</p>
-      <div class="price-row hotel-price-row">
-        <span class="price">${fmtNum(rub)} ₽ <span class="hotel-night">प्रति रात</span></span>
-        <span class="price-alt">≈ ₹${inrFmt}</span>
+      <div class="hotel-score">
+        ${h.rating ? `<span class="hotel-rating">${h.rating}</span>` : ''}
+        ${h.reviews ? `<span class="hotel-reviews">${h.reviews}</span>` : ''}
       </div>
+      <p class="hotel-name">${h.name}</p>
+      <div class="route-price">
+        <span class="price">${fmtNum(rub)}&nbsp;₽ <span class="hotel-night">प्रति रात</span></span>
+        <span class="route-discount">-${CONFIG.hotelDiscount}%</span>
+      </div>
+      <span class="route-inr">≈ ₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
+      <s class="route-old-price">${fmtNum(oldRub)}&nbsp;₽ ≈&nbsp;₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
     </div>
   </article>`;
 }).join('') + CTA_CARD;
