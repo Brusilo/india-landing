@@ -1723,3 +1723,16 @@
   .promo-strip--v2 .promo-strip__action { gap: 6px; margin-top: 6px; }
   .promo-strip--v2 .promo-strip__offer { padding: 10px 10px 10px 14px; }
 }
+
+/* =========================================================================
+   Thirty-second pass: the green is the brand Lime (#D0FF1A), so text and
+   icons on it are dark ink; the orange is Tangerine (#FF800A); the pink is
+   the lighter end of the hotel stage gradient.
+   ========================================================================= */
+
+:root { --brand-green: #D0FF1A; --brand-pink: #E08FFA; }
+
+.hotel-rating { color: var(--ink); }
+.review-avatar--orange { background: #FF800A; }
+.review-avatar--green .review-avatar__icon circle,
+.review-avatar--green .review-avatar__icon path { fill: var(--ink); }
