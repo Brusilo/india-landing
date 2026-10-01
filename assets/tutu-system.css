@@ -1632,3 +1632,23 @@
 
 #hotels .card--hotel .price { font-size: 20px; font-weight: 700; color: var(--ink); white-space: nowrap; }
 #hotels .card--hotel .hotel-night { font-size: 14px; font-weight: 400; color: var(--ink-muted); }
+
+/* =========================================================================
+   Twenty-ninth pass: the group photo is the 3:2 shot again. The heads sit in
+   its top half, about 400px tall in the file and spread across the middle.
+   Each band size scales them to its height and frames from the top.
+   ========================================================================= */
+
+.group-banner {
+  background-image: url("photos/friends-group.webp");
+  background-size: max(100%, min(197%, 645px)) auto;
+  background-position: 63% 10%;
+}
+
+@media (min-width: 768px) {
+  .group-banner { background-size: max(100%, 875px) auto; background-position: 80% 10%; }
+}
+
+@media (min-width: 1101px) {
+  .group-banner { background-size: cover; background-position: 50% 10%; }
+}
