@@ -1736,3 +1736,7 @@
 .review-avatar--orange { background: #FF800A; }
 .review-avatar--green .review-avatar__icon circle,
 .review-avatar--green .review-avatar__icon path { fill: var(--ink); }
+
+/* Hotel ratings take their own green (#63CF1C) with white figures, as on
+   the reference card; the lime stays on the review avatar. */
+.hotel-rating { background: #63CF1C; color: #fff; }
