@@ -1742,7 +1742,7 @@
 .hotel-rating { background: #63CF1C; color: #fff; }
 
 /* Review avatars: a lighter pink, and the rating green with a white icon. */
-.review-avatar--pink { background: #EBADFC; }
+.review-avatar--pink { background: #E596FB; }
 .review-avatar--green { background: #63CF1C; }
 .review-avatar--green .review-avatar__icon circle,
 .review-avatar--green .review-avatar__icon path { fill: #fff; }
