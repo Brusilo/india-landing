@@ -2123,3 +2123,31 @@
   :lang(en) .panel--photo .panel-line { font-size: 36px; }
   :lang(en) .panel--photo .panel-badge { font-size: 28px; }
 }
+
+/* =========================================================================
+   Forty-fifth pass: on PCs the bento keeps its width but everything inside
+   it - type, stickers, props, padding and the row floor - is scaled to about
+   three quarters, so the block is that much shorter.
+   ========================================================================= */
+
+@media (min-width: 1101px) {
+  .bento { grid-template-rows: repeat(3, minmax(134px, auto)); gap: 14px; }
+  .bento .bento-cell { padding: 18px 22px 16px; border-radius: 24px !important; }
+
+  .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(17px, 1.72vw, 23px); }
+
+  .bento .bento-cell .bento-sticker { font-size: clamp(22px, 2.5vw, 38px); }
+  .bento .bento-cell.bento-pos-tc .bento-sticker,
+  .bento .bento-cell.bento-pos-r .bento-sticker { font-size: clamp(24px, 3.15vw, 45px); }
+  :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker,
+  :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(20px, 2.25vw, 33px); }
+  .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: clamp(18px, 2.1vw, 30px); }
+  .bento .bento-cell.bento-pos-bl .bento-sticker.bento-sticker--text { font-size: clamp(18px, 2.2vw, 32px); }
+  .bento .bento-cell.bento-pos-r .bento-sticker { margin-top: 16px; }
+
+  .bento .bento-cell.bento-pos-tl .bento-art { width: 70%; max-height: 46%; right: -6px; bottom: -40px; }
+  .bento .bento-cell.bento-pos-tr .bento-art { width: 42%; right: -12px; bottom: -14px; }
+  .bento .bento-cell.bento-pos-tr h3 { padding-right: 34%; }
+  .bento .bento-cell.bento-pos-bl .bento-art { width: 24%; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 190px; right: -22px; bottom: 0; }
+}
