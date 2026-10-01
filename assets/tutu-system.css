@@ -1334,7 +1334,7 @@
    ========================================================================= */
 
 @media (min-width: 900px) {
-  .hero > .hero-decor--suitcase { top: 40px !important; right: -196px !important; }
+  .hero > .hero-decor--suitcase { top: 40px !important; right: -246px !important; }
 }
 
 @media (max-width: 859px) {
@@ -1343,4 +1343,10 @@
   .promo-strip--v2 .promo-strip__action { gap: 6px; }
   .promo-strip--v2 .promo-strip__code { padding: 5px 9px; font-size: 13px; }
   .promo-strip--v2 .promo-strip__copy { padding: 5px 11px; font-size: 13px; }
+}
+
+/* From 1101px the suitcase is anchored to the page centre with `left` (see
+   responsive.css), so the `right` offsets above only apply below that. */
+@media (min-width: 1101px) {
+  .hero > .hero-decor--suitcase { left: calc(50% + 173px) !important; right: auto !important; }
 }
