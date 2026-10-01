@@ -1484,14 +1484,20 @@
 
 /* =========================================================================
    Twenty-fourth pass: larger rupee estimate, the rupee figure struck through
-   next to the old price too, and the new group photo framed on the heads:
-   zoomed in on phones, where the band is narrow, and plain cover once it
-   is wide enough.
+   next to the old price too, and the new group photo (framed below).
    ========================================================================= */
 
 .route-inr { font-size: 16px; font-weight: 600; }
 .route-old-price { font-size: 14px; }
 .route-old-inr { margin-left: 6px; }
 
-.group-banner { background: url("photos/friends-square.webp") 50% 32% / auto 270% no-repeat; }
-@media (min-width: 768px) { .group-banner { background-size: cover; background-position: 50% 30%; } }
+.group-banner { background: url("photos/friends-square.webp") no-repeat; }
+
+/* =========================================================================
+   Twenty-fifth pass: the group photo closer on the faces everywhere. The
+   width is set so the four heads fill about nine tenths of the band's
+   height (168px, 200px from 1101px), and never less than the band itself.
+   ========================================================================= */
+
+.group-banner { background-size: max(100%, 1015px) auto; background-position: 50% 31.6%; }
+@media (min-width: 1101px) { .group-banner { background-size: max(100%, 1209px) auto; } }
