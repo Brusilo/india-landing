@@ -2043,7 +2043,32 @@
 }
 
 .promo-strip--v2 .promo-strip__code { border-color: #CE59FA; color: #CE59FA; }
+
+/* =========================================================================
+   Forty-first pass: on phones the extra-savings card sits tighter (plate and
+   text start higher, so the line clears the calendar without widening its
+   column); on tablets the lock-in card's text runs full width over a much
+   bigger wallet.
+   ========================================================================= */
+
 @media (max-width: 699.98px) {
-  /* Room for the bigger, higher calendar beside the extra-savings text. */
-  .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(104px, 31vw, 150px); }
+  .bento .bento-cell.bento-pos-bl { padding-top: 12px; gap: 2px; }
+  .bento .bento-cell.bento-pos-bl .bento-sticker { margin-top: 0.92em; margin-bottom: 2px; }
+  .bento .bento-cell.bento-pos-bl .bento-art { bottom: -14px; }
+  :lang(en) .bento .bento-cell.bento-pos-bl h3,
+  :lang(hi) .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(104px, 30vw, 146px); }
+}
+
+@media (min-width: 700px) and (max-width: 1100.98px) {
+  .bento .bento-cell.bento-pos-tr h3 { padding-right: 0; }
+  .bento .bento-cell.bento-pos-tr .bento-art { width: 74%; max-height: none; right: -18px; bottom: -22px; }
+}
+@media (min-width: 700px) and (max-width: 1100.98px) {
+  /* The English top row runs shorter, so its wallet steps down a little. */
+  :lang(en) .bento .bento-cell.bento-pos-tr .bento-art { width: 62%; }
+}
+@media (min-width: 1101px) {
+  /* "42 MILLION" and "SINCE 2003" are longer than their Russian plates. */
+  :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker,
+  :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(26px, 3vw, 44px); margin-top: 0.4em; }
 }
