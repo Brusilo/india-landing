@@ -1671,3 +1671,55 @@
 /* `.section` and `.section:last-of-type` zero this with !important above. */
 .section.section:has(+ footer) { padding-bottom: 40px !important; }
 @media (min-width: 768px) { .section.section:has(+ footer) { padding-bottom: 64px !important; } }
+
+/* =========================================================================
+   Thirty-first pass: brand colours and a few phone fixes.
+   Palette from the brand book: Strawberry, Tangerine, Lime, Berry,
+   Aubergine, Blueberry; the pink is the hotel stage's #CE59FA and the
+   green is the site's #00C95E.
+   ========================================================================= */
+
+:root { --aubergine: #6118C5; --brand-pink: #CE59FA; --brand-green: #00C95E; }
+
+/* Promo code in aubergine rather than orange. */
+.promo-strip--v2 .promo-strip__code { border-color: var(--aubergine); color: var(--aubergine); }
+
+/* Hotel rating in the brand green. */
+.hotel-rating { background: var(--brand-green); }
+
+/* Review avatars in brand colours. */
+.review-avatar--pink { background: var(--brand-pink); }
+.review-avatar--orange { background: var(--tangerine); }
+.review-avatar--green { background: var(--brand-green); }
+
+/* A shorter group band; framed on the faces. */
+@media (min-width: 768px) {
+  .group-banner { height: 200px; background-position: 80% 17%; }
+}
+@media (min-width: 1101px) {
+  .group-banner { height: 240px; background-position: 50% 17%; }
+}
+
+/* The −20% stays on the heading's line: the last word and the sticker never
+   part, and on phones the heading scales down just enough to fit both. */
+.h2-tail { white-space: nowrap; }
+@media (max-width: 480px) {
+  #routes .section-head h2 { font-size: min(26px, 5.9vw); }
+}
+
+/* Phone promo: a smaller code and button of one height, and less air. */
+@media (max-width: 859px) {
+  .promo-strip--v2 .promo-strip__code,
+  .promo-strip--v2 .promo-strip__copy {
+    min-height: 34px;
+    height: 34px;
+    padding: 0 10px;
+    font-size: 13px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .promo-strip--v2 .promo-strip__action { gap: 6px; margin-top: 6px; }
+  .promo-strip--v2 .promo-strip__offer { padding: 10px 10px 10px 14px; }
+}
