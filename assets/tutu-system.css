@@ -1816,3 +1816,57 @@
 @media (min-width: 900px) {
   .bento-cell.bento-pos-bl .bento-art { width: 31%; max-height: none; bottom: 6px; right: 18px; transform: translateY(24%); }
 }
+
+/* =========================================================================
+   Thirty-fifth pass: bento props and stickers sit on a layer above every
+   card (no card makes its own stacking context or clips), one text size on
+   every card, larger stickers and props, and on phones the extra-savings
+   card is lime like the 42 million one.
+   ========================================================================= */
+
+.bento .bento-cell,
+.bento .bento-cell--art,
+.bento .bento-cell:has(.bento-art--plane) { overflow: visible; z-index: auto; isolation: auto; }
+.bento .bento-art { z-index: 6; pointer-events: none; }
+.bento .bento-sticker { z-index: 7; }
+
+/* ---- Desktop ---- */
+@media (min-width: 900px) {
+  .bento .bento-cell { overflow: visible; }
+
+  .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(19px, 2.1vw, 27px); line-height: 1.22; }
+
+  .bento .bento-cell .bento-sticker { font-size: clamp(26px, 3.3vw, 50px); }
+  .bento .bento-cell .bento-sticker.bento-sticker--text { font-size: clamp(22px, 2.3vw, 36px); }
+
+  .bento .bento-cell.bento-pos-tl .bento-art { width: 66%; max-height: 40%; right: 10px; bottom: 10px; }
+  .bento .bento-cell.bento-pos-tr h3 { padding-right: 38%; }
+  .bento .bento-cell.bento-pos-tr .bento-art { width: 46%; right: -6px; bottom: -8px; max-height: 92%; }
+  .bento .bento-cell.bento-pos-bl h3 { padding-right: 34%; }
+  .bento .bento-cell.bento-pos-bl .bento-art { width: 36%; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 240px; right: -20px; bottom: -24px; }
+}
+
+/* ---- Phones ---- */
+@media (max-width: 899px) {
+  .bento .bento-cell h3 { font-size: 20px; line-height: 1.22; letter-spacing: -0.01em; }
+  .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(112px, 32vw, 132px); }
+  .bento .bento-cell.bento-pos-tl h3 { padding-right: clamp(104px, 30vw, 128px); }
+  .bento .bento-cell--art h3 { padding-right: clamp(124px, 42vw, 166px); }
+
+  .bento .bento-cell .bento-sticker { font-size: clamp(30px, 9.6vw, 48px); }
+  .bento .bento-cell--stat .bento-sticker { font-size: clamp(18px, 5.6vw, 28px); }
+  .bento .bento-cell .bento-sticker.bento-sticker--text { font-size: clamp(22px, 6.8vw, 30px); }
+
+  .bento .bento-art { width: clamp(132px, 42vw, 170px); }
+  .bento .bento-art--plane { width: 158px; }
+
+  /* The extra-savings card turns lime too, with dark text. */
+  .bento .bento-cell.bento-pos-bl { background: var(--lime) !important; }
+  .bento .bento-cell.bento-pos-bl h3 { color: var(--ink); }
+}
+
+/* Narrow desktops: the columns run ~230-340px, so word stickers step down. */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .bento .bento-cell .bento-sticker.bento-sticker--text { font-size: 19px; padding: 4px 12px 6px; }
+}
