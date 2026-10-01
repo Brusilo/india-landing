@@ -1230,3 +1230,20 @@
 
   .panel--photo > div { margin-top: -80px; }
 }
+
+/* =========================================================================
+   Fourteenth pass.
+   ========================================================================= */
+
+/* The cabin photo was sized to the panel height, so on a shorter panel (the
+   English copy is shorter) it came out narrower and stopped short of the
+   purple shape's lower edge, leaving a square of panel colour. Sizing it to
+   the panel width keeps its left edge under the shape at any height. */
+@media (min-width: 1101px) {
+  .panel--photo { background-size: 75% auto; background-position: right top; }
+}
+
+/* Suitcase a little higher on phones. */
+@media (max-width: 899px) {
+  .hero > .hero-decor--suitcase { top: 58px !important; }
+}
