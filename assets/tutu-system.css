@@ -1528,3 +1528,30 @@
   .panel--photo .panel-badge { font-size: 20px; }
   .panel--photo p { font-size: 14px; line-height: 1.4; }
 }
+
+/* =========================================================================
+   Twenty-seventh pass: the new cabin photo. It is wider than the old one
+   (3:1), the traveller sits at the right edge, and the file carries thin
+   white strips along its top and bottom. The photo is sized a few percent
+   taller than its box and centred vertically so the strips stay outside.
+   ========================================================================= */
+
+@media (min-width: 901px) {
+  .panel--photo {
+    background-image: url("photos/plane-window-2.webp");
+    background-size: auto 106%;
+    background-position: right center;
+  }
+}
+
+@media (max-width: 900px) {
+  .panel.panel--transport.panel--photo::before {
+    background-image: url("photos/plane-window-2.webp");
+    background-size: 110% auto;
+    background-position: 90% 50%;
+  }
+}
+
+@media (max-width: 600px) {
+  .panel.panel--transport.panel--photo::before { background-size: auto 106%; }
+}
