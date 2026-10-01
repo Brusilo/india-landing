@@ -1809,3 +1809,10 @@
   .bento-cell.bento-pos-bl .bento-sticker { margin-top: 14px; }
   .bento-cell.bento-pos-bl .bento-art { width: 26%; right: 18px; bottom: 8px; max-height: 84%; }
 }
+
+/* The new calendar render has wide transparent margins (its drawing fills
+   only the middle ~60% of the square), so in the wide tile it is drawn
+   larger and its empty bottom margin hangs below the clipped edge. */
+@media (min-width: 900px) {
+  .bento-cell.bento-pos-bl .bento-art { width: 31%; max-height: none; bottom: 6px; right: 18px; transform: translateY(24%); }
+}
