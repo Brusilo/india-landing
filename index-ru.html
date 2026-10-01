@@ -667,7 +667,7 @@ body{position:relative!important}
 <link rel="stylesheet" href="assets/search-v2.css?v=20260925-return-date">
 <script src="assets/site-language-faq-v26.js?v=20260921-translation-audit-3"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20260930b">
-<link rel="stylesheet" href="assets/tutu-system.css?v=79">
+<link rel="stylesheet" href="assets/tutu-system.css?v=80">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1107,7 +1107,7 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
         <span class="route-discount">-${CONFIG.routeDiscount}%</span>
       </div>
       <span class="route-inr">≈ ₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
-      <s class="route-old-price">${fmtNum(oldRub)}&nbsp;${CONFIG.currency} <span class="route-old-inr">≈&nbsp;₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</span></s>
+      <s class="route-old-price">${fmtNum(oldRub)}&nbsp;${CONFIG.currency} ≈&nbsp;₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
     </div>
   </article>`;
 }).join('') + CTA_CARD;

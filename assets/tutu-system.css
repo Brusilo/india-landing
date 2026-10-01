@@ -1489,7 +1489,6 @@
 
 .route-inr { font-size: 16px; font-weight: 600; }
 .route-old-price { font-size: 14px; }
-.route-old-inr { margin-left: 6px; }
 
 .group-banner { background: url("photos/friends-square.webp") no-repeat; }
 
@@ -1501,3 +1500,31 @@
 
 .group-banner { background-size: max(100%, 1015px) auto; background-position: 50% 31.6%; }
 @media (min-width: 1101px) { .group-banner { background-size: max(100%, 1209px) auto; } }
+
+/* =========================================================================
+   Twenty-sixth pass: the faces much closer, and a shorter city panel on
+   phones. The group band grows on wider screens so the zoom has room: the
+   heads fill nine tenths of it. On phones the four faces span the band's
+   width already, so there the zoom is capped by width.
+   ========================================================================= */
+
+.group-banner {
+  background-size: max(100%, min(310%, 1089px)) auto;
+  background-position: 51% 32%;
+}
+
+@media (min-width: 768px) {
+  .group-banner { height: 240px; background-size: 1433px auto; }
+}
+
+@media (min-width: 1101px) {
+  .group-banner { height: 300px; background-size: 1789px auto; }
+}
+
+@media (max-width: 900px) {
+  .panel.panel--transport.panel--photo::before { height: 180px; }
+  .panel--photo > div { margin-top: -56px; padding: 26px 16px 20px; gap: 8px; }
+  .panel--photo .panel-line { font-size: 26px; }
+  .panel--photo .panel-badge { font-size: 20px; }
+  .panel--photo p { font-size: 14px; line-height: 1.4; }
+}
