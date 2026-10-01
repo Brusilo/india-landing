@@ -2093,3 +2093,20 @@
   /* The calendar a touch bigger and further right. */
   .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(140px, 43vw, 200px); right: -24px; }
 }
+
+/* =========================================================================
+   Forty-third pass: more room for the promo photo on phones. The photo
+   column grows from 38% to 46% and the strip gets a little taller; the
+   code and the copy button run slightly tighter so they still share a line.
+   ========================================================================= */
+
+@media (max-width: 859px) {
+  .promo-strip--v2 { grid-template-columns: minmax(0, 1fr) 46%; min-height: 124px; }
+  .promo-strip--v2 .promo-strip__offer { padding: 12px 8px 12px 12px; }
+  .promo-strip--v2 .promo-strip__code,
+  .promo-strip--v2 .promo-strip__copy { padding: 0 8px; }
+}
+@media (max-width: 359.98px) {
+  /* The narrowest phones keep a smaller photo so the code and button fit. */
+  .promo-strip--v2 { grid-template-columns: minmax(0, 1fr) 34%; }
+}
