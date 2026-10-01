@@ -1420,3 +1420,41 @@
   font-weight: 600;
   vertical-align: .08em;
 }
+
+/* =========================================================================
+   Nineteenth pass: the −20% tags are not turned. As in the reference, only
+   the plate is slanted (a parallelogram drawn behind), the text stays
+   upright. The rupee estimate is back under the price.
+   ========================================================================= */
+
+.route-discount,
+.route-sticker {
+  position: relative;
+  z-index: 0;
+  background: none;
+  font-weight: 400;
+  transform: none;
+}
+
+.route-discount::before,
+.route-sticker::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--strawberry);
+  border-radius: inherit;
+  transform: skewX(-14deg);
+}
+
+.route-discount { padding: 4px 8px 5px; }
+.route-sticker { margin-left: 8px; padding: .14em .38em .18em; vertical-align: .1em; }
+
+.route-inr {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+
+.route-inr + .route-old-price { margin-top: 2px; }
