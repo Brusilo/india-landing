@@ -2185,3 +2185,26 @@
     clip-path: inset(0 70px 0 0 round 0 0 24px 0);
   }
 }
+
+/* =========================================================================
+   Forty-eighth pass (PC): an old nth-of-type rule capped the plane at 47% of
+   the card's height, so the 300px box drew it at ~165px, pinned right and
+   a third cut off. The cap is lifted and the plane sized to sit, almost all
+   visible, beside the text column. Tile copy a little larger.
+   ========================================================================= */
+
+@media (min-width: 1101px) {
+  .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(18px, 1.9vw, 26px); }
+
+  .bento .bento-cell.bento-pos-r .bento-art--plane {
+    max-height: none;
+    width: 236px;
+    right: -40px;
+    bottom: -6px;
+    clip-path: inset(0 40px 6px 0 round 0 0 24px 0);
+  }
+}
+@media (min-width: 1101px) {
+  .bento .bento-cell.bento-pos-r h3 { padding-right: 50%; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 224px; right: -34px; clip-path: inset(0 34px 6px 0 round 0 0 24px 0); }
+}
