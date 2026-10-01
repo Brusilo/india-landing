@@ -1481,3 +1481,17 @@
    ========================================================================= */
 
 .group-banner { object-position: center 15%; }
+
+/* =========================================================================
+   Twenty-fourth pass: larger rupee estimate, the rupee figure struck through
+   next to the old price too, and the new group photo framed on the heads:
+   zoomed in on phones, where the band is narrow, and plain cover once it
+   is wide enough.
+   ========================================================================= */
+
+.route-inr { font-size: 16px; font-weight: 600; }
+.route-old-price { font-size: 14px; }
+.route-old-inr { margin-left: 6px; }
+
+.group-banner { background: url("photos/friends-square.webp") 50% 32% / auto 270% no-repeat; }
+@media (min-width: 768px) { .group-banner { background-size: cover; background-position: 50% 30%; } }
