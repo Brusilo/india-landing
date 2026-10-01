@@ -1474,3 +1474,10 @@
 
 .tile .tile-ico { width: 76px; height: 76px; right: 8px; bottom: 8px; object-fit: contain; }
 .tiles--4 .tile { padding-bottom: 90px; }
+
+/* =========================================================================
+   Twenty-third pass: new group photo, framed on the faces rather than the
+   map so no one loses the top of their head in the wide band.
+   ========================================================================= */
+
+.group-banner { object-position: center 15%; }
