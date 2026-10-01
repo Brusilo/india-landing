@@ -1458,3 +1458,15 @@
 }
 
 .route-inr + .route-old-price { margin-top: 2px; }
+
+/* =========================================================================
+   Twentieth pass: the airport photo with the discount badge, and a longer
+   photo on desktop. The photo never drops below its old 440px and grows
+   up to 680px when there is room. Framed on the suitcase and the badge.
+   ========================================================================= */
+
+.promo-photo { object-position: 50% 74%; }
+
+@media (min-width: 860px) {
+  .promo-strip--v2 { grid-template-columns: minmax(280px, 1fr) minmax(440px, 680px); }
+}
