@@ -1316,3 +1316,14 @@
 
   .has-carousel-arrows .carousel-nav--overlay button:disabled { opacity: 0; pointer-events: none; }
 }
+
+/* =========================================================================
+   Sixteenth pass: a smaller suitcase on desktop, and the airport photo in
+   the promo, framed on the suitcase.
+   ========================================================================= */
+
+@media (min-width: 900px) {
+  .hero > .hero-decor--suitcase { width: min(30vw, 400px) !important; right: -150px !important; }
+}
+
+.promo-photo { object-position: 50% 82%; }
