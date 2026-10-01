@@ -1774,3 +1774,38 @@
   .bento-cell:has(.bento-art--cal) h3,
   .bento-cell:has(.bento-art--plane) h3 { font-size: 20px; line-height: 1.3; }
 }
+
+/* =========================================================================
+   Thirty-fourth pass: desktop bento order by content, not markup order, so
+   the phone stacking stays as it is. Each slot brings its own art and type
+   sizes (the nth-of-type rules above are matched and overridden here):
+
+       English       since 2003     Lock in the price
+       English       42 million     Carriers
+       Extra savings                Carriers
+   ========================================================================= */
+
+@media (min-width: 900px) {
+  .bento-cell.bento-pos-tl { grid-column: 1; grid-row: 1 / 3; }
+  .bento-cell.bento-pos-tc { grid-column: 2; grid-row: 1; }
+  .bento-cell.bento-pos-tr { grid-column: 3; grid-row: 1; }
+  .bento-cell.bento-pos-c  { grid-column: 2; grid-row: 2; }
+  .bento-cell.bento-pos-r  { grid-column: 3; grid-row: 2 / 4; }
+  .bento-cell.bento-pos-bl { grid-column: 1 / 3; grid-row: 3; }
+
+  /* Tall left slot. */
+  .bento-cell.bento-pos-tl h3 { font-size: clamp(19px, 1.95vw, 27px); padding-right: 0; }
+  .bento-cell.bento-pos-tl .bento-art { width: 56%; right: 14px; bottom: 14px; max-height: 33%; }
+  .bento-cell.bento-pos-tl .bento-sticker:first-child { margin-top: 10px; }
+
+  /* Small slots. */
+  .bento-cell.bento-pos-tr h3 { font-size: clamp(16px, 1.62vw, 23px); padding-right: 52%; }
+  .bento-cell.bento-pos-tr .bento-art { width: 42%; right: 8px; bottom: 6px; max-height: 84%; }
+  .bento-cell.bento-pos-c h3,
+  .bento-cell.bento-pos-tc h3 { padding-right: 0; }
+
+  /* Wide bottom slot. */
+  .bento-cell.bento-pos-bl h3 { font-size: 20px; padding-right: 30%; }
+  .bento-cell.bento-pos-bl .bento-sticker { margin-top: 14px; }
+  .bento-cell.bento-pos-bl .bento-art { width: 26%; right: 18px; bottom: 8px; max-height: 84%; }
+}
