@@ -1652,3 +1652,22 @@
 @media (min-width: 1101px) {
   .group-banner { background-size: cover; background-position: 50% 10%; }
 }
+
+/* =========================================================================
+   Thirtieth pass: a hotel without a rating gets a neutral chip in the same
+   spot, and the last section keeps its gap above the footer.
+   ========================================================================= */
+
+.hotel-unrated {
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--surface-neutral);
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* `.section` and `.section:last-of-type` zero this with !important above. */
+.section.section:has(+ footer) { padding-bottom: 40px !important; }
+@media (min-width: 768px) { .section.section:has(+ footer) { padding-bottom: 64px !important; } }
