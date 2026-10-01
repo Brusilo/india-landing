@@ -1460,28 +1460,9 @@
 .route-inr + .route-old-price { margin-top: 2px; }
 
 /* =========================================================================
-   Twentieth pass: the airport photo with the discount badge, and a longer
-   photo on desktop. The photo never drops below its old 440px and grows
-   up to 680px when there is room. Framed on the suitcase and the badge.
+   Twentieth pass: the promo photo takes half the strip on desktop.
    ========================================================================= */
-
-.promo-photo { object-position: 50% 74%; }
-
-@media (min-width: 860px) {
-  .promo-strip--v2 { grid-template-columns: minmax(280px, 1fr) minmax(440px, 680px); }
-}
-
-/* =========================================================================
-   Twenty-first pass: the promo photo takes half the strip on desktop, and
-   it is zoomed past the palms that stand at both edges of the picture. On
-   phones the narrow column already crops them away, so plain cover there.
-   ========================================================================= */
-
-.promo-photo--airport {
-  background: url("photos/airport-discount.webp") 50% 50% / cover no-repeat;
-}
 
 @media (min-width: 860px) {
   .promo-strip--v2 { grid-template-columns: minmax(280px, 1fr) minmax(0, 1fr); }
-  .promo-photo--airport { background-size: 160% auto; background-position: 48% 72%; }
 }
