@@ -14,7 +14,7 @@
   const FAQ = {
     ru: [
       {
-        q: 'Какие карты принимаются для оплаты авиабилетов?',
+        q: 'Какие карты принимаются для оплаты билетов?',
         a: 'К оплате принимаются карты, выпущенные в России, странах СНГ, Прибалтике и большинстве стран Европы. Оплата также возможна виртуальной, предоплаченной картой Visa Virtual.'
       },
       {
@@ -44,7 +44,7 @@
     ],
     en: [
       {
-        q: 'Which cards can I use to pay for flights?',
+        q: 'Which cards can I use to pay for tickets?',
         a: 'Cards issued in Russia, CIS countries, the Baltic states and most European countries are accepted. You can also pay with a prepaid Visa Virtual card.'
       },
       {
@@ -74,7 +74,7 @@
     ],
     hi: [
       {
-        q: 'फ़्लाइट टिकट के भुगतान के लिए कौन-से कार्ड स्वीकार किए जाते हैं?',
+        q: 'टिकट के भुगतान के लिए कौन-से कार्ड स्वीकार किए जाते हैं?',
         a: 'रूस, CIS देशों, बाल्टिक देशों और यूरोप के अधिकांश देशों में जारी किए गए कार्ड स्वीकार किए जाते हैं। Visa Virtual प्रीपेड कार्ड से भी भुगतान किया जा सकता है।'
       },
       {
