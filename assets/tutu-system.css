@@ -1,32 +1,40 @@
 /* Tutu visual system.
    Values measured on the live tutu.ru (computed styles, not guesses) and
    cross-checked against the brand book and the ТутуЛенд Figma file.
-   Loaded last; remove the <link> to get the previous look back. */
+   Loaded last; remove the <link> to get the previous look back.
+
+   Where a value matches an official Kite token exactly (assets/kite-tokens.css,
+   from @tutu/mother-of-tokens), the variable reads the token; the old value
+   stays as the fallback. Colours with no Kite twin (lime, the pinks, the
+   rating green, the action violet) keep their hand-picked values. */
 
 :root {
   /* Surfaces */
   --surface-neutral: #F5F5F9;
-  --surface-neutral-2: #F0F0F7;
+  --surface-neutral-2: var(--kite-main-layout-color, #F0F0F7);
   --surface-brand: #F3F0FF;
 
   /* Text */
-  --ink: #181C2D;
-  --ink-muted: #555A7A;
+  --ink: var(--kite-content-neutral-primary, #181C2D);
+  --ink-muted: var(--kite-content-neutral-secondary, #555A7A);
 
   /* Actions */
   --action: #7028EB;
-  --action-hover: #5F17C5;
+  --action-hover: var(--kite-content-brand-primary, #5F17C5);
 
   /* Accents, used on badges and stickers only */
-  --strawberry: #FD5623;
-  --tangerine: #FF800A;
+  --strawberry: var(--kite-content-brand-duo-secondary, #FD5623);
+  --tangerine: var(--kite-content-accent-duo-secondary, #FF800A);
   --rating-green: #48A22B;
   --lime: #D0FF1A;
 
-  /* Geometry, as the live site uses it */
-  --r-panel: 32px;
-  --r-card: 16px;
-  --r-btn: 12px;
+  /* Brand deep blue (the hero and footer), defined inline in each page */
+  --deep-blue: var(--kite-background-static-brand-deep, #0D0B68);
+
+  /* Geometry: the Kite radius scale */
+  --r-panel: var(--kite-radius-700, 32px);
+  --r-card: var(--kite-radius-500, 16px);
+  --r-btn: var(--kite-radius-400, 12px);
   --r-pill: 9999px;
 }
 

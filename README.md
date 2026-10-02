@@ -94,6 +94,25 @@ To change the code, overwrite the file.
 
 No other brand colors are used. Body text is neutral grey.
 
+## Kite design tokens
+
+`assets/kite-tokens.css` holds the official Kite tokens (light theme colours, shadows, and the
+radius, spacing and sizing scales) from Tutu's `@tutu/mother-of-tokens` package. It loads just
+before `assets/tutu-system.css`, whose variables read the tokens wherever a value matches one
+exactly (`--ink`, `--ink-muted`, `--action-hover`, `--strawberry`, `--tangerine`,
+`--surface-neutral-2`, `--deep-blue`, `--r-panel`, `--r-card`, `--r-btn`). The old values stay
+as fallbacks, so the page looks the same if the file is missing.
+
+To refresh the tokens (needs access to Tutu's internal npm registry):
+
+```bash
+npm pack @tutu/mother-of-tokens --registry=https://artifactory.tutu.ru/artifactory/api/npm/npm-common/
+tar -xzf tutu-mother-of-tokens-*.tgz
+node scripts/build-kite-tokens.js ./package
+```
+
+Then bump `?v=` on the `kite-tokens.css` link in the three pages.
+
 ## Not wired up yet (stage 2)
 
 Styled but inert on purpose:
