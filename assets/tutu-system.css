@@ -2282,3 +2282,27 @@
   .bento .bento-cell.bento-pos-tl .bento-art { bottom: -28px; }
   :lang(en) .bento .bento-cell.bento-pos-tl { min-height: 282px; }
 }
+
+/* Fifty-first pass (phones): the wallet and the messages a little bigger and
+   shifted left into the free space beside their copy; the copy stays put. */
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tr .bento-art { width: clamp(150px, 47vw, 196px); right: 8px; bottom: -20px; }
+  .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(168px, 52vw, 222px); right: 2px; bottom: -36px; }
+}
+@media (max-width: 699.98px) {
+  :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: 282px; }
+}
+/* The bigger wallet needs a taller card so it doesn't reach into the card above;
+   on wider phones the bigger messages need a little more room under their copy. */
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tr { min-height: clamp(132px, 36vw, 146px); }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tl { min-height: 280px; }
+  :lang(en) .bento .bento-cell.bento-pos-tl,
+  :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: 296px; }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 292px; }
+  :lang(hi) .bento .bento-cell.bento-pos-tr .bento-art { right: -6px; }
+}
