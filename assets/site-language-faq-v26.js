@@ -30,6 +30,18 @@
         a: 'Нормы зависят от перевозчика и тарифа. Для авиабилетов условия ручной клади и багажа показываются при выборе тарифа, а у автобусных перевозчиков багаж может оплачиваться отдельно. Перед покупкой проверьте условия именно вашего билета.'
       },
       {
+        q: 'Как работает «Оплатить позже»?',
+        a: 'Для части билетов и отелей можно оформить заказ сейчас, а заплатить позже: цена фиксируется на время брони. До какого срока нужно оплатить, покажем при оформлении. Если не оплатить вовремя, бронь отменится.'
+      },
+      {
+        q: 'Какие скидки есть на билеты на поезд?',
+        a: 'На невозвратные билеты на поезд скидка до 20%. В день рождения скидку получаете вы и до трёх попутчиков: 30% на «Сапсан» и 10% на другие поезда дальнего следования. Точные сроки и условия покажем при выборе тарифа.'
+      },
+      {
+        q: 'Как применить промокод INDIA10?',
+        a: 'Введите INDIA10 при оформлении заказа на сайте или в приложении Туту, и вы получите скидку 10% на билеты и отели. Промокодом можно поделиться с друзьями. Срок действия и ограничения покажем, когда вы введёте промокод.'
+      },
+      {
         q: 'Можно ли вернуть или обменять билет?',
         a: 'Это зависит от вида транспорта, перевозчика и тарифа. Возвратные и невозвратные условия показываются до покупки. После покупки доступные действия можно посмотреть в заказе на сайте или в приложении Туту; для некоторых билетов обмен фактически оформляется как возврат и покупка нового билета.'
       },
@@ -60,6 +72,18 @@
         a: 'Baggage limits depend on the carrier and fare. For flights, cabin baggage and checked baggage allowances are shown with the fare; on buses, baggage may be charged separately. Check the conditions for your specific ticket before paying.'
       },
       {
+        q: 'How does “Pay later” work?',
+        a: 'For some tickets and hotels you can book now and pay later: the price is fixed while the booking holds. We show the payment deadline when you book. If it is not paid in time, the booking is cancelled.'
+      },
+      {
+        q: 'What train discounts are there?',
+        a: 'Non-refundable train tickets are up to 20% cheaper. On your birthday, you and up to three companions get a discount: 30% on Sapsan trains and 10% on other long-distance trains. Exact dates and conditions are shown when you choose a fare.'
+      },
+      {
+        q: 'How do I use the INDIA10 promo code?',
+        a: 'Enter INDIA10 when you check out on the Tutu website or app to get 10% off tickets and hotels. You can share the code with friends. The validity period and any limits are shown when you enter the code.'
+      },
+      {
         q: 'Can I refund or exchange a ticket?',
         a: 'It depends on the transport type, carrier and fare. Refundable and non-refundable conditions are shown before purchase. After purchase, available actions are shown in your order on the Tutu website or app; for some tickets, an exchange is handled as a refund followed by a new purchase.'
       },
@@ -88,6 +112,18 @@
       {
         q: 'कितना सामान साथ ले जा सकते हैं?',
         a: 'सामान की सीमा परिवहन कंपनी और किराये के नियमों पर निर्भर करती है। फ़्लाइट के लिए हैंड बैगेज और चेक-इन बैगेज की शर्तें किराया चुनते समय दिखाई जाती हैं; बस में सामान के लिए अलग शुल्क हो सकता है। भुगतान से पहले अपने टिकट की शर्तें ज़रूर जाँचें।'
+      },
+      {
+        q: '«बाद में भुगतान करें» कैसे काम करता है?',
+        a: 'कुछ टिकटों और होटलों के लिए आप अभी बुकिंग करके बाद में भुगतान कर सकते हैं: बुकिंग रहने तक कीमत तय रहती है। भुगतान की आख़िरी तारीख़ बुकिंग के समय दिखाई जाती है। समय पर भुगतान न करने पर बुकिंग रद्द हो जाती है।'
+      },
+      {
+        q: 'ट्रेन टिकटों पर कौन-सी छूट मिलती है?',
+        a: 'नॉन-रिफ़ंडेबल ट्रेन टिकट 20% तक सस्ते होते हैं। जन्मदिन पर आपको और आपके तीन तक साथियों को छूट मिलती है: «सपसान» ट्रेनों पर 30% और दूसरी लंबी दूरी की ट्रेनों पर 10%। सटीक तारीख़ें और शर्तें किराया चुनते समय दिखाई जाती हैं।'
+      },
+      {
+        q: 'प्रोमो कोड INDIA10 कैसे इस्तेमाल करें?',
+        a: 'Tutu वेबसाइट या ऐप पर ऑर्डर करते समय INDIA10 डालें और टिकटों व होटलों पर 10% की छूट पाएँ। आप यह कोड दोस्तों के साथ भी शेयर कर सकते हैं। कोड की वैधता और शर्तें कोड डालने पर दिखाई जाती हैं।'
       },
       {
         q: 'क्या टिकट वापस या बदला जा सकता है?',

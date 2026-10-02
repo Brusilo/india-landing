@@ -2400,3 +2400,68 @@ h1, h2, h3 { text-wrap: balance; }
 .v2-value { color: var(--ink); }
 .search.search-v2 .v2-input,
 .search.search-v2 .v2-value { color: var(--ink) !important; }
+
+/* =========================================================================
+   Fifty-seventh pass (design review): a smaller "We'll get you" heading,
+   the "all the way" plate stepped right and touching "English", the wallet
+   upright, and a smaller plane now that the carriers copy is short.
+   ========================================================================= */
+
+.panel--photo .panel-line,
+:lang(en) .panel--photo .panel-line { font-size: clamp(26px, 3.4vw, 38px); }
+:lang(en) .panel--photo .panel-badge { font-size: clamp(24px, 3.2vw, 38px); }
+@media (max-width: 900px) {
+  .panel--photo .panel-line,
+  :lang(en) .panel--photo .panel-line { font-size: 22px; }
+  :lang(en) .panel--photo .panel-badge { font-size: 20px; }
+}
+
+/* The plates are turned the same way, so their edges run parallel: the lower
+   one steps right by 0.7em and rises by that step's slope to touch. */
+.bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text {
+  margin-left: 0.7em; margin-top: calc(-19px - 0.1em);
+}
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: calc(-12px - 0.1em); }
+}
+
+.bento .bento-cell.bento-pos-tr .bento-art { transform: none; }
+
+@media (min-width: 1101px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 190px; }
+}
+@media (min-width: 700px) and (max-width: 1100.98px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 140px; }
+}
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 170px; }
+}
+
+/* The footer is a rounded block, like the hero below the header. */
+.footer { border-radius: 28px 28px 0 0; }
+@media (min-width: 768px) { .footer { border-radius: 40px 40px 0 0; } }
+/* Upright, the wallet's left corner sits higher, so it shrinks on tablets and
+   drops a little on wider phones to clear the copy. */
+@media (min-width: 700px) and (max-width: 1100.98px) {
+  .bento .bento-cell.bento-pos-tr .bento-art { width: 125px; }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tr .bento-art { bottom: -28px; }
+}
+@media (max-width: 389.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { bottom: -42px; }
+}
+@media (min-width: 700px) and (max-width: 1100.98px) {
+  :lang(en) .bento .bento-cell.bento-pos-tr .bento-art { width: 125px; }
+}
+@media (max-width: 389.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { right: -6px; }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  :lang(en) .bento .bento-cell.bento-pos-tr .bento-art { right: -2px; }
+}
+/* With the smaller plane and two lines of copy, the phone carriers card is shorter. */
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-r,
+  :lang(hi) .bento .bento-cell.bento-pos-r { min-height: max(240px, calc(360px - 30vw)); }
+}
