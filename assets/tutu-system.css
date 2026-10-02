@@ -2216,3 +2216,56 @@
   .bento .bento-cell.bento-pos-r h3 { padding-right: 50%; }
   .bento .bento-cell.bento-pos-r .bento-art--plane { width: 224px; right: -34px; clip-path: inset(0 34px 6px 0 round 0 0 24px 0); }
 }
+
+/* =========================================================================
+   Forty-ninth pass: a bigger promo code and button on the English and Hindi
+   phones (their labels are short, so there is room); on phones larger
+   messages and calendar, and a larger plane sitting higher; on PCs the
+   lock-in line drops a little.
+   ========================================================================= */
+
+@media (max-width: 859px) {
+  :lang(en) .promo-strip--v2 .promo-strip__code,
+  :lang(en) .promo-strip--v2 .promo-strip__copy,
+  :lang(hi) .promo-strip--v2 .promo-strip__code,
+  :lang(hi) .promo-strip--v2 .promo-strip__copy {
+    height: 40px; min-height: 40px; padding: 0 12px; font-size: 15px;
+  }
+}
+
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(130px, 38vw, 160px); }
+  .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(150px, 47vw, 214px); }
+  .bento .bento-cell.bento-pos-r .bento-art--plane {
+    width: 188px; right: -30px; bottom: -12px;
+    clip-path: inset(0 30px 12px 0 round 0 0 22px 0);
+  }
+}
+
+@media (min-width: 1101px) {
+  .bento .bento-cell.bento-pos-tr h3 { margin-top: 18px; }
+}
+@media (max-width: 699.98px) {
+  /* Room beside the bigger calendar. */
+  .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(146px, 45vw, 206px); }
+  .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(92px, 27vw, 126px); }
+  :lang(en) .bento .bento-cell.bento-pos-bl h3,
+  :lang(hi) .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(110px, 32vw, 152px); }
+
+  /* The carriers card grows a little so the bigger plane fits beside the
+     copy and below the 10 000+ plate. */
+  .bento .bento-cell.bento-pos-r { min-height: 290px; }
+  .bento .bento-cell.bento-pos-r h3 { padding-right: clamp(130px, 40vw, 172px); }
+  .bento .bento-cell.bento-pos-r .bento-art--plane {
+    width: 190px; right: -26px; bottom: -8px;
+    clip-path: inset(0 26px 8px 0 round 0 0 22px 0);
+  }
+}
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane { right: -40px; clip-path: inset(0 40px 8px 0 round 0 0 22px 0); }
+  .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(102px, 29vw, 130px); }
+}
+@media (max-width: 370px) {
+  /* "10,000+" is a touch wider in English, so on narrow phones the plane steps right. */
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { right: -50px; clip-path: inset(0 50px 8px 0 round 0 0 22px 0); }
+}
