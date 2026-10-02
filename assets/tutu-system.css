@@ -2472,3 +2472,51 @@ h1, h2, h3 { text-wrap: balance; }
   :lang(en) .panel--photo .panel-line { font-size: clamp(30px, 3.75vw, 44px); }
   .panel--photo .panel-badge { margin-left: -0.3em; }
 }
+
+/* =========================================================================
+   Fifty-ninth pass (design review, mostly phones): the "All" buttons are
+   back beside the route and hotel headings (short label on phones), the
+   hotel and review panels are rounded blocks again, a 16px promo corner,
+   no messages prop on the phone English card, an upright calendar, and no
+   QR code in the phone footer.
+   ========================================================================= */
+
+.see-all__short { display: none; }
+@media (max-width: 599.98px) {
+  .see-all__full { display: none; }
+  .see-all__short { display: inline; }
+}
+@media (max-width: 1100px) {
+  #routes .section-head--row,
+  #hotels .section-head--row { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-items: start; }
+  #routes .section-head > .head-actions,
+  #hotels .section-head > .head-actions { display: flex; justify-self: end; align-self: start; }
+}
+
+@media (max-width: 767.98px) {
+  html #hotels > .container,
+  html .reviews-section > .container { padding-inline: 16px !important; }
+  html #hotels .stage,
+  html .reviews-section .reviews-stage { width: auto !important; margin-inline: 0 !important; border-radius: 24px !important; overflow: hidden; }
+
+  .promo-strip,
+  .promo-strip--v2 { border-radius: 16px; }
+
+  .footer-app-col .qr { display: none; }
+}
+
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tl .bento-art { display: none; }
+  .bento .bento-cell.bento-pos-tl h3,
+  :lang(en) .bento .bento-cell.bento-pos-tl h3,
+  :lang(hi) .bento .bento-cell.bento-pos-tl h3 { padding-right: 0; }
+  .bento .bento-cell.bento-pos-tl,
+  :lang(ru) .bento .bento-cell.bento-pos-tl,
+  :lang(en) .bento .bento-cell.bento-pos-tl,
+  :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: 0; }
+}
+
+.bento .bento-cell.bento-pos-bl .bento-art { transform: none; }
+@media (max-width: 767.98px) {
+  .promo-strip--v2 .promo-photo { border-radius: 12px 16px 16px 12px; }
+}
