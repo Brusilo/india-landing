@@ -2379,3 +2379,24 @@ h1, h2, h3 { text-wrap: balance; }
   }
   .promo-strip__copy--code svg { width: 20px; height: 20px; }
 }
+
+/* =========================================================================
+   Fifty-sixth pass (design review): route cards flat and grey as on the
+   tutu.ru home page, 8px button corners, the "any city" plate slanted with
+   a skew instead of an italic, and black text instead of dark blue.
+   ========================================================================= */
+
+:root { --card-neutral: #F5F5F9; }
+
+#routes .card.card--route { box-shadow: none; background: var(--card-neutral); }
+
+.see-all { border-radius: 8px; }
+
+.panel-badge { transform: rotate(-3deg) skewX(-12deg); }
+
+.tile h3,
+.review-card__author,
+.lang a.is-active,
+.v2-value { color: var(--ink); }
+.search.search-v2 .v2-input,
+.search.search-v2 .v2-value { color: var(--ink) !important; }
