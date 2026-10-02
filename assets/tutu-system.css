@@ -2685,3 +2685,14 @@ h1, h2, h3 { text-wrap: balance; }
 @media (min-width: 1101px) {
   .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(18px, 1.82vw, 25px); }
 }
+
+/* Sixty-fifth pass (PC): the plane fills the bottom of the carriers card
+   (its wide upper half, nose and wings, from edge to edge), so there is no
+   empty corner under the copy; the copy on the other tiles steps right. */
+@media (min-width: 1101px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane {
+    width: calc(100% + 66px); align-self: center;
+    margin: 6px -66px -16px 0;
+  }
+  .bento .bento-cell:not(.bento-pos-r) h3 { margin-left: 8px; }
+}
