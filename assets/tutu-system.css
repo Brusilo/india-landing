@@ -2465,3 +2465,10 @@ h1, h2, h3 { text-wrap: balance; }
   .bento .bento-cell.bento-pos-r,
   :lang(hi) .bento .bento-cell.bento-pos-r { min-height: max(240px, calc(360px - 30vw)); }
 }
+
+/* Fifty-eighth pass (PC): "We'll get you" a touch larger, its plate a touch left. */
+@media (min-width: 901px) {
+  .panel--photo .panel-line,
+  :lang(en) .panel--photo .panel-line { font-size: clamp(30px, 3.75vw, 44px); }
+  .panel--photo .panel-badge { margin-left: -0.3em; }
+}
