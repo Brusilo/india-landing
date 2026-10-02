@@ -2661,3 +2661,22 @@ h1, h2, h3 { text-wrap: balance; }
 @media (max-width: 339.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane { width: 84px; right: 6px; }
 }
+
+/* Sixty-third pass (PC): the carriers copy is longer, so the plane follows
+   it in the flow and fills what is left of the card, cropped at the bottom
+   (flex-basis 0 keeps it from making the card taller). */
+@media (min-width: 1101px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane {
+    position: static; flex: 1 1 0; min-height: 0; max-height: none;
+    width: 210px; height: auto; align-self: flex-end;
+    margin: 12px -30px -16px 0;
+    object-fit: cover; object-position: 100% 0;
+    top: auto; right: auto; bottom: auto; translate: none; clip-path: none;
+  }
+}
+@media (max-width: 699.98px) {
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { right: 12px; clip-path: none; }
+}
+@media (max-width: 339.98px) {
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { right: 6px; }
+}
