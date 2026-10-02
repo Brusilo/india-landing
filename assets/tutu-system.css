@@ -2696,3 +2696,26 @@ h1, h2, h3 { text-wrap: balance; }
   }
   .bento .bento-cell:not(.bento-pos-r) h3 { margin-left: 8px; }
 }
+
+/* Sixty-sixth pass (PC): copy and plates about 8% larger, a bigger train a
+   little higher, the wallet further left. */
+@media (min-width: 1101px) {
+  .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(19px, 1.97vw, 27px); }
+  .bento .bento-cell .bento-sticker { font-size: clamp(26px, 2.97vw, 43px); }
+  .bento .bento-cell.bento-pos-tc .bento-sticker,
+  .bento .bento-cell.bento-pos-r .bento-sticker { font-size: clamp(28px, 3.56vw, 52px); }
+  :lang(ru) .bento .bento-cell.bento-pos-tc .bento-sticker,
+  :lang(hi) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(26px, 3.19vw, 45px); }
+  :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker,
+  :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(26px, 3.02vw, 43px); }
+  .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: clamp(22px, 2.54vw, 37px); }
+  .bento .bento-cell.bento-pos-bl .bento-sticker.bento-sticker--text { font-size: clamp(22px, 2.65vw, 39px); }
+
+  .bento .bento-cell.bento-pos-bl .bento-art--train { width: 34%; bottom: -10px; }
+  .bento .bento-cell.bento-pos-tr .bento-art { right: 10px; }
+}
+@media (min-width: 1101px) {
+  .bento .bento-cell.bento-pos-bl h3 { padding-right: 38%; }
+  .bento .bento-cell.bento-pos-bl .bento-art--train { right: 40px; }
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { max-height: 46%; }
+}
