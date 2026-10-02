@@ -2576,3 +2576,37 @@ h1, h2, h3 { text-wrap: balance; }
   :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker:first-child { margin-top: 0.1em; }
   .bento .bento-cell.bento-pos-tl h3 { margin-top: -6px; }
 }
+
+/* =========================================================================
+   Sixty-first pass: the PC carriers card is a tall column with two short
+   lines of copy, so the plane now fills the space under the copy, large and
+   cropped by the card's right and bottom edges. The train replaces the
+   calendar. The phone carriers card is shorter; the hotel "All" button
+   sits a touch lower and keeps black text on hover.
+   ========================================================================= */
+
+@media (min-width: 1101px) {
+  .bento .bento-cell.bento-pos-r { overflow: hidden; }
+  .bento .bento-cell.bento-pos-r h3 { padding-right: 0; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane {
+    width: 330px; max-height: none; right: -58px; top: 196px; bottom: auto;
+    clip-path: none;
+  }
+}
+
+.stage .see-all:hover { color: var(--ink); background: #EFEFF5; }
+@media (max-width: 1100px) {
+  #hotels .section-head > .head-actions { position: relative; top: 3px; }
+}
+
+/* The train is wider than the calendar and has less air in its frame. */
+.bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.88; transform-origin: 100% 100%; }
+
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 156px; }
+  .bento .bento-cell.bento-pos-r,
+  :lang(hi) .bento .bento-cell.bento-pos-r { min-height: max(214px, calc(334px - 30vw)); }
+}
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.88; right: -6px; bottom: -8px; }
+}
