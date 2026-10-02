@@ -33,7 +33,6 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400&display=swap" rel="stylesheet">
 
 <style>
 @font-face{font-family:'Tutu Sans';src:url('fonts/tutu_sans_regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
@@ -64,9 +63,8 @@
   --maxw:1180px;
 
   --font:'Tutu Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-  --font-accent:'Lora',Georgia,'Times New Roman',serif;
 }
-/* Tutu Sans and Lora have no Devanagari glyphs, so the Hindi page needs its own fallbacks and looser lines */
+/* Tutu Sans has no Devanagari glyphs, so the Hindi page needs its own fallbacks and looser lines */
 html:lang(hi){--font:'Tutu Sans','Noto Sans Devanagari','Nirmala UI','Mangal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
 :lang(hi) .hero h1{line-height:1.2;letter-spacing:0}
 :lang(hi) .hero h1 .accent{font-family:inherit;font-style:normal;font-weight:700;color:var(--lilac)}
@@ -177,12 +175,7 @@ input:focus{outline:none}
   letter-spacing:-.025em;
   max-width:16ch;
 }
-.hero h1 .accent{
-  font-family:var(--font-accent);
-  font-style:italic;
-  font-weight:400;
-  letter-spacing:0;
-}
+.hero h1 .accent{color:var(--lilac)}
 .hero-sub{
   margin-top:14px;
   font-size:16px;
@@ -665,10 +658,10 @@ body{position:relative!important}
 }
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20260925-return-date">
-<script src="assets/site-language-faq-v26.js?v=20261001-tickets"></script>
+<script src="assets/site-language-faq-v26.js?v=20261002-copy"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20260930b">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
-<link rel="stylesheet" href="assets/tutu-system.css?v=154">
+<link rel="stylesheet" href="assets/tutu-system.css?v=155">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -677,7 +670,7 @@ body{position:relative!important}
 
 <header class="top">
   <div class="container top-inner">
-    <img class="logo" src="assets/logo-tutu-white.png" alt="Tutu">
+    <a class="logo-link" href="https://www.tutu.ru/" aria-label="Tutu — home page"><img class="logo" src="assets/logo-tutu-white.png" alt="Tutu"></a>
     <nav class="top-nav" aria-label="Sections">
       <a href="https://www.tutu.ru/juicy-offers/">Deals</a>
       <a href="https://provereno.tutu.ru/">Routes</a>
@@ -753,8 +746,7 @@ body{position:relative!important}
         <p><span class="promo-title-desktop">10% off tickets and hotels for you and your friends</span><span class="promo-title-mobile">10% off tickets and hotels</span></p>
       
         <div class="promo-strip__action">
-          <div class="promo-strip__code" aria-label="Promo code">INDIA10</div>
-          <button type="button" class="promo-strip__copy" data-promo-code="INDIA10" data-copied-label="Copied">Copy</button>
+          <button type="button" class="promo-strip__copy promo-strip__copy--code" data-promo-code="INDIA10" data-copied-label="Copied" aria-label="Copy promo code INDIA10"><span class="promo-strip__copy-label">INDIA10</span><svg class="promo-strip__copy-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M4 16.5V5a1 1 0 0 1 1-1h11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="8" y="8" width="12" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg><svg class="promo-strip__copied-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>      </div>
       <img class="promo-photo" src="assets/photos/airport-promo.webp" alt="" aria-hidden="true">
     </div>

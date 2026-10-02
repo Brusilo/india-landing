@@ -74,10 +74,9 @@ To change the code, overwrite the file.
 
 ## Fonts
 
-- **Tutu Sans** — brand face, loaded locally from `fonts/`. A system sans stack is set as fallback.
-- **Lora Italic** (Google Fonts) — **stand-in** for PT Cooper Light Italic, the brand accent face,
-  which was not supplied. It is used in exactly one word — «Дешёвые» in the H1 — and nowhere else.
-  When the real file arrives, add it as an `@font-face` and change `--font-accent`.
+- **Tutu Sans** — the only face, loaded locally from `fonts/`. A system sans stack is set as fallback
+  (plus Devanagari fallbacks on the Hindi page). Italic accent faces (Cooper and the like) are no
+  longer part of the brand, so the H1 accent word is Tutu Sans in lilac.
 
 ## Brand colors in use
 

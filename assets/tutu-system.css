@@ -2334,3 +2334,48 @@
   :lang(en) .bento .bento-cell.bento-pos-r h3,
   :lang(ru) .bento .bento-cell.bento-pos-r h3 { padding-right: clamp(116px, 34vw, 150px); }
 }
+
+/* =========================================================================
+   Fifty-fifth pass (design review): Tutu Sans everywhere, the logo links to
+   tutu.ru, headings balance their lines, and the promo code is one button:
+   the code with a copy icon (Kite Button with square-stack_outline).
+   ========================================================================= */
+
+.logo-link { display: inline-flex; flex: none; border-radius: 6px; }
+.logo-link:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+/* The "any city" plate was set in the italic stand-in face. */
+.panel-badge { font-family: inherit; font-style: normal; }
+
+h1, h2, h3 { text-wrap: balance; }
+
+.promo-strip--v2 .promo-strip__copy.promo-strip__copy--code {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  min-height: 0;
+  padding: 0 12px 0 20px;
+  border-radius: var(--r-btn);
+  background: var(--action);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .04em;
+}
+.promo-strip--v2 .promo-strip__copy.promo-strip__copy--code:hover { background: var(--action-hover); }
+.promo-strip--v2 .promo-strip__copy.promo-strip__copy--code:focus-visible { outline: 2px solid var(--action); outline-offset: 3px; }
+.promo-strip__copy--code svg { width: 24px; height: 24px; flex: none; }
+.promo-strip__copy--code .promo-strip__copied-icon,
+.promo-strip__copy--code.is-copied .promo-strip__copy-icon { display: none; }
+.promo-strip__copy--code.is-copied .promo-strip__copied-icon { display: block; }
+
+@media (max-width: 859px) {
+  .promo-strip--v2 .promo-strip__copy.promo-strip__copy--code,
+  :lang(en) .promo-strip--v2 .promo-strip__copy.promo-strip__copy--code,
+  :lang(hi) .promo-strip--v2 .promo-strip__copy.promo-strip__copy--code {
+    gap: 8px; height: 40px; min-height: 0; padding: 0 10px 0 14px; font-size: 16px;
+  }
+  .promo-strip__copy--code svg { width: 20px; height: 20px; }
+}

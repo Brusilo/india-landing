@@ -130,15 +130,22 @@
     if (!button) return;
     const code = button.getAttribute('data-promo-code');
     if (!code) return;
-    const original = button.getAttribute('data-default-label') || button.textContent;
-    button.setAttribute('data-default-label', original);
     const copied = button.getAttribute('data-copied-label') || 'Copied';
+    /* The code-and-icon button keeps its code: the copy icon turns into a
+       tick, and screen readers hear the copied label through aria-label. */
+    const iconOnly = button.classList.contains('promo-strip__copy--code');
+    const original = button.getAttribute('data-default-label') ||
+      (iconOnly ? button.getAttribute('aria-label') : button.textContent);
+    button.setAttribute('data-default-label', original);
     const showCopied = function () {
       button.classList.add('is-copied');
-      button.textContent = copied;
-      window.setTimeout(function () {
+      if (iconOnly) button.setAttribute('aria-label', copied);
+      else button.textContent = copied;
+      window.clearTimeout(button._copiedTimer);
+      button._copiedTimer = window.setTimeout(function () {
         button.classList.remove('is-copied');
-        button.textContent = original;
+        if (iconOnly) button.setAttribute('aria-label', original);
+        else button.textContent = original;
       }, 1600);
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
