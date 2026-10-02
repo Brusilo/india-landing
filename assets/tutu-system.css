@@ -2319,3 +2319,9 @@
   /* Hindi carriers copy is shorter, so its card loses the spare room on top. */
   :lang(hi) .bento .bento-cell.bento-pos-r { min-height: 274px; justify-content: flex-start; }
 }
+
+/* Fifty-third pass (PC): the "since 2003" plate a little smaller in Russian and Hindi. */
+@media (min-width: 1101px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tc .bento-sticker,
+  :lang(hi) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(26px, 3.35vw, 48px); }
+}
