@@ -2325,3 +2325,12 @@
   :lang(ru) .bento .bento-cell.bento-pos-tc .bento-sticker,
   :lang(hi) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(26px, 3.35vw, 48px); }
 }
+
+/* Fifty-fourth pass (phones): the carriers card hugs its plate at the top. Its
+   copy gets a slightly wider column (one line fewer), and the card is only as
+   tall as the plane needs to clear the 10 000+ plate. */
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-r { min-height: max(262px, calc(382px - 30vw)); justify-content: flex-start; }
+  :lang(en) .bento .bento-cell.bento-pos-r h3,
+  :lang(ru) .bento .bento-cell.bento-pos-r h3 { padding-right: clamp(116px, 34vw, 150px); }
+}
