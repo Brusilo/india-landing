@@ -39,7 +39,7 @@
       },
       {
         q: 'Как применить промокод INDIA10?',
-        a: 'Введите INDIA10 при оформлении заказа на сайте или в приложении Туту, и вы получите скидку 10% на билеты и отели. Промокодом можно поделиться с друзьями. Срок действия и ограничения покажем, когда вы введёте промокод.'
+        a: 'Промокод INDIA10 действует до 31 декабря 2026 года. Введите его при оформлении заказа на сайте или в приложении Туту, и вы получите скидку 10% на билеты и отели. Каждый пользователь может применить промокод один раз; на отели скидка действует при онлайн-оплате, а не при оплате при заселении. Промокодом можно поделиться с друзьями.'
       },
       {
         q: 'Можно ли вернуть или обменять билет?',
@@ -81,7 +81,7 @@
       },
       {
         q: 'How do I use the INDIA10 promo code?',
-        a: 'Enter INDIA10 when you check out on the Tutu website or app to get 10% off tickets and hotels. You can share the code with friends. The validity period and any limits are shown when you enter the code.'
+        a: 'INDIA10 is valid until 31 December 2026. Enter it when you check out on the Tutu website or app to get 10% off tickets and hotels. Each user can apply the code once; for hotels, the discount applies to bookings paid online, not to those paid at check-in. You can share the code with friends.'
       },
       {
         q: 'Can I refund or exchange a ticket?',
@@ -123,7 +123,7 @@
       },
       {
         q: 'प्रोमो कोड INDIA10 कैसे इस्तेमाल करें?',
-        a: 'Tutu वेबसाइट या ऐप पर ऑर्डर करते समय INDIA10 डालें और टिकटों व होटलों पर 10% की छूट पाएँ। आप यह कोड दोस्तों के साथ भी शेयर कर सकते हैं। कोड की वैधता और शर्तें कोड डालने पर दिखाई जाती हैं।'
+        a: 'INDIA10 31 दिसंबर 2026 तक मान्य है। Tutu वेबसाइट या ऐप पर ऑर्डर करते समय कोड डालें और टिकटों व होटलों पर 10% की छूट पाएँ। हर यूज़र कोड को एक बार इस्तेमाल कर सकता है; होटलों पर छूट ऑनलाइन भुगतान वाली बुकिंग पर मिलती है, चेक-इन पर भुगतान वाली बुकिंग पर नहीं। आप यह कोड दोस्तों के साथ भी शेयर कर सकते हैं।'
       },
       {
         q: 'क्या टिकट वापस या बदला जा सकता है?',
@@ -140,10 +140,16 @@
     ]
   };
 
+  /* Questions by importance for an Indian traveller: paying, the promo code,
+     the name on the ticket, refunds, pay later, train discounts, baggage,
+     buying for others, airport transfers, carriage classes. The numbers are
+     positions in the lists above, which keep the same order in every language. */
+  const FAQ_ORDER = [0, 6, 2, 7, 4, 5, 3, 8, 1, 9];
+
   function renderFaq() {
     const list = document.getElementById('faq-list');
     if (!list) return;
-    list.innerHTML = FAQ[lang].map(function (item) {
+    list.innerHTML = FAQ_ORDER.map(function (i) { return FAQ[lang][i]; }).map(function (item) {
       const details = document.createElement('details');
       details.className = 'faq-item';
       const summary = document.createElement('summary');
