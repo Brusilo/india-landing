@@ -2900,3 +2900,8 @@ h1, h2, h3 { text-wrap: balance; }
 @media (max-width: 699.98px) {
   .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(20px, 5.75vw, 23px); }
 }
+/* Phones: the messages a touch bigger and higher; the card keeps its size. */
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tl .bento-art,
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(144px, 44vw, 188px); bottom: -22px; }
+}
