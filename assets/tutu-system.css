@@ -2758,3 +2758,53 @@ h1, h2, h3 { text-wrap: balance; }
   /* The raised train would meet the English savings copy. */
   :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(118px, 34vw, 160px); }
 }
+
+/* =========================================================================
+   Sixty-eighth pass (phones): a wider savings column with a slightly smaller
+   train, so the card is shorter; the messages step right and the English
+   card is shorter; the plane a little left; a bigger 10 000+ plate; the
+   "All" buttons level with their headings; no "directly" on phones.
+   ========================================================================= */
+
+.only-phone { display: none; }
+@media (max-width: 699.98px) {
+  .hide-phone { display: none; }
+  .only-phone { display: inline; }
+
+  .bento .bento-cell.bento-pos-bl h3,
+  :lang(en) .bento .bento-cell.bento-pos-bl h3,
+  :lang(hi) .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(96px, 27vw, 120px); }
+  .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.8; bottom: 0; }
+
+  .bento .bento-cell.bento-pos-tl .bento-art,
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { right: -12px; }
+  .bento .bento-cell.bento-pos-tl h3,
+  :lang(en) .bento .bento-cell.bento-pos-tl h3,
+  :lang(hi) .bento .bento-cell.bento-pos-tl h3 { padding-right: clamp(132px, 40vw, 168px); }
+  .bento .bento-cell.bento-pos-tl,
+  :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 252px; }
+  :lang(en) .bento .bento-cell.bento-pos-tl,
+  :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: clamp(242px, 65vw, 276px); }
+
+  .bento .bento-cell.bento-pos-r .bento-art--plane,
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { right: -22px; }
+  .bento .bento-cell.bento-pos-r .bento-sticker { font-size: clamp(28px, 8.8vw, 37px); }
+
+  #routes .section-head > .head-actions { top: 2px; }
+  #hotels .section-head > .head-actions { top: 0; }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 278px; }
+}
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-bl h3,
+  :lang(en) .bento .bento-cell.bento-pos-bl h3,
+  :lang(hi) .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(84px, 24vw, 108px); }
+  .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.72; bottom: -2px; }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: -10px; }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: 108px; }
+}
