@@ -2719,3 +2719,42 @@ h1, h2, h3 { text-wrap: balance; }
   .bento .bento-cell.bento-pos-bl .bento-art--train { right: 40px; }
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { max-height: 46%; }
 }
+
+/* =========================================================================
+   Sixty-seventh pass (phones): the messages are back on the English card;
+   the plane is bigger, lower and cropped by its card; the train a little
+   higher; both "All" buttons a touch lower.
+   ========================================================================= */
+
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tl .bento-art { display: block; }
+  .bento .bento-cell.bento-pos-tl h3,
+  :lang(en) .bento .bento-cell.bento-pos-tl h3,
+  :lang(hi) .bento .bento-cell.bento-pos-tl h3 { padding-right: clamp(150px, 46vw, 190px); }
+  .bento .bento-cell.bento-pos-tl,
+  :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 266px; }
+  :lang(en) .bento .bento-cell.bento-pos-tl,
+  :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: clamp(256px, 69vw, 290px); }
+
+  .bento .bento-cell.bento-pos-r { overflow: hidden; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane,
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane {
+    width: clamp(150px, 47vw, 196px); right: -34px; top: auto; bottom: -46px; translate: none;
+  }
+
+  .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: 6px; }
+
+  #routes .section-head > .head-actions { position: relative; top: 4px; }
+  #hotels .section-head > .head-actions { top: 7px; }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 292px; }
+}
+@media (min-width: 480px) and (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane,
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { width: 170px; bottom: -50px; }
+}
+@media (max-width: 699.98px) {
+  /* The raised train would meet the English savings copy. */
+  :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(118px, 34vw, 160px); }
+}
