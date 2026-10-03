@@ -2859,3 +2859,24 @@ h1, h2, h3 { text-wrap: balance; }
   :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 240px; }
   .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: -10px; }
 }
+
+/* Seventy-first pass (phones): no train on the English savings card (its copy
+   runs full width and the card is shorter); the Russian train a little bigger
+   and further left, the Hindi one a touch left; Hindi carriers copy wider and
+   its English card shorter. The narrowest phones keep the old train spot. */
+@media (max-width: 699.98px) {
+  :lang(en) .bento .bento-cell.bento-pos-bl .bento-art--train { display: none; }
+  :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: 0; }
+  :lang(en) .bento .bento-cell.bento-pos-bl { padding-bottom: 14px; }
+  :lang(ru) .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.84; right: 4px; }
+  :lang(hi) .bento .bento-cell.bento-pos-bl .bento-art--train { right: -4px; }
+  :lang(hi) .bento .bento-cell.bento-pos-r h3 { padding-right: clamp(96px, 30vw, 128px); }
+  :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: clamp(192px, 52vw, 224px); }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: 0; }
+}
+@media (max-width: 339.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-bl .bento-art--train,
+  :lang(hi) .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.78; right: -12px; }
+}
