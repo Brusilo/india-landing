@@ -2841,3 +2841,21 @@ h1, h2, h3 { text-wrap: balance; }
   .bento .bento-cell.bento-pos-r .bento-art--plane,
   :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { width: 160px; bottom: -40px; }
 }
+
+/* Seventieth pass (phones): smaller, higher messages and a shorter English
+   card; the train higher in a shorter savings card. */
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tl .bento-art,
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(134px, 41vw, 176px); bottom: -26px; }
+  .bento .bento-cell.bento-pos-tl,
+  :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 216px; }
+  :lang(en) .bento .bento-cell.bento-pos-tl,
+  :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: clamp(208px, 56vw, 240px); }
+
+  .bento .bento-cell.bento-pos-bl { padding-bottom: 22px; }
+  .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.78; right: -12px; bottom: -6px; }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 240px; }
+  .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: -10px; }
+}
