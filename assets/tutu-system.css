@@ -2808,3 +2808,36 @@ h1, h2, h3 { text-wrap: balance; }
 @media (min-width: 390px) and (max-width: 699.98px) {
   :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: 108px; }
 }
+
+/* Sixty-ninth pass (phones): smaller, higher messages on a shorter English
+   card; a smaller, higher plane; a bigger train tucked into the corner;
+   larger stat plates. */
+@media (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-tl .bento-art,
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(150px, 46vw, 196px); bottom: -30px; }
+  .bento .bento-cell.bento-pos-tl,
+  :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 232px; }
+  :lang(en) .bento .bento-cell.bento-pos-tl,
+  :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: clamp(224px, 60vw, 256px); }
+
+  .bento .bento-cell.bento-pos-r .bento-art--plane,
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { width: clamp(136px, 42vw, 176px); bottom: -30px; }
+
+  .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.82; right: -8px; bottom: -14px; }
+
+  .bento .bento-cell--stat .bento-sticker { font-size: clamp(22px, 7vw, 33px); }
+  :lang(en) .bento .bento-cell--stat .bento-sticker { font-size: clamp(19px, 5.7vw, 29px); }
+}
+@media (min-width: 390px) and (max-width: 699.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 258px; }
+  .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: -18px; }
+}
+@media (max-width: 699.98px) {
+  :lang(en) .bento .bento-cell--stat .bento-sticker { font-size: clamp(17px, 5.4vw, 28px); }
+  /* Room under the savings copy for the bigger train; the copy keeps its width. */
+  .bento .bento-cell.bento-pos-bl { padding-bottom: 34px; }
+}
+@media (min-width: 480px) and (max-width: 699.98px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane,
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { width: 160px; bottom: -40px; }
+}
