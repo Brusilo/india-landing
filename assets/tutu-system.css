@@ -2905,3 +2905,30 @@ h1, h2, h3 { text-wrap: balance; }
   .bento .bento-cell.bento-pos-tl .bento-art,
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(144px, 44vw, 188px); bottom: -22px; }
 }
+
+/* Seventy-third pass (PC): every tile plate 15% larger, a smaller plane a
+   little higher, the train a little lower; the Hindi English-card copy on
+   two lines. */
+br.br-wide { display: none; }
+@media (min-width: 700px) { br.br-wide { display: inline; } }
+
+@media (min-width: 1101px) {
+  .bento .bento-cell .bento-sticker { font-size: clamp(30px, 3.42vw, 49px); }
+  .bento .bento-cell.bento-pos-tc .bento-sticker,
+  .bento .bento-cell.bento-pos-r .bento-sticker { font-size: clamp(32px, 4.1vw, 60px); }
+  :lang(ru) .bento .bento-cell.bento-pos-tc .bento-sticker,
+  :lang(hi) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(30px, 3.67vw, 52px); }
+  :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker,
+  :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: clamp(30px, 3.47vw, 49px); }
+  .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: clamp(25px, 2.92vw, 43px); }
+  .bento .bento-cell.bento-pos-bl .bento-sticker.bento-sticker--text { font-size: clamp(25px, 3.05vw, 45px); }
+
+  .bento .bento-cell.bento-pos-r .bento-art--plane { width: 260px; align-self: flex-end; margin: 0 -36px -16px 0; }
+  .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: -18px; }
+}
+@media (min-width: 1101px) {
+  /* "НА ВСЁМ ПУТИ" is the longest plate; capped so it stays inside its card. */
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: clamp(25px, 2.6vw, 37px); }
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art,
+  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-art { max-height: 44%; }
+}
