@@ -27,7 +27,7 @@
       },
       {
         q: 'Сколько багажа можно взять с собой?',
-        a: 'Нормы зависят от перевозчика и тарифа. В поездах дальнего следования можно бесплатно провезти до 36 кг ручной клади на человека (в вагонах СВ — до 50 кг), если сумма трёх измерений каждого места не больше 180 см; сверх нормы — за отдельную плату. Для авиабилетов условия ручной клади и багажа показываются при выборе тарифа, а у автобусных перевозчиков багаж может оплачиваться отдельно. Перед покупкой проверьте условия именно вашего билета.'
+        a: 'Нормы зависят от перевозчика и тарифа. В поездах дальнего следования можно бесплатно провезти до 36 кг ручной клади, а в вагонах СВ до 50 кг. Сумма трёх измерений одного места не должна превышать 180 см. Нормы для самолётов и автобусов покажем при выборе билета.'
       },
       {
         q: 'Как работает «Оплатить позже»?',
@@ -69,7 +69,7 @@
       },
       {
         q: 'How much baggage can I take?',
-        a: 'Baggage limits depend on the carrier and fare. On long-distance trains you can take up to 36 kg of hand luggage per person free of charge (up to 50 kg in SV sleeper carriages), as long as each item measures no more than 180 cm in length, width and height combined; anything above that is paid separately. For flights, cabin baggage and checked baggage allowances are shown with the fare; on buses, baggage may be charged separately. Check the conditions for your specific ticket before paying.'
+        a: 'Allowances depend on the carrier and fare. On long-distance trains you can take up to 36 kg of hand luggage free, or up to 50 kg in SV carriages. Each item can measure up to 180 cm in length, width and height combined. For flights and buses, we show the allowance when you choose a ticket.'
       },
       {
         q: 'How does “Pay later” work?',
@@ -111,7 +111,7 @@
       },
       {
         q: 'कितना सामान साथ ले जा सकते हैं?',
-        a: 'सामान की सीमा परिवहन कंपनी और किराये के नियमों पर निर्भर करती है। लंबी दूरी की ट्रेनों में हर यात्री 36 किलो तक हैंड लगेज मुफ़्त ले जा सकता है (SV डिब्बों में 50 किलो तक), बशर्ते हर सामान की लंबाई, चौड़ाई और ऊँचाई का जोड़ 180 सेमी से ज़्यादा न हो; इससे ज़्यादा के लिए अलग से भुगतान करना होता है। फ़्लाइट के लिए हैंड बैगेज और चेक-इन बैगेज की शर्तें किराया चुनते समय दिखाई जाती हैं; बस में सामान के लिए अलग शुल्क हो सकता है। भुगतान से पहले अपने टिकट की शर्तें ज़रूर जाँचें।'
+        a: 'सामान की सीमा कंपनी और किराये पर निर्भर करती है। लंबी दूरी की ट्रेनों में 36 किलो तक हैंड लगेज मुफ़्त ले जा सकते हैं, और SV डिब्बों में 50 किलो तक। हर सामान की लंबाई, चौड़ाई और ऊँचाई का जोड़ 180 सेमी से ज़्यादा नहीं होना चाहिए। फ़्लाइट और बस के लिए सीमा टिकट चुनते समय दिखाई जाती है।'
       },
       {
         q: '«बाद में भुगतान करें» कैसे काम करता है?',
