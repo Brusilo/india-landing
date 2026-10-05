@@ -3626,3 +3626,53 @@ br.br-wide { display: none; }
 @media (min-width: 1280px) {
   :lang(en) #routes .card--route .price { font-size: 19px; }
 }
+
+/* =========================================================================
+   Eighty-eighth pass. Route cards take the proportions of the tutu.ru route
+   card (about 240 x 345: taller, larger name and price). The discount tag
+   follows the old price on its line instead of sitting at the far edge.
+   Both struck prices share one grey; the rupee price is a step darker.
+   Hindi PC: number plates back to full size, with a little more air
+   between each plate and its copy.
+   ========================================================================= */
+
+#routes .card--route { aspect-ratio: 240 / 345; }
+#routes .card--route .route-name { font-size: 21px; line-height: 1.25; }
+#routes .card--route .price,
+:lang(en) #routes .card--route .price { font-size: 22px; }
+:lang(en) #routes .card--route .price { font-size: 20px; }
+#routes .card--route .card-body,
+#hotels .card--hotel .card-body { padding: 16px 14px 16px; }
+
+.route-price { flex-wrap: wrap; row-gap: 4px; }
+.route-price .route-discount { margin-left: 0; }
+.route-price .route-old,
+.route-price--inr .route-old { color: #A3A5BC; }
+.route-price--inr .route-inr { color: #6B6F8F; font-weight: 600; }
+
+@media (min-width: 1101px) {
+  html:lang(hi) .bento .bento-cell.bento-pos-c .bento-sticker.bento-sticker { font-size: clamp(27px, 3.08vw, 44px); }
+  html:lang(hi) .bento .bento-cell.bento-pos-tc .bento-sticker.bento-sticker { font-size: clamp(27px, 3.3vw, 47px); }
+  html:lang(hi) .bento .bento-cell.bento-pos-r .bento-sticker.bento-sticker { font-size: clamp(26px, 3.33vw, 49px); }
+  :lang(hi) .bento .bento-cell.bento-pos-c h3,
+  :lang(hi) .bento .bento-cell.bento-pos-tc h3,
+  :lang(hi) .bento .bento-cell.bento-pos-r h3 { margin-top: 8px; }
+}
+/* The first price line stays on one line: price, old price, then the tag. */
+.route-price:not(.route-price--inr) { flex-wrap: nowrap; }
+#routes .card--route .price { font-size: 20px; }
+:lang(en) #routes .card--route .price { font-size: 17px; }
+@media (min-width: 1280px) {
+  #routes .card--route .price { font-size: 21px; }
+  :lang(en) #routes .card--route .price { font-size: 19px; }
+}
+#routes .card--route .card-body,
+#hotels .card--hotel .card-body { padding-inline: 12px; }
+.route-price:not(.route-price--inr) { column-gap: 6px; }
+@media (min-width: 1101px) and (max-width: 1279.98px) {
+  :lang(en) #routes .card--route .price,
+  :lang(ru) #routes .card--route .price { font-size: 18px; }
+}
+@media (min-width: 1101px) and (max-width: 1279.98px) {
+  html:lang(en) #routes .card--route .price { font-size: 16px; }
+}
