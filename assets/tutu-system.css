@@ -3399,3 +3399,76 @@ br.br-wide { display: none; }
   :lang(ru) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 5px; }
   :lang(hi) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 0; }
 }
+
+/* =========================================================================
+   Eighty-fourth pass (tablets). Every plate sits 6px below its card's top;
+   the tile copy is 21px; the lock-in copy gets a wider column; the hotel
+   and review panels stay inside the page's content width; the calendar
+   matches the date field it opens from.
+   ========================================================================= */
+
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  .bento .bento-cell[class*="bento-pos-"] h3 { font-size: 21px; }
+
+  :lang(en) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -8px -8px; }
+  :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker { translate: 0 6px; }
+  :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { translate: 0 7px; }
+  :lang(en) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 6px; }
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-sticker { translate: 0 -6px; }
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -8px 1px; }
+  :lang(ru) .bento .bento-cell.bento-pos-c .bento-sticker { translate: 0 -1px; }
+  :lang(ru) .bento .bento-cell.bento-pos-tc .bento-sticker { translate: 0 -2px; }
+  :lang(ru) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 8px; }
+  :lang(ru) .bento .bento-cell.bento-pos-r .bento-sticker { translate: 0 -6px; }
+  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -8px -14px; }
+  :lang(hi) .bento .bento-cell.bento-pos-c .bento-sticker { translate: 0 1px; }
+  :lang(hi) .bento .bento-cell.bento-pos-tc .bento-sticker { translate: 0 -2px; }
+  :lang(hi) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 0; }
+  :lang(hi) .bento .bento-cell.bento-pos-r .bento-sticker { translate: 0 -6px; }
+
+  html .bento .bento-cell.bento-pos-tr h3 { padding-right: 24%; }
+  html:lang(ru) .bento .bento-cell.bento-pos-tr h3 { padding-right: 28%; }
+
+  html body #hotels > .container,
+  html body .reviews-section > .container { padding-inline: 24px !important; }
+  html body #hotels .stage,
+  html body .reviews-section .reviews-stage { width: auto !important; margin-inline: 0 !important; border-radius: 32px !important; }
+
+  html .search.search-v2[data-mode="flight"] .v2-flight-calendar { width: max(50%, 330px); }
+}
+
+/* Carousel arrows wherever two and a half cards fit (set by responsive.js),
+   not just from 1024px. Below 1024px they sit just inside the edges. */
+.has-carousel-arrows:not(.arrows-on) .carousel-nav.carousel-nav--overlay { display: none; }
+@media (max-width: 1023.98px) {
+  .has-carousel-arrows.arrows-on { position: relative; overflow: visible; }
+  .has-carousel-arrows.arrows-on .carousel-nav.carousel-nav--overlay {
+    position: absolute; inset: 0; z-index: 3; display: block; pointer-events: none;
+  }
+  .has-carousel-arrows.arrows-on .carousel-nav--overlay button {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px; border: 0; border-radius: 50%;
+    display: grid; place-items: center;
+    background: #fff; color: var(--ink);
+    box-shadow: 0 2px 12px rgba(13, 11, 104, .18);
+    pointer-events: auto; transition: opacity .2s ease, background .15s ease;
+  }
+  .has-carousel-arrows.arrows-on .carousel-nav--overlay button:first-child { left: 8px; }
+  .has-carousel-arrows.arrows-on .carousel-nav--overlay button:last-child { right: 8px; }
+  .has-carousel-arrows.arrows-on .carousel-nav--overlay button svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
+  .has-carousel-arrows.arrows-on .carousel-nav--overlay button:disabled { opacity: 0; pointer-events: none; }
+}
+@media (min-width: 768px) and (max-width: 1100.98px) {
+  html:lang(en) .bento .bento-cell.bento-pos-tr .bento-art.bento-art { width: 124px; right: -6px; bottom: -20px; }
+}
+@media (min-width: 600px) and (max-width: 767.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tr h3 { padding-right: 36%; }
+  /* Smaller plates rise less, so on the narrowest tablets they come up a few px to keep the 6px inset. */
+  .bento .bento-cell.bento-pos-bl .bento-sticker { position: relative; top: -5px; }
+  .bento .bento-cell.bento-pos-c .bento-sticker,
+  .bento .bento-cell.bento-pos-tc .bento-sticker,
+  .bento .bento-cell.bento-pos-r .bento-sticker { position: relative; top: -3px; }
+}
+@media (min-width: 600px) and (max-width: 1100px) {
+  html .search.search-v2[data-mode="flight"] .v2-flight-calendar { width: 50%; min-width: 288px; }
+}

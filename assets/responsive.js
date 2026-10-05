@@ -140,4 +140,22 @@
     nav.classList.add('carousel-nav--overlay');
     row.parentElement.appendChild(nav);
   });
+
+  /* Arrows show while at least two and a half cards fit across the carousel;
+     on narrower screens people swipe. */
+  function syncArrows() {
+    document.querySelectorAll('.has-carousel-arrows').forEach(function (wrap) {
+      const row = wrap.querySelector('.row, [id$="-row"]');
+      const card = row && row.firstElementChild;
+      if (!card) return;
+      const style = getComputedStyle(row);
+      const gap = parseFloat(style.columnGap) || 0;
+      const inner = row.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0);
+      const fits = (inner + gap) / (card.getBoundingClientRect().width + gap);
+      wrap.classList.toggle('arrows-on', fits >= 2.5 && row.scrollWidth > row.clientWidth + 4);
+    });
+  }
+  window.addEventListener('resize', syncArrows);
+  window.addEventListener('load', syncArrows);
+  syncArrows();
 })();
