@@ -2965,3 +2965,89 @@ br.br-wide { display: none; }
   #routes .section-head > .head-actions,
   #hotels .section-head > .head-actions { grid-area: all; align-self: center; }
 }
+
+/* =========================================================================
+   Seventy-fifth pass: the city panel keeps its desktop shape (copy on the
+   purple shape, the traveller on the right) from 700px instead of 901px.
+   Up to 1100px the panel is only 634-720px wide, so the shape is wider and
+   the copy column narrower, which also stops the copy running past the
+   shape's curved edge (it overran by ~75px at 901-1100px).
+   ========================================================================= */
+
+@media (min-width: 700px) and (max-width: 900px) {
+  .panel.panel--transport.panel--photo {
+    background: #A181FF url("photos/plane-window-2.webp") right center / auto 106% no-repeat;
+    padding: 0;
+    overflow: hidden;
+    border-radius: var(--r-panel);
+    isolation: auto;
+  }
+  .panel.panel--transport.panel--photo::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    display: block;
+    height: auto;
+    border-radius: 0;
+    background: url("art/panel-blob.png") left center / 100% 100% no-repeat;
+  }
+  .panel--photo > div {
+    margin: 0;
+    background: none;
+    border-radius: 0;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .panel--photo h2 { align-items: flex-start; }
+}
+
+@media (min-width: 700px) and (max-width: 1100px) {
+  .panel.panel--transport.panel--photo::before { width: 66%; }
+  .panel--photo > div { width: 55%; max-width: none; padding: 34px 28px 36px 32px; gap: 12px; }
+  .panel--photo .panel-line,
+  :lang(en) .panel--photo .panel-line { font-size: clamp(26px, 3.2vw, 32px); }
+  .panel--photo .panel-badge,
+  :lang(en) .panel--photo .panel-badge { font-size: clamp(22px, 2.7vw, 28px); margin-left: -0.3em; }
+  .panel--photo p { font-size: 15px; line-height: 1.45; max-width: none; }
+}
+
+/* Seventy-sixth pass (PC): a shorter bento. Less air between each plate and
+   its copy, and slightly tighter card padding; the plates' top offsets stay,
+   since they keep the raised corners inside the cards. */
+@media (min-width: 1101px) {
+  .bento .bento-cell { padding-top: 18px; padding-bottom: 14px; }
+  .bento .bento-cell .bento-sticker { margin-bottom: 2px; }
+  .bento .bento-cell[class*="bento-pos-"] h3 { line-height: 1.16; }
+}
+
+/* =========================================================================
+   Seventy-seventh pass: the empty bands found across common tablet and phone
+   widths. On tablets the tall carriers card had ~90-125px of nothing between
+   its copy and a small plane, so the plane follows the copy and fills the
+   rest of the card as on PC; the messages on the tall English card grow.
+   On phones the short stat cards centre their content, so a shorter text
+   next to a longer one leaves equal air above and below.
+   ========================================================================= */
+
+@media (min-width: 700px) and (max-width: 1100.98px) {
+  .bento .bento-cell.bento-pos-r { overflow: visible; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane,
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane {
+    position: static; flex: 1 1 0; min-height: 0; max-height: none;
+    width: auto; height: auto; align-self: stretch;
+    margin: 10px -26px -20px -26px;
+    object-fit: cover; object-position: 70% 0;
+    border-radius: 0 0 28px 28px;
+    top: auto; right: auto; bottom: auto; translate: none; clip-path: none; transform: none;
+  }
+  .bento .bento-cell.bento-pos-tl .bento-art { max-height: 56%; }
+}
+
+@media (max-width: 699.98px) {
+  .bento .bento-cell--stat { justify-content: center; }
+}
+@media (min-width: 700px) and (max-width: 1100.98px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane,
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { max-width: none; width: calc(100% + 52px); }
+  .bento .bento-cell.bento-pos-tl .bento-art { width: 108%; max-height: none; right: -26px; }
+}
