@@ -2857,7 +2857,7 @@ window.TUTU_DESTINATIONS = {
     "ru-yaroslavl": "Yaroslavl",
     "ru-yekaterinburg": "Ekaterinburg",
     "ru-yessentuki": "Essentuki",
-    "ru-yoshkar-ola": "Ioshkar-Ola",
+    "ru-yoshkar-ola": "Yoshkar-Ola",
     "ru-yuzhno-sakhalinsk": "Yuzhno-Sakhalinsk",
     "ru-zheleznovodsk": "Zheleznovodsk",
     "uz-namangan": "Namangan",

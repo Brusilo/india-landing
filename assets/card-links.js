@@ -53,18 +53,30 @@
     card.addEventListener('click',e=>{if(e.target.closest('a,button'))return;window.location.assign(url)});
     card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.location.assign(url)}});
   }
-  function resolvePlace(text){
-    if(!window.TUTU_PLACES)return null;
-    return TUTU_PLACES.resolveExact(text);
-  }
 
-  /* A built link carries tomorrow's date; the audited plain URL is the fallback. */
-  function routeUrl(card,fallback){
-    const plain=fallback||HOME;
-    const name=card.querySelector('.route-name');if(!name)return plain;
-    const parts=name.textContent.split('–').map(x=>x.trim());if(parts.length!==2)return plain;
-    const from=resolvePlace(parts[0]),to=resolvePlace(parts[1]);if(!from||!to||!window.TUTU_LINKS)return plain;
-    try{return TUTU_LINKS.build(card.dataset.transport,{from,to,date:tomorrow(),adults:1,children:0,childAges:[],cabin:'economy'})}catch(_){return plain}
+  /* Each card opens Tutu's search results for tomorrow straight away, not the
+     route's landing page. The cities come from fixed ids rather than the card
+     title, which differs by language; the audited plain URL is the fallback. */
+  const routeEnds={
+    r1:['in-delhi','ru-moscow'],r2:['ru-moscow','in-delhi'],r3:['in-delhi','ru-yekaterinburg'],
+    r4:['in-goa','ru-moscow'],r5:['in-goa','ru-yekaterinburg'],r6:['ru-moscow','ru-saint-petersburg'],
+    r7:['ru-yekaterinburg','ru-kazan'],r8:['ru-yekaterinburg','ru-ufa'],r9:['ru-moscow','ru-yoshkar-ola'],
+    r10:['ru-moscow','ru-sochi']
+  };
+  const placeById=id=>window.TUTU_PLACES&&TUTU_PLACES.places.find(p=>p.id===id);
+  function routeUrl(card,id,fallback){
+    const plain=fallback||HOME,ends=routeEnds[id];
+    if(!ends||!window.TUTU_LINKS)return plain;
+    const from=placeById(ends[0]),to=placeById(ends[1]);if(!from||!to)return plain;
+    try{
+      const url=TUTU_LINKS.build(card.dataset.transport,{from,to,date:tomorrow(),adults:1,children:0,childAges:[],cabin:'economy'});
+      return url&&url!==HOME?url:plain;
+    }catch(_){return plain}
+  }
+  /* Hotel cards open the hotel with tomorrow's one-night stay for one guest. */
+  function hotelUrl(url){
+    const a=tomorrow();
+    return url+'?'+new URLSearchParams({check_in:iso(a),check_out:iso(addDays(a,1)),'room[0]':'1'}).toString();
   }
 
   const routes=document.getElementById('routes');
@@ -79,7 +91,7 @@
         const alt=card.querySelector('.price-alt');if(alt)alt.textContent='≈ ₹'+nf(Math.round(d.price*RUB_TO_INR));
         const meta=card.querySelector('.card-meta');if(meta)meta.textContent=duration(d.h,d.m);
       }
-      activate(card,routeUrl(card,verifiedRouteUrls[id]));
+      activate(card,routeUrl(card,id,verifiedRouteUrls[id]));
     });
   }
 
@@ -102,7 +114,7 @@
         else if(lang==='hi')price.innerHTML='<span class="price">'+nf(d.price)+' ₽ <span class="hotel-night">'+night+'</span></span><span class="price-alt">≈ ₹'+nf(inr)+'</span>';
         else price.innerHTML='<span class="price">'+nf(d.price)+' ₽ <span class="hotel-night">'+night+'</span></span><span class="price-alt">≈ ₹'+nf(inr)+'</span>';
       }
-      activate(card,d.url);
+      activate(card,hotelUrl(d.url));
     });
     const cta=hotelRow.querySelector('.card--cta');if(cta)cta.href=hotelAllUrl();
   }
