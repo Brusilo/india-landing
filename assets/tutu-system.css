@@ -3472,3 +3472,59 @@ br.br-wide { display: none; }
 @media (min-width: 600px) and (max-width: 1100px) {
   html .search.search-v2[data-mode="flight"] .v2-flight-calendar { width: 50%; min-width: 288px; }
 }
+
+/* =========================================================================
+   Eighty-fifth pass (tablets). The content column no longer stops at 768px
+   (between 768 and 1100px the page sat at 720px and then jumped to 1050px
+   at 1101px); it now grows with the window, so the cards widen smoothly.
+   Plates and copy scale with the card width rather than a fixed cap; carousel
+   cards are 250px on tablets and phones alike.
+   ========================================================================= */
+
+@media (min-width: 600px) and (max-width: 1100px) {
+  .container { max-width: none; }
+}
+
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  /* A card is (100vw - 68px) / 3 wide; each size keeps its longest plate inside it. */
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker { font-size: clamp(17px, calc((100vw - 74px) / 28.5), 34px); }
+  html:lang(en) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker { font-size: clamp(18px, calc((100vw - 74px) / 25.2), 34px); }
+  html:lang(ru) .bento .bento-cell:not(.bento-pos-tl)[class*="bento-pos-"] .bento-sticker.bento-sticker,
+  html:lang(en) .bento .bento-cell:not(.bento-pos-tl)[class*="bento-pos-"] .bento-sticker.bento-sticker,
+  html:lang(hi) .bento .bento-cell[class*="bento-pos-"] .bento-sticker.bento-sticker { font-size: clamp(20px, calc((100vw - 98px) / 21), 34px); }
+
+  .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(20px, 2.3vw, 24px); }
+  :lang(hi) .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(20px, 2.4vw, 25px); }
+
+  .row > * { flex-basis: 250px; }
+}
+@media (max-width: 599.98px) {
+  .row > * { flex-basis: clamp(250px, calc((100% + 4px) / 1.5), 260px); }
+}
+@media (min-width: 600px) {
+  /* Balanced wrapping left the tile copy short of its column (42 MILLION ran
+     to three narrow lines in a card with room for two). */
+  .bento .bento-cell[class*="bento-pos-"] h3 { text-wrap: wrap; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html:lang(hi) .bento .bento-cell:not(.bento-pos-tl)[class*="bento-pos-"] .bento-sticker.bento-sticker { font-size: clamp(20px, calc((100vw - 98px) / 21), 34px); }
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker { font-size: clamp(17px, calc((100vw - 74px) / 30), 34px); }
+  html .bento .bento-cell.bento-pos-tl .bento-art { width: min(94%, 236px); }
+}
+@media (min-width: 900px) and (max-width: 1100.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tr h3 { padding-right: 34%; }
+}
+@media (min-width: 1101px) {
+  .bento .bento-cell[class*="bento-pos-"] h3 { text-wrap: balance; }
+}
+@media (min-width: 768px) and (max-width: 1100.98px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art { width: min(80%, 204px); }
+  html .bento .bento-cell.bento-pos-bl h3 { padding-right: 50%; }
+}
+@media (min-width: 880px) and (max-width: 1100.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { width: min(68%, 184px); }
+}
+@media (min-width: 768px) and (max-width: 1100.98px) {
+  /* The wallet grows with its card now that cards widen with the window. */
+  html .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: clamp(132px, 46%, 164px); }
+}
