@@ -665,7 +665,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 <script src="assets/site-language-faq-v26.js?v=20261003-faq-bag3"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20260930b">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
-<link rel="stylesheet" href="assets/tutu-system.css?v=237">
+<link rel="stylesheet" href="assets/tutu-system.css?v=243">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1103,7 +1103,7 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
     <div class="card-body">
       <p class="route-name">${r.from}&nbsp;→ ${r.to}</p>
       <div class="route-price">
-        <span class="price">${fmtNum(rub)}&nbsp;${CONFIG.currency} से</span>
+        <span class="price">${fmtNum(rub)}&nbsp;${CONFIG.currency} <span class="price-from">से</span></span>
         <s class="route-old">${fmtNum(oldRub)}&nbsp;${CONFIG.currency}</s>
         <span class="route-discount">-${CONFIG.routeDiscount}%</span>
       </div>
@@ -1281,7 +1281,7 @@ initCarousel('reviews-row', 'reviews');
 <script src="assets/tutu-destinations.js?v=20260923-bus-ids"></script>
 <script src="assets/tutu-link-builder.js?v=20260925-return-date"></script>
 <script src="assets/search-v2.js?v=20261001-labels"></script>
-<script src="assets/card-links.js?v=20260924-rub-first"></script>
+<script src="assets/card-links.js?v=20261006-price-from"></script>
 <script src="assets/responsive.js?v=20261006-arrows"></script>
 </body>
 </html>

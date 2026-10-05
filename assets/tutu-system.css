@@ -3528,3 +3528,70 @@ br.br-wide { display: none; }
   /* The wallet grows with its card now that cards widen with the window. */
   html .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: clamp(132px, 46%, 164px); }
 }
+
+/* =========================================================================
+   Eighty-sixth pass. Prices read in a clear order: the current price in
+   black with "from" small and grey, the discount tag at the line's end, old
+   prices lighter, rupees a step quieter than rubles. Tablet tile copy a
+   size larger in English and Hindi; smaller, roomier Hindi plates on PC; a
+   larger tablet wallet; phone stat cards back to top-aligned content.
+   ========================================================================= */
+
+.price-from { font-size: .72em; font-weight: 500; color: var(--ink-muted); }
+.route-price .route-discount { margin-left: auto; }
+.route-price .route-old { color: #9EA0B8; font-weight: 400; }
+.route-price--inr { padding-top: 3px; }
+.route-price--inr .route-inr { color: var(--ink-muted); font-weight: 600; }
+.route-price--inr .route-old { color: #B2B4C8; }
+
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  :lang(en) .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(21px, 2.5vw, 26px); }
+  :lang(hi) .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(22px, 2.65vw, 27px); }
+}
+@media (min-width: 768px) and (max-width: 1100.98px) {
+  html .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: clamp(140px, 49%, 172px); }
+}
+
+@media (min-width: 1101px) {
+  html:lang(hi) .bento .bento-cell .bento-sticker.bento-sticker { padding: .14em .4em .2em; }
+  html:lang(hi) .bento .bento-cell.bento-pos-c .bento-sticker.bento-sticker { font-size: clamp(27px, 3.08vw, 44px); }
+  html:lang(hi) .bento .bento-cell.bento-pos-tc .bento-sticker.bento-sticker { font-size: clamp(27px, 3.3vw, 47px); }
+  html:lang(hi) .bento .bento-cell.bento-pos-r .bento-sticker.bento-sticker { font-size: clamp(26px, 3.33vw, 49px); }
+  html:lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker { font-size: clamp(22px, 2.63vw, 39px); }
+  html:lang(hi) .bento .bento-cell.bento-pos-bl .bento-sticker.bento-sticker { font-size: clamp(22px, 2.75vw, 40px); }
+}
+
+@media (max-width: 599.98px) {
+  .bento .bento-cell--stat { justify-content: flex-start; }
+}
+@media (min-width: 768px) and (max-width: 1100.98px) {
+  html:lang(en) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: clamp(140px, 45%, 160px); }
+}
+/* With "from" small, the price itself can be larger. */
+#routes .card--route .price,
+#hotels .card--hotel .price,
+:lang(en) #routes .card--route .price { font-size: 20px; }
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  #routes .card--route .price,
+  #hotels .card--hotel .price,
+  :lang(en) #routes .card--route .price { font-size: 19px; }
+}
+@media (min-width: 1101px) and (max-width: 1279.98px) {
+  #routes .card--route .price,
+  #hotels .card--hotel .price,
+  :lang(en) #routes .card--route .price { font-size: 19px; }
+}
+@media (min-width: 1280px) {
+  #routes .card--route .price,
+  #hotels .card--hotel .price,
+  :lang(en) #routes .card--route .price { font-size: 21px; }
+}
+@media (max-width: 599.98px) {
+  :lang(en) #routes .card--route .price { font-size: 19px; }
+}
+@media (min-width: 900px) and (max-width: 1100.98px) {
+  html:lang(hi) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: clamp(140px, 43%, 156px); }
+}
+@media (min-width: 420px) and (max-width: 599.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tr h3 { padding-right: 52%; }
+}

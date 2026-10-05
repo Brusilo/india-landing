@@ -75,7 +75,7 @@
       const id=(card.dataset.cta||'').replace(/^route_/,'').replace(/_combined$/,'');
       const d=routeData[id];
       if(d){
-        const price=card.querySelector('.price');if(price)price.textContent=lang==='en'?'from '+nf(d.price)+' ₽':lang==='hi'?nf(d.price)+' ₽ से':'от '+nf(d.price)+' ₽';
+        const price=card.querySelector('.price');if(price)price.innerHTML=lang==='en'?'<span class="price-from">from</span> '+nf(d.price)+'&nbsp;₽':lang==='hi'?nf(d.price)+'&nbsp;₽ <span class="price-from">से</span>':'<span class="price-from">от</span> '+nf(d.price)+'&nbsp;₽';
         const alt=card.querySelector('.price-alt');if(alt)alt.textContent='≈ ₹'+nf(Math.round(d.price*RUB_TO_INR));
         const meta=card.querySelector('.card-meta');if(meta)meta.textContent=duration(d.h,d.m);
       }
