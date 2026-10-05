@@ -661,7 +661,7 @@ body{position:relative!important}
 <script src="assets/site-language-faq-v26.js?v=20261003-faq-bag3"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20260930b">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
-<link rel="stylesheet" href="assets/tutu-system.css?v=243">
+<link rel="stylesheet" href="assets/tutu-system.css?v=247">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1104,7 +1104,7 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
         <span class="route-discount">-${CONFIG.routeDiscount}%</span>
       </div>
       <div class="route-price route-price--inr">
-        <span class="route-inr">≈ ₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
+        <span class="route-inr">from ₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
         <s class="route-old">₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
       </div>
     </div>

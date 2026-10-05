@@ -3595,3 +3595,34 @@ br.br-wide { display: none; }
 @media (min-width: 420px) and (max-width: 599.98px) {
   :lang(ru) .bento .bento-cell.bento-pos-tr h3 { padding-right: 52%; }
 }
+
+/* =========================================================================
+   Eighty-seventh pass. Prices: "from" back to the price's own size, and the
+   rupee line repeats it, smaller and grey. Hindi PC: number plates 15%
+   smaller; the 4.2 crore card as tall as its neighbour (the whole tile grows
+   a little), which gives the English card the height for full-size messages.
+   ========================================================================= */
+
+.price-from { font-size: inherit; font-weight: inherit; color: inherit; }
+.route-price--inr .route-inr { font-weight: 500; color: var(--ink-muted); }
+
+@media (min-width: 1101px) {
+  html:lang(hi) .bento .bento-cell.bento-pos-c .bento-sticker.bento-sticker { font-size: clamp(23px, 2.62vw, 37px); }
+  html:lang(hi) .bento .bento-cell.bento-pos-tc .bento-sticker.bento-sticker { font-size: clamp(23px, 2.8vw, 40px); }
+  html:lang(hi) .bento .bento-cell.bento-pos-r .bento-sticker.bento-sticker { font-size: clamp(22px, 2.83vw, 42px); }
+  :lang(hi) .bento .bento-cell.bento-pos-c { min-height: clamp(168px, 13.6vw, 196px); }
+  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-art { max-height: 52%; }
+}
+@media (min-width: 1101px) {
+  /* Both upper rows the same height as on the English page. */
+  :lang(hi) .bento .bento-cell.bento-pos-c { min-height: 0; }
+  :lang(hi) .bento { grid-template-rows: repeat(2, minmax(clamp(160px, 14.6vw, 200px), 1fr)) auto; }
+}
+@media (min-width: 1101px) {
+  :lang(hi) .bento .bento-cell.bento-pos-c .bento-sticker { translate: 0 0; }
+}
+/* "from" is full size again and longer than "от", so English route prices run 2px smaller. */
+:lang(en) #routes .card--route .price { font-size: 17px; }
+@media (min-width: 1280px) {
+  :lang(en) #routes .card--route .price { font-size: 19px; }
+}
