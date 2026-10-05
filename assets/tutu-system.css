@@ -3707,3 +3707,19 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 
 /* Footer: the operator's notice in regular weight, as on tutu.ru. */
 .footer .footer-site { font-weight: 400; }
+
+/* Hindi header: the title takes exactly the two lines the English one does,
+   so the subtitle, pills, tabs and search sit at the same height. */
+@media (min-width: 1101px) {
+  html:lang(hi) .hero h1 { font-size: 42px; line-height: calc(46px * 1.05); padding-top: 0; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html:lang(hi) .hero h1 { font-size: 42px; line-height: calc(48px * 1.08); }
+}
+
+/* Social icons in the footer, 15% larger. */
+.footer .social { width: 46px; height: 46px; border-radius: 14px; }
+@media (max-width: 1100px) {
+  .footer .social { width: 55px; height: 55px; border-radius: 16px; }
+  .footer .footer-col .socials a { min-height: 55px; }
+}
