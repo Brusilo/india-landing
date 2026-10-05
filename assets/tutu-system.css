@@ -3704,3 +3704,6 @@ br.br-wide { display: none; }
 html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (min-width: 1101px) and (max-width: 1279.98px) { html:lang(en) #routes .card--route .price { font-size: 15.5px; } }
 @media (min-width: 1280px) { html:lang(en) #routes .card--route .price { font-size: 18px; } }
+
+/* Footer: the operator's notice in regular weight, as on tutu.ru. */
+.footer .footer-site { font-weight: 400; }

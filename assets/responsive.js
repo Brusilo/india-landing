@@ -159,3 +159,39 @@
   window.addEventListener('load', syncArrows);
   syncArrows();
 })();
+
+/* Every text plate on the tile sits the same distance below its card's top
+   edge. The tilted plates' raised corners differ with their width, language
+   and screen, so the plates are measured and nudged with `translate`; only
+   the plates move, the copy and the cards stay as they are. */
+(function () {
+  'use strict';
+  const cells = document.querySelectorAll('.bento .bento-cell');
+  if (!cells.length) return;
+  function inset() { return window.innerWidth < 600 ? 3 : 4; }
+  function align() {
+    const target = inset();
+    cells.forEach(function (cell) {
+      const plates = Array.prototype.filter.call(cell.querySelectorAll('.bento-sticker'), function (p) { return p.offsetParent; });
+      if (!plates.length) return;
+      plates.forEach(function (p) { p.style.removeProperty('translate'); });
+      const top = Math.min.apply(null, plates.map(function (p) { return p.getBoundingClientRect().top; }));
+      const dy = target - (top - cell.getBoundingClientRect().top);
+      if (Math.abs(dy) < 0.5) return;
+      plates.forEach(function (p) {
+        const t = getComputedStyle(p).translate;
+        const parts = t && t !== 'none' ? t.split(' ') : ['0px'];
+        const x = parts[0], y = parseFloat(parts[1] || '0') || 0;
+        p.style.translate = x + ' ' + (y + dy).toFixed(2) + 'px';
+      });
+    });
+  }
+  let frame = 0;
+  function schedule() { clearTimeout(frame); frame = setTimeout(align, 30); }
+  window.addEventListener('resize', schedule);
+  window.addEventListener('load', schedule);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  if (window.ResizeObserver) { const ro = new ResizeObserver(schedule); cells.forEach(function (cell) { ro.observe(cell); cell.querySelectorAll('.bento-sticker, h3').forEach(function (el) { ro.observe(el); }); }); }
+  document.querySelectorAll('.bento img').forEach(function (img) { img.addEventListener('load', schedule); });
+  schedule();
+})();
