@@ -3313,3 +3313,89 @@ br.br-wide { display: none; }
 @media (min-width: 901px) and (max-width: 1100.98px) {
   html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { width: 88%; right: -14px; }
 }
+
+/* =========================================================================
+   Eighty-second pass: tablet search behaves like PC. Suggestions, the date
+   calendar and the passengers popover float over the page under their own
+   field instead of expanding it (typing used to stretch "From" and "To").
+   The calendar is 360px wide, under "When" or under "Return".
+   ========================================================================= */
+
+@media (min-width: 600px) and (max-width: 1100px) {
+  html .search.search-v2 .search-suggest,
+  html .search.search-v2 .v2-calendar,
+  html .search.search-v2 .v2-popover {
+    position: absolute; top: calc(100% + 8px); bottom: auto;
+    margin: 0; padding: 8px; border-top: 0;
+    border-radius: 16px; background: #fff;
+    box-shadow: 0 14px 40px rgba(13, 11, 104, .20);
+    z-index: 1300;
+  }
+  html .search.search-v2 .search-suggest { left: 0; right: auto; width: max(100%, 320px); max-width: calc(100vw - 48px); }
+  html .search.search-v2 .v2-popover { left: auto; right: 0; width: 360px; max-width: calc(100vw - 48px); padding: 16px; }
+  html .search.search-v2 .v2-flight-dates { position: relative; }
+  html .search.search-v2 .v2-calendar { left: 0; right: auto; width: 360px; max-width: calc(100vw - 48px); padding: 16px; }
+  html .search.search-v2 .v2-flight-dates:has(.v2-field--return.is-calendar-active) > .v2-calendar { left: auto; right: 0; }
+  html .search.search-v2:has(.search-suggest:not([hidden])) .v2-swap { top: 11px; }
+  html .search.search-v2 .cal-day { height: 38px; font-size: 14px; }
+  html .search.search-v2 .cal-nav { width: 36px; height: 36px; }
+}
+@media (min-width: 600px) and (max-width: 1100px) {
+  html .search.search-v2[data-mode="flight"] .v2-flight-dates { position: relative; }
+  html .search.search-v2[data-mode="flight"] .v2-flight-calendar {
+    position: absolute; top: calc(100% + 8px); left: 0; right: auto;
+    width: 360px; max-width: calc(100vw - 48px);
+    padding: 16px; border-radius: 18px;
+    box-shadow: 0 14px 40px rgba(13, 11, 104, .20);
+    z-index: 1300;
+  }
+  html .search.search-v2[data-mode="flight"] .v2-flight-dates:has([data-role="return"].is-calendar-active) .v2-flight-calendar { left: auto; right: 0; }
+  /* The pair keeps its own rounded shape while the calendar floats below. */
+  html .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date[data-role="date"] { border-radius: 16px 0 0 16px; border-right: 1px solid #e6e7f3; }
+  html .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--return { border-radius: 0 16px 16px 0; }
+  html .search.search-v2[data-mode="flight"] .v2-flight-dates.is-calendar-open .v2-field--date::after { content: none; }
+}
+
+/* =========================================================================
+   Eighty-third pass (tablets). The tile copy stays 20px across tablets (it
+   grew to 25px past 900px in cards that stay 233px wide, which left the
+   wallet no room); the wallet is 132px and sits inside its card from 768px.
+   Every plate except the English pair is larger. Route and hotel cards are
+   ~230px wide like tutu.ru's on tablets.
+   ========================================================================= */
+
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  .bento .bento-cell[class*="bento-pos-"] h3 { font-size: 20px; line-height: 1.22; }
+
+  html:lang(ru) .bento .bento-cell:not(.bento-pos-tl)[class*="bento-pos-"] .bento-sticker.bento-sticker,
+  html:lang(en) .bento .bento-cell:not(.bento-pos-tl)[class*="bento-pos-"] .bento-sticker.bento-sticker,
+  html:lang(hi) .bento .bento-cell:not(.bento-pos-tl)[class*="bento-pos-"] .bento-sticker.bento-sticker { font-size: clamp(21px, 3.6vw, 30px); }
+
+  .row > * { flex-basis: 228px; }
+  #routes .card--route .price,
+  #hotels .card--hotel .price { font-size: 17px; }
+  .route-price { gap: 4px 6px; }
+  .route-price .route-old { font-size: 13px; }
+  .route-price--inr .route-inr { font-size: 15px; }
+  .route-name, .hotel-name { font-size: 17px; }
+}
+@media (min-width: 768px) and (max-width: 1100.98px) {
+  html .bento .bento-cell.bento-pos-tr .bento-art.bento-art,
+  html:lang(ru) .bento .bento-cell.bento-pos-tr .bento-art.bento-art,
+  html:lang(hi) .bento .bento-cell.bento-pos-tr .bento-art.bento-art { width: 132px; right: -4px; bottom: -16px; }
+  html .bento .bento-cell.bento-pos-tr h3 { padding-right: 40%; }
+  html:lang(ru) .bento .bento-cell.bento-pos-tr h3 { padding-right: 36%; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  /* Measured on the turned edges: this leaves the pair touching (0.4px overlap) at every tablet width. */
+  html .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: calc(-18px - 0.1em); }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  .row > * { flex-basis: 236px; }
+  :lang(en) #routes .card--route .price { font-size: 16px; }
+  :lang(en) .route-price .route-old { font-size: 12.5px; }
+  :lang(en) .route-price { gap: 4px 5px; }
+  :lang(en) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 2px; }
+  :lang(ru) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 5px; }
+  :lang(hi) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 0; }
+}
