@@ -248,7 +248,7 @@
   gap: 10px;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 }
 
@@ -264,7 +264,7 @@
   color: #fff;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento-cell { padding: 24px; border-radius: 24px; min-height: 176px; }
 }
 
@@ -278,7 +278,7 @@
   line-height: 1.2;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento-cell h3 { font-size: 22px; }
 }
 
@@ -290,7 +290,7 @@
   line-height: 1.5;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento-cell p { font-size: 16px; }
 }
 
@@ -334,7 +334,7 @@
   transform: rotate(-8deg);
 }
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento-art { width: 190px; right: -24px; bottom: -28px; }
   .bento-cell--art p { max-width: 60%; }
 }
@@ -421,7 +421,7 @@
    An asymmetric composition rather than a row of equal boxes: one tall hero
    cell, two narrow number cells beside it, then wide cells underneath. */
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento-cell--hero { grid-column: span 2; grid-row: span 2; }
   .bento-cell--hero h3 { font-size: 26px; }
   .bento-cell--hero .bento-art { width: 230px; right: -20px; bottom: -24px; }
@@ -438,10 +438,10 @@
 .bento-cell--stat p { margin-top: 0; }
 
 .bento-art--cal { width: 120px; right: 6px; bottom: -10px; transform: rotate(6deg); }
-@media (min-width: 700px) { .bento-art--cal { width: 150px; right: 10px; } }
+@media (min-width: 600px) { .bento-art--cal { width: 150px; right: 10px; } }
 
 .bento-art--plane { width: 130px; right: -6px; bottom: -6px; transform: rotate(0deg); }
-@media (min-width: 700px) { .bento-art--plane { width: 170px; right: -10px; bottom: -10px; } }
+@media (min-width: 600px) { .bento-art--plane { width: 170px; right: -10px; bottom: -10px; } }
 
 /* ---- Promo strip ---------------------------------------------------------
    Text, code and two actions on the left, a photo filling the right. */
@@ -871,7 +871,7 @@
 
 .bento-cell:has(.bento-art--plane) { overflow: hidden; }
 .bento-art--plane { right: -10px; bottom: -14px; width: 150px; }
-@media (min-width: 700px) { .bento-art--plane { width: 200px; right: -14px; bottom: -18px; } }
+@media (min-width: 600px) { .bento-art--plane { width: 200px; right: -14px; bottom: -18px; } }
 
 /* ---- Hero plane: 20% larger and further right on desktop ----------------- */
 
@@ -1059,7 +1059,7 @@
 
 /* ---- Phones: one short line a card, one row of two ----------------------- */
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 
   /* Everything runs the full width except the two short stat cards, which
@@ -1122,7 +1122,7 @@
    nothing else.
    ========================================================================= */
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento {
     position: static;
     display: grid;
@@ -1768,17 +1768,17 @@
 }
 .bento-cell .bento-sticker--text + .bento-sticker--text { margin-top: 2px; }
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento-cell .bento-sticker.bento-sticker--text { font-size: clamp(22px, 2.2vw, 30px); }
 }
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento-cell--stat h3 { font-size: 15px; line-height: 1.25; }
   .bento-cell:has(.bento-art--cal) h3,
   .bento-cell:has(.bento-art--plane) h3 { font-size: 17px; line-height: 1.3; padding-right: 112px; }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento-cell:has(.bento-art--cal) h3,
   .bento-cell:has(.bento-art--plane) h3 { font-size: 20px; line-height: 1.3; }
 }
@@ -1793,7 +1793,7 @@
        Extra savings                Carriers
    ========================================================================= */
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento-cell.bento-pos-tl { grid-column: 1; grid-row: 1 / 3; }
   .bento-cell.bento-pos-tc { grid-column: 2; grid-row: 1; }
   .bento-cell.bento-pos-tr { grid-column: 3; grid-row: 1; }
@@ -1821,7 +1821,7 @@
 /* The new calendar render has wide transparent margins (its drawing fills
    only the middle ~60% of the square), so in the wide tile it is drawn
    larger and its empty bottom margin hangs below the clipped edge. */
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento-cell.bento-pos-bl .bento-art { width: 31%; max-height: none; bottom: 6px; right: 18px; transform: translateY(24%); }
 }
 
@@ -1839,7 +1839,7 @@
 .bento .bento-sticker { z-index: 7; }
 
 /* ---- Desktop ---- */
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento .bento-cell { overflow: visible; }
 
   .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(19px, 2.1vw, 27px); line-height: 1.22; }
@@ -1856,7 +1856,7 @@
 }
 
 /* ---- Phones ---- */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell h3 { font-size: 20px; line-height: 1.22; letter-spacing: -0.01em; }
   .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(112px, 32vw, 132px); }
   .bento .bento-cell.bento-pos-tl h3 { padding-right: clamp(104px, 30vw, 128px); }
@@ -1875,7 +1875,7 @@
 }
 
 /* Narrow desktops: the columns run ~230-340px, so word stickers step down. */
-@media (min-width: 700px) and (max-width: 1199px) {
+@media (min-width: 600px) and (max-width: 1199px) {
   .bento .bento-cell .bento-sticker.bento-sticker--text { font-size: 19px; padding: 4px 12px 6px; }
 }
 
@@ -1885,7 +1885,7 @@
    10 000+ stickers lower, and the plane raised and trimmed by its card.
    ========================================================================= */
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(20px, 2.3vw, 30px); }
 
   /* English, all the way: bigger, and the second plate tucked up. */
@@ -1912,7 +1912,7 @@
 
 /* Up to 1100px the container is 720px and the columns ~230px: the bigger
    stickers and the plane step down to fit. */
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: 19px; }
   .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: -6px; }
   .bento .bento-cell.bento-pos-bl .bento-sticker.bento-sticker--text { font-size: 21px; margin-top: 18px; }
@@ -1934,14 +1934,14 @@
   .bento .bento-cell.bento-pos-tl .bento-art { width: 92%; max-height: 52%; right: -6px; bottom: -58px; }
 }
 
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane { right: -14px; }
   .bento .bento-cell.bento-pos-bl .bento-art { right: -8px; }
   .bento .bento-cell.bento-pos-tl .bento-art { width: 92%; max-height: 46%; right: -6px; bottom: -24px; }
 }
 
 /* ---- Phones ---- */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   /* Bigger stickers, the English pair tucked together. */
   .bento .bento-cell .bento-sticker { font-size: clamp(32px, 10.4vw, 52px); }
   .bento .bento-cell--stat .bento-sticker { font-size: clamp(20px, 6.4vw, 30px); }
@@ -1955,7 +1955,7 @@
   .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(118px, 36vw, 156px); }
 }
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   /* The tilted word plates sit a touch lower so their corners stay inside. */
   .bento .bento-cell.bento-pos-tl .bento-sticker:first-child { margin-top: 14px; }
   .bento .bento-cell.bento-pos-bl .bento-sticker { margin-top: 18px; }
@@ -1970,7 +1970,7 @@
    text gets a wider column, and the plane is trimmed by its card.
    ========================================================================= */
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: -16px; }
 
   .bento .bento-cell.bento-pos-tr .bento-art { bottom: -18px; }
@@ -1997,12 +1997,12 @@
 @media (min-width: 1101px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane { clip-path: inset(0 22px 0 0 round 0 0 28px 0); }
 }
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane { clip-path: inset(0 14px 0 0 round 0 0 28px 0); }
 }
 
 /* ---- Phones ---- */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: -6px; }
 
   .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(126px, 37vw, 176px); right: -16px; bottom: -26px; }
@@ -2014,12 +2014,12 @@
 /* The plates are turned 8deg about their left edge, so their right corner
    rises with their width. The first plate in each card is held down by an
    offset in em, which scales with the plate. */
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   .bento .bento-cell.bento-pos-tl .bento-sticker:first-child { margin-top: 0.6em; }
   .bento .bento-cell.bento-pos-c .bento-sticker,
   .bento .bento-cell.bento-pos-tc .bento-sticker { margin-top: 0.28em; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-sticker:first-child { margin-top: 0.7em; }
   .bento .bento-cell.bento-pos-bl .bento-sticker { margin-top: 0.88em; }
   .bento .bento-cell.bento-pos-r .bento-sticker { margin-top: 0.42em; }
@@ -2027,26 +2027,26 @@
 @media (min-width: 1101px) {
   .bento .bento-cell.bento-pos-bl .bento-sticker.bento-sticker--text { margin-top: 0.8em; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   /* Shorter copy (English, Hindi) would lift the messages into the plates. */
   .bento .bento-cell.bento-pos-tl { min-height: 226px; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell--stat .bento-sticker { margin-top: 0.35em; }
 }
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker,
   :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: 24px; }
 }
 
 /* =========================================================================
    Fortieth pass: the three-column bento now holds down to 700px, and the
-   phone range ends at 699.98px so a fractional viewport (page zoom, display
+   phone range ends at 599.98px so a fractional viewport (page zoom, display
    scaling) never falls between the two and gets the unstyled base layout.
    The phone calendar is larger and sits higher; the promo code is pink.
    ========================================================================= */
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(132px, 40vw, 190px); right: -14px; bottom: -8px; }
 }
 
@@ -2059,7 +2059,7 @@
    bigger wallet.
    ========================================================================= */
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-bl { padding-top: 12px; gap: 2px; }
   .bento .bento-cell.bento-pos-bl .bento-sticker { margin-top: 0.92em; margin-bottom: 2px; }
   .bento .bento-cell.bento-pos-bl .bento-art { bottom: -14px; }
@@ -2067,11 +2067,11 @@
   :lang(hi) .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(104px, 30vw, 146px); }
 }
 
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   .bento .bento-cell.bento-pos-tr h3 { padding-right: 0; }
   .bento .bento-cell.bento-pos-tr .bento-art { width: 74%; max-height: none; right: -18px; bottom: -22px; }
 }
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   /* The English top row runs shorter, so its wallet steps down a little. */
   :lang(en) .bento .bento-cell.bento-pos-tr .bento-art { width: 62%; }
 }
@@ -2097,7 +2097,7 @@
   }
 }
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   /* The calendar a touch bigger and further right. */
   .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(140px, 43vw, 200px); right: -24px; }
 }
@@ -2233,7 +2233,7 @@
   }
 }
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(130px, 38vw, 160px); }
   .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(150px, 47vw, 214px); }
   .bento .bento-cell.bento-pos-r .bento-art--plane {
@@ -2245,7 +2245,7 @@
 @media (min-width: 1101px) {
   .bento .bento-cell.bento-pos-tr h3 { margin-top: 18px; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   /* Room beside the bigger calendar. */
   .bento .bento-cell.bento-pos-bl .bento-art { width: clamp(146px, 45vw, 206px); }
   .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(92px, 27vw, 126px); }
@@ -2261,7 +2261,7 @@
     clip-path: inset(0 26px 8px 0 round 0 0 22px 0);
   }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane { right: -40px; clip-path: inset(0 40px 8px 0 round 0 0 22px 0); }
   .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(102px, 29vw, 130px); }
 }
@@ -2273,43 +2273,43 @@
 /* Fiftieth pass (phones): bigger messages on the English card. The card is a
    little taller and its copy a narrower column, so the bubbles grow up and
    left without meeting the plates or the text. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl { min-height: 266px; }
   .bento .bento-cell.bento-pos-tl h3 { padding-right: clamp(150px, 46vw, 190px); }
   .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(160px, 49vw, 210px); right: -14px; bottom: -10px; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-art { bottom: -28px; }
   :lang(en) .bento .bento-cell.bento-pos-tl { min-height: 282px; }
 }
 
 /* Fifty-first pass (phones): the wallet and the messages a little bigger and
    shifted left into the free space beside their copy; the copy stays put. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tr .bento-art { width: clamp(150px, 47vw, 196px); right: 8px; bottom: -20px; }
   .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(168px, 52vw, 222px); right: 2px; bottom: -36px; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: 282px; }
 }
 /* The bigger wallet needs a taller card so it doesn't reach into the card above;
    on wider phones the bigger messages need a little more room under their copy. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tr { min-height: clamp(132px, 36vw, 146px); }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl { min-height: 280px; }
   :lang(en) .bento .bento-cell.bento-pos-tl,
   :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: 296px; }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 292px; }
   :lang(hi) .bento .bento-cell.bento-pos-tr .bento-art { right: -6px; }
 }
 
 /* Fifty-second pass (phones): in English and Hindi the English card had empty
    room above its plates. The plates grow instead, and the card hugs them. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   :lang(en) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text,
   :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: clamp(28px, 8.8vw, 38px); }
   :lang(en) .bento .bento-cell.bento-pos-tl .bento-sticker:first-child,
@@ -2329,7 +2329,7 @@
 /* Fifty-fourth pass (phones): the carriers card hugs its plate at the top. Its
    copy gets a slightly wider column (one line fewer), and the card is only as
    tall as the plane needs to clear the 10 000+ plate. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-r { min-height: max(262px, calc(382px - 30vw)); justify-content: flex-start; }
   :lang(en) .bento .bento-cell.bento-pos-r h3,
   :lang(ru) .bento .bento-cell.bento-pos-r h3 { padding-right: clamp(116px, 34vw, 150px); }
@@ -2421,7 +2421,7 @@ h1, h2, h3 { text-wrap: balance; }
 .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text {
   margin-left: 0.7em; margin-top: calc(-19px - 0.1em);
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: calc(-12px - 0.1em); }
 }
 
@@ -2430,10 +2430,10 @@ h1, h2, h3 { text-wrap: balance; }
 @media (min-width: 1101px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane { width: 190px; }
 }
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane { width: 140px; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane { width: 170px; }
 }
 
@@ -2442,26 +2442,26 @@ h1, h2, h3 { text-wrap: balance; }
 @media (min-width: 768px) { .footer { border-radius: 40px 40px 0 0; } }
 /* Upright, the wallet's left corner sits higher, so it shrinks on tablets and
    drops a little on wider phones to clear the copy. */
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   .bento .bento-cell.bento-pos-tr .bento-art { width: 125px; }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tr .bento-art { bottom: -28px; }
 }
 @media (max-width: 389.98px) {
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { bottom: -42px; }
 }
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   :lang(en) .bento .bento-cell.bento-pos-tr .bento-art { width: 125px; }
 }
 @media (max-width: 389.98px) {
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { right: -6px; }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   :lang(en) .bento .bento-cell.bento-pos-tr .bento-art { right: -2px; }
 }
 /* With the smaller plane and two lines of copy, the phone carriers card is shorter. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-r,
   :lang(hi) .bento .bento-cell.bento-pos-r { min-height: max(240px, calc(360px - 30vw)); }
 }
@@ -2505,7 +2505,7 @@ h1, h2, h3 { text-wrap: balance; }
   .footer-app-col .qr { display: none; }
 }
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-art { display: none; }
   .bento .bento-cell.bento-pos-tl h3,
   :lang(en) .bento .bento-cell.bento-pos-tl h3,
@@ -2567,7 +2567,7 @@ h1, h2, h3 { text-wrap: balance; }
   .footer-app-col .stores a { min-height: 0; }
 }
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl { padding-bottom: 14px; }
   :lang(en) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text,
   :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: clamp(26px, 8vw, 34px); }
@@ -2602,12 +2602,12 @@ h1, h2, h3 { text-wrap: balance; }
 /* The train is wider than the calendar and has less air in its frame. */
 .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.88; transform-origin: 100% 100%; }
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane { width: 156px; }
   .bento .bento-cell.bento-pos-r,
   :lang(hi) .bento .bento-cell.bento-pos-r { min-height: max(214px, calc(334px - 30vw)); }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.88; right: -6px; bottom: -8px; }
 }
 
@@ -2633,7 +2633,7 @@ h1, h2, h3 { text-wrap: balance; }
   .bento .bento-cell.bento-pos-r .bento-art--plane { width: 236px; right: -40px; top: 186px; }
 }
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: 2px; }
 
   .bento .bento-cell.bento-pos-r .bento-sticker { font-size: clamp(26px, 8vw, 34px); }
@@ -2674,7 +2674,7 @@ h1, h2, h3 { text-wrap: balance; }
     top: auto; right: auto; bottom: auto; translate: none; clip-path: none;
   }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { right: 12px; clip-path: none; }
 }
 @media (max-width: 339.98px) {
@@ -2726,7 +2726,7 @@ h1, h2, h3 { text-wrap: balance; }
    higher; both "All" buttons a touch lower.
    ========================================================================= */
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-art { display: block; }
   .bento .bento-cell.bento-pos-tl h3,
   :lang(en) .bento .bento-cell.bento-pos-tl h3,
@@ -2747,14 +2747,14 @@ h1, h2, h3 { text-wrap: balance; }
   #routes .section-head > .head-actions { position: relative; top: 4px; }
   #hotels .section-head > .head-actions { top: 7px; }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 292px; }
 }
-@media (min-width: 480px) and (max-width: 699.98px) {
+@media (min-width: 480px) and (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane,
   :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { width: 170px; bottom: -50px; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   /* The raised train would meet the English savings copy. */
   :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(118px, 34vw, 160px); }
 }
@@ -2767,7 +2767,7 @@ h1, h2, h3 { text-wrap: balance; }
    ========================================================================= */
 
 .only-phone { display: none; }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .hide-phone { display: none; }
   .only-phone { display: inline; }
 
@@ -2793,26 +2793,26 @@ h1, h2, h3 { text-wrap: balance; }
   #routes .section-head > .head-actions { top: 2px; }
   #hotels .section-head > .head-actions { top: 0; }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 278px; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-bl h3,
   :lang(en) .bento .bento-cell.bento-pos-bl h3,
   :lang(hi) .bento .bento-cell.bento-pos-bl h3 { padding-right: clamp(84px, 24vw, 108px); }
   .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.72; bottom: -2px; }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: -10px; }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: 108px; }
 }
 
 /* Sixty-ninth pass (phones): smaller, higher messages on a shorter English
    card; a smaller, higher plane; a bigger train tucked into the corner;
    larger stat plates. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-art,
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(150px, 46vw, 196px); bottom: -30px; }
   .bento .bento-cell.bento-pos-tl,
@@ -2828,23 +2828,23 @@ h1, h2, h3 { text-wrap: balance; }
   .bento .bento-cell--stat .bento-sticker { font-size: clamp(22px, 7vw, 33px); }
   :lang(en) .bento .bento-cell--stat .bento-sticker { font-size: clamp(19px, 5.7vw, 29px); }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 258px; }
   .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: -18px; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   :lang(en) .bento .bento-cell--stat .bento-sticker { font-size: clamp(17px, 5.4vw, 28px); }
   /* Room under the savings copy for the bigger train; the copy keeps its width. */
   .bento .bento-cell.bento-pos-bl { padding-bottom: 34px; }
 }
-@media (min-width: 480px) and (max-width: 699.98px) {
+@media (min-width: 480px) and (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane,
   :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { width: 160px; bottom: -40px; }
 }
 
 /* Seventieth pass (phones): smaller, higher messages and a shorter English
    card; the train higher in a shorter savings card. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-art,
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(134px, 41vw, 176px); bottom: -26px; }
   .bento .bento-cell.bento-pos-tl,
@@ -2855,7 +2855,7 @@ h1, h2, h3 { text-wrap: balance; }
   .bento .bento-cell.bento-pos-bl { padding-bottom: 22px; }
   .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.78; right: -12px; bottom: -6px; }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   :lang(ru) .bento .bento-cell.bento-pos-tl { min-height: 240px; }
   .bento .bento-cell.bento-pos-bl .bento-art--train { bottom: -10px; }
 }
@@ -2864,7 +2864,7 @@ h1, h2, h3 { text-wrap: balance; }
    runs full width and the card is shorter); the Russian train a little bigger
    and further left, the Hindi one a touch left; Hindi carriers copy wider and
    its English card shorter. The narrowest phones keep the old train spot. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   :lang(en) .bento .bento-cell.bento-pos-bl .bento-art--train { display: none; }
   :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: 0; }
   :lang(en) .bento .bento-cell.bento-pos-bl { padding-bottom: 14px; }
@@ -2873,7 +2873,7 @@ h1, h2, h3 { text-wrap: balance; }
   :lang(hi) .bento .bento-cell.bento-pos-r h3 { padding-right: clamp(96px, 30vw, 128px); }
   :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: clamp(192px, 52vw, 224px); }
 }
-@media (min-width: 390px) and (max-width: 699.98px) {
+@media (min-width: 390px) and (max-width: 599.98px) {
   :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: 0; }
 }
 @media (max-width: 339.98px) {
@@ -2882,7 +2882,7 @@ h1, h2, h3 { text-wrap: balance; }
 }
 /* Phones: no train on the savings card in any language; its copy runs the
    full width (balanced wrapping would leave the lines short). */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-bl .bento-art--train,
   :lang(ru) .bento .bento-cell.bento-pos-bl .bento-art--train,
   :lang(hi) .bento .bento-cell.bento-pos-bl .bento-art--train { display: none; }
@@ -2892,16 +2892,16 @@ h1, h2, h3 { text-wrap: balance; }
   :lang(hi) .bento .bento-cell.bento-pos-bl h3 { padding-right: 0; text-wrap: wrap; }
   .bento .bento-cell.bento-pos-bl { padding-bottom: 14px; }
 }
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-bl h3 { max-width: none; }
 }
 
 /* Seventy-second pass (phones): the tile copy a touch larger. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell[class*="bento-pos-"] h3 { font-size: clamp(20px, 5.75vw, 23px); }
 }
 /* Phones: the messages a touch bigger and higher; the card keeps its size. */
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell.bento-pos-tl .bento-art,
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-art { width: clamp(144px, 44vw, 188px); bottom: -22px; }
 }
@@ -2910,7 +2910,7 @@ h1, h2, h3 { text-wrap: balance; }
    little higher, the train a little lower; the Hindi English-card copy on
    two lines. */
 br.br-wide { display: none; }
-@media (min-width: 700px) { br.br-wide { display: inline; } }
+@media (min-width: 600px) { br.br-wide { display: inline; } }
 
 @media (min-width: 1101px) {
   .bento .bento-cell .bento-sticker { font-size: clamp(30px, 3.42vw, 49px); }
@@ -2974,7 +2974,7 @@ br.br-wide { display: none; }
    shape's curved edge (it overran by ~75px at 901-1100px).
    ========================================================================= */
 
-@media (min-width: 700px) and (max-width: 900px) {
+@media (min-width: 600px) and (max-width: 900px) {
   .panel.panel--transport.panel--photo {
     background: #A181FF url("photos/plane-window-2.webp") right center / auto 106% no-repeat;
     padding: 0;
@@ -3001,7 +3001,7 @@ br.br-wide { display: none; }
   .panel--photo h2 { align-items: flex-start; }
 }
 
-@media (min-width: 700px) and (max-width: 1100px) {
+@media (min-width: 600px) and (max-width: 1100px) {
   .panel.panel--transport.panel--photo::before { width: 66%; }
   .panel--photo > div { width: 55%; max-width: none; padding: 34px 28px 36px 32px; gap: 12px; }
   .panel--photo .panel-line,
@@ -3029,7 +3029,7 @@ br.br-wide { display: none; }
    next to a longer one leaves equal air above and below.
    ========================================================================= */
 
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   .bento .bento-cell.bento-pos-r { overflow: visible; }
   .bento .bento-cell.bento-pos-r .bento-art--plane,
   :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane {
@@ -3043,11 +3043,90 @@ br.br-wide { display: none; }
   .bento .bento-cell.bento-pos-tl .bento-art { max-height: 56%; }
 }
 
-@media (max-width: 699.98px) {
+@media (max-width: 599.98px) {
   .bento .bento-cell--stat { justify-content: center; }
 }
-@media (min-width: 700px) and (max-width: 1100.98px) {
+@media (min-width: 600px) and (max-width: 1100.98px) {
   .bento .bento-cell.bento-pos-r .bento-art--plane,
   :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { max-width: none; width: calc(100% + 52px); }
   .bento .bento-cell.bento-pos-tl .bento-art { width: 108%; max-height: none; right: -26px; }
+}
+
+/* =========================================================================
+   Seventy-eighth pass. The three-column bento and the side-by-side city
+   panel now start at 600px (the 700px edges above were moved), so tablets
+   read like the PC page. Tablets get tighter gaps and padding, a bigger
+   train and wallet, and a shorter city panel. On PC the English plates no
+   longer overlap, and plates may run past their card (not into the next).
+   ========================================================================= */
+
+@media (min-width: 1101px) {
+  /* With 2px under each plate the stack gap is 10px; the lower plate rises
+     by its 0.7em step's slope so the two edges just touch. */
+  .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-top: calc(-10px - 0.1em); }
+  :lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: clamp(25px, 2.75vw, 40px); }
+}
+
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  .bento { gap: 10px; }
+  .bento .bento-cell { padding: 18px 20px 16px; }
+  .bento .bento-cell.bento-pos-r .bento-art--plane,
+  :lang(en) .bento .bento-cell.bento-pos-r .bento-art--plane { margin: 10px -20px -16px -20px; width: calc(100% + 40px); }
+  .bento .bento-cell.bento-pos-tl .bento-art { right: -20px; }
+
+  .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 1; }
+  .bento .bento-cell.bento-pos-tr .bento-art,
+  :lang(en) .bento .bento-cell.bento-pos-tr .bento-art { width: 140px; }
+  .bento .bento-cell.bento-pos-tr h3 { padding-right: 34%; }
+
+  .panel--photo > div { padding: 24px 24px 26px 30px; gap: 10px; }
+  .panel--photo .panel-line,
+  :lang(en) .panel--photo .panel-line { font-size: clamp(22px, 2.6vw, 28px); }
+  .panel--photo .panel-badge,
+  :lang(en) .panel--photo .panel-badge { font-size: clamp(19px, 2.3vw, 25px); }
+  .panel--photo p { font-size: 14px; line-height: 1.4; }
+}
+/* The narrowest three-column widths (600-680px): plates scale with the
+   viewport so they stay off the neighbouring cards, and the wallet is
+   smaller beside its copy. */
+@media (min-width: 600px) and (max-width: 679.98px) {
+  .bento .bento-cell--stat .bento-sticker { font-size: 3.7vw; }
+  :lang(en) .bento .bento-cell--stat .bento-sticker { font-size: 3.45vw; }
+  .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: 2.95vw; }
+  .bento .bento-cell.bento-pos-r .bento-sticker { font-size: 4.9vw; }
+  .bento .bento-cell.bento-pos-tr .bento-art,
+  :lang(en) .bento .bento-cell.bento-pos-tr .bento-art { width: 116px; }
+  .bento .bento-cell.bento-pos-tr h3 { padding-right: 40%; }
+}
+@media (min-width: 600px) and (max-width: 679.98px) {
+  :lang(en) .bento .bento-cell--stat .bento-sticker { font-size: 3.15vw; }
+  .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: 2.7vw; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  .bento .bento-cell.bento-pos-tr h3 { padding-right: 42%; }
+}
+@media (min-width: 600px) and (max-width: 639.98px) {
+  :lang(en) .bento .bento-cell--stat .bento-sticker { font-size: 2.85vw; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  .bento .bento-cell.bento-pos-tr .bento-art { bottom: -26px; }
+}
+@media (min-width: 600px) and (max-width: 639.98px) {
+  :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker,
+  :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: 2.85vw; }
+}
+@media (min-width: 640px) and (max-width: 679.98px) {
+  :lang(en) .bento .bento-cell.bento-pos-c .bento-sticker,
+  :lang(en) .bento .bento-cell.bento-pos-tc .bento-sticker { font-size: 3.15vw; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  /* "Зафиксируйте" cannot break, so the Russian wallet is smaller and further into its corner. */
+  :lang(ru) .bento .bento-cell.bento-pos-tr .bento-art { width: 116px; right: -24px; bottom: -32px; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  :lang(ru) .bento .bento-cell.bento-pos-tr .bento-art { width: 112px; right: -22px; bottom: -12px; }
+  :lang(hi) .bento .bento-cell.bento-pos-tr .bento-art { width: 124px; right: -20px; bottom: -14px; }
+}
+@media (min-width: 600px) and (max-width: 679.98px) {
+  :lang(hi) .bento .bento-cell.bento-pos-tr .bento-art { width: 106px; }
 }
