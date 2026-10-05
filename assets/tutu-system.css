@@ -3130,3 +3130,73 @@ br.br-wide { display: none; }
 @media (min-width: 600px) and (max-width: 679.98px) {
   :lang(hi) .bento .bento-cell.bento-pos-tr .bento-art { width: 106px; }
 }
+
+/* =========================================================================
+   Seventy-ninth pass: the price block as the colleague sketched it. Rubles
+   on the first line (price, old price struck, discount tag), rupees on the
+   second (estimate, old estimate struck).
+   ========================================================================= */
+
+.route-price { flex-wrap: nowrap; align-items: baseline; }
+.route-price .route-discount { align-self: center; }
+.route-price--inr { margin-top: 0; padding-top: 4px; }
+.route-price--inr .route-inr { margin-top: 0; }
+.route-price .route-old {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  text-decoration-thickness: 1px;
+}
+.route-price--inr .route-old { font-size: 14px; }
+/* The rubles line is longer now (price, old price, tag), so phone cards are
+   at least 250px wide; on wider phones they stop at 300px like on tablets
+   instead of growing with the screen. */
+@media (max-width: 599.98px) {
+  .row > * { flex-basis: clamp(250px, calc((100% + 4px) / 1.5), 300px); }
+  #routes .card--route .price,
+  #hotels .card--hotel .price { font-size: 18px; }
+  .route-price { gap: 4px 6px; }
+  .route-price .route-old { font-size: 13px; }
+  .route-price--inr .route-inr { font-size: 15px; }
+}
+@media (min-width: 1101px) {
+  #routes .card--route .price,
+  #hotels .card--hotel .price { font-size: 19px; }
+  .route-price { gap: 4px 7px; }
+  .route-price .route-old { font-size: 14px; }
+}
+.route-price--inr .hotel-night { font-size: 13px; font-weight: 400; color: var(--ink-muted); white-space: nowrap; }
+@media (max-width: 599.98px) {
+  :lang(en) #routes .card--route .price { font-size: 17px; }
+}
+@media (min-width: 1024px) and (max-width: 1100.98px) {
+  #routes .card--route .price,
+  #hotels .card--hotel .price { font-size: 17px; }
+  .route-price { gap: 4px 6px; }
+  .route-price .route-old { font-size: 13px; }
+  .route-price--inr .route-inr { font-size: 15px; }
+}
+@media (min-width: 1101px) and (max-width: 1279.98px) {
+  #routes .card--route .price,
+  #hotels .card--hotel .price { font-size: 17px; }
+  .route-price { gap: 4px 6px; }
+  .route-price .route-old { font-size: 13px; }
+  .route-price--inr .route-inr { font-size: 15px; }
+}
+@media (min-width: 1280px) {
+  :lang(en) #routes .card--route .price { font-size: 18px; }
+}
+
+/* Plates keep the PC proportions at any size: padding and corners in em
+   (in px they turned into pills at the small tablet sizes). */
+@media (min-width: 600px) {
+  .bento .bento-cell .bento-sticker { padding: .08em .38em .16em; border-radius: .32em; }
+}
+
+/* Tablets: the savings card has room for a much bigger train beside a
+   narrower column of copy. */
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  .bento .bento-cell.bento-pos-bl h3 { padding-right: 46%; }
+  .bento .bento-cell.bento-pos-bl .bento-art--train { width: 46%; max-height: none; right: 6px; bottom: -6px; scale: 1; }
+}

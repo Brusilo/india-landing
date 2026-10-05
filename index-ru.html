@@ -661,7 +661,7 @@ body{position:relative!important}
 <script src="assets/site-language-faq-v26.js?v=20261003-faq-bag3"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20260930b">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
-<link rel="stylesheet" href="assets/tutu-system.css?v=210">
+<link rel="stylesheet" href="assets/tutu-system.css?v=215">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1100,10 +1100,13 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
       <p class="route-name">${r.from}&nbsp;→ ${r.to}</p>
       <div class="route-price">
         <span class="price">от ${fmtNum(rub)}&nbsp;${CONFIG.currency}</span>
+        <s class="route-old">${fmtNum(oldRub)}&nbsp;${CONFIG.currency}</s>
         <span class="route-discount">-${CONFIG.routeDiscount}%</span>
       </div>
-      <span class="route-inr">≈ ₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
-      <s class="route-old-price">${fmtNum(oldRub)}&nbsp;${CONFIG.currency} ≈&nbsp;₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
+      <div class="route-price route-price--inr">
+        <span class="route-inr">≈ ₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
+        <s class="route-old">₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
+      </div>
     </div>
   </article>`;
 }).join('') + CTA_CARD;
@@ -1123,11 +1126,15 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
       </div>
       <p class="hotel-name">${h.name}</p>
       <div class="route-price">
-        <span class="price">${fmtNum(rub)}&nbsp;${CONFIG.currency} <span class="hotel-night">за ночь</span></span>
+        <span class="price">${fmtNum(rub)}&nbsp;${CONFIG.currency}</span>
+        <s class="route-old">${fmtNum(oldRub)}&nbsp;${CONFIG.currency}</s>
         <span class="route-discount">-${CONFIG.hotelDiscount}%</span>
       </div>
-      <span class="route-inr">≈ ₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
-      <s class="route-old-price">${fmtNum(oldRub)}&nbsp;${CONFIG.currency} ≈&nbsp;₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
+      <div class="route-price route-price--inr">
+        <span class="route-inr">≈ ₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
+        <s class="route-old">₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
+        <span class="hotel-night">за ночь</span>
+      </div>
     </div>
   </article>`;
 }).join('') + CTA_CARD;
