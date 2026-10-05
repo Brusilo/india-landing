@@ -3676,3 +3676,31 @@ br.br-wide { display: none; }
 @media (min-width: 1101px) and (max-width: 1279.98px) {
   html:lang(en) #routes .card--route .price { font-size: 16px; }
 }
+
+/* =========================================================================
+   Eighty-ninth pass. Route cards take their natural height (no empty band
+   above the prices); the discount tag keeps more air from the prices; hotel
+   tags are plain rounded rectangles. On PC the plane ends exactly at the
+   card's bottom edge. Hindi PC: a shorter tile, English plates 10% larger.
+   ========================================================================= */
+
+#routes .card--route { aspect-ratio: auto; }
+#routes .card--route .route-price:not(.route-price--inr),
+#hotels .card--hotel .route-price:not(.route-price--inr) { padding-top: 14px; }
+.route-price .route-discount { margin-left: 4px; }
+#hotels .card--hotel .route-discount { padding: 4px 7px; border-radius: 6px; font-size: 13px; font-weight: 500; }
+#hotels .card--hotel .route-discount::before { transform: none; border-radius: 6px; }
+
+@media (min-width: 1101px) {
+  .bento .bento-cell.bento-pos-r .bento-art--plane { margin-bottom: -14px; }
+  html:lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker { font-size: clamp(24px, 2.9vw, 43px); }
+  :lang(hi) .bento { grid-template-rows: repeat(2, minmax(clamp(150px, 13.4vw, 184px), 1fr)) auto; }
+}
+@media (min-width: 1101px) {
+  /* The rows follow their copy, so the Hindi tile gets shorter through slightly tighter lines. */
+  html:lang(hi) .bento .bento-cell h3 { font-size: clamp(19px, 1.88vw, 26px); line-height: 1.12; }
+}
+/* The wider gap before the tag costs English route prices 1px. */
+html:lang(en) #routes .card--route .price { font-size: 16px; }
+@media (min-width: 1101px) and (max-width: 1279.98px) { html:lang(en) #routes .card--route .price { font-size: 15.5px; } }
+@media (min-width: 1280px) { html:lang(en) #routes .card--route .price { font-size: 18px; } }
