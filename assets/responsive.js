@@ -141,18 +141,25 @@
     row.parentElement.appendChild(nav);
   });
 
-  /* Arrows show while at least two and a half cards fit across the carousel;
-     on narrower screens people swipe. */
+  /* Arrows show while at least two and a half route cards fit across the
+     carousel; on narrower screens people swipe. Every carousel follows the
+     route row, so all arrows appear and disappear at the same width, even
+     on the reviews, whose cards are wider. */
+  function fitsIn(row) {
+    const card = row && row.firstElementChild;
+    if (!card) return 0;
+    const style = getComputedStyle(row);
+    const gap = parseFloat(style.columnGap) || 0;
+    const inner = row.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0);
+    return (inner + gap) / (card.getBoundingClientRect().width + gap);
+  }
   function syncArrows() {
+    const reference = document.getElementById('routes-row');
+    const wide = fitsIn(reference) >= 2.5;
     document.querySelectorAll('.has-carousel-arrows').forEach(function (wrap) {
       const row = wrap.querySelector('.row, [id$="-row"]');
-      const card = row && row.firstElementChild;
-      if (!card) return;
-      const style = getComputedStyle(row);
-      const gap = parseFloat(style.columnGap) || 0;
-      const inner = row.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0);
-      const fits = (inner + gap) / (card.getBoundingClientRect().width + gap);
-      wrap.classList.toggle('arrows-on', fits >= 2.5 && row.scrollWidth > row.clientWidth + 4);
+      if (!row) return;
+      wrap.classList.toggle('arrows-on', wide && row.scrollWidth > row.clientWidth + 4);
     });
   }
   window.addEventListener('resize', syncArrows);

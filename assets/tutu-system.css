@@ -3777,3 +3777,8 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (min-width: 980px) and (max-width: 1100.98px) {
   html:lang(en) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: 146px; }
 }
+/* Narrow tablets: the English and Hindi wallets as large as their copy allows. */
+@media (min-width: 640px) and (max-width: 767.98px) {
+  html:lang(en) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: 59%; }
+  html:lang(hi) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: 58%; }
+}
