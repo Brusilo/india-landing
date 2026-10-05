@@ -3732,8 +3732,48 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   html:lang(hi) .hero h1 { font-size: min(clamp(36px, 10.7vw, 48px), calc((100vw - 52px) / 7.2)); }
 }
 
-/* Store buttons without the QR code, 10% smaller. */
-@media (max-width: 1023.98px) {
-  html .footer-app-col .stores { grid-template-columns: repeat(4, 47px); width: auto; }
-  html .footer-app-col .stores a { min-height: 0; }
+/* Footer social icons 10% smaller than the 15%-larger set (the earlier
+   10% cut was meant for them, not the store buttons). */
+.footer .social { width: 41px; height: 41px; border-radius: 12px; }
+@media (max-width: 1100px) {
+  .footer .social { width: 50px; height: 50px; border-radius: 14px; }
+  .footer .footer-col .socials a { min-height: 50px; }
+}
+
+/* Tablets: the English plates are the largest and ran to the cards' right
+   edges, so they start further left (the second "all the way" plate steps
+   in less); the wallet with the timer is larger and further left. */
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html:lang(en) .bento .bento-cell:not(.bento-pos-tl) .bento-sticker.bento-sticker { margin-left: -10px; }
+  html:lang(en) .bento .bento-cell.bento-pos-tl .bento-sticker--text + .bento-sticker--text { margin-left: .45em; margin-top: calc(-18px - 0.065em); }
+}
+@media (min-width: 600px) and (max-width: 767.98px) {
+  html .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: 62%; right: 0; bottom: -12px; }
+}
+@media (min-width: 768px) and (max-width: 1100.98px) {
+  html .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: clamp(160px, 56%, 190px); right: 8px; bottom: -18px; }
+}
+/* Wallet sizes measured per language so its pixels keep 3px clear of the copy. */
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art,
+  html:lang(en) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art,
+  html:lang(ru) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art,
+  html:lang(hi) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { right: 2px; bottom: -18px; }
+}
+@media (min-width: 600px) and (max-width: 767.98px) {
+  html .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art,
+  html:lang(en) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art,
+  html:lang(ru) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: clamp(84px, 52%, 120px); }
+  html:lang(hi) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: clamp(84px, 47%, 120px); }
+}
+@media (min-width: 768px) and (max-width: 1100.98px) {
+  html:lang(en) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: 160px; }
+  html:lang(ru) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: 142px; }
+  html:lang(hi) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: 148px; }
+}
+@media (min-width: 850px) and (max-width: 1100.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: 168px; }
+}
+@media (min-width: 980px) and (max-width: 1100.98px) {
+  html:lang(en) .bento .bento-cell.bento-pos-tr .bento-art.bento-art.bento-art { width: 146px; }
 }
