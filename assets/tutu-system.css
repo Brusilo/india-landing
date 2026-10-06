@@ -3840,3 +3840,15 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   html:lang(ru) .bento .bento-cell.bento-pos-c h3, html:lang(ru) .bento .bento-cell.bento-pos-tc h3,
   html:lang(hi) .bento .bento-cell.bento-pos-c h3, html:lang(hi) .bento .bento-cell.bento-pos-tc h3 { font-size: clamp(18px, 5.75vw, 24px); }
 }
+
+/* "ПОДДЕРЖКА / НА АНГЛИЙСКОМ" is longer than the old Russian plates, so they
+   run a little smaller to stay off the neighbouring card. */
+@media (max-width: 599.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text.bento-sticker--text { font-size: min(7.1vw, 30px); }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text.bento-sticker--text { font-size: clamp(14px, calc((100vw - 180px) / 29), 30px); }
+}
+@media (min-width: 1101px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text.bento-sticker--text { font-size: clamp(24px, 2.7vw, 34px); }
+}
