@@ -3873,3 +3873,23 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (min-width: 480px) and (max-width: 599.98px) {
   html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.1; translate: -5% 2.5%; }
 }
+/* The bubbles came out too big on tablets and PC: 10% over the original
+   there; phones get a touch more (18%, wide Russian phones stay at 10%). */
+@media (max-width: 599.98px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.18; translate: -9% -9%; }
+}
+@media (min-width: 480px) and (max-width: 599.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.1; translate: -5% 2.5%; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.1; translate: -5% 0; }
+}
+@media (min-width: 1101px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.1; translate: -5% 2.5%; }
+}
+@media (min-width: 400px) and (max-width: 479.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.15; translate: -7.5% -7.5%; }
+}
+@media (min-width: 420px) and (max-width: 599.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.1; translate: -5% 2.5%; }
+}
