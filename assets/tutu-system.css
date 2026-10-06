@@ -3852,3 +3852,24 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (min-width: 1101px) {
   html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text.bento-sticker--text { font-size: clamp(24px, 2.7vw, 34px); }
 }
+
+/* =========================================================================
+   Ninety-first pass. The message bubbles on the support card are larger:
+   15% on phones (still inside the card's bottom-right corner), 20% on
+   tablets (the right edge stays, the bubbles grow down) and on PC (a little
+   lower). Sizes were measured against the copy, the plates and the
+   neighbouring cards in all three languages.
+   ========================================================================= */
+@media (max-width: 599.98px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.15; translate: -7.5% -7.5%; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.2; translate: -10% 0; }
+}
+@media (min-width: 1101px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.2; translate: -10% 5%; }
+}
+/* Wide phones in Russian: the longer copy leaves room for 10% only. */
+@media (min-width: 480px) and (max-width: 599.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.1; translate: -5% 2.5%; }
+}
