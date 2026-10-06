@@ -3893,3 +3893,11 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (min-width: 420px) and (max-width: 599.98px) {
   html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.1; translate: -5% 2.5%; }
 }
+/* Phones: bubbles 25% over the original (Russian from 420px keeps 10%:
+   its longer plates leave no room for more). */
+@media (max-width: 599.98px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.25; translate: -8% -3%; }
+}
+@media (max-width: 419.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.25; translate: -8% -3%; }
+}
