@@ -3901,3 +3901,37 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (max-width: 419.98px) {
   html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.25; translate: -8% -3%; }
 }
+/* Phones: the bubbles sit a little further left. */
+@media (max-width: 599.98px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { translate: -14% -3%; }
+}
+@media (max-width: 419.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { translate: -14% -3%; }
+}
+@media (min-width: 420px) and (max-width: 599.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { translate: -11% 2.5%; }
+}
+@media (min-width: 560px) and (max-width: 599.98px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { translate: -10% -3%; }
+}
+@media (min-width: 420px) and (max-width: 599.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { translate: -8% 2.5%; }
+}
+/* Where the copy is closest (wide English phones, Russian from 490px) the
+   bubbles keep their place. */
+@media (min-width: 560px) and (max-width: 599.98px) {
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { translate: -8% -3%; }
+}
+@media (min-width: 560px) and (max-width: 599.98px) {
+  html:lang(hi) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { translate: -10% -3%; }
+}
+@media (min-width: 490px) and (max-width: 599.98px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { translate: -5% 2.5%; }
+}
+@media (min-width: 560px) and (max-width: 599.98px) {
+  html:lang(en) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { translate: -4% -3%; }
+}
+/* English at 570-584px: the one-line copy reaches the bubbles, so 15% there. */
+@media (min-width: 570px) and (max-width: 584.98px) {
+  html:lang(en) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.15; translate: -4% -3%; }
+}
