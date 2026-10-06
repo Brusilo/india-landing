@@ -176,7 +176,35 @@
   const cells = document.querySelectorAll('.bento .bento-cell');
   if (!cells.length) return;
   function inset() { return window.innerWidth < 600 ? 3 : 4; }
+  /* On phones the copy also starts the same distance below its plates in
+     every card, so the space under each plate reads alike. */
+  const COPY_GAP = 8;
+  function platesOf(cell) {
+    return Array.prototype.filter.call(cell.querySelectorAll('.bento-sticker'), function (p) { return p.offsetParent; });
+  }
+  function gaps() {
+    cells.forEach(function (cell) {
+      const plates = platesOf(cell), h = cell.querySelector('h3');
+      if (!plates.length || !h) return;
+      const range = document.createRange(); range.selectNodeContents(h);
+      const lines = Array.prototype.filter.call(range.getClientRects(), function (r) { return r.width; });
+      if (!lines.length) return;
+      const textTop = Math.min.apply(null, lines.map(function (r) { return r.top; }));
+      const plateBottom = Math.max.apply(null, plates.map(function (p) { return p.getBoundingClientRect().bottom; }));
+      const delta = COPY_GAP - (textTop - plateBottom);
+      if (Math.abs(delta) < 0.5) return;
+      h.style.marginTop = (parseFloat(getComputedStyle(h).marginTop) + delta).toFixed(2) + 'px';
+    });
+  }
   function align() {
+    const phone = window.innerWidth < 600;
+    cells.forEach(function (cell) { const h = cell.querySelector('h3'); if (h) h.style.removeProperty('margin-top'); });
+    alignPlates();
+    if (!phone) return;
+    /* Moving the copy shifts centred cards, so plates and copy settle together. */
+    for (let i = 0; i < 3; i++) { gaps(); alignPlates(); }
+  }
+  function alignPlates() {
     const target = inset();
     cells.forEach(function (cell) {
       const plates = Array.prototype.filter.call(cell.querySelectorAll('.bento-sticker'), function (p) { return p.offsetParent; });

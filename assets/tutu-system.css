@@ -3332,7 +3332,7 @@ br.br-wide { display: none; }
     z-index: 1300;
   }
   html .search.search-v2 .search-suggest { left: 0; right: auto; width: max(100%, 320px); max-width: calc(100vw - 48px); }
-  html .search.search-v2 .v2-popover { left: auto; right: 0; width: 360px; max-width: calc(100vw - 48px); padding: 16px; }
+  html .search.search-v2 .v2-popover { left: 0; right: auto; width: 360px; max-width: calc(100vw - 48px); padding: 16px; }
   html .search.search-v2 .v2-flight-dates { position: relative; }
   html .search.search-v2 .v2-calendar { left: 0; right: auto; width: 360px; max-width: calc(100vw - 48px); padding: 16px; }
   html .search.search-v2 .v2-flight-dates:has(.v2-field--return.is-calendar-active) > .v2-calendar { left: auto; right: 0; }
@@ -3785,3 +3785,58 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 
 /* Route cards a little longer: more air between the route and its prices. */
 #routes .card--route .route-price:not(.route-price--inr) { padding-top: 34px; }
+
+/* =========================================================================
+   Ninetieth pass. Tablets: the train follows the card's width but never
+   grows taller than the card, so it stays under the card's top edge.
+   ========================================================================= */
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  /* The image has 18% clear space above the train: (card - 6px) / 0.82. */
+  .bento .bento-cell.bento-pos-bl .bento-art--train { max-height: calc(122% - 8px); object-fit: contain; object-position: 100% 100%; }
+}
+
+/* Tablets: the header suitcase sits 30px higher, clear of the pills. */
+@media (min-width: 600px) and (max-width: 899.98px) {
+  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { top: 28px !important; }
+}
+@media (min-width: 900px) and (max-width: 1100.98px) {
+  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { top: -6px !important; }
+}
+
+/* City panel: larger heading and, above all, larger copy, still inside the
+   purple shape and centred in the panel's height. */
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html .panel--photo .panel-line,
+  html:lang(en) .panel--photo .panel-line { font-size: clamp(26px, 3.1vw, 34px); }
+  html .panel--photo .panel-badge,
+  html:lang(en) .panel--photo .panel-badge { font-size: clamp(22px, 2.75vw, 30px); }
+  html .panel--photo p { font-size: clamp(15px, 1.7vw, 18px); line-height: 1.4; }
+}
+@media (min-width: 1101px) {
+  html .panel--photo p { font-size: 19px; line-height: 1.45; }
+}
+@media (max-width: 599.98px) {
+  html .panel--photo .panel-line,
+  html:lang(en) .panel--photo .panel-line { font-size: 24px; }
+  html .panel--photo .panel-badge,
+  html:lang(en) .panel--photo .panel-badge { font-size: 21px; }
+  html .panel--photo p { font-size: 15px; line-height: 1.4; }
+}
+
+/* Phones: tile copy a little larger; the English card gives its copy more
+   width (smaller messages), so no line is left with just "and the". */
+@media (max-width: 599.98px) {
+  html .bento .bento-cell h3,
+  html:lang(en) .bento .bento-cell h3,
+  html:lang(ru) .bento .bento-cell h3,
+  html:lang(hi) .bento .bento-cell h3 { font-size: clamp(19px, 6.1vw, 25px); }
+  html .bento .bento-cell.bento-pos-tl h3,
+  html:lang(en) .bento .bento-cell.bento-pos-tl h3,
+  html:lang(ru) .bento .bento-cell.bento-pos-tl h3,
+  html:lang(hi) .bento .bento-cell.bento-pos-tl h3 { padding-right: 36%; }
+  html .bento .bento-cell.bento-pos-tl .bento-art.bento-art { width: 38%; }
+  /* The two half-width cards keep their size: long Russian words must fit. */
+  html:lang(en) .bento .bento-cell.bento-pos-c h3, html:lang(en) .bento .bento-cell.bento-pos-tc h3,
+  html:lang(ru) .bento .bento-cell.bento-pos-c h3, html:lang(ru) .bento .bento-cell.bento-pos-tc h3,
+  html:lang(hi) .bento .bento-cell.bento-pos-c h3, html:lang(hi) .bento .bento-cell.bento-pos-tc h3 { font-size: clamp(18px, 5.75vw, 24px); }
+}
