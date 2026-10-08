@@ -3989,3 +3989,18 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (max-width: 599.98px) {
   html .search.search-v2 .v2-field--place > .search-suggest:not([hidden]) { margin-right: -50px !important; width: auto !important; max-width: none !important; }
 }
+
+/* Phones: a tapped city field looks the way it does while typing, so
+   nothing moves when the first letter appears. The "From" / "To" label sits
+   above at once (the placeholder hides), the field keeps the typing state's
+   spacing, and the swap button steps aside while the list is open, so the
+   input and the list use the field's full width. */
+@media (max-width: 599.98px) {
+  html .search.search-v2 .v2-field--place:focus-within .v2-caption { display: block; }
+  html .search.search-v2 .v2-field--place:focus-within .v2-input::placeholder { color: transparent !important; }
+  html .search.search-v2 .v2-field--place:has(> .search-suggest:not([hidden])),
+  html .search.search-v2 .v2-field--place.has-value:has(> .search-suggest:not([hidden])),
+  html .search.search-v2 .v2-field--place:not(.has-value):has(> .search-suggest:not([hidden])) { padding-top: 12px; padding-right: 16px; }
+  html .search.search-v2 .v2-field--place > .search-suggest:not([hidden]) { margin-right: 0 !important; width: 100% !important; max-width: 100% !important; }
+  html .search.search-v2:has(.v2-field--place > .search-suggest:not([hidden])) .v2-swap { visibility: hidden; }
+}
