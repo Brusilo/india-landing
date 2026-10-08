@@ -3935,3 +3935,32 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (min-width: 570px) and (max-width: 584.98px) {
   html:lang(en) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.15; translate: -4% -3%; }
 }
+
+/* City panel: "We'll get you" a little smaller and the "to any city" badge a
+   little larger on PC and tablets; on phones only the badge grows. */
+@media (min-width: 1101px) {
+  html .panel--photo .panel-line,
+  html:lang(en) .panel--photo .panel-line,
+  html:lang(ru) .panel--photo .panel-line,
+  html:lang(hi) .panel--photo .panel-line { font-size: clamp(28px, 3.45vw, 40px); }
+  html .panel--photo .panel-badge,
+  html:lang(en) .panel--photo .panel-badge,
+  html:lang(ru) .panel--photo .panel-badge,
+  html:lang(hi) .panel--photo .panel-badge { font-size: clamp(32px, 3.55vw, 41px); }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html .panel--photo .panel-line,
+  html:lang(en) .panel--photo .panel-line,
+  html:lang(ru) .panel--photo .panel-line,
+  html:lang(hi) .panel--photo .panel-line { font-size: clamp(24px, 2.85vw, 31px); }
+  html .panel--photo .panel-badge,
+  html:lang(en) .panel--photo .panel-badge,
+  html:lang(ru) .panel--photo .panel-badge,
+  html:lang(hi) .panel--photo .panel-badge { font-size: clamp(24px, 3vw, 33px); }
+}
+@media (max-width: 599.98px) {
+  html .panel--photo .panel-badge,
+  html:lang(en) .panel--photo .panel-badge,
+  html:lang(ru) .panel--photo .panel-badge,
+  html:lang(hi) .panel--photo .panel-badge { font-size: 23px; }
+}

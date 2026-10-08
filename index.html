@@ -658,10 +658,10 @@ body{position:relative!important}
 }
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20260925-return-date">
-<script src="assets/site-language-faq-v26.js?v=20261008-faq-cards4"></script>
+<script src="assets/site-language-faq-v26.js?v=20261008-faq-terms"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20260930b">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
-<link rel="stylesheet" href="assets/tutu-system.css?v=287">
+<link rel="stylesheet" href="assets/tutu-system.css?v=288">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -672,7 +672,7 @@ body{position:relative!important}
   <div class="container top-inner">
     <a class="logo-link" href="https://www.tutu.ru/" aria-label="Tutu — home page"><img class="logo" src="assets/logo-tutu-white.png" alt="Tutu"></a>
     <nav class="top-nav" aria-label="Sections">
-      <a href="https://www.tutu.ru/juicy-offers/">Deals</a>
+      <a href="https://www.tutu.ru/juicy-offers/">Offers</a>
       <a href="https://provereno.tutu.ru/">Routes</a>
       <a href="https://www.tutu.ru/2read/">Help centre</a>
       <a href="https://www.tutu.ru/geo/">Travel guide</a>
@@ -1075,18 +1075,18 @@ const CONFIG = {
     { q:'What train discounts are there?',
       a:'Non-refundable train tickets come with up to 20% off. On your birthday, you and up to three companions get a discount: 30% on Sapsan trains and 10% on other long-distance trains. We show the exact timing and conditions when you choose a fare.' },
     { q:'How much baggage can I take?',
-      a:'Allowances depend on the carrier and fare. On long-distance trains you can take up to 36 kg of hand luggage free, or up to 50 kg in SV carriages. Each item can measure up to 180 cm in length, width and height combined. For flights and buses, we show the allowance when you choose a ticket.' },
+      a:'Allowances depend on the carrier and fare. On long-distance trains you can take up to 36 kg of hand luggage free, or up to 50 kg in SV (two-berth first-class) coaches. Each item can measure up to 180 cm in length, width and height combined. For flights and buses, we show the allowance when you choose a ticket.' },
     { q:'Can I buy a ticket for a friend or relative?',
       a:'Yes. Enter the passenger’s passport details when booking. They will need to show the same passport when travelling. You can’t change the passenger after purchase.' },
     { q:'How do I get from the airport to another city?',
       a:'Tutu lets you search for flights, trains and buses. If there is no direct option, build the trip from separate segments and leave enough time for the connection.' },
     { q:'What is the difference between platskart and kupe?',
-      a:'A platskart carriage normally has 54 sleeping berths in open sections connected by a common aisle. A kupe carriage usually has 32 or 36 berths, with four berths in each closed compartment. Kupe carriages have fewer passengers and more privacy, so they are usually more expensive.' }
+      a:'A platskart coach normally has 54 berths in open bays along a common aisle, much like sleeper class in India. A kupe coach usually has 32 or 36 berths, four in each closed compartment. Kupe coaches have fewer passengers and more privacy, so they are usually more expensive.' }
   ]
 };
 
 const toRub = p => parseInt(p.replace(/\s/g, ''), 10);
-const fmtNum = n => String(Math.trunc(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F');
+const fmtNum = n => new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(Math.trunc(Number(n)));
 
 const CTA_CARD = `
   <a class="card card--cta" href="#">
@@ -1280,8 +1280,8 @@ initCarousel('reviews-row', 'reviews');
 
 <script src="assets/tutu-destinations.js?v=20261006-yoshkar"></script>
 <script src="assets/tutu-link-builder.js?v=20260925-return-date"></script>
-<script src="assets/search-v2.js?v=20261001-labels"></script>
-<script src="assets/card-links.js?v=20261006-dated-links"></script>
+<script src="assets/search-v2.js?v=20261008-terms"></script>
+<script src="assets/card-links.js?v=20261008-inr-format"></script>
 <script src="assets/responsive.js?v=20261007-copy-gap"></script>
 </body>
 </html>

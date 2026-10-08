@@ -69,7 +69,7 @@
       },
       {
         q: 'How much baggage can I take?',
-        a: 'Allowances depend on the carrier and fare. On long-distance trains you can take up to 36 kg of hand luggage free, or up to 50 kg in SV carriages. Each item can measure up to 180 cm in length, width and height combined. For flights and buses, we show the allowance when you choose a ticket.'
+        a: 'Allowances depend on the carrier and fare. On long-distance trains you can take up to 36 kg of hand luggage free, or up to 50 kg in SV (two-berth first-class) coaches. Each item can measure up to 180 cm in length, width and height combined. For flights and buses, we show the allowance when you choose a ticket.'
       },
       {
         q: 'How does “Pay later” work?',
@@ -93,7 +93,7 @@
       },
       {
         q: 'What is the difference between platskart and kupe?',
-        a: 'A platskart carriage normally has 54 sleeping berths in open sections connected by a common aisle. A kupe carriage usually has 32 or 36 berths, with four berths in each closed compartment. Kupe carriages have fewer passengers and more privacy, so they are usually more expensive.'
+        a: 'A platskart coach normally has 54 berths in open bays along a common aisle, much like sleeper class in India. A kupe coach usually has 32 or 36 berths, four in each closed compartment. Kupe coaches have fewer passengers and more privacy, so they are usually more expensive.'
       }
     ],
     hi: [
@@ -111,7 +111,7 @@
       },
       {
         q: 'कितना सामान साथ ले जा सकते हैं?',
-        a: 'सामान की सीमा परिवहन कंपनी और किराये पर निर्भर करती है। लंबी दूरी की ट्रेनों में 36 किलो तक हैंड लगेज मुफ़्त ले जा सकते हैं, और SV डिब्बों में 50 किलो तक। हर सामान की लंबाई, चौड़ाई और ऊँचाई का जोड़ 180 सेमी से ज़्यादा नहीं होना चाहिए। फ़्लाइट और बस के नियम हम टिकट चुनते समय दिखाते हैं।'
+        a: 'सामान की सीमा परिवहन कंपनी और किराये पर निर्भर करती है। लंबी दूरी की ट्रेनों में 36 किलो तक हैंड लगेज मुफ़्त ले जा सकते हैं, और SV (दो बर्थ वाले फ़र्स्ट क्लास) कोच में 50 किलो तक। हर सामान की लंबाई, चौड़ाई और ऊँचाई का जोड़ 180 सेमी से ज़्यादा नहीं होना चाहिए। फ़्लाइट और बस के नियम हम टिकट चुनते समय दिखाते हैं।'
       },
       {
         q: '«बाद में भुगतान करें» कैसे काम करता है?',
@@ -135,7 +135,7 @@
       },
       {
         q: 'प्लात्सकार्ट और कूपे में क्या अंतर है?',
-        a: 'प्लात्सकार्ट डिब्बे में आम तौर पर 54 बर्थ होती हैं, जो खुले सेक्शन में होती हैं और एक साझा गलियारे से जुड़ी होती हैं। कूपे में आम तौर पर 32 या 36 बर्थ होती हैं, और हर बंद कूपे में चार बर्थ होती हैं। कूपे में यात्री कम होते हैं और ज़्यादा प्राइवेसी मिलती है, इसलिए यह आम तौर पर महँगा होता है।'
+        a: 'प्लात्सकार्ट कोच में आम तौर पर 54 बर्थ होती हैं, जो खुले सेक्शन में एक साझा गलियारे के साथ होती हैं, लगभग भारत के स्लीपर कोच जैसी। कूपे में आम तौर पर 32 या 36 बर्थ होती हैं, और हर बंद कूपे में चार बर्थ होती हैं। कूपे में यात्री कम होते हैं और ज़्यादा प्राइवेसी मिलती है, इसलिए यह आम तौर पर महँगा होता है।'
       }
     ]
   };

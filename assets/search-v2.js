@@ -21,16 +21,16 @@
       prev:'Предыдущий месяц',next:'Следующий месяц'
     },
     en:{
-      from:'From',to:'To',when:'When',back:'Return',flightWho:'Travellers',travelWho:'Travellers',swap:'Swap departure and destination',search:'Search',
+      from:'From',to:'To',when:'Departure',back:'Return',flightWho:'Travellers',travelWho:'Travellers',swap:'Swap departure and destination',search:'Search',
       hotelWhere:'City',hotelDates:'Check-in — check-out',guests:'Guests',
       adults:'Adults',adultSub:'12+ years',children:'Children',childSub:'Under 18',childAge:'Child age',years:'years',
       economy:'Economy',business:'Business',cabin:'Cabin class',
-      passenger1:'passenger',passenger2:'passengers',passenger5:'passengers',
+      passenger1:'traveller',passenger2:'travellers',passenger5:'travellers',
       guest1:'guest',guest2:'guests',guest5:'guests',
       prev:'Previous month',next:'Next month'
     },
     hi:{
-      from:'कहाँ से',to:'कहाँ तक',when:'तारीख़',back:'वापसी',flightWho:'यात्री',travelWho:'यात्री',swap:'कहाँ से और कहाँ तक की जगह बदलें',search:'खोजें',
+      from:'कहाँ से',to:'कहाँ तक',when:'प्रस्थान',back:'वापसी',flightWho:'यात्री',travelWho:'यात्री',swap:'कहाँ से और कहाँ तक की जगह बदलें',search:'खोजें',
       hotelWhere:'शहर',hotelDates:'चेक-इन — चेक-आउट',guests:'मेहमान',
       adults:'वयस्क',adultSub:'12 साल या उससे ज़्यादा',children:'बच्चे',childSub:'18 साल से कम',childAge:'बच्चे की उम्र',years:'साल',
       economy:'इकोनॉमी',business:'बिज़नेस',cabin:'केबिन क्लास',
