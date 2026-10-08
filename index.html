@@ -659,7 +659,7 @@ body{position:relative!important}
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20261008-separators20">
 <script src="assets/site-language-faq-v26.js?v=20261008-faq-formal"></script>
-<link rel="stylesheet" href="assets/responsive.css?v=20260930b">
+<link rel="stylesheet" href="assets/responsive.css?v=20261008-no-flash">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
 <link rel="stylesheet" href="assets/tutu-system.css?v=300">
 </head>
@@ -733,8 +733,15 @@ body{position:relative!important}
       </a>
     </div>
 
-    <form id="search" class="search" onsubmit="return false"><div class="field field--place" data-kind="from"><input id="f-from" type="text" placeholder="From" aria-label="From" autocomplete="off"><div class="search-suggest" hidden></div></div><button class="swap" type="button" aria-label="Swap departure and destination"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span></button><div class="field field--place" data-kind="to"><input id="f-to" type="text" placeholder="To" aria-label="To" autocomplete="off"><div class="search-suggest" hidden></div></div><div class="field field--date"><input id="f-date" type="text" placeholder="Date" aria-label="Date" autocomplete="off"></div><div class="field field--pax"><button type="button" class="pax-trigger" aria-haspopup="dialog" aria-expanded="false"><span class="pax-caption">Travellers</span><span class="pax-value">1 passenger, Economy</span></button><div class="pax-pop" role="dialog" hidden></div></div><button type="button" class="btn-search">Find</button></form>
-    <div class="search-hints" aria-label="Popular options"><div class="quick-group quick-from"></div><span></span><div class="quick-group quick-to"></div><div class="quick-group quick-date"><button type="button" class="quick-chip" data-quick-date="0">Today</button><button type="button" class="quick-chip" data-quick-date="1">Tomorrow</button></div></div>
+    <form id="search" class="search search-v2" data-mode="flight">
+      <div class="v2-field v2-field--place" data-role="from"><span class="v2-caption">From</span><input class="v2-input" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest-from" maxlength="128" value="" placeholder="From" aria-label="From"><div class="search-suggest" role="listbox" id="suggest-from" hidden></div></div>
+      <button type="button" class="v2-swap" aria-label="Swap departure and destination"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/></svg></span></button>
+      <div class="v2-field v2-field--place" data-role="to"><span class="v2-caption">To</span><input class="v2-input" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest-to" maxlength="128" value="" placeholder="To" aria-label="To"><div class="search-suggest" role="listbox" id="suggest-to" hidden></div></div>
+      <div class="v2-flight-dates"><div class="v2-field v2-field--date " data-role="date"><button type="button" class="v2-trigger" data-trigger="date" aria-haspopup="dialog"><span class="v2-caption">Departure</span><span class="v2-value">Departure</span></button><div class="v2-calendar" hidden></div></div><div class="v2-field v2-field--date v2-field--return " data-role="return"><button type="button" class="v2-trigger" data-trigger="return" aria-haspopup="dialog"><span class="v2-caption">Return</span><span class="v2-value">Return</span></button><div class="v2-calendar" hidden></div></div><div class="v2-calendar v2-flight-calendar" hidden></div></div>
+      <div class="v2-field v2-field--always-caption v2-field--pax" data-role="pax"><button type="button" class="v2-trigger" data-trigger="pax" aria-haspopup="dialog"><span class="v2-caption">Travellers</span><span class="v2-value">1 traveller, economy</span></button><div class="v2-popover" hidden></div></div>
+      <button type="submit" class="v2-submit">Search</button>
+    </form>
+    <div class="search-hints search-hints-v2" data-mode="flight" aria-label="Popular options"><div class="quick-group-v2 quick-group-v2--from"><button type="button" class="quick-chip-v2" data-v2-place="in-delhi" data-v2-role="from">Delhi</button><button type="button" class="quick-chip-v2" data-v2-place="in-mumbai" data-v2-role="from">Mumbai</button></div><div class="quick-group-v2 quick-group-v2--to"><button type="button" class="quick-chip-v2" data-v2-place="ru-moscow" data-v2-role="to">Moscow</button><button type="button" class="quick-chip-v2" data-v2-place="ru-saint-petersburg" data-v2-role="to">Saint Petersburg</button></div><div class="quick-group-v2 quick-group-v2--date"><button type="button" class="quick-chip-v2" data-v2-date="0" data-v2-length="0">Today</button><button type="button" class="quick-chip-v2" data-v2-date="1" data-v2-length="0">Tomorrow</button></div></div>
   </div>
 </section>
 
@@ -1060,29 +1067,6 @@ const CONFIG = {
     { id:'h6', name:'Dacha House', city:'Rostov-on-Don', distance:'3.4 km from centre', rating:'7.8', reviews:'46 reviews', type:'Hotel', price:'2 400', img:'assets/hotels/dacha-haus-rostov.jpg', gradient:'linear-gradient(145deg,#BA61FF 0%,#0D0B68 100%)' },
     { id:'h7', name:'Hotel Amax Inn', city:'New Delhi', distance:'3 km from centre', rating:'9.4', reviews:'2 reviews', type:'Hotel', price:'1 293', img:'assets/hotels/amax-inn-delhi.jpg', gradient:'linear-gradient(135deg,#7D71FF 0%,#0D0B68 100%)' }
   ],
-
-  faq: [
-    { q:'Which cards can I use to pay for tickets and hotels?',
-      a:'You can pay with Visa and Mastercard cards, including Indian ones, and with cards from Russian banks.' },
-    { q:'How do I use the INDIA10 promo code?',
-      a:'INDIA10 is valid until 31 December 2026. Enter it when you check out on the Tutu website or app to get 10% off tickets and hotels. You can use it once. For hotels, the discount works when you pay online, not at check-in.' },
-    { q:'What if my passport has no surname, or my name is misspelled on the ticket?',
-      a:'Enter your name in Latin letters exactly as it appears in your passport. Foreign citizens do not need to fill in a patronymic. If your passport has no surname, contact support before booking. Minor transliteration differences usually cause no trouble at boarding, because coach attendants and ticket inspectors go by your passport number. If the mistake is serious, contact support before your trip and we will help correct your details.' },
-    { q:'Can I refund or exchange a ticket?',
-      a:'It depends on the transport type, carrier and fare. We show the refund conditions before you buy. After that, you’ll find everything you can do with the ticket in your order on the Tutu website or app. Some tickets can’t be exchanged directly: you return the ticket and buy a new one.' },
-    { q:'How does “Pay later” work?',
-      a:'For some tickets and hotels you can book now and pay later: we hold the price while the booking lasts. We show the payment deadline when you book. If you don’t pay in time, the booking is cancelled.' },
-    { q:'What train discounts are there?',
-      a:'Non-refundable train tickets come with up to 20% off. On your birthday, you and up to three companions get a discount: 30% on Sapsan trains and 10% on other long-distance trains. We show the exact timing and conditions when you choose a fare.' },
-    { q:'How much baggage can I take?',
-      a:'Allowances depend on the carrier and fare. On long-distance trains you can take up to 36 kg of hand luggage free, or up to 50 kg in SV (two-berth first-class) coaches. Each item can measure up to 180 cm in length, width and height combined. For flights and buses, we show the allowance when you choose a ticket.' },
-    { q:'Can I buy a ticket for a friend or relative?',
-      a:'Yes. Enter the passenger’s passport details when booking. They will need to show the same passport when travelling. You can’t change the passenger after purchase.' },
-    { q:'How do I get from the airport to another city?',
-      a:'Tutu lets you search for flights, trains and buses. If there is no direct option, build the trip from separate segments and leave enough time for the connection.' },
-    { q:'What is the difference between platskart and kupe?',
-      a:'A platskart coach normally has 54 berths in open bays along a common aisle, much like sleeper class in India. A kupe coach usually has 32 or 36 berths, four in each closed compartment. Kupe coaches have fewer passengers and more privacy, so they are usually more expensive.' }
-  ]
 };
 
 const toRub = p => parseInt(p.replace(/\s/g, ''), 10);
@@ -1143,47 +1127,7 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
   </article>`;
 }).join('') + CTA_CARD;
 
-document.getElementById('faq-list').innerHTML = CONFIG.faq.map(f => `
-  <details class="faq-item">
-    <summary><span class="faq-plus" aria-hidden="true"></span>${f.q}</summary>
-    <p>${f.a}</p>
-  </details>`).join('');
 
-(function(){
-  const buttons=[...document.querySelectorAll('.transport button')], modes=['hotel','flight','train','bus'];
-  const places={"flight": [["Moscow", "All airports · MOW"], ["Saint Petersburg", "Pulkovo · LED"], ["Kazan", "Kazan Airport · KZN"], ["Delhi", "Indira Gandhi · DEL"], ["Mumbai", "Chhatrapati Shivaji · BOM"]], "train": [["Moscow", "Leningradsky station"], ["Moscow", "Kazansky station"], ["Saint Petersburg", "Moskovsky station"], ["Kazan", "Kazan-Pass."], ["Tver", "Railway station"]], "bus": [["Moscow", "Central Bus Station"], ["Saint Petersburg", "Obvodny Bus Station"], ["Kazan", "Vostochny Bus Station"], ["Ufa", "South Bus Station"], ["Tver", "Bus Station"]]}, L={"flight_search": "Find", "train_search": "Find", "bus_search": "Find", "flight_from": "From", "flight_to": "To", "train_from": "From", "train_to": "To", "bus_from": "From", "bus_to": "To", "adult": "Adults", "adult_sub": "Age 12+", "child": "Children", "child_sub": "Under 12", "cabin": "Travel class", "economy": "Economy", "business": "Business"};
-  const from=document.getElementById('f-from'),to=document.getElementById('f-to'),searchBtn=document.querySelector('.btn-search'),swap=document.querySelector('.search .swap'),paxTrigger=document.querySelector('.pax-trigger'),paxCaption=document.querySelector('.pax-caption'),paxValue=document.querySelector('.pax-value'),paxPop=document.querySelector('.pax-pop');
-  let mode='flight',adults=1,children=0,cabin='economy';document.documentElement.dataset.transportMode=mode;
-  function plural(n){const lang=document.documentElement.lang;if(lang==='ru'){const m=n%10,d=n%100;return d>=11&&d<=14?'пассажиров':m===1?'пассажир':m>=2&&m<=4?'пассажира':'пассажиров'}if(lang==='en')return n===1?'passenger':'passengers';return 'यात्री'}
-  function updatePax(){const total=adults+children;paxValue.textContent=total+' '+plural(total)+(mode==='flight'?', '+(cabin==='economy'?L.economy:L.business):'')}
-  function renderPax(){const childRow=children>0?'<div class="pax-row"><div><div class="pax-name">'+L.child+'</div><div class="pax-sub">'+L.child_sub+'</div></div><div class="stepper"><button type="button" data-pax="child" data-step="-1">−</button><output>'+children+'</output><button type="button" data-pax="child" data-step="1">+</button></div></div>':'';const cabinBlock=mode==='flight'?'<div class="cabin"><div class="cabin-title">'+L.cabin+'</div><div class="cabin-tabs"><button type="button" data-cabin="economy" class="'+(cabin==='economy'?'is-active':'')+'">'+L.economy+'</button><button type="button" data-cabin="business" class="'+(cabin==='business'?'is-active':'')+'">'+L.business+'</button></div></div>':'';paxPop.innerHTML='<div class="pax-row"><div><div class="pax-name">'+L.adult+'</div><div class="pax-sub">'+L.adult_sub+'</div></div><div class="stepper"><button type="button" data-pax="adult" data-step="-1">−</button><output>'+adults+'</output><button type="button" data-pax="adult" data-step="1">+</button></div></div><button type="button" class="add-child '+(children===0?'is-visible':'')+'" data-add-child>＋ '+L.child+'</button>'+childRow+cabinBlock;paxPop.querySelectorAll('[data-step]').forEach(b=>{const total=adults+children;if(b.dataset.pax==='adult'&&b.dataset.step==='-1'&&adults<=1)b.disabled=true;if(b.dataset.step==='1'&&total>=9)b.disabled=true})}
-  function closePax(){paxPop.hidden=true;paxTrigger.setAttribute('aria-expanded','false')}paxTrigger.addEventListener('click',()=>{if(paxPop.hidden){renderPax();paxPop.hidden=false;paxTrigger.setAttribute('aria-expanded','true')}else closePax()});
-  paxPop.addEventListener('click',e=>{e.stopPropagation();if(e.target.closest('[data-add-child]')){children=1;renderPax();updatePax();return}const step=e.target.closest('[data-step]');if(step){const d=Number(step.dataset.step);if(step.dataset.pax==='adult')adults=Math.max(1,Math.min(9-children,adults+d));else children=Math.max(0,Math.min(9-adults,children+d));renderPax();updatePax();return}const c=e.target.closest('[data-cabin]');if(c){cabin=c.dataset.cabin;renderPax();updatePax()}});
-  function closeSuggest(){document.querySelectorAll('.search-suggest').forEach(x=>x.hidden=true)}
-  function escapeAttr(v){return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-  function clearPlaceMeta(input){['placeId','canonical','country','iata'].forEach(k=>delete input.dataset[k])}
-  function renderSuggest(input){
-    if(mode==='hotel')return;
-    const box=input.closest('.field').querySelector('.search-suggest'),q=input.value.trim();
-    let items=[];
-    if(mode==='flight'&&window.TUTU_PLACES){
-      const kind=input===from?'from':'to';
-      const found=q?TUTU_PLACES.search(q,6):TUTU_PLACES.popularFor(kind);
-      items=found.map(p=>{const d=TUTU_PLACES.display(p);return {value:d.name,main:d.name,meta:d.meta,id:p.id,canonical:p.canonical,country:p.country,iata:p.iata.join(',')}})
-    }else{
-      const nq=q.toLocaleLowerCase();
-      items=(places[mode]||[]).filter(x=>(x[0]+' '+x[1]).toLocaleLowerCase().includes(nq)).slice(0,6).map(x=>({value:x[0],main:x[0],meta:x[1]}))
-    }
-    box.innerHTML=items.map(x=>'<button type="button" class="suggest-item" data-value="'+escapeAttr(x.value)+'"'+(x.id?' data-place-id="'+escapeAttr(x.id)+'" data-canonical="'+escapeAttr(x.canonical)+'" data-country="'+escapeAttr(x.country)+'" data-iata="'+escapeAttr(x.iata)+'"':'')+'><span class="suggest-main">'+x.main+'</span><span class="suggest-meta">'+x.meta+'</span></button>').join('');
-    box.hidden=!items.length
-  }
-  [from,to].forEach(input=>{input.addEventListener('focus',()=>{closeSuggest();renderSuggest(input)});input.addEventListener('input',()=>{clearPlaceMeta(input);renderSuggest(input)});input.closest('.field').querySelector('.search-suggest').addEventListener('click',e=>{const item=e.target.closest('.suggest-item');if(!item)return;input.value=item.dataset.value;clearPlaceMeta(input);if(item.dataset.placeId){input.dataset.placeId=item.dataset.placeId;input.dataset.canonical=item.dataset.canonical||'';input.dataset.country=item.dataset.country||'';input.dataset.iata=item.dataset.iata||''}item.closest('.search-suggest').hidden=true})});
-  swap.addEventListener('click',()=>{const keys=['placeId','canonical','country','iata'],x=from.value,meta={};keys.forEach(k=>meta[k]=from.dataset[k]||'');from.value=to.value;to.value=x;keys.forEach(k=>{const v=to.dataset[k]||'';if(v)from.dataset[k]=v;else delete from.dataset[k];if(meta[k])to.dataset[k]=meta[k];else delete to.dataset[k]})});
-  function setMode(next,index){if(next==='hotel')return;mode=next;buttons.forEach((b,i)=>{const active=i===index;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active))});const p=mode==='flight'?'flight':mode==='train'?'train':'bus';from.placeholder=L[p+'_from'];to.placeholder=L[p+'_to'];searchBtn.textContent=L[p+'_search'];document.documentElement.dataset.transportMode=mode;document.dispatchEvent(new CustomEvent('transportmodechange',{detail:{mode}}));paxCaption.textContent=mode==='flight'?'Travellers':'Who is travelling';closeSuggest();closePax();updatePax()}
-  buttons.forEach((b,i)=>b.addEventListener('click',()=>setMode(modes[i],i)));document.addEventListener('click',e=>{if(!e.target.closest('.field--place'))closeSuggest();if(!e.target.closest('.field--pax'))closePax()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSuggest();closePax()}});updatePax();
-})();
-
-(function(){const quick={"flight": {"from": ["Delhi", "Mumbai"], "to": ["Moscow", "Saint Petersburg"]}, "train": {"from": ["Moscow", "Saint Petersburg"], "to": ["Kazan", "Tver"]}, "bus": {"from": ["Moscow", "Kazan"], "to": ["Saint Petersburg", "Tver"]}};const from=document.getElementById("f-from"),to=document.getElementById("f-to"),date=document.getElementById("f-date"),fromBox=document.querySelector(".quick-from"),toBox=document.querySelector(".quick-to");if(!fromBox||!toBox)return;function mode(){return document.documentElement.dataset.transportMode||"flight"}function render(){const q=quick[mode()]||quick.flight;fromBox.innerHTML=q.from.map(x=>`<button type="button" class="quick-chip" data-quick-from="${x}">${x}</button>`).join("");toBox.innerHTML=q.to.map(x=>`<button type="button" class="quick-chip" data-quick-to="${x}">${x}</button>`).join("")}document.addEventListener("transportmodechange",render);document.addEventListener("click",e=>{const a=e.target.closest("[data-quick-from]");if(a){from.value=a.dataset.quickFrom;return}const b=e.target.closest("[data-quick-to]");if(b){to.value=b.dataset.quickTo;return}const d=e.target.closest("[data-quick-date]");if(d){const target=new Date();target.setHours(0,0,0,0);target.setDate(target.getDate()+Number(d.dataset.quickDate));const lang=document.documentElement.lang,locale=lang==="en"?"en-GB":lang,dayFmt=new Intl.DateTimeFormat(locale,{day:"numeric",month:"long"}),weekFmt=new Intl.DateTimeFormat(locale,{weekday:"short"}),pad=n=>String(n).padStart(2,"0");date.value=dayFmt.format(target)+", "+weekFmt.format(target);date.dataset.iso=target.getFullYear()+"-"+pad(target.getMonth()+1)+"-"+pad(target.getDate())}});render()})();
 function initCarousel(rowId, navSel){
   const row = document.getElementById(rowId);
   const nav = document.querySelector(`.carousel-nav[data-carousel="${navSel}"]`);
@@ -1211,77 +1155,12 @@ initCarousel('routes-row', 'routes');
 initCarousel('hotels-row', 'hotels');
 initCarousel('reviews-row', 'reviews');
 
-(function(){
-  const input=document.getElementById('f-date');
-  const field=input.closest('.field');
-  const lang=document.documentElement.lang;
-  const locale=lang==='en'?'en-GB':lang;
-  const labels={ru:['Предыдущий месяц','Следующий месяц'],en:['Previous month','Next month'],hi:['पिछला महीना','अगला महीना']}[lang]||['‹','›'];
-  const monthFmt=new Intl.DateTimeFormat(locale,{month:'long'});
-  const weekdayFmt=new Intl.DateTimeFormat(locale,{weekday:'short'});
-  const dayFmt=new Intl.DateTimeFormat(locale,{day:'numeric',month:'long'});
-  const today=new Date();today.setHours(0,0,0,0);
-  const firstMonth=new Date(today.getFullYear(),today.getMonth(),1);
-  const lastMonth=new Date(today.getFullYear(),today.getMonth()+11,1);
-  let view=firstMonth;
-  let selected=null;
-
-  field.classList.add('field--date');
-  input.readOnly=true;
-  input.setAttribute('aria-haspopup','dialog');
-  const dp=document.createElement('div');
-  dp.className='dp';
-  dp.hidden=true;
-  dp.setAttribute('role','dialog');
-  field.appendChild(dp);
-
-  const icon=d=>`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
-  const pad=n=>String(n).padStart(2,'0');
-
-  function render(){
-    const y=view.getFullYear(), m=view.getMonth();
-    const offset=(new Date(y,m,1).getDay()+6)%7;
-    const count=new Date(y,m+1,0).getDate();
-    const title=monthFmt.format(view);
-    let html=`<div class="dp-head">
-      <button type="button" class="dp-nav" data-step="-1" aria-label="${labels[0]}" ${+view<=+firstMonth?'disabled':''}>${icon('M15 19 8 12l7-7')}</button>
-      <span class="dp-title">${title.charAt(0).toUpperCase()+title.slice(1)} ${y}</span>
-      <button type="button" class="dp-nav" data-step="1" aria-label="${labels[1]}" ${+view>=+lastMonth?'disabled':''}>${icon('m9 5 7 7-7 7')}</button>
-    </div><div class="dp-grid">`;
-    for(let i=0;i<7;i++) html+=`<span class="dp-wd">${weekdayFmt.format(new Date(2024,0,1+i))}</span>`;
-    html+='<span></span>'.repeat(offset);
-    for(let d=1;d<=count;d++){
-      const date=new Date(y,m,d);
-      const cls='dp-day'+(+date===+today?' is-today':'')+(selected&&+date===+selected?' is-selected':'');
-      html+=`<button type="button" class="${cls}" data-day="${d}" ${date<today?'disabled':''}>${d}</button>`;
-    }
-    dp.innerHTML=html+'</div>';
-  }
-  const open=()=>{ if(selected) view=new Date(selected.getFullYear(),selected.getMonth(),1); render(); dp.hidden=false; };
-  const close=()=>{ dp.hidden=true; };
-
-  input.addEventListener('click',()=>dp.hidden?open():close());
-  input.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
-  dp.addEventListener('click',e=>{
-    e.stopPropagation();
-    const nav=e.target.closest('.dp-nav');
-    if(nav){ view=new Date(view.getFullYear(),view.getMonth()+Number(nav.dataset.step),1); render(); return; }
-    const day=e.target.closest('.dp-day');
-    if(!day||day.disabled) return;
-    selected=new Date(view.getFullYear(),view.getMonth(),Number(day.dataset.day));
-    input.value=`${dayFmt.format(selected)}, ${weekdayFmt.format(selected)}`;
-    input.dataset.iso=`${selected.getFullYear()}-${pad(selected.getMonth()+1)}-${pad(selected.getDate())}`;
-    close();
-  });
-  document.addEventListener('click',e=>{ if(!field.contains(e.target)) close(); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
-})();
 </script>
 
 <script src="assets/tutu-destinations.js?v=20261008-manas"></script>
 <script src="assets/tutu-link-builder.js?v=20261008-nukta"></script>
-<script src="assets/search-v2.js?v=20261008-terms"></script>
+<script src="assets/search-v2.js?v=20261008-current-only"></script>
 <script src="assets/card-links.js?v=20261008-inr-format"></script>
-<script src="assets/responsive.js?v=20261007-copy-gap"></script>
+<script src="assets/responsive.js?v=20261008-no-flash"></script>
 </body>
 </html>
