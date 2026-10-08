@@ -6,28 +6,36 @@
   const RUB_TO_INR=1.12888;
   const lang=document.documentElement.lang==='hi'?'hi':document.documentElement.lang==='en'?'en':'ru';
   const routeData={
-    r1:{price:20316,h:6,m:30},
-    r2:{price:16539,h:6,m:10},
-    r3:{price:25528,h:8,m:50},
-    r4:{price:10611,h:8,m:25},
-    r5:{price:6650,h:6,m:55},
-    r6:{price:1197,h:4,m:0},
-    r7:{price:1694,h:12,m:46},
-    r8:{price:2087,h:14,m:10},
-    r9:{price:1681,h:14,m:27},
-    r10:{price:2693,h:3,m:30}
+    r1:{price:831},
+    r2:{price:19668},
+    r3:{price:801},
+    r4:{price:2048},
+    r5:{price:1188},
+    r6:{price:1916},
+    r7:{price:1550},
+    r8:{price:2717},
+    r9:{price:525},
+    r10:{price:4553},
+    r11:{price:1681},
+    r12:{price:1662},
+    r13:{price:1188},
+    r14:{price:2013}
   };
   const verifiedRouteUrls={
-    r1:'https://avia.tutu.ru/f/Deli/Moskva/',
+    r1:'https://www.tutu.ru/poezda/Sankt-Peterburg/Moskva/',
     r2:'https://avia.tutu.ru/f/Moskva/Deli/',
-    r3:'https://avia.tutu.ru/f/Deli/Ekaterinburg/',
-    r4:'https://avia.tutu.ru/f/Goa/Moskva/',
-    r5:'https://avia.tutu.ru/f/Goa/Ekaterinburg/',
-    r6:'https://www.tutu.ru/poezda/Moskva/Sankt-Peterburg/',
-    r7:'https://www.tutu.ru/poezda/Ekaterinburg/Kazan/',
-    r8:'https://www.tutu.ru/poezda/Ekaterinburg/Ufa/',
-    r9:'https://www.tutu.ru/poezda/Moskva/Yoshkar-Ola/',
-    r10:'https://avia.tutu.ru/f/Moskva/Sochi/'
+    r3:'https://www.tutu.ru/poezda/Moskva/Sankt-Peterburg/',
+    r4:'https://www.tutu.ru/poezda/Novgorod/Sankt-Peterburg/',
+    r5:'https://www.tutu.ru/poezda/Cheboksary/Moskva/',
+    r6:'https://www.tutu.ru/poezda/Rostov-Na-Donu/Moskva/',
+    r7:'https://www.tutu.ru/poezda/Moskva/Ulyanovsk/',
+    r8:'https://www.tutu.ru/poezda/Ufa/Moskva/',
+    r9:'https://www.tutu.ru/poezda/Moskva/Orel/',
+    r10:'https://www.tutu.ru/poezda/Stavropol/Moskva/',
+    r11:'https://www.tutu.ru/poezda/Moskva/Yoshkar-Ola/',
+    r12:'https://www.tutu.ru/poezda/Sankt-Peterburg/Novgorod/',
+    r13:'https://www.tutu.ru/poezda/Moskva/Cheboksary/',
+    r14:'https://www.tutu.ru/poezda/Moskva/Rostov-Na-Donu/'
   };
   const hotels={
     h1:{name:{ru:'Отель Золотой Колос',en:'Zolotoy Kolos Hotel',hi:'Zolotoy Kolos Hotel'},city:{ru:'Москва',en:'Moscow',hi:'मॉस्को'},top:{ru:'Москва · 7,4 км от центра',en:'Moscow · 7.4 km from centre',hi:'मॉस्को · केंद्र से 7.4 किमी'},meta:{ru:'Отель · 923 отзыва',en:'Hotel · 923 reviews',hi:'होटल · 923 समीक्षाएँ'},rating:8.5,price:3616,url:'https://hotel.tutu.ru/h_meblirovannye_komnaty_zolotoy_kolos/'},
@@ -58,10 +66,20 @@
      route's landing page. The cities come from fixed ids rather than the card
      title, which differs by language; the audited plain URL is the fallback. */
   const routeEnds={
-    r1:['in-delhi','ru-moscow'],r2:['ru-moscow','in-delhi'],r3:['in-delhi','ru-yekaterinburg'],
-    r4:['in-goa','ru-moscow'],r5:['in-goa','ru-yekaterinburg'],r6:['ru-moscow','ru-saint-petersburg'],
-    r7:['ru-yekaterinburg','ru-kazan'],r8:['ru-yekaterinburg','ru-ufa'],r9:['ru-moscow','ru-yoshkar-ola'],
-    r10:['ru-moscow','ru-sochi']
+    r1:['ru-saint-petersburg','ru-moscow'],
+    r2:['ru-moscow','in-delhi'],
+    r3:['ru-moscow','ru-saint-petersburg'],
+    r4:['ru-veliky-novgorod','ru-saint-petersburg'],
+    r5:['ru-cheboksary','ru-moscow'],
+    r6:['ru-rostov-on-don','ru-moscow'],
+    r7:['ru-moscow','ru-ulyanovsk'],
+    r8:['ru-ufa','ru-moscow'],
+    r9:['ru-moscow','ru-oryol'],
+    r10:['ru-stavropol','ru-moscow'],
+    r11:['ru-moscow','ru-yoshkar-ola'],
+    r12:['ru-saint-petersburg','ru-veliky-novgorod'],
+    r13:['ru-moscow','ru-cheboksary'],
+    r14:['ru-moscow','ru-rostov-on-don']
   };
   const placeById=id=>window.TUTU_PLACES&&TUTU_PLACES.places.find(p=>p.id===id);
   function routeUrl(card,id,fallback){

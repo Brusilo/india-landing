@@ -348,6 +348,10 @@ window.TUTU_DESTINATIONS = {
       "Hanty-Mansijsk",
       1784221
     ],
+    "ru-khimki": [
+      "Himki",
+      1384563
+    ],
     "ru-kirov": [
       "Kirov",
       1439192
@@ -371,6 +375,10 @@ window.TUTU_DESTINATIONS = {
     "ru-kostroma": [
       "Kostroma",
       1395289
+    ],
+    "ru-kotelniki": [
+      "Kotelniki",
+      1385178
     ],
     "ru-kotlas": [
       "Kotlas",
@@ -2773,6 +2781,11 @@ window.TUTU_DESTINATIONS = {
       "khanty_mansiysk",
       2657275
     ],
+    "ru-khimki": [
+      "russia",
+      "khimki",
+      2665769
+    ],
     "ru-kirov": [
       "russia",
       "kirov",
@@ -2802,6 +2815,11 @@ window.TUTU_DESTINATIONS = {
       "russia",
       "kostroma",
       2662389
+    ],
+    "ru-kotelniki": [
+      "russia",
+      "kotelniki",
+      2696170
     ],
     "ru-kotlas": [
       "russia",
@@ -3591,6 +3609,7 @@ window.TUTU_DESTINATIONS = {
     "ru-kazan": "Kazan",
     "ru-kemerovo": "Kemerovo",
     "ru-khabarovsk": "Habarovsk",
+    "ru-khimki": "Khimki",
     "ru-kirov": "Kirov",
     "ru-kislovodsk": "Kislovodsk",
     "ru-kogalym": "Kogalym",

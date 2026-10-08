@@ -57,3 +57,13 @@ Every stored link was opened in the landing's own URL format:
 - Still without a link (Tutu has no page): trains for 51 cities without a railway
   or without a Tutu route page, buses for 32, hotels for Petropavlovsk-Kamchatsky
   and Sovetskaya Gavan. These send the search to the Tutu home page as before.
+
+## 9 October 2026
+
+- Khimki and Kotelniki added (Moscow-region towns with steady hotel bookings
+  in 2025–2026): hotels and buses for both, trains for Khimki
+  (`/poezda/Moskva/Khimki/`). Kotelniki has no railway station.
+- Popular routes rebuilt from Tutu purchases in 2025–2026: 14 cards, Moscow →
+  Delhi kept second. Prices are Tutu's own "from" prices on 9 October; cards
+  without a destination photo show the gradient with a transport icon.
+- `tests/landing-data.cjs`: 16,964 assertions on 334 cities, all passed.

@@ -665,7 +665,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 <script src="assets/site-language-faq-v26.js?v=20261008-india-terms"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20261008-no-flash">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
-<link rel="stylesheet" href="assets/tutu-system.css?v=300">
+<link rel="stylesheet" href="assets/tutu-system.css?v=301">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1041,7 +1041,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
   </div>
 </footer>
 
-<script src="assets/search-places.js?v=20261008-manas"></script>
+<script src="assets/search-places.js?v=20261009-routes"></script>
 <script>
 const CONFIG = {
   currency: '₽',
@@ -1050,16 +1050,20 @@ const CONFIG = {
   rubToInr: 1.12888,
 
   routes: [
-    { id:'r1',  from:'दिल्ली',             to:'मॉस्को',           typeLine:'फ़्लाइट',          transport:'flight', combined:false, price:'20 316', duration:'6 घं. 30 मि.',  img:'assets/routes/moscow-kremlin.jpg', gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
-    { id:'r2',  from:'मॉस्को',            to:'दिल्ली',            typeLine:'फ़्लाइट',          transport:'flight', combined:false, price:'16 539', duration:'6 घं. 10 मि.',  img:'assets/routes/delhi-red-fort.jpg', gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
-    { id:'r3',  from:'दिल्ली',             to:'येकातेरिनबर्ग',     typeLine:'फ़्लाइट + फ़्लाइट', transport:'flight', combined:false, price:'25 528', duration:'8 घं. 50 मि.',  img:'assets/routes/yekaterinburg-embankment.jpg', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
-    { id:'r6',  from:'मॉस्को',            to:'सेंट पीटर्सबर्ग', typeLine:'हाई-स्पीड ट्रेन',         transport:'train',  combined:false, price:'1 197',  duration:'4 घं.',         img:'assets/routes/saint-petersburg-bridge.jpg', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r7',  from:'येकातेरिनबर्ग',      to:'कज़ान',            typeLine:'ट्रेन',                transport:'train',  combined:false, price:'1 694',  duration:'12 घं. 46 मि.', img:'assets/routes/kazan.jpg', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
-    { id:'r8',  from:'येकातेरिनबर्ग',      to:'ऊफ़ा',             typeLine:'ट्रेन',                transport:'train',  combined:false, price:'2 087',  duration:'14 घं. 10 मि.', img:'assets/routes/ufa.jpg', gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
-    { id:'r9',  from:'मॉस्को',            to:'योश्कर-ओला',       typeLine:'ट्रेन',                transport:'train',  combined:false, price:'1 681',  duration:'14 घं. 27 मि.', img:'assets/routes/yoshkar-ola.jpg', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r4',  from:'गोवा',              to:'मॉस्को',           typeLine:'फ़्लाइट',          transport:'flight', combined:false, price:'10 611', duration:'8 घं. 25 मि.',  img:'assets/routes/moscow-st-basils.jpg', gradient:'linear-gradient(135deg,#7D71FF 0%,#0D0B68 100%)' },
-    { id:'r5',  from:'गोवा',              to:'येकातेरिनबर्ग',     typeLine:'फ़्लाइट',          transport:'flight', combined:false, price:'6 650',  duration:'6 घं. 55 मि.',  img:'assets/routes/yekaterinburg-skyline.jpg', gradient:'linear-gradient(135deg,#5F94FF 0%,#7D71FF 100%)' },
-    { id:'r10', from:'मॉस्को',            to:'सोची',             typeLine:'फ़्लाइट',          transport:'flight', combined:false, price:'2 693',  duration:'3 घं. 30 मि.',  img:'assets/routes/sochi.jpg', gradient:'linear-gradient(135deg,#0D0B68 0%,#7D71FF 100%)' }
+    { id:'r1', from:'सेंट पीटर्सबर्ग', to:'मॉस्को', typeLine:'ट्रेन', transport:'train', combined:false, price:'831', img:'assets/routes/moscow-kremlin.jpg', gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'r2', from:'मॉस्को', to:'दिल्ली', typeLine:'फ़्लाइट', transport:'flight', combined:false, price:'19 668', img:'assets/routes/delhi-red-fort.jpg', gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
+    { id:'r3', from:'मॉस्को', to:'सेंट पीटर्सबर्ग', typeLine:'ट्रेन', transport:'train', combined:false, price:'801', img:'assets/routes/saint-petersburg-bridge.jpg', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r4', from:'वेलिकी नोवगोरोद', to:'सेंट पीटर्सबर्ग', typeLine:'ट्रेन', transport:'train', combined:false, price:'2 048', img:'', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r5', from:'चेबोक्सारी', to:'मॉस्को', typeLine:'ट्रेन', transport:'train', combined:false, price:'1 188', img:'assets/routes/moscow-st-basils.jpg', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r6', from:'रोस्तोव-ऑन-डॉन', to:'मॉस्को', typeLine:'ट्रेन', transport:'train', combined:false, price:'1 916', img:'', gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' },
+    { id:'r7', from:'मॉस्को', to:'उल्यानोव्स्क', typeLine:'ट्रेन', transport:'train', combined:false, price:'1 550', img:'', gradient:'linear-gradient(60deg,#5F94FF 0%,#7D71FF 100%)' },
+    { id:'r8', from:'ऊफ़ा', to:'मॉस्को', typeLine:'ट्रेन', transport:'train', combined:false, price:'2 717', img:'assets/routes/ufa.jpg', gradient:'linear-gradient(135deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r9', from:'मॉस्को', to:'ओर्योल', typeLine:'ट्रेन', transport:'train', combined:false, price:'525', img:'', gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
+    { id:'r10', from:'स्तावरोपोल', to:'मॉस्को', typeLine:'ट्रेन', transport:'train', combined:false, price:'4 553', img:'', gradient:'linear-gradient(135deg,#0D0B68 0%,#BA61FF 100%)' },
+    { id:'r11', from:'मॉस्को', to:'योश्कर-ओला', typeLine:'ट्रेन', transport:'train', combined:false, price:'1 681', img:'assets/routes/yoshkar-ola.jpg', gradient:'linear-gradient(135deg,#0D0B68 0%,#5F94FF 100%)' },
+    { id:'r12', from:'सेंट पीटर्सबर्ग', to:'वेलिकी नोवगोरोद', typeLine:'ट्रेन', transport:'train', combined:false, price:'1 662', img:'', gradient:'linear-gradient(200deg,#7D71FF 0%,#0D0B68 100%)' },
+    { id:'r13', from:'मॉस्को', to:'चेबोक्सारी', typeLine:'ट्रेन', transport:'train', combined:false, price:'1 188', img:'', gradient:'linear-gradient(135deg,#BA61FF 0%,#7D71FF 100%)' },
+    { id:'r14', from:'मॉस्को', to:'रोस्तोव-ऑन-डॉन', typeLine:'ट्रेन', transport:'train', combined:false, price:'2 013', img:'', gradient:'radial-gradient(120% 120% at 80% 90%,#5F94FF 0%,#0D0B68 70%)' }
   ],
 
   hotels: [
@@ -1087,7 +1091,7 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
   const oldRub = Math.round(rub / (1 - CONFIG.routeDiscount / 100));
   return `
   <article class="card card--route" data-cta="route_${r.id}${r.combined ? '_combined' : ''}" data-transport="${r.transport}">
-    <div class="card-media" style="background:${r.img ? `url('${r.img}') center/cover no-repeat, ` : ''}${r.gradient}"></div>
+    <div class="card-media${r.img ? '' : ' card-media--placeholder'}" style="background:${r.img ? `url('${r.img}') center/cover no-repeat, ` : ''}${r.gradient}">${r.img ? '' : `<img src="assets/icon-${r.transport === 'flight' ? 'flight' : 'train'}.png" alt="" aria-hidden="true">`}</div>
     <div class="card-body">
       <p class="route-name">${r.from}&nbsp;→ ${r.to}</p>
       <div class="route-price">
@@ -1161,10 +1165,10 @@ initCarousel('reviews-row', 'reviews');
 
 </script>
 
-<script src="assets/tutu-destinations.js?v=20261008-manas"></script>
+<script src="assets/tutu-destinations.js?v=20261009-routes"></script>
 <script src="assets/tutu-link-builder.js?v=20261008-nukta"></script>
 <script src="assets/search-v2.js?v=20261008-hi-terms"></script>
-<script src="assets/card-links.js?v=20261008-inr-format"></script>
+<script src="assets/card-links.js?v=20261009-routes"></script>
 <script src="assets/responsive.js?v=20261008-no-flash"></script>
 </body>
 </html>

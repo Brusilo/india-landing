@@ -177,6 +177,9 @@
     ['RU','Рыбинск','Rybinsk','रिबिंस्क','','',164],
     ['RU','Углич','Uglich','उगलिच','','',165],
     ['RU','Муром','Murom','मुरोम','','',166],
+    // Added 2026-10-09: Moscow-region towns from the hotel bookings
+    ['RU','Химки','Khimki','खिमकी','','Himki',167],
+    ['RU','Котельники','Kotelniki','कोतेलनिकी','','',168],
 
     // India — international and high-demand nodes
     ['IN','Дели','Delhi','दिल्ली','DEL','New Delhi Dilli Нью-Дели',1],
