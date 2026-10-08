@@ -14,8 +14,8 @@
   const FAQ = {
     ru: [
       {
-        q: 'Какими картами можно оплатить билеты?',
-        a: 'Подойдут карты Visa и Mastercard банков большинства стран, в том числе Индии, и виртуальная предоплаченная Visa Virtual. Также принимаем карты банков России и стран СНГ.'
+        q: 'Какими картами можно оплатить билеты и отели?',
+        a: 'Подойдут карты Visa и Mastercard, в том числе индийские, и карты российских банков.'
       },
       {
         q: 'Как добраться из аэропорта в другой город?',
@@ -56,8 +56,8 @@
     ],
     en: [
       {
-        q: 'Which cards can I use to pay for tickets?',
-        a: 'You can pay with Visa and Mastercard cards from banks in most countries, India included, and with a prepaid Visa Virtual card. We also accept cards from Russian and CIS banks.'
+        q: 'Which cards can I use to pay for tickets and hotels?',
+        a: 'You can pay with Visa and Mastercard cards, including Indian ones, and with cards from Russian banks.'
       },
       {
         q: 'How do I get from the airport to another city?',
@@ -98,8 +98,8 @@
     ],
     hi: [
       {
-        q: 'टिकट का भुगतान किन कार्डों से कर सकते हैं?',
-        a: 'आप ज़्यादातर देशों के बैंकों के Visa और Mastercard कार्ड से भुगतान कर सकते हैं, भारत के कार्ड भी इनमें शामिल हैं। Visa Virtual प्रीपेड कार्ड भी मान्य है। हम रूस और CIS देशों के बैंक कार्ड भी स्वीकार करते हैं।'
+        q: 'टिकट और होटल का भुगतान किन कार्डों से कर सकते हैं?',
+        a: 'आप Visa और Mastercard कार्ड (भारतीय कार्ड समेत) और रूसी बैंकों के कार्ड से भुगतान कर सकते हैं।'
       },
       {
         q: 'एयरपोर्ट से दूसरे शहर कैसे जाएँ?',
