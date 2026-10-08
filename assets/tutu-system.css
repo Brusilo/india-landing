@@ -3984,3 +3984,8 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   html .search.search-v2 .v2-field--place:not(.has-value):has(> .search-suggest:not([hidden])) { padding-top: 20px; }
   html .search.search-v2 .v2-field--place.has-value:has(> .search-suggest:not([hidden])) { padding-top: 12px; }
 }
+/* Phones: the open city list (and its top line) runs the full field width,
+   past the swap button's column, from the first tap on. */
+@media (max-width: 599.98px) {
+  html .search.search-v2 .v2-field--place > .search-suggest:not([hidden]) { margin-right: -50px !important; width: auto !important; max-width: none !important; }
+}
