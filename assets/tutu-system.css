@@ -4021,3 +4021,15 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 .transport .ico img[src*="icon-hotel"] { translate: 0 -11%; }
 .transport .ico img[src*="icon-train"] { translate: 0 -5.4%; }
 .transport .ico img[src*="icon-bus"] { translate: 0 -3.8%; }
+
+/* Phones: the promo photo is shown at under half its size there, which broke
+   up the small details; it zooms 1.35x on the discount badge and suitcase.
+   The clip keeps the zoomed photo inside its own frame and corners (inset =
+   origin share x (1 - 1/1.35); radii / 1.35). */
+@media (max-width: 599.98px) {
+  html .promo-strip--v2 .promo-photo {
+    transform: scale(1.35);
+    transform-origin: 47% 72%;
+    clip-path: inset(18.67% 13.74% 7.26% 12.19% round 8.9px 11.85px 11.85px 8.9px);
+  }
+}
