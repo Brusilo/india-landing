@@ -4004,3 +4004,12 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   html .search.search-v2 .v2-field--place > .search-suggest:not([hidden]) { margin-right: 0 !important; width: 100% !important; max-width: 100% !important; }
   html .search.search-v2:has(.v2-field--place > .search-suggest:not([hidden])) .v2-swap { visibility: hidden; }
 }
+/* Phones: the line under a tapped city field runs edge to edge, like the
+   line between "From" and "To"; the suggestions keep their inset. */
+@media (max-width: 599.98px) {
+  html .search.search-v2 .v2-field--place > .search-suggest:not([hidden]) {
+    margin-left: -16px !important; margin-right: -16px !important;
+    width: auto !important; max-width: none !important;
+    padding-left: 16px !important; padding-right: 16px !important;
+  }
+}
