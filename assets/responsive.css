@@ -18,7 +18,7 @@
   .top .lang { margin-left: auto; gap: 0; }
   .top .lang a { padding: 9px 10px; font-size: 13px; }
   .top .top-nav {
-    display: flex; order: 4; flex: 0 0 100%; margin: 0; gap: 16px;
+    display: none; order: 4; flex: 0 0 100%; margin: 0; gap: 16px;
     overflow-x: auto; scrollbar-width: none;
   }
   .top .top-nav::-webkit-scrollbar { display: none; }
