@@ -33,7 +33,7 @@
       from:'कहाँ से',to:'कहाँ तक',when:'प्रस्थान',back:'वापसी',flightWho:'यात्री',travelWho:'यात्री',swap:'कहाँ से और कहाँ तक की जगह बदलें',search:'खोजें',
       hotelWhere:'शहर',hotelDates:'चेक-इन — चेक-आउट',guests:'मेहमान',
       adults:'वयस्क',adultSub:'12 साल या उससे ज़्यादा',children:'बच्चे',childSub:'18 साल से कम',childAge:'बच्चे की उम्र',years:'साल',
-      economy:'इकोनॉमी',business:'बिज़नेस',cabin:'केबिन क्लास',
+      economy:'इकोनॉमी',business:'बिज़नेस',cabin:'ट्रैवल क्लास',
       passenger1:'यात्री',passenger2:'यात्री',passenger5:'यात्री',
       guest1:'मेहमान',guest2:'मेहमान',guest5:'मेहमान',
       prev:'पिछला महीना',next:'अगला महीना'
