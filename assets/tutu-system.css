@@ -2408,7 +2408,7 @@ h1, h2, h3 { text-wrap: balance; }
    ========================================================================= */
 
 .panel--photo .panel-line,
-:lang(en) .panel--photo .panel-line { font-size: clamp(26px, 3.4vw, 38px); }
+:lang(en) .panel--photo .panel-line { font-size: clamp(28px, 3.6vw, 38px); }
 :lang(en) .panel--photo .panel-badge { font-size: clamp(24px, 3.2vw, 38px); }
 @media (max-width: 900px) {
   .panel--photo .panel-line,
@@ -3963,4 +3963,16 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   html:lang(en) .panel--photo .panel-badge,
   html:lang(ru) .panel--photo .panel-badge,
   html:lang(hi) .panel--photo .panel-badge { font-size: 23px; }
+}
+/* Tablets: the city panel has room to spare, so heading and copy grow. */
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html .panel--photo .panel-line,
+  html:lang(en) .panel--photo .panel-line,
+  html:lang(ru) .panel--photo .panel-line,
+  html:lang(hi) .panel--photo .panel-line { font-size: clamp(28px, 3.5vw, 36px); }
+  html .panel--photo .panel-badge,
+  html:lang(en) .panel--photo .panel-badge,
+  html:lang(ru) .panel--photo .panel-badge,
+  html:lang(hi) .panel--photo .panel-badge { font-size: clamp(28px, 3.6vw, 38px); }
+  html .panel--photo p { font-size: clamp(17px, 2.1vw, 21px); line-height: 1.4; }
 }
