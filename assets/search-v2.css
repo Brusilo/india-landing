@@ -46,7 +46,7 @@
   gap: 2px;
   background: #fff;
   border: 0;
-  border-right: 1px solid #e6e7f3;
+  border-right: 1px solid #b8b9c2;
   color: #0d0b68;
 }
 
@@ -125,7 +125,7 @@
   display: grid;
   place-items: center;
   background: #fff;
-  border-right: 1px solid #e6e7f3;
+  border-right: 1px solid #b8b9c2;
 }
 
 .search-v2 .v2-swap span {
