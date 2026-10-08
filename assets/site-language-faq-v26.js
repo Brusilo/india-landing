@@ -65,7 +65,7 @@
       },
       {
         q: 'What if my passport has no surname, or my name is misspelled on the ticket?',
-        a: 'Enter your name in Latin letters exactly as it appears in your passport. Foreign citizens do not need to fill in a patronymic. If your passport has no surname, contact support before booking. Minor transliteration differences usually cause no trouble at boarding, because coach attendants and ticket inspectors go by your passport number. If the mistake is serious, contact support before your trip and we will help correct your details.'
+        a: 'Enter your name in Latin letters exactly as it appears in your passport. Foreign travellers do not need to fill in the Russian patronymic (отчество) field. If your passport has no surname, contact support before booking. Minor spelling differences in the Latin version of your name usually cause no trouble at boarding, because coach attendants and ticket inspectors go by your passport number. If the mistake is serious, contact support before your trip and we will help correct your details.'
       },
       {
         q: 'How much baggage can I take?',
@@ -107,7 +107,7 @@
       },
       {
         q: 'अगर पासपोर्ट में सरनेम नहीं है या टिकट पर नाम में ग़लती है तो क्या करें?',
-        a: 'नाम लैटिन अक्षरों में ठीक वैसे ही लिखें जैसे पासपोर्ट में है। विदेशी नागरिकों को पैट्रोनिमिक (पिता का नाम) भरने की ज़रूरत नहीं है। अगर पासपोर्ट में सरनेम नहीं है, तो बुकिंग से पहले सपोर्ट से संपर्क करें। ट्रांसलिटरेशन की छोटी ग़लतियों से आम तौर पर बोर्डिंग में समस्या नहीं होती, क्योंकि कोच अटेंडेंट और टिकट निरीक्षक पासपोर्ट नंबर देखते हैं। बड़ी ग़लती होने पर यात्रा से पहले सपोर्ट को लिखें, हम जानकारी ठीक करने में मदद करेंगे।'
+        a: 'नाम लैटिन अक्षरों में ठीक वैसे ही लिखें जैसे पासपोर्ट में है। अगर फ़ॉर्म में रूसी पैट्रोनिमिक (отчество) का फ़ील्ड हो, तो विदेशी यात्रियों को इसे भरने की ज़रूरत नहीं है। अगर पासपोर्ट में सरनेम नहीं है, तो बुकिंग से पहले सपोर्ट से संपर्क करें। लैटिन अक्षरों में नाम की छोटी स्पेलिंग ग़लतियों से आम तौर पर बोर्डिंग में समस्या नहीं होती, क्योंकि कोच अटेंडेंट और टिकट निरीक्षक पासपोर्ट नंबर देखते हैं। बड़ी ग़लती होने पर यात्रा से पहले सपोर्ट को लिखें, हम जानकारी ठीक करने में मदद करेंगे।'
       },
       {
         q: 'कितना सामान साथ ले जा सकते हैं?',
