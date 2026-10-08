@@ -52,16 +52,16 @@
   const today=new Date();today.setHours(0,0,0,0);
   const lastMonth=new Date(today.getFullYear(),today.getMonth()+11,1);
 
-  const form=document.createElement('form');
+  const form=oldForm;
   form.className='search search-v2';
   form.noValidate=true;
+  form.innerHTML='';
   form.addEventListener('submit',e=>{e.preventDefault();submitSearch()});
-  oldForm.replaceWith(form);
 
-  const hints=document.createElement('div');
+  const hints=oldHints;
   hints.className='search-hints search-hints-v2';
+  hints.innerHTML='';
   hints.setAttribute('aria-label',pageLang==='ru'?'Популярные варианты':pageLang==='hi'?'लोकप्रिय विकल्प':'Popular options');
-  oldHints.replaceWith(hints);
 
   const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   const iso=d=>d?d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'):'';
@@ -514,4 +514,5 @@
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlays()});
 
   renderForm();
+  document.documentElement.classList.add('search-v2-ready');
 })();
