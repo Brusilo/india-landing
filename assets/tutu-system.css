@@ -3976,3 +3976,11 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   html:lang(hi) .panel--photo .panel-badge { font-size: clamp(28px, 3.6vw, 38px); }
   html .panel--photo p { font-size: clamp(17px, 2.1vw, 21px); line-height: 1.4; }
 }
+
+/* Phones: the city list opens inside the field. The field used to drop its
+   centring then, so the input jumped 10px up and the field looked squeezed;
+   the open field now keeps the closed field's top spacing. */
+@media (max-width: 599.98px) {
+  html .search.search-v2 .v2-field--place:not(.has-value):has(> .search-suggest:not([hidden])) { padding-top: 20px; }
+  html .search.search-v2 .v2-field--place.has-value:has(> .search-suggest:not([hidden])) { padding-top: 12px; }
+}
