@@ -1,8 +1,33 @@
-/* Confirmed public Tutu city mappings, checked 2026-09-17.
+/* Confirmed public Tutu city mappings, checked 2026-09-17; extended and
+   re-verified 2026-10-08 (docs/destinations-2026-10-08.md).
    See docs/landing-audit-v25.md for coverage and limitations.
    No transliteration guesses are used as destination URLs. */
 window.TUTU_DESTINATIONS = {
   "bus": {
+    "am-dilijan": [
+      "Dilizhan",
+      1676344
+    ],
+    "am-gyumri": [
+      "Gyumri",
+      1676092
+    ],
+    "am-vanadzor": [
+      "Vanadzor",
+      2061432
+    ],
+    "am-yerevan": [
+      "Erevan",
+      1676464
+    ],
+    "az-baku": [
+      "Baku",
+      1677099
+    ],
+    "az-ganja": [
+      "Gyandzha",
+      1676468
+    ],
     "by-brest": [
       "Brest",
       1288162
@@ -27,17 +52,57 @@ window.TUTU_DESTINATIONS = {
       "Vitebsk",
       1282079
     ],
+    "ge-batumi": [
+      "Batumi",
+      1035253
+    ],
+    "ge-gudauri": [
+      "Gudauri",
+      1037408
+    ],
+    "ge-kobuleti": [
+      "Kobuleti",
+      1035302
+    ],
+    "ge-kutaisi": [
+      "Kutaisi",
+      1035265
+    ],
     "ge-tbilisi": [
       "Tbilisi",
       1038838
+    ],
+    "kg-bishkek": [
+      "Bishkek",
+      1614827
+    ],
+    "kg-karakol": [
+      "Karakol",
+      1614834
+    ],
+    "kz-aktau": [
+      "Aktau",
+      1644053
     ],
     "kz-aktobe": [
       "Aktobe",
       1642990
     ],
+    "kz-almaty": [
+      "Almaty",
+      1644111
+    ],
     "kz-astana": [
       "Astana",
       1644112
+    ],
+    "kz-atyrau": [
+      "Atyrau",
+      1643908
+    ],
+    "kz-balkhash": [
+      "Balhash",
+      1638837
     ],
     "kz-karaganda": [
       "Karaganda",
@@ -50,6 +115,10 @@ window.TUTU_DESTINATIONS = {
     "kz-kostanay": [
       "Kostanaj",
       1639144
+    ],
+    "kz-kyzylorda": [
+      "Kyzylorda",
+      1642482
     ],
     "kz-oral": [
       "Uralsk",
@@ -66,6 +135,46 @@ window.TUTU_DESTINATIONS = {
     "kz-petropavl": [
       "Petropavlovsk",
       1638506
+    ],
+    "kz-semey": [
+      "Semej",
+      1637235
+    ],
+    "kz-shymkent": [
+      "Shymkent",
+      1641916
+    ],
+    "kz-taldykorgan": [
+      "Taldykorgan",
+      1640773
+    ],
+    "kz-taraz": [
+      "Taraz",
+      1641438
+    ],
+    "kz-turkistan": [
+      "Turkestan",
+      1641899
+    ],
+    "kz-urzhar": [
+      "Urdzhar",
+      1637242
+    ],
+    "kz-usharal": [
+      "Usharal",
+      1640783
+    ],
+    "kz-zaysan": [
+      "Zajsan",
+      1638303
+    ],
+    "kz-zhezkazgan": [
+      "Zhezkazgan",
+      1638843
+    ],
+    "md-balti": [
+      "Beltsy",
+      1273247
     ],
     "md-chisinau": [
       "Kishinyov",
@@ -91,6 +200,14 @@ window.TUTU_DESTINATIONS = {
       "Arhipo-Osipovka",
       1448112
     ],
+    "ru-arkhyz": [
+      "Arhyz",
+      1436836
+    ],
+    "ru-armavir": [
+      "Armavir",
+      1447986
+    ],
     "ru-astrakhan": [
       "Astrahan",
       1414159
@@ -106,6 +223,10 @@ window.TUTU_DESTINATIONS = {
     "ru-belokurikha": [
       "Belokuriha",
       1305389
+    ],
+    "ru-betta": [
+      "Betta",
+      1448114
     ],
     "ru-blagoveshchensk": [
       "Blagoveshhensk",
@@ -135,6 +256,10 @@ window.TUTU_DESTINATIONS = {
       "Cherepovets",
       1343753
     ],
+    "ru-cherkessk": [
+      "Cherkessk",
+      1436834
+    ],
     "ru-chita": [
       "Chita",
       1311973
@@ -143,9 +268,17 @@ window.TUTU_DESTINATIONS = {
       "Dagomys",
       2082725
     ],
+    "ru-derbent": [
+      "Derbent",
+      1436997
+    ],
     "ru-divnomorskoye": [
       "Divnomorskoe",
       1447983
+    ],
+    "ru-dombay": [
+      "Dombaj",
+      1436843
     ],
     "ru-dzhubga": [
       "Dzhubga",
@@ -154,6 +287,14 @@ window.TUTU_DESTINATIONS = {
     "ru-elista": [
       "Elista",
       1414556
+    ],
+    "ru-engels": [
+      "Engels",
+      1433950
+    ],
+    "ru-estosadok": [
+      "Estosadok",
+      1448446
     ],
     "ru-gelendzhik": [
       "Gelendzhik",
@@ -215,6 +356,14 @@ window.TUTU_DESTINATIONS = {
       "Kislovodsk",
       1435840
     ],
+    "ru-kogalym": [
+      "Kogalym",
+      1783946
+    ],
+    "ru-kolomna": [
+      "Kolomna",
+      1384569
+    ],
     "ru-komsomolsk-on-amur": [
       "Komsomolsk-na-Amure",
       1315649
@@ -226,6 +375,10 @@ window.TUTU_DESTINATIONS = {
     "ru-kotlas": [
       "Kotlas",
       1339854
+    ],
+    "ru-krasnaya-polyana": [
+      "Krasnaya-Polyana",
+      1447981
     ],
     "ru-krasnodar": [
       "Krasnodar",
@@ -243,6 +396,10 @@ window.TUTU_DESTINATIONS = {
       "Kursk",
       1416451
     ],
+    "ru-kyzyl": [
+      "Kyzyl",
+      1307555
+    ],
     "ru-lazarevskoye": [
       "Lazarevskoe",
       1783862
@@ -251,9 +408,17 @@ window.TUTU_DESTINATIONS = {
       "Lipetsk",
       1379567
     ],
+    "ru-listvyanka": [
+      "Listvyanka",
+      1309644
+    ],
     "ru-loo": [
       "Loo",
       2082727
+    ],
+    "ru-magadan": [
+      "Magadan",
+      1316461
     ],
     "ru-magnitogorsk": [
       "Magnitogorsk",
@@ -263,21 +428,49 @@ window.TUTU_DESTINATIONS = {
       "Mahachkala",
       1436995
     ],
+    "ru-maykop": [
+      "Majkop",
+      1436604
+    ],
     "ru-mineralnye-vody": [
       "Mineralnye-Vody",
       1435842
+    ],
+    "ru-mirny": [
+      "Mirnyj",
+      2095205
     ],
     "ru-moscow": [
       "Moskva",
       1447874
     ],
+    "ru-murmansk": [
+      "Murmansk",
+      1322570
+    ],
+    "ru-murom": [
+      "Murom",
+      1425289
+    ],
     "ru-naberezhnye-chelny": [
       "Naberezhnye-Chelny",
       1330023
     ],
+    "ru-nadym": [
+      "Nadym",
+      1299809
+    ],
     "ru-nalchik": [
       "Nalchik",
       1439015
+    ],
+    "ru-nefteyugansk": [
+      "Nefteyugansk",
+      1784212
+    ],
+    "ru-neryungri": [
+      "Neryungri",
+      2095306
     ],
     "ru-nizhnekamsk": [
       "Nizhnekamsk",
@@ -291,13 +484,45 @@ window.TUTU_DESTINATIONS = {
       "Nizhnij-Novgorod",
       1427804
     ],
+    "ru-nizhny-tagil": [
+      "Nizhnij-Tagil",
+      1322776
+    ],
+    "ru-norilsk": [
+      "Norilsk",
+      1307745
+    ],
+    "ru-novocherkassk": [
+      "Novocherkassk",
+      1391659
+    ],
     "ru-novokuznetsk": [
       "Novokuznetsk",
       1304261
     ],
+    "ru-novorossiysk": [
+      "Novorossijsk",
+      1447985
+    ],
     "ru-novosibirsk": [
       "Novosibirsk",
       1302713
+    ],
+    "ru-novy-urengoy": [
+      "Novyj-Urengoj",
+      1299864
+    ],
+    "ru-noyabrsk": [
+      "Noyabrsk",
+      1299808
+    ],
+    "ru-obninsk": [
+      "Obninsk",
+      1419242
+    ],
+    "ru-olginka": [
+      "Olginka",
+      1448263
     ],
     "ru-omsk": [
       "Omsk",
@@ -306,6 +531,10 @@ window.TUTU_DESTINATIONS = {
     "ru-orenburg": [
       "Orenburg",
       1354435
+    ],
+    "ru-orsk": [
+      "Orsk",
+      1355728
     ],
     "ru-oryol": [
       "Oryol",
@@ -319,6 +548,10 @@ window.TUTU_DESTINATIONS = {
       "Perm",
       1324708
     ],
+    "ru-petropavlovsk-kamchatsky": [
+      "Petropavlovsk-Kamchatskij",
+      1316323
+    ],
     "ru-petrozavodsk": [
       "Petrozavodsk",
       1329076
@@ -331,13 +564,25 @@ window.TUTU_DESTINATIONS = {
       "Pyatigorsk",
       1435838
     ],
+    "ru-rostov-on-don": [
+      "Rostov-na-Donu",
+      1391657
+    ],
     "ru-ryazan": [
       "Ryazan",
       1312827
     ],
+    "ru-rybinsk": [
+      "Rybinsk",
+      1397803
+    ],
     "ru-saint-petersburg": [
       "Sankt-Peterburg",
       1447624
+    ],
+    "ru-salekhard": [
+      "Salehard",
+      1299806
     ],
     "ru-samara": [
       "Samara",
@@ -351,6 +596,18 @@ window.TUTU_DESTINATIONS = {
       "Saratov",
       1433947
     ],
+    "ru-sergiev-posad": [
+      "Sergiev-Posad",
+      1384573
+    ],
+    "ru-sheregesh": [
+      "Sheregesh",
+      1304300
+    ],
+    "ru-sirius": [
+      "Sirius",
+      2096048
+    ],
     "ru-smolensk": [
       "Smolensk",
       1403603
@@ -363,6 +620,10 @@ window.TUTU_DESTINATIONS = {
       "Sortavala",
       1329612
     ],
+    "ru-sovetskaya-gavan": [
+      "Sovetskaya-Gavan",
+      1316029
+    ],
     "ru-stary-oskol": [
       "Staryj-Oskol",
       1414845
@@ -371,13 +632,33 @@ window.TUTU_DESTINATIONS = {
       "Stavropol",
       1435837
     ],
+    "ru-sterlitamak": [
+      "Sterlitamak",
+      1333153
+    ],
+    "ru-sukko": [
+      "Sukko",
+      1447993
+    ],
     "ru-surgut": [
       "Surgut",
       1784218
     ],
+    "ru-suzdal": [
+      "Suzdal",
+      1427767
+    ],
+    "ru-svetlogorsk": [
+      "Svetlogorsk",
+      1316602
+    ],
     "ru-syktyvkar": [
       "Syktyvkar",
       1328209
+    ],
+    "ru-syzran": [
+      "Syzran",
+      1322553
     ],
     "ru-taganrog": [
       "Taganrog",
@@ -386,6 +667,10 @@ window.TUTU_DESTINATIONS = {
     "ru-tambov": [
       "Tambov",
       1382947
+    ],
+    "ru-teberda": [
+      "Teberda",
+      1436900
     ],
     "ru-tobolsk": [
       "Tobolsk",
@@ -411,6 +696,10 @@ window.TUTU_DESTINATIONS = {
       "Tver",
       1369087
     ],
+    "ru-tynda": [
+      "Tynda",
+      1298534
+    ],
     "ru-tyumen": [
       "Tyumen",
       1299959
@@ -419,17 +708,41 @@ window.TUTU_DESTINATIONS = {
       "Ufa",
       1333152
     ],
+    "ru-uglich": [
+      "Uglich",
+      1397800
+    ],
     "ru-ukhta": [
       "Uhta",
       1328210
+    ],
+    "ru-ulan-ude": [
+      "Ulan-Ude",
+      1311335
     ],
     "ru-ulyanovsk": [
       "Ulyanovsk",
       1351868
     ],
+    "ru-uray": [
+      "Uraj",
+      1784219
+    ],
+    "ru-usinsk": [
+      "Usinsk",
+      1328361
+    ],
     "ru-ust-kut": [
       "Ust-Kut",
       1309643
+    ],
+    "ru-veliky-novgorod": [
+      "Novgorod-Velikij",
+      1317690
+    ],
+    "ru-veliky-ustyug": [
+      "Velikij-Ustyug",
+      1343836
     ],
     "ru-vityazevo": [
       "Vityazevo",
@@ -455,9 +768,25 @@ window.TUTU_DESTINATIONS = {
       "Vologda",
       1343752
     ],
+    "ru-volzhsky": [
+      "Volzhskij",
+      1412653
+    ],
+    "ru-vorkuta": [
+      "Vorkuta",
+      1328208
+    ],
     "ru-voronezh": [
       "Voronezh",
       1381189
+    ],
+    "ru-vyborg": [
+      "Vyborg",
+      1358708
+    ],
+    "ru-yakutsk": [
+      "Yakutsk",
+      2092294
     ],
     "ru-yaroslavl": [
       "Yaroslavl",
@@ -478,6 +807,42 @@ window.TUTU_DESTINATIONS = {
     "ru-yoshkar-ola": [
       "Joshkar-Ola",
       1356140
+    ],
+    "ru-yuzhno-sakhalinsk": [
+      "Yuzhno-Sahalinsk",
+      1316093
+    ],
+    "ru-zelenogradsk": [
+      "Zelenogradsk",
+      1316551
+    ],
+    "ru-zheleznovodsk": [
+      "Zheleznovodsk",
+      1435841
+    ],
+    "tj-bokhtar": [
+      "Bohtar",
+      1636391
+    ],
+    "tj-dushanbe": [
+      "Dushanbe",
+      1636685
+    ],
+    "tj-khujand": [
+      "Hudzhand",
+      1636228
+    ],
+    "uz-bukhara": [
+      "Buhara",
+      1633735
+    ],
+    "uz-samarkand": [
+      "Samarkand",
+      1635232
+    ],
+    "uz-tashkent": [
+      "Tashkent",
+      1635924
     ]
   },
   "flight": {
@@ -601,6 +966,14 @@ window.TUTU_DESTINATIONS = {
       "Tbilisi",
       425
     ],
+    "in-agartala": [
+      "Agartala",
+      2607
+    ],
+    "in-agra": [
+      "Agra_jchdjbah",
+      2609
+    ],
     "in-ahmedabad": [
       "Ahmadabad",
       2616
@@ -609,9 +982,29 @@ window.TUTU_DESTINATIONS = {
       "Amritsar",
       2614
     ],
+    "in-aurangabad": [
+      "Aurangabad",
+      2615
+    ],
+    "in-ayodhya": [
+      "Ayodhya",
+      254584
+    ],
+    "in-bagdogra": [
+      "Bagdogra",
+      2617
+    ],
+    "in-belagavi": [
+      "Belgaum",
+      2621
+    ],
     "in-bengaluru": [
       "Bangalor",
       2619
+    ],
+    "in-bhopal": [
+      "Bhopal",
+      2627
     ],
     "in-bhubaneswar": [
       "Bhubaneshvar",
@@ -629,37 +1022,93 @@ window.TUTU_DESTINATIONS = {
       "Koimbatur",
       2671
     ],
+    "in-darbhanga": [
+      "Darbhanga",
+      253468
+    ],
+    "in-dehradun": [
+      "Dehradun",
+      2645
+    ],
     "in-delhi": [
       "Deli",
       216
+    ],
+    "in-dharamshala": [
+      "Dharamsala",
+      2660
+    ],
+    "in-dibrugarh": [
+      "Dibrugarh",
+      2656
     ],
     "in-goa": [
       "Goa",
       199
     ],
+    "in-gorakhpur": [
+      "Gorakhpur",
+      2638
+    ],
     "in-guwahati": [
       "Guvahati",
       2639
+    ],
+    "in-gwalior": [
+      "Gvalior",
+      2637
+    ],
+    "in-hubballi": [
+      "Hubli",
+      2730
     ],
     "in-hyderabad": [
       "Haydarabad",
       2727
     ],
+    "in-imphal": [
+      "Imphal",
+      2662
+    ],
     "in-indore": [
       "Indaur",
       2663
+    ],
+    "in-jabalpur": [
+      "Djabalpur",
+      2646
     ],
     "in-jaipur": [
       "Djaypur",
       2648
     ],
+    "in-jaisalmer": [
+      "Djaysalmer",
+      2649
+    ],
+    "in-jammu": [
+      "Djammu",
+      2650
+    ],
+    "in-jodhpur": [
+      "Djodhpur",
+      2654
+    ],
     "in-kannur": [
       "Kannur",
       250342
     ],
+    "in-kanpur": [
+      "Kanpur",
+      2667
+    ],
     "in-kochi": [
       "Kochin",
       278
+    ],
+    "in-kolhapur": [
+      "Kolhapur",
+      2672
     ],
     "in-kolkata": [
       "Kalkutta",
@@ -669,9 +1118,17 @@ window.TUTU_DESTINATIONS = {
       "Kojikode",
       2670
     ],
+    "in-leh": [
+      "Leh_biecfefbed",
+      2678
+    ],
     "in-lucknow": [
       "Lakhnau",
       2677
+    ],
+    "in-madurai": [
+      "Maduray",
+      2681
     ],
     "in-mangaluru": [
       "Mangalor",
@@ -681,9 +1138,17 @@ window.TUTU_DESTINATIONS = {
       "Mumbai",
       158
     ],
+    "in-mysuru": [
+      "Maysur",
+      2682
+    ],
     "in-nagpur": [
       "Nagpur",
       2688
+    ],
+    "in-nashik": [
+      "Nashik",
+      2690
     ],
     "in-patna": [
       "Patna",
@@ -693,6 +1158,10 @@ window.TUTU_DESTINATIONS = {
       "Port-bler",
       2700
     ],
+    "in-prayagraj": [
+      "Allahabad",
+      2612
+    ],
     "in-pune": [
       "Puna",
       2701
@@ -700,6 +1169,26 @@ window.TUTU_DESTINATIONS = {
     "in-raipur": [
       "Raypur",
       2706
+    ],
+    "in-rajahmundry": [
+      "Radjamandri",
+      2703
+    ],
+    "in-rajkot": [
+      "Hirasar",
+      254603
+    ],
+    "in-ranchi": [
+      "Ranchi",
+      2708
+    ],
+    "in-shirdi": [
+      "Shirdi",
+      241666
+    ],
+    "in-silchar": [
+      "Silchar",
+      2715
     ],
     "in-srinagar": [
       "Shrinagar",
@@ -713,13 +1202,33 @@ window.TUTU_DESTINATIONS = {
       "Tiruvanantapuram",
       2724
     ],
+    "in-thoothukudi": [
+      "Tutikorin",
+      2722
+    ],
     "in-tiruchirappalli": [
       "Tiruchchirappalli",
       2721
     ],
+    "in-tirupati": [
+      "Tirupati",
+      2720
+    ],
+    "in-udaipur": [
+      "Udaypur",
+      2725
+    ],
+    "in-vadodara": [
+      "Vadodara",
+      2630
+    ],
     "in-varanasi": [
       "Varanasi",
       2631
+    ],
+    "in-vijayawada": [
+      "Vidjayavada",
+      2633
     ],
     "in-visakhapatnam": [
       "Vishakhapatnam",
@@ -1539,6 +2048,16 @@ window.TUTU_DESTINATIONS = {
       "tbilisi",
       2657214
     ],
+    "in-agartala": [
+      "india",
+      "agartala",
+      2659295
+    ],
+    "in-agra": [
+      "india",
+      "agra",
+      2659297
+    ],
     "in-ahmedabad": [
       "india",
       "ahmedabad",
@@ -1549,10 +2068,35 @@ window.TUTU_DESTINATIONS = {
       "amritsar",
       2659302
     ],
+    "in-aurangabad": [
+      "india",
+      "aurangabad",
+      2659303
+    ],
+    "in-ayodhya": [
+      "india",
+      "ayodhya",
+      7456415
+    ],
+    "in-bagdogra": [
+      "india",
+      "bagdogra",
+      2659305
+    ],
+    "in-belagavi": [
+      "india",
+      "belgaum",
+      2659309
+    ],
     "in-bengaluru": [
       "india",
       "bangalore",
       2659307
+    ],
+    "in-bhopal": [
+      "india",
+      "bhopal",
+      2659315
     ],
     "in-bhubaneswar": [
       "india",
@@ -1574,45 +2118,115 @@ window.TUTU_DESTINATIONS = {
       "coimbatore",
       2659358
     ],
+    "in-darbhanga": [
+      "india",
+      "darbhanga",
+      6622401
+    ],
+    "in-dehradun": [
+      "india",
+      "dehradun",
+      2659332
+    ],
     "in-delhi": [
       "india",
       "delhi",
       2657045
+    ],
+    "in-dharamshala": [
+      "india",
+      "dharamsala",
+      2659347
+    ],
+    "in-dibrugarh": [
+      "india",
+      "dibrugarh",
+      2659343
     ],
     "in-goa": [
       "india",
       "goa",
       2657034
     ],
+    "in-gorakhpur": [
+      "india",
+      "gorakhpur",
+      2659326
+    ],
     "in-guwahati": [
       "india",
       "guwahati",
       2659327
+    ],
+    "in-gwalior": [
+      "india",
+      "gwalior",
+      2659325
+    ],
+    "in-hubballi": [
+      "india",
+      "hubli",
+      2659416
     ],
     "in-hyderabad": [
       "india",
       "hyderabad",
       2659413
     ],
+    "in-imphal": [
+      "india",
+      "imphal",
+      2659349
+    ],
     "in-indore": [
       "india",
       "indore",
       2659350
+    ],
+    "in-jabalpur": [
+      "india",
+      "jabalpur",
+      2659333
     ],
     "in-jaipur": [
       "india",
       "jaipur",
       2659335
     ],
+    "in-jaisalmer": [
+      "india",
+      "jaisalmer",
+      2659336
+    ],
+    "in-jammu": [
+      "india",
+      "jammu",
+      2659337
+    ],
+    "in-jodhpur": [
+      "india",
+      "jodhpur",
+      2659341
+    ],
     "in-kannur": [
       "india",
       "kannur",
       2715871
     ],
+    "in-kanpur": [
+      "india",
+      "kanpur",
+      2659354
+    ],
     "in-kochi": [
       "india",
       "cochin",
       2657092
+    ],
+    "in-kolhapur": [
+      "india",
+      "kolhapur",
+      2659359
     ],
     "in-kolkata": [
       "india",
@@ -1624,10 +2238,20 @@ window.TUTU_DESTINATIONS = {
       "kozhikode",
       2659357
     ],
+    "in-leh": [
+      "india",
+      "leh",
+      2659365
+    ],
     "in-lucknow": [
       "india",
       "lucknow",
       2659364
+    ],
+    "in-madurai": [
+      "india",
+      "madurai",
+      2659368
     ],
     "in-mangaluru": [
       "india",
@@ -1639,10 +2263,20 @@ window.TUTU_DESTINATIONS = {
       "mumbai",
       2656996
     ],
+    "in-mysuru": [
+      "india",
+      "mysore",
+      2659369
+    ],
     "in-nagpur": [
       "india",
       "nagpur",
       2659375
+    ],
+    "in-nashik": [
+      "india",
+      "nashik",
+      2659377
     ],
     "in-patna": [
       "india",
@@ -1654,6 +2288,11 @@ window.TUTU_DESTINATIONS = {
       "port_blair",
       2659386
     ],
+    "in-prayagraj": [
+      "india",
+      "allahabad",
+      2659300
+    ],
     "in-pune": [
       "india",
       "pune",
@@ -1663,6 +2302,31 @@ window.TUTU_DESTINATIONS = {
       "india",
       "raipur",
       2659392
+    ],
+    "in-rajahmundry": [
+      "india",
+      "rajahmundry",
+      2659389
+    ],
+    "in-rajkot": [
+      "india",
+      "rajkot",
+      2659390
+    ],
+    "in-ranchi": [
+      "india",
+      "ranchi",
+      2659394
+    ],
+    "in-shirdi": [
+      "india",
+      "shirdi",
+      2707360
+    ],
+    "in-silchar": [
+      "india",
+      "silchar",
+      2659401
     ],
     "in-srinagar": [
       "india",
@@ -1679,15 +2343,40 @@ window.TUTU_DESTINATIONS = {
       "thiruvananthapuram",
       2659410
     ],
+    "in-thoothukudi": [
+      "india",
+      "tuticorin",
+      2659408
+    ],
     "in-tiruchirappalli": [
       "india",
       "tiruchirappalli",
       2721907
     ],
+    "in-tirupati": [
+      "india",
+      "tirupati",
+      2659406
+    ],
+    "in-udaipur": [
+      "india",
+      "udaipur",
+      2659411
+    ],
+    "in-vadodara": [
+      "india",
+      "vadodara",
+      2659318
+    ],
     "in-varanasi": [
       "india",
       "varanasi",
       2659319
+    ],
+    "in-vijayawada": [
+      "india",
+      "vijayawada",
+      2659321
     ],
     "in-visakhapatnam": [
       "india",
@@ -1708,6 +2397,11 @@ window.TUTU_DESTINATIONS = {
       "kirgizstan",
       "isfana",
       2718606
+    ],
+    "kg-issyk-kul": [
+      "kirgizstan",
+      "cholpon_ata",
+      2711243
     ],
     "kg-jalal-abad": [
       "kirgizstan",
@@ -1894,6 +2588,11 @@ window.TUTU_DESTINATIONS = {
       "arkhyz",
       4018287
     ],
+    "ru-armavir": [
+      "russia",
+      "armavir",
+      2665639
+    ],
     "ru-astrakhan": [
       "russia",
       "astrakhan",
@@ -1954,6 +2653,11 @@ window.TUTU_DESTINATIONS = {
       "cherepovets",
       2656939
     ],
+    "ru-cherkessk": [
+      "russia",
+      "cherkessk",
+      2694273
+    ],
     "ru-chita": [
       "russia",
       "chita",
@@ -1963,6 +2667,11 @@ window.TUTU_DESTINATIONS = {
       "russia",
       "dagomys",
       2665616
+    ],
+    "ru-derbent": [
+      "russia",
+      "derbent",
+      2694264
     ],
     "ru-divnomorskoye": [
       "russia",
@@ -1983,6 +2692,11 @@ window.TUTU_DESTINATIONS = {
       "russia",
       "elista",
       2656941
+    ],
+    "ru-engels": [
+      "russia",
+      "engels",
+      2694275
     ],
     "ru-estosadok": [
       "russia",
@@ -2074,6 +2788,11 @@ window.TUTU_DESTINATIONS = {
       "kogalym",
       2657267
     ],
+    "ru-kolomna": [
+      "russia",
+      "kolomna",
+      2665585
+    ],
     "ru-komsomolsk-on-amur": [
       "russia",
       "komsomolsk_na_amure",
@@ -2082,7 +2801,7 @@ window.TUTU_DESTINATIONS = {
     "ru-kostroma": [
       "russia",
       "kostroma",
-      null
+      2662389
     ],
     "ru-kotlas": [
       "russia",
@@ -2154,6 +2873,11 @@ window.TUTU_DESTINATIONS = {
       "makhachkala",
       2656886
     ],
+    "ru-maykop": [
+      "russia",
+      "maykop",
+      2694239
+    ],
     "ru-mineralnye-vody": [
       "russia",
       "mineralnye_vody",
@@ -2173,6 +2897,11 @@ window.TUTU_DESTINATIONS = {
       "russia",
       "murmansk",
       2656889
+    ],
+    "ru-murom": [
+      "russia",
+      "murom",
+      2691208
     ],
     "ru-naberezhnye-chelny": [
       "russia",
@@ -2224,15 +2953,30 @@ window.TUTU_DESTINATIONS = {
       "nizhny_novgorod",
       2656895
     ],
+    "ru-nizhny-tagil": [
+      "russia",
+      "nizhny_tagil",
+      2665619
+    ],
     "ru-norilsk": [
       "russia",
       "norilsk",
       2656900
     ],
+    "ru-novocherkassk": [
+      "russia",
+      "novocherkassk",
+      2694247
+    ],
     "ru-novokuznetsk": [
       "russia",
       "novokuznetsk",
       2656897
+    ],
+    "ru-novorossiysk": [
+      "russia",
+      "novorossiysk",
+      2662392
     ],
     "ru-novosibirsk": [
       "russia",
@@ -2248,6 +2992,11 @@ window.TUTU_DESTINATIONS = {
       "russia",
       "noyabrsk",
       2656901
+    ],
+    "ru-obninsk": [
+      "russia",
+      "obninsk",
+      2665607
     ],
     "ru-olginka": [
       "russia",
@@ -2309,10 +3058,20 @@ window.TUTU_DESTINATIONS = {
       "pyatigorsk",
       2665594
     ],
+    "ru-rostov-on-don": [
+      "russia",
+      "rostov_na_donu",
+      2656912
+    ],
     "ru-ryazan": [
       "russia",
       "ryazan",
       2657277
+    ],
+    "ru-rybinsk": [
+      "russia",
+      "rybinsk",
+      2657270
     ],
     "ru-saint-petersburg": [
       "russia",
@@ -2338,6 +3097,11 @@ window.TUTU_DESTINATIONS = {
       "russia",
       "saratov",
       2656917
+    ],
+    "ru-sergiev-posad": [
+      "russia",
+      "sergiev_posad",
+      3862147
     ],
     "ru-sheregesh": [
       "russia",
@@ -2374,6 +3138,11 @@ window.TUTU_DESTINATIONS = {
       "stavropol",
       2656919
     ],
+    "ru-sterlitamak": [
+      "russia",
+      "sterlitamak",
+      2665597
+    ],
     "ru-sukko": [
       "russia",
       "sukko",
@@ -2384,6 +3153,11 @@ window.TUTU_DESTINATIONS = {
       "surgut",
       2656921
     ],
+    "ru-suzdal": [
+      "russia",
+      "suzdal",
+      2665565
+    ],
     "ru-svetlogorsk": [
       "russia",
       "svetlogorsk",
@@ -2393,6 +3167,11 @@ window.TUTU_DESTINATIONS = {
       "russia",
       "syktyvkar",
       2656922
+    ],
+    "ru-syzran": [
+      "russia",
+      "syzran",
+      2665658
     ],
     "ru-taganrog": [
       "russia",
@@ -2458,6 +3237,11 @@ window.TUTU_DESTINATIONS = {
       "russia",
       "ufa",
       2656933
+    ],
+    "ru-uglich": [
+      "russia",
+      "uglich",
+      2686138
     ],
     "ru-ukhta": [
       "russia",
@@ -2529,6 +3313,11 @@ window.TUTU_DESTINATIONS = {
       "vologda",
       2657265
     ],
+    "ru-volzhsky": [
+      "russia",
+      "volzhskiy",
+      2689923
+    ],
     "ru-vorkuta": [
       "russia",
       "vorkuta",
@@ -2538,6 +3327,11 @@ window.TUTU_DESTINATIONS = {
       "russia",
       "voronezh",
       2656866
+    ],
+    "ru-vyborg": [
+      "russia",
+      "vyborg",
+      2665576
     ],
     "ru-yakutsk": [
       "russia",
@@ -2647,7 +3441,7 @@ window.TUTU_DESTINATIONS = {
     "tr-istanbul": [
       "turkey",
       "istanbul",
-      null
+      2657208
     ],
     "uz-andijan": [
       "uzbekistan",
@@ -2731,8 +3525,10 @@ window.TUTU_DESTINATIONS = {
     "am-yerevan": "Erevan",
     "az-baku": "Baku",
     "by-brest": "Brest",
+    "by-gomel": "Gomel-Passazhirskiy",
     "by-grodno": "Grodno",
     "by-minsk": "Minsk",
+    "by-mogilev": "Mogilev-1",
     "by-vitebsk": "Vitebsk",
     "ge-batumi": "Batumi",
     "ge-kobuleti": "Kobuleti",
@@ -2744,20 +3540,30 @@ window.TUTU_DESTINATIONS = {
     "kz-almaty": "Almaty",
     "kz-astana": "Astana",
     "kz-atyrau": "Atyrau",
+    "kz-baikonur": "Baykonyr",
+    "kz-balkhash": "Balkhash-1",
     "kz-karaganda": "Karaganda",
     "kz-kokshetau": "Kokshetau",
+    "kz-kostanay": "Qostanay-",
     "kz-kyzylorda": "Kyzylorda",
     "kz-oral": "Uralsk",
     "kz-oskemen": "Ust-Kamenogorsk",
     "kz-pavlodar": "Pavlodar",
+    "kz-petropavl": "Petropavlovsk",
     "kz-semey": "Semey",
     "kz-shymkent": "Shymkent",
     "kz-taldykorgan": "Taldykorgan",
     "kz-taraz": "Taraz",
+    "kz-turkistan": "Turkestan",
     "kz-zhezkazgan": "Zhezkazgan",
+    "md-balti": "Belts-Sloboziya",
+    "md-chisinau": "Kishineu",
+    "ru-abakan": "Abakan",
     "ru-adler": "Adler",
     "ru-anapa": "Anapa",
     "ru-arkhangelsk": "Arhangelsk",
+    "ru-arkhyz": "Ost-Arkhyz",
+    "ru-armavir": "Armavir",
     "ru-astrakhan": "Astrakhan",
     "ru-barnaul": "Barnaul",
     "ru-belgorod": "Belgorod",
@@ -2768,9 +3574,13 @@ window.TUTU_DESTINATIONS = {
     "ru-cheboksary": "Cheboksary",
     "ru-chelyabinsk": "Chelyabinsk",
     "ru-cherepovets": "Cherepovets",
+    "ru-cherkessk": "Cherkessk",
     "ru-chita": "Chita",
     "ru-dagomys": "Dagomys",
+    "ru-derbent": "Derbent",
+    "ru-dombay": "Ost-Dombay",
     "ru-elista": "Elista",
+    "ru-estosadok": "vokzal_Roza_Khutor",
     "ru-grozny": "Groznyy",
     "ru-irkutsk": "Irkutsk",
     "ru-ivanovo": "Ivanovo",
@@ -2784,8 +3594,11 @@ window.TUTU_DESTINATIONS = {
     "ru-kirov": "Kirov",
     "ru-kislovodsk": "Kislovodsk",
     "ru-kogalym": "Kogalym",
+    "ru-kolomna": "Kolomna",
+    "ru-komsomolsk-on-amur": "Komsomolsk-Na-Amure",
     "ru-kostroma": "Kostroma",
     "ru-kotlas": "Kotlas",
+    "ru-krasnaya-polyana": "vokzal_Roza_Khutor",
     "ru-krasnodar": "Krasnodar",
     "ru-krasnoyarsk": "Krasnoyarsk",
     "ru-kurgan": "Kurgan",
@@ -2796,18 +3609,26 @@ window.TUTU_DESTINATIONS = {
     "ru-loo": "Loo",
     "ru-magnitogorsk": "Magnitogorsk",
     "ru-makhachkala": "Makhachkala",
+    "ru-maykop": "Maykop",
     "ru-mineralnye-vody": "Mineralnye_Vody",
     "ru-moscow": "Moskva",
     "ru-murmansk": "Murmansk",
+    "ru-murom": "Murom",
     "ru-naberezhnye-chelny": "Naberezhnye-Chelny",
     "ru-nalchik": "Nalchik",
     "ru-neryungri": "Neryungri",
     "ru-nizhnekamsk": "Nizhnekamsk",
+    "ru-nizhnevartovsk": "Nizhnevartovsk-1",
     "ru-nizhny-novgorod": "Nizhnij-Novgorod",
+    "ru-nizhny-tagil": "Nizhniy_Tagil",
     "ru-norilsk": "Norilsk",
+    "ru-novocherkassk": "Novocherkassk",
     "ru-novokuznetsk": "Novokuznetsk",
+    "ru-novorossiysk": "Novorossiysk",
     "ru-novosibirsk": "Novosibirsk",
     "ru-novy-urengoy": "Novyy-Urengoi",
+    "ru-noyabrsk": "vokzal_Noyabrsk-1",
+    "ru-obninsk": "Obninskoe",
     "ru-omsk": "Omsk",
     "ru-orenburg": "Orenburg",
     "ru-orsk": "Orsk",
@@ -2818,18 +3639,28 @@ window.TUTU_DESTINATIONS = {
     "ru-petrozavodsk": "Petrozavodsk",
     "ru-pskov": "Pskov",
     "ru-pyatigorsk": "Pyatigorsk",
+    "ru-rostov-on-don": "Rostov-Na-Donu",
     "ru-ryazan": "Ryazan",
+    "ru-rybinsk": "Rybinsk",
     "ru-saint-petersburg": "Sankt-Peterburg",
+    "ru-salekhard": "Labytnangi-",
     "ru-samara": "Samara",
     "ru-saransk": "Saransk",
     "ru-saratov": "Saratov",
+    "ru-sergiev-posad": "Sergiev-Posad",
     "ru-sheregesh": "Sheregesh",
+    "ru-sirius": "vokzal_Olimpiyskiy_Park",
     "ru-smolensk": "Smolensk",
     "ru-sochi": "Sochi",
     "ru-sortavala": "Sortavala",
+    "ru-sovetskaya-gavan": "Sovetskaya-Gavan-Sort",
+    "ru-stary-oskol": "Staryy_Oskol",
     "ru-stavropol": "Stavropol",
+    "ru-sterlitamak": "Sterlitamak",
     "ru-surgut": "Surgut",
+    "ru-svetlogorsk": "Svetlogorsk-2",
     "ru-syktyvkar": "Syktyvkar",
+    "ru-syzran": "Syzran",
     "ru-taganrog": "Taganrog",
     "ru-tambov": "Tambov",
     "ru-tobolsk": "Tobolsk",
@@ -2841,28 +3672,41 @@ window.TUTU_DESTINATIONS = {
     "ru-tynda": "Tynda",
     "ru-tyumen": "Tyumen",
     "ru-ufa": "Ufa",
+    "ru-uglich": "Uglich",
     "ru-ukhta": "Ukhta",
     "ru-ulan-ude": "Ulan-Ude",
     "ru-ulyanovsk": "Ulyanovsk",
     "ru-usinsk": "Usinsk",
     "ru-ust-kut": "Ust-Kut",
     "ru-veliky-novgorod": "Novgorod",
+    "ru-veliky-ustyug": "Velikiy_Ustyug",
     "ru-vladikavkaz": "Vladikavkaz",
     "ru-vladimir": "Vladimir",
     "ru-vladivostok": "Vladivostok",
     "ru-volgograd": "Volgograd",
     "ru-vologda": "Vologda",
+    "ru-volzhsky": "Volzhskiy",
     "ru-vorkuta": "Vorkuta",
     "ru-voronezh": "Voronezh",
+    "ru-vyborg": "Vyborg",
     "ru-yaroslavl": "Yaroslavl",
     "ru-yekaterinburg": "Ekaterinburg",
     "ru-yessentuki": "Essentuki",
+    "ru-yeysk": "Eysk",
     "ru-yoshkar-ola": "Yoshkar-Ola",
     "ru-yuzhno-sakhalinsk": "Yuzhno-Sakhalinsk",
     "ru-zheleznovodsk": "Zheleznovodsk",
+    "tj-bokhtar": "Kurgan-Tyube",
+    "tj-dushanbe": "Dushanbe",
+    "tj-khujand": "Khudzhand",
+    "tj-kulob": "Kulyab",
+    "uz-andijan": "Andizhan-1",
+    "uz-bukhara": "Bukhara-1",
+    "uz-kokand": "Kokand-1",
     "uz-namangan": "Namangan",
     "uz-navoi": "Navoi",
     "uz-nukus": "Nukus",
+    "uz-qarshi": "Karshi",
     "uz-samarkand": "Samarkand",
     "uz-tashkent": "Tashkent",
     "uz-termez": "Termez",
