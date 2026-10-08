@@ -50,8 +50,9 @@ Every stored link was opened in the landing's own URL format:
   hotels use Tutu's Rajkot city page.
 - Tutu names Bengaluru and Kolkata "Бангалор" and "Калькутта" on flight pages;
   the links are correct.
-- Tutu's own `c_kirgizstan/jalal_abad/` page is titled "Манас"; the stored link
-  is that page.
+- Jalal-Abad was renamed Manas; the record is now Manas (kg-manas) and keeps
+  Jalal-Abad / Джалал-Абад / जलाल-अबाद as alternative names. "Manas" in flight
+  mode still finds Bishkek, whose airport bears that name.
 - Salekhard trains go to Labytnangi, which Tutu itself lists as Salekhard's station.
 - Still without a link (Tutu has no page): trains for 51 cities without a railway
   or without a Tutu route page, buses for 32, hotels for Petropavlovsk-Kamchatsky

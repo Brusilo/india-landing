@@ -2403,15 +2403,15 @@ window.TUTU_DESTINATIONS = {
       "cholpon_ata",
       2711243
     ],
-    "kg-jalal-abad": [
-      "kirgizstan",
-      "manas",
-      4078878
-    ],
     "kg-karakol": [
       "kirgizstan",
       "karakol",
       2711242
+    ],
+    "kg-manas": [
+      "kirgizstan",
+      "manas",
+      4078878
     ],
     "kg-osh": [
       "kirgizstan",

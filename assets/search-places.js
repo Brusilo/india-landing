@@ -297,7 +297,7 @@
     ['KG','Иссык-Куль','Issyk-Kul','इस्सिक-कुल','IKU','Tamchy Тамчы',3],
     ['KG','Баткен','Batken','बतकेन','BTC','',4],
     ['KG','Каракол','Karakol','कराकोल','','',5],
-    ['KG','Джалал-Абад','Jalal-Abad','जलाल-अबाद','','',6],
+    ['KG','Манас','Manas','मानस','','Jalal-Abad Jalalabad Джалал-Абад जलाल-अबाद',6], // renamed from Jalal-Abad
     ['KG','Исфана','Isfana','इस्फाना','','Razzakov',7],
 
     // Tajikistan
