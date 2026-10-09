@@ -4331,7 +4331,7 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
 }
 
 /* Pass 360 — hotels offer row, as in the reference: an orange slanted −15%
-   badge, then the code INTHOTELTUTU in bold italic, then a copy button. */
+   badge, then the code INTHOTELTUTU on a white slanted plate with a copy icon. */
 #hotels .hotel-offer {
   grid-column: 1;
   justify-self: start;
@@ -4361,30 +4361,49 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
   background: var(--head-cta);
   transform: skewX(-12deg);
 }
-#hotels .hotel-offer__promo {
-  color: #fff;
+/* The code sits on a white slanted plate (the reference shape: a rounded
+   parallelogram leaning ~12deg) in black bold italic, with a copy icon; the
+   whole plate copies the code. */
+#hotels .hotel-offer__plate.hotel-offer__plate {
+  position: relative;
+  z-index: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 4px 16px 5px 14px !important;
+  line-height: 1.1 !important;
+  border: 0;
+  background: none;
+  color: #1E1E1E;
+  font: inherit;
+  cursor: pointer;
+}
+#hotels .hotel-offer__plate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 8px;
+  background: #fff;
+  transform: skewX(-12deg);
+  transition: background .15s ease;
+}
+#hotels .hotel-offer__plate:hover::before { background: #F3EEFF; }
+#hotels .hotel-offer__code {
   font-size: 22px;
   font-weight: 700;
   font-style: italic;
   line-height: 1.1;
-  text-transform: uppercase;
   letter-spacing: -.01em;
+  text-transform: uppercase;
 }
-#hotels .hotel-offer__copy.hotel-offer__copy {
-  width: auto !important;
-  padding: 8px 14px;
-  border: 0;
-  border-radius: 10px;
-  background: #fff;
-  color: var(--deep-blue);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.2;
-  cursor: pointer;
-}
-#hotels .hotel-offer__copy:hover { background: #F1EBFF; }
-#hotels .hotel-offer__copy.is-copied { color: #00894A; }
+#hotels .hotel-offer__plate svg { width: 20px; height: 20px; flex: none; }
+#hotels .hotel-offer__plate .promo-strip__copied-icon { display: none; }
+#hotels .hotel-offer__plate.is-copied .promo-strip__copy-icon { display: none; }
+#hotels .hotel-offer__plate.is-copied .promo-strip__copied-icon { display: block; color: #00894A; }
 @media (max-width: 599.98px) {
-  #hotels .hotel-offer__badge, #hotels .hotel-offer__promo { font-size: 18px; }
+  #hotels .hotel-offer__badge, #hotels .hotel-offer__code { font-size: 18px; }
 }
