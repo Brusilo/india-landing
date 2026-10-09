@@ -4068,7 +4068,7 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 /* Pass 303 — header details as on tutu.ru: white headline, borderless
    translucent badges, white quick chips with dark text, a violet circle
    under the active transport tab. On phones the veil over the suitcase is
-   15% lighter (opacity .48 -> .63). */
+   brighter (opacity .48 -> .8). */
 .hero h1 .accent, :lang(hi) .hero h1 .accent { color: #fff; }
 .hero .pill { background: rgba(255, 255, 255, .15) !important; border-color: transparent !important; }
 .hero .ico { background: transparent !important; }
@@ -4077,5 +4077,10 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 .search-hints-v2 .quick-chip-v2 { background: #fff; color: #343954; font-weight: 500; }
 .search-hints-v2 .quick-chip-v2:hover { background: #F1EBFF; }
 @media (max-width: 599.98px) {
-  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { opacity: .63 !important; }
+  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { opacity: .8 !important; }
 }
+
+/* Pass 304 — larger transport icons (two thirds of the circle instead of
+   about half) and semibold text across the header; the quick chips keep 500. */
+.hero .ico img { width: 66% !important; height: auto !important; }
+.top a, .top .lang a, .hero .hero-sub, .hero .pill, .hero .lbl { font-weight: 600 !important; }
