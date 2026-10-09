@@ -469,6 +469,13 @@
     }else{s.date=start;if(s.returnDate&&s.returnDate<start)s.returnDate=null}
     renderForm();
   }
+  /* A return earlier than the chosen departure clears the departure,
+     the same way a later departure clears the return. */
+  function setQuickReturn(offset){
+    const back=new Date(today);back.setDate(back.getDate()+offset);
+    const s=states[mode];s.returnDate=back;if(s.date&&s.date>back)s.date=null;
+    renderForm();
+  }
 
   function renderHints(){
     hints.dataset.mode=mode;
@@ -478,10 +485,10 @@
       b=[[0,1],[1,1]];
     }else if(mode==='flight'){
       a=[['in-delhi','from'],['in-mumbai','from'],['ru-moscow','to'],['ru-saint-petersburg','to']];
-      b=[[1,0],[2,0]];
+      b=[[0,0],[1,0]];
     }else{
       a=[['ru-moscow','from'],['ru-saint-petersburg','from'],['ru-kazan','to'],['ru-tver','to']];
-      b=[[1,0],[2,0]];
+      b=[[0,0],[1,0]];
     }
     const dayWord=offset=>offset===0?(pageLang==='ru'?'Сегодня':pageLang==='hi'?'आज':'Today'):offset===1?(pageLang==='ru'?'Завтра':pageLang==='hi'?'कल':'Tomorrow'):(pageLang==='ru'?'Послезавтра':pageLang==='hi'?'परसों':'In 2 days');
     const placeChip=item=>{const id=item[0],role=mode==='hotel'?'destination':item[1],p=TUTU_PLACES.byId.get(id);if(!p)return '';return '<button type="button" class="quick-chip-v2" data-v2-place="'+esc(id)+'" data-v2-role="'+esc(role)+'">'+esc(TUTU_PLACES.display(p,pageLang).name)+'</button>'};
@@ -496,12 +503,14 @@
     }else{
       const fromHtml=a.filter(item=>item[1]==='from').map(placeChip).join('');
       const toHtml=a.filter(item=>item[1]==='to').map(placeChip).join('');
-      hints.innerHTML='<div class="quick-group-v2 quick-group-v2--from">'+fromHtml+'</div><div class="quick-group-v2 quick-group-v2--to">'+toHtml+'</div><div class="quick-group-v2 quick-group-v2--date">'+dateHtml+'</div>';
+      const returnHtml=mode==='flight'?'<div class="quick-group-v2 quick-group-v2--return">'+[1,2].map(n=>'<button type="button" class="quick-chip-v2" data-v2-return="'+n+'">'+esc(dayWord(n))+'</button>').join('')+'</div>':'';
+      hints.innerHTML='<div class="quick-group-v2 quick-group-v2--from">'+fromHtml+'</div><div class="quick-group-v2 quick-group-v2--to">'+toHtml+'</div><div class="quick-group-v2 quick-group-v2--date">'+dateHtml+'</div>'+returnHtml;
     }
   }
 
   hints.addEventListener('click',e=>{
     const p=e.target.closest('[data-v2-place]');if(p){setQuickPlace(p.dataset.v2Role,p.dataset.v2Place);return}
+    const r=e.target.closest('[data-v2-return]');if(r){setQuickReturn(Number(r.dataset.v2Return));return}
     const d=e.target.closest('[data-v2-date]');if(d)setQuickDate(Number(d.dataset.v2Date),Number(d.dataset.v2Length));
   });
 

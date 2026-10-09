@@ -264,6 +264,7 @@
 .search-hints-v2[data-mode="flight"] .quick-group-v2--date,
 .search-hints-v2[data-mode="train"] .quick-group-v2--date,
 .search-hints-v2[data-mode="bus"] .quick-group-v2--date { grid-column: 4; }
+.search-hints-v2[data-mode="flight"] .quick-group-v2--return { grid-column: 5; }
 .search-hints-v2 .quick-chip-v2 {
   padding: 5px 9px;
   border-radius: 9px;
