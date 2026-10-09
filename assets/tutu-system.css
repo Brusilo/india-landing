@@ -4130,26 +4130,45 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   .hero .transport .ico img { width: 62% !important; }
   .hero .transport .lbl { font-size: 16px !important; }
 
-  .search.search-v2 { background: transparent !important; column-gap: 2px !important; box-shadow: none !important; }
-  .search.search-v2 > *, .search.search-v2 .v2-flight-dates > .v2-field { background: #fff; border-radius: 0 !important; border-left: 0 !important; border-right: 0 !important; }
-  .search.search-v2 .v2-flight-dates { column-gap: 2px !important; background: transparent !important; }
+  .search.search-v2 { background: transparent !important; column-gap: 0 !important; box-shadow: none !important; }
+  .search.search-v2 > *, .search.search-v2 .v2-flight-dates > .v2-field { background: #fff; border-radius: 0 !important; border-right: 0 !important; }
+  /* Each divider is the left border of the next cell, so all of them are
+     exactly 2px; separate cells with gaps rounded to 2 or 3px each. */
+  .search.search-v2 > :not(:first-child):not(.v2-flight-dates):not(.v2-calendar),
+  .search.search-v2 .v2-flight-dates > .v2-field { border-left: 2px solid var(--head-bg) !important; }
+  .search.search-v2 > :first-child, .search.search-v2 > .v2-flight-dates { border-left: 0 !important; }
+  .search.search-v2 .v2-flight-dates { column-gap: 0 !important; background: transparent !important; }
   .search.search-v2 > :first-child { border-radius: 12px 0 0 12px !important; }
   .search.search-v2 > .v2-submit { border-radius: 0 12px 12px 0 !important; background: var(--head-cta) !important; }
-  .search-hints.search-hints-v2 { column-gap: 2px !important; }
+  .search-hints.search-hints-v2 { column-gap: 0 !important; }
+  .search-hints.search-hints-v2 .quick-group-v2:not(:first-child) { padding-left: 2px; }
 
   /* The suitcase no longer reaches into the top bar on desktop, so the hero
      can be its positioning box again and "bottom" follows the search bar. */
   html body section.hero { position: relative !important; }
   html body .hero > .hero-decor--suitcase.hero-decor--suitcase {
-    /* Sized so the one-row badges (longest in Russian) stay clear of it:
-       180px at 1120px wide up to 320px from about 1680px. Its visible bottom
-       (82% down the image) rests on the search bar; on wide screens it may
-       reach 160px into the free margin. */
-    --suitcase-w: clamp(180px, calc(25vw - 100px), 320px);
+    /* 340px, as before. Only below ~1255px wide does it shrink (to 240px at
+       1120px) so the one-row English and Hindi badges stay clear of it. Its
+       visible bottom rests on the search bar; on wide screens it may reach
+       into the free right margin. */
+    --suitcase-w: clamp(240px, calc(75vw - 600px), 340px);
     width: var(--suitcase-w) !important;
     top: auto !important;
     bottom: calc(161.3px - 0.142 * var(--suitcase-w)) !important;
     left: auto !important;
     right: max(16px, calc((100% - 1180px) / 2 - 160px)) !important;
   }
+}
+
+/* Pass 321 — no seam between the top bar and the hero, transport icons 10%
+   smaller and a little lower, labels always white, semibold hint chips and
+   20% larger swap arrows. */
+/* The top bar and the hero meet at a fractional pixel, where the white page
+   could show through as a hairline; a 1px lilac shadow closes the seam. */
+.top { box-shadow: 0 1px 0 var(--head-bg); }
+.hero .transport .lbl { color: #fff !important; opacity: 1 !important; }
+@media (min-width: 1101px) {
+  .hero .transport .ico img { width: 56% !important; transform: translateY(3px) !important; }
+  .search-hints-v2 .quick-chip-v2 { font-weight: 600 !important; }
+  .search.search-v2 .v2-swap svg { width: 22px !important; height: 22px !important; }
 }
