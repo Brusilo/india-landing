@@ -506,7 +506,7 @@
     font-weight:600;
     flex:0 1 auto;
   }
-  html:lang(ru) .promo-strip__copy.is-copied{
+  html:lang(ru) .promo-strip__copy.is-copied:not(.promo-strip__copy--code){
     padding-inline:3px;
     font-size:15px;
     letter-spacing:-.025em;
