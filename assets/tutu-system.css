@@ -4064,3 +4064,18 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 .search-v2 .v2-submit:hover, .btn-search:hover { background: var(--head-cta-hover) !important; }
 .search-hints-v2 .quick-chip-v2 { background: rgba(255, 255, 255, .22); }
 .search-hints-v2 .quick-chip-v2:hover { background: rgba(255, 255, 255, .36); }
+
+/* Pass 303 — header details as on tutu.ru: white headline, borderless
+   translucent badges, white quick chips with dark text, a violet circle
+   under the active transport tab. On phones the veil over the suitcase is
+   15% lighter (opacity .48 -> .63). */
+.hero h1 .accent, :lang(hi) .hero h1 .accent { color: #fff; }
+.hero .pill { background: rgba(255, 255, 255, .15) !important; border-color: transparent !important; }
+.hero .ico { background: transparent !important; }
+.hero .is-active .ico { background: #7028EB !important; }
+.hero .is-active .ico img { filter: brightness(0) invert(1); }
+.search-hints-v2 .quick-chip-v2 { background: #fff; color: #343954; font-weight: 500; }
+.search-hints-v2 .quick-chip-v2:hover { background: #F1EBFF; }
+@media (max-width: 599.98px) {
+  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { opacity: .63 !important; }
+}
