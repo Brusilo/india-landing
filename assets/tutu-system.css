@@ -4408,18 +4408,26 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
   #hotels .hotel-offer__badge, #hotels .hotel-offer__code { font-size: 18px; }
 }
 
-/* Pass 364 — both offer plates drawn as true rounded parallelograms (an SVG
-   shape) instead of skewed boxes, whose rounded corners turned into ovals. */
-#hotels .hotel-offer__badge::before {
+/* Pass 365 — both offer plates use the reference plate image (2000x387).
+   It is sliced like a 9-patch: the 180px ends, which hold the slanted edges
+   and rounded corners, scale with the plate height and keep their shape;
+   only the straight middle stretches to fit the text. The end width is
+   180/387 of the plate height, set explicitly for each size. */
+#hotels .hotel-offer__badge, #hotels .hotel-offer__plate.hotel-offer__plate { height: 33px !important; box-sizing: border-box; }
+#hotels .hotel-offer__badge::before, #hotels .hotel-offer__plate::before {
   transform: none !important;
   border-radius: 0 !important;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 70 33' preserveAspectRatio='none'%3E%3Cpath fill='%23FD5626' d='M15.01 0H62Q70 0 68.34 7.83L64.65 25.17Q62.99 33 54.99 33H8Q0 33 1.66 25.17L5.35 7.83Q7.01 0 15.01 0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat !important;
+  background: none !important;
+  border-style: solid;
+  border-width: 0 15.35px;
+  border-image-slice: 0 180 fill;
+  border-image-width: 0 15.35px;
+  border-image-repeat: stretch;
 }
-#hotels .hotel-offer__plate::before {
-  transform: none !important;
-  border-radius: 0 !important;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 218 33' preserveAspectRatio='none'%3E%3Cpath fill='%23FFFFFF' d='M15.01 0H210Q218 0 216.34 7.83L212.65 25.17Q210.99 33 202.99 33H8Q0 33 1.66 25.17L5.35 7.83Q7.01 0 15.01 0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat !important;
-}
-#hotels .hotel-offer__plate:hover::before {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 218 33' preserveAspectRatio='none'%3E%3Cpath fill='%23F3EEFF' d='M15.01 0H210Q218 0 216.34 7.83L212.65 25.17Q210.99 33 202.99 33H8Q0 33 1.66 25.17L5.35 7.83Q7.01 0 15.01 0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat !important;
+#hotels .hotel-offer__badge::before { border-image-source: url("art/promo-plate-orange.webp"); }
+#hotels .hotel-offer__plate::before { border-image-source: url("art/promo-plate-white.webp"); }
+#hotels .hotel-offer__plate:hover::before { filter: brightness(.96); }
+@media (max-width: 599.98px) {
+  #hotels .hotel-offer__badge, #hotels .hotel-offer__plate.hotel-offer__plate { height: 28px !important; }
+  #hotels .hotel-offer__badge::before, #hotels .hotel-offer__plate::before { border-width: 0 13.02px; border-image-width: 0 13.02px; }
 }
