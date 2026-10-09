@@ -478,15 +478,16 @@
       b=[[0,1],[1,1]];
     }else if(mode==='flight'){
       a=[['in-delhi','from'],['in-mumbai','from'],['ru-moscow','to'],['ru-saint-petersburg','to']];
-      b=[[0,0],[1,0]];
+      b=[[1,0],[2,0]];
     }else{
       a=[['ru-moscow','from'],['ru-saint-petersburg','from'],['ru-kazan','to'],['ru-tver','to']];
-      b=[[0,0],[1,0]];
+      b=[[1,0],[2,0]];
     }
+    const dayWord=offset=>offset===0?(pageLang==='ru'?'Сегодня':pageLang==='hi'?'आज':'Today'):offset===1?(pageLang==='ru'?'Завтра':pageLang==='hi'?'कल':'Tomorrow'):(pageLang==='ru'?'Послезавтра':pageLang==='hi'?'परसों':'Day after tomorrow');
     const placeChip=item=>{const id=item[0],role=mode==='hotel'?'destination':item[1],p=TUTU_PLACES.byId.get(id);if(!p)return '';return '<button type="button" class="quick-chip-v2" data-v2-place="'+esc(id)+'" data-v2-role="'+esc(role)+'">'+esc(TUTU_PLACES.display(p,pageLang).name)+'</button>'};
     const dateHtml=b.map(x=>{
       const start=new Date(today);start.setDate(start.getDate()+x[0]);
-      const label=mode==='hotel'?compactDayFmt.format(start)+' – '+compactDayFmt.format(new Date(start.getFullYear(),start.getMonth(),start.getDate()+(x[1]||1))):(x[0]===0?(pageLang==='ru'?'Сегодня':pageLang==='hi'?'आज':'Today'):(pageLang==='ru'?'Завтра':pageLang==='hi'?'कल':'Tomorrow'));
+      const label=mode==='hotel'?compactDayFmt.format(start)+' – '+compactDayFmt.format(new Date(start.getFullYear(),start.getMonth(),start.getDate()+(x[1]||1))):dayWord(x[0]);
       return '<button type="button" class="quick-chip-v2" data-v2-date="'+x[0]+'" data-v2-length="'+x[1]+'">'+esc(label)+'</button>';
     }).join('');
     if(mode==='hotel'){
