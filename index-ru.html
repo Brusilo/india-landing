@@ -658,7 +658,7 @@ body{position:relative!important}
 }
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20261009-return-chips">
-<script src="assets/site-language-faq-v26.js?v=20261008-india-terms"></script>
+<script src="assets/site-language-faq-v26.js?v=20261009-promo-codes"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20261008-no-flash">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
 <link rel="stylesheet" href="assets/tutu-system.css?v=371">
@@ -747,13 +747,13 @@ body{position:relative!important}
 
 <section class="section promo-section">
   <div class="container">
-    <div class="promo-strip promo-strip--v2" role="region" aria-label="INDIA10">
+    <div class="promo-strip promo-strip--v2" role="region" aria-label="INTAVIATUTU">
       <div class="promo-strip__offer">
-        <h3><span class="promo-title-desktop">Больше экономии в&nbsp;поездке</span><span class="promo-title-mobile">Больше экономии!</span></h3>
-        <p><span class="promo-title-desktop">Скидка 10% на&nbsp;билеты и&nbsp;отели для&nbsp;вас и&nbsp;ваших друзей</span><span class="promo-title-mobile">Скидка 10% на&nbsp;билеты и&nbsp;отели</span></p>
+        <h3><span class="promo-title-desktop">Скидка 15% на&nbsp;авиабилеты</span><span class="promo-title-mobile">−15% на&nbsp;авиабилеты</span></h3>
+        <p><span class="promo-title-desktop">Сэкономьте до&nbsp;1000&nbsp;₽. Код действует до&nbsp;31&nbsp;декабря 2026&nbsp;года</span><span class="promo-title-mobile">До&nbsp;1000&nbsp;₽, до&nbsp;31&nbsp;декабря 2026</span></p>
       
         <div class="promo-strip__action">
-          <button type="button" class="promo-strip__copy promo-strip__copy--code" data-promo-code="INDIA10" data-copied-label="Скопировано" aria-label="Скопировать промокод INDIA10"><span class="promo-strip__copy-label">INDIA10</span><svg class="promo-strip__copy-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M4 16.5V5a1 1 0 0 1 1-1h11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="8" y="8" width="12" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg><svg class="promo-strip__copied-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="promo-strip__copy promo-strip__copy--code" data-promo-code="INTAVIATUTU" data-copied-label="Скопировано" aria-label="Скопировать промокод INTAVIATUTU"><span class="promo-strip__copy-label">INTAVIATUTU</span><svg class="promo-strip__copy-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M4 16.5V5a1 1 0 0 1 1-1h11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="8" y="8" width="12" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg><svg class="promo-strip__copied-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>      </div>
       <img class="promo-photo" src="assets/photos/airport-promo.webp" alt="" aria-hidden="true">
     </div>
@@ -1046,6 +1046,7 @@ const CONFIG = {
   currency: '₽',
   routeDiscount: 20,
   hotelDiscount: 15,
+  hotelDiscountMax: 3000,
   rubToInr: 1.12888,
 
   routes: [
@@ -1113,8 +1114,10 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
 }).join('') + CTA_CARD;
 
 document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
-  const rub = toRub(h.price);
-  const oldRub = Math.round(rub / (1 - CONFIG.hotelDiscount / 100));
+  // INTHOTELTUTU: 15% off Tutu's price, at most 3000 ₽.
+  const oldRub = toRub(h.price);
+  const offRub = Math.min(Math.round(oldRub * CONFIG.hotelDiscount / 100), CONFIG.hotelDiscountMax);
+  const rub = oldRub - offRub;
   return `
   <article class="card card--hotel" data-cta="hotel_${h.id}">
     <div class="card-media" style="background:${h.img ? `url('${h.img}') center/cover no-repeat, ` : ''}${h.gradient}">
@@ -1129,7 +1132,7 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
       <div class="route-price">
         <span class="price">${fmtNum(rub)}&nbsp;${CONFIG.currency}</span>
         <s class="route-old">${fmtNum(oldRub)}&nbsp;${CONFIG.currency}</s>
-        <span class="route-discount">-${CONFIG.hotelDiscount}%</span>
+        <span class="route-discount">-${Math.round(offRub / oldRub * 100)}%</span>
       </div>
       <div class="route-price route-price--inr">
         <span class="route-inr">₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>

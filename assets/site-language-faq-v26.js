@@ -38,8 +38,8 @@
         a: 'На невозвратные билеты на поезд скидка до 20%. В день рождения скидку получаете вы и до трёх попутчиков: 30% на Сапсан и 10% на другие поезда дальнего следования. Точные сроки и условия покажем при выборе тарифа.'
       },
       {
-        q: 'Как применить промокод INDIA10?',
-        a: 'INDIA10 действует до 31 декабря 2026 года. Введите код при оформлении заказа на сайте или в приложении Туту, и вы получите скидку 10% на билеты и отели. Применить его можно один раз. На отели скидка работает, если вы платите онлайн, а не при заселении.'
+        q: 'Какие промокоды можно применить?',
+        a: 'INTAVIATUTU даёт скидку 15% на авиабилеты, но не больше 1000 ₽. INTHOTELTUTU даёт скидку 15% на отели, но не больше 3000 ₽. Оба промокода действуют до 31 декабря 2026 года. Введите код при оформлении заказа на tutu.ru.'
       },
       {
         q: 'Можно ли вернуть или обменять билет?',
@@ -80,8 +80,8 @@
         a: 'Non-refundable train tickets come with up to 20% off. On your birthday, you and up to three companions get a discount: 30% on Sapsan trains and 10% on other long-distance trains. We show the exact timing and conditions when you choose a fare.'
       },
       {
-        q: 'How do I use the INDIA10 promo code?',
-        a: 'INDIA10 is valid until 31 December 2026. Enter it when you check out on the Tutu website or app to get 10% off tickets and hotels. You can use it once. For hotels, the discount works when you pay online, not at check-in.'
+        q: 'Which promo codes can I use?',
+        a: 'INTAVIATUTU gives you 15% off flights, up to 1,000 ₽. INTHOTELTUTU gives you 15% off hotels, up to 3,000 ₽. Both codes are valid until 31 December 2026. Enter the code when you check out on tutu.ru.'
       },
       {
         q: 'Can I refund or exchange a ticket?',
@@ -122,8 +122,8 @@
         a: 'नॉन-रिफ़ंडेबल ट्रेन टिकटों पर 20% तक की छूट मिलती है। जन्मदिन पर आपको और आपके साथ यात्रा करने वाले अधिकतम तीन लोगों को छूट मिलती है: सपसान ट्रेनों पर 30% और दूसरी लंबी दूरी की ट्रेनों पर 10%। सटीक तारीख़ें और शर्तें हम किराया चुनते समय दिखाते हैं।'
       },
       {
-        q: 'प्रोमो कोड INDIA10 कैसे इस्तेमाल करें?',
-        a: 'INDIA10 31 दिसंबर 2026 तक मान्य है। Tutu वेबसाइट या ऐप पर ऑर्डर करते समय कोड डालें और टिकटों व होटलों पर 10% की छूट पाएँ। कोड एक बार इस्तेमाल कर सकते हैं। होटलों पर छूट तब मिलती है, जब आप ऑनलाइन भुगतान करते हैं, चेक-इन पर नहीं।'
+        q: 'कौन-से प्रोमो कोड इस्तेमाल कर सकते हैं?',
+        a: 'INTAVIATUTU से फ़्लाइट टिकटों पर 15% की छूट मिलती है, अधिकतम 1,000 ₽। INTHOTELTUTU से होटलों पर 15% की छूट मिलती है, अधिकतम 3,000 ₽। दोनों कोड 31 दिसंबर 2026 तक मान्य हैं। tutu.ru पर ऑर्डर करते समय कोड डालें।'
       },
       {
         q: 'क्या टिकट वापस करना या बदलना संभव है?',
