@@ -4203,25 +4203,25 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   .hero .transport > * { gap: 4px !important; }
   .hero .transport .ico { margin-top: 4px !important; }
 }
-/* Tablet: the suitcase is back at the top right beside the title, without
-   the veil (that stays on phones). It fills the free corner between the end of
-   the title text (~431px from the left), the top bar and the subtitle, so it
-   never covers text; its width follows the window smoothly up to 179px. The
-   badge row runs to the screen edge again. */
+/* Tablet: the suitcase is background art behind the text again, under the
+   veil, in its old place and size - but as one smooth curve instead of two
+   jumps: 224px wide up to ~750px, then growing to 330px at 1100px, with the
+   top and right offsets following the old placements (top 28px -> -6px,
+   right 2px -> ~63px). */
 @media (min-width: 600px) and (max-width: 1100.98px) {
   html body section.hero { position: relative !important; }
   html body .hero > .hero-decor--suitcase.hero-decor--suitcase {
-    --suitcase-w: clamp(110px, calc((100vw - 486px) * 1.09), 179px);
+    --suitcase-w: clamp(224px, 30vw, 330px);
     width: var(--suitcase-w) !important;
     height: auto !important;
-    top: calc(132px - 0.82 * var(--suitcase-w)) !important;
+    top: max(-6px, calc(28px - (var(--suitcase-w) - 224px) * 0.74)) !important;
     bottom: auto !important;
     left: auto !important;
-    right: calc(24px - 0.005 * var(--suitcase-w)) !important;
-    opacity: 1 !important;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-    transform: rotate(-5deg) !important;
+    right: clamp(2px, calc(23px + (100vw - 915px) * 0.2), 70px) !important;
+    opacity: .8 !important;
+    -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 94%) !important;
+    mask-image: linear-gradient(to bottom, #000 25%, transparent 94%) !important;
+    transform: none !important;
     scale: none !important;
     translate: none !important;
   }
@@ -4241,5 +4241,5 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   html body .hero > .hero-decor--suitcase.hero-decor--suitcase { translate: -5px 0 !important; }
 }
 
-/* Badge icons sit 2px lower, level with the text. */
-.hero .pill svg { transform: translateY(2px); }
+/* Badge icons sit 1px lower, level with the text. */
+.hero .pill svg { transform: translateY(1px); }
