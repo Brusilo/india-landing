@@ -4156,7 +4156,7 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
     top: auto !important;
     bottom: calc(161.3px - 0.142 * var(--suitcase-w)) !important;
     left: auto !important;
-    right: max(16px, calc((100% - 1180px) / 2 - 160px)) !important;
+    right: max(5px, calc((100% - 1180px) / 2 + 5px)) !important;
   }
 }
 
@@ -4168,7 +4168,19 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 .top { box-shadow: 0 1px 0 var(--head-bg); }
 .hero .transport .lbl { color: #fff !important; opacity: 1 !important; }
 @media (min-width: 1101px) {
-  .hero .transport .ico img { width: 56% !important; transform: translateY(3px) !important; }
+  /* Each PNG draws its icon off-centre by a different amount (measured from
+     the visible pixels), so each is shifted by its own offset; the drawing
+     then sits exactly in the middle of the selection circle. */
+  .hero .transport .ico img { width: 56% !important; height: auto !important; margin: 0 !important; translate: none !important; transform: translateY(0) !important; }
+  .hero .transport .ico img[src*="icon-hotel"] { transform: translateY(-10.9%) !important; }
+  .hero .transport .ico img[src*="icon-flight"] { transform: translateY(-5.5%) !important; }
+  .hero .transport .ico img[src*="icon-train"] { transform: translateY(-5.1%) !important; }
+  .hero .transport .ico img[src*="icon-bus"] { transform: translateY(-3.5%) !important; }
+  .hero .transport .ico img[src*="icon-tours"] { transform: translateY(0.4%) !important; }
   .search-hints-v2 .quick-chip-v2 { font-weight: 600 !important; }
   .search.search-v2 .v2-swap svg { width: 22px !important; height: 22px !important; }
+}
+/* The Hindi badge row is longer, so its suitcase stops at 320px. */
+@media (min-width: 1101px) {
+  html:lang(hi) body .hero > .hero-decor--suitcase.hero-decor--suitcase { --suitcase-w: clamp(240px, calc(75vw - 600px), 320px); }
 }
