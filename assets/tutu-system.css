@@ -4150,19 +4150,18 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
      can be its positioning box again and "bottom" follows the search bar. */
   html body section.hero { position: relative !important; }
   html body .hero > .hero-decor--suitcase.hero-decor--suitcase {
-    /* 340px, as before. Only below ~1255px wide does it shrink (to 240px at
-       1120px) so the one-row English and Hindi badges stay clear of it. Its
-       visible bottom rests on the search bar; on wide screens it may reach
-       into the free right margin. */
-    --suitcase-w: calc(1.15 * clamp(240px, calc(75vw - 600px), 340px));
+    /* Grows smoothly from about 230px at 1101px to 330px at 1200px and wider
+       (300px in Hindi, whose badge row is longer) - the largest size that
+       stays inside the search bar's right edge without touching the badges.
+       Its visible bottom rests on the search bar. */
+    --suitcase-w: clamp(225px, calc(100vw - 870px), 330px);
     width: var(--suitcase-w) !important;
     top: auto !important;
     bottom: calc(161.3px - 0.142 * var(--suitcase-w)) !important;
     left: auto !important;
-    /* 15% larger than before; it sits 45px further right (50px in Hindi) so its
-       left side clears the rating badge. */
-    --suitcase-shift: 45px;
-    right: calc(max(5px, (100% - 1180px) / 2 + 5px) - var(--suitcase-shift)) !important;
+    /* Visible right edge = the search bar's right edge (the rotated image
+       reaches 0.5% of its width past its box). */
+    right: calc(max(24px, (100% - 1180px) / 2 + 24px) - 0.005 * var(--suitcase-w)) !important;
   }
 }
 
@@ -4183,7 +4182,7 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 }
 /* The Hindi badge row is longer, so its suitcase stops at 320px. */
 @media (min-width: 1101px) {
-  html:lang(hi) body .hero > .hero-decor--suitcase.hero-decor--suitcase { --suitcase-w: calc(1.15 * clamp(240px, calc(75vw - 600px), 320px)); --suitcase-shift: 50px; }
+  html:lang(hi) body .hero > .hero-decor--suitcase.hero-decor--suitcase { --suitcase-w: clamp(210px, calc(87.5vw - 750px), 300px); }
 }
 
 /* Pass 328 — the header details from desktop on every screen: badges with the
@@ -4204,9 +4203,28 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   .hero .transport > * { gap: 4px !important; }
   .hero .transport .ico { margin-top: 4px !important; }
 }
-/* Tablet suitcase keeps its long-tuned place and size; only brighter, as on phones. */
+/* Tablet: the suitcase stands on the search bar at its right edge, as on
+   desktop, with no veil (that stays on phones). Its width grows smoothly with
+   the window, limited by the room right of the tabs (they end at 444px) and
+   under the subtitle; the badge row stops before it. */
 @media (min-width: 600px) and (max-width: 1100.98px) {
-  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { opacity: .8 !important; }
+  html body section.hero { position: relative !important; }
+  html body .hero > .hero-decor--suitcase.hero-decor--suitcase {
+    --suitcase-w: clamp(110px, calc(109vw - 540px), 207px);
+    width: var(--suitcase-w) !important;
+    height: auto !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: calc(322px - 0.142 * var(--suitcase-w)) !important;
+    right: calc(24px - 0.005 * var(--suitcase-w)) !important;
+    opacity: 1 !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    transform: rotate(-5deg) !important;
+    scale: none !important;
+    translate: none !important;
+  }
+  .hero .pills { margin-right: calc(8px + 0.916 * clamp(110px, calc(109vw - 540px), 207px)) !important; padding-right: 0 !important; }
 }
 
 /* Pass 330 — search fields 30% closer on phones (10 -> 7px) and tablets
@@ -4216,4 +4234,9 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 }
 @media (min-width: 600px) and (max-width: 1100.98px) {
   .search.search-v2 { row-gap: 8px !important; column-gap: 7px !important; }
+}
+/* Phones keep the veiled suitcase behind the text; 5px in so its edge stays
+   inside the search bar's right edge. */
+@media (max-width: 599.98px) {
+  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { translate: -5px 0 !important; }
 }
