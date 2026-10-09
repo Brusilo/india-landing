@@ -768,7 +768,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
   <div class="container">
     <div class="section-head section-head--row">
       <div>
-        <h2>लोकप्रिय <span class="h2-tail">रूट&nbsp;<span class="route-sticker">-20%</span></span></h2>
+        <h2>लोकप्रिय <span class="h2-tail">रूट</span></h2>
         <p>वे रूट जिन्हें लोग सबसे ज़्यादा खोजते हैं</p>
       </div>
       <div class="head-actions">
@@ -1048,7 +1048,6 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 <script>
 const CONFIG = {
   currency: '₽',
-  routeDiscount: 20,
   hotelDiscount: 15,
   hotelDiscountMax: 3000,
   rubToInr: 1.12888,
@@ -1098,7 +1097,6 @@ const CTA_CARD = `
 
 document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
   const rub = parseInt(r.price.replace(/\s/g, ''), 10);
-  const oldRub = Math.round(rub / (1 - CONFIG.routeDiscount / 100));
   return `
   <article class="card card--route" data-cta="route_${r.id}${r.combined ? '_combined' : ''}" data-transport="${r.transport}">
     <div class="card-media${r.img ? '' : ' card-media--placeholder'}" style="background:${r.img ? `url('${r.img}') center/cover no-repeat, ` : ''}${r.gradient}">${r.img ? '' : `<img src="assets/icon-${r.transport === 'flight' ? 'flight' : 'train'}.png" alt="" aria-hidden="true">`}</div>
@@ -1106,12 +1104,9 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
       <p class="route-name">${r.from}&nbsp;→ ${r.to}</p>
       <div class="route-price">
         <span class="price">${fmtNum(rub)}&nbsp;${CONFIG.currency} <span class="price-from">से</span></span>
-        <s class="route-old">${fmtNum(oldRub)}&nbsp;${CONFIG.currency}</s>
-        <span class="route-discount">-${CONFIG.routeDiscount}%</span>
       </div>
       <div class="route-price route-price--inr">
         <span class="route-inr">₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
-        <s class="route-old">₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
       </div>
     </div>
   </article>`;

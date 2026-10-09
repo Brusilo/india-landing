@@ -764,7 +764,7 @@ body{position:relative!important}
   <div class="container">
     <div class="section-head section-head--row">
       <div>
-        <h2>Popular <span class="h2-tail">routes&nbsp;<span class="route-sticker">-20%</span></span></h2>
+        <h2>Popular <span class="h2-tail">routes</span></h2>
         <p>The routes people search for most</p>
       </div>
       <div class="head-actions">
@@ -1044,7 +1044,6 @@ body{position:relative!important}
 <script>
 const CONFIG = {
   currency: '₽',
-  routeDiscount: 20,
   hotelDiscount: 15,
   hotelDiscountMax: 3000,
   rubToInr: 1.12888,
@@ -1094,7 +1093,6 @@ const CTA_CARD = `
 
 document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
   const rub = parseInt(r.price.replace(/\s/g, ''), 10);
-  const oldRub = Math.round(rub / (1 - CONFIG.routeDiscount / 100));
   return `
   <article class="card card--route" data-cta="route_${r.id}${r.combined ? '_combined' : ''}" data-transport="${r.transport}">
     <div class="card-media${r.img ? '' : ' card-media--placeholder'}" style="background:${r.img ? `url('${r.img}') center/cover no-repeat, ` : ''}${r.gradient}">${r.img ? '' : `<img src="assets/icon-${r.transport === 'flight' ? 'flight' : 'train'}.png" alt="" aria-hidden="true">`}</div>
@@ -1102,12 +1100,9 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
       <p class="route-name">${r.from}&nbsp;→ ${r.to}</p>
       <div class="route-price">
         <span class="price"><span class="price-from">from</span> ${fmtNum(rub)}&nbsp;${CONFIG.currency}</span>
-        <s class="route-old">${fmtNum(oldRub)}&nbsp;${CONFIG.currency}</s>
-        <span class="route-discount">-${CONFIG.routeDiscount}%</span>
       </div>
       <div class="route-price route-price--inr">
         <span class="route-inr">₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
-        <s class="route-old">₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
       </div>
     </div>
   </article>`;
