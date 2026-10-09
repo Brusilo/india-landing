@@ -4084,3 +4084,26 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
    about half) and semibold text across the header; the quick chips keep 500. */
 .hero .ico img { width: 66% !important; height: auto !important; }
 .top a, .top .lang a, .hero .hero-sub, .hero .pill, .hero .lbl { font-weight: 600 !important; }
+
+/* Pass 305 — rounded rectangles instead of capsules, as on tutu.ru (badges
+   8px at about 38px high), slightly larger badge text, and a footer without
+   divider lines, as in the mock-ups. */
+.hero .pill { border-radius: 8px !important; font-size: 14px !important; }
+.lang { border-radius: 10px !important; }
+.lang a { border-radius: 8px !important; }
+.search-hints-v2 .quick-chip-v2 { border-radius: 6px; }
+.footer-grid, .mobile-footer-group { border-bottom: 0 !important; }
+@media (max-width: 599.98px) {
+  .hero .pill { font-size: 12.5px !important; }
+}
+/* On desktop the suitcase starts about 790px into the badge row, so the
+   badges wrap before reaching it instead of running underneath. */
+@media (min-width: 1101px) {
+  .hero .pills { max-width: 780px; }
+}
+/* At the narrowest desktop widths two city chips are a pixel wider than the
+   "To" column; a slightly tighter gap keeps them on one line. */
+@media (min-width: 1101px) and (max-width: 1199.98px) {
+  .search-hints-v2 .quick-group-v2 { gap: 4px; }
+  .search-hints-v2 .quick-chip-v2 { padding-left: 6px; padding-right: 6px; }
+}
