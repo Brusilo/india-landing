@@ -4254,3 +4254,18 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
      may run on instead of wrapping. */
   .search-hints-v2 .quick-group-v2:last-child { flex-wrap: nowrap !important; }
 }
+
+/* Pass 343 — rounder hint chips (8px); Russian chips ~5% smaller so every
+   group fits under its own field; Hindi text centred vertically: Devanagari
+   marks reach higher above the line, so badges and chips get more padding on
+   top (text +2px / +1px) and the badge icon keeps its place. */
+.search-hints-v2 .quick-chip-v2 { border-radius: 8px !important; }
+@media (min-width: 1101px) {
+  html:lang(ru) .search-hints-v2 .quick-chip-v2 {
+    font-size: clamp(11px, calc(1.6vw - 7px), 11.8px) !important;
+    padding: 5px clamp(5px, calc(3vw - 29px), 7px) !important;
+  }
+  html:lang(hi) .search-hints-v2 .quick-chip-v2 { padding-top: 6px !important; padding-bottom: 4px !important; }
+}
+html:lang(hi) .hero .pill { padding-top: 6.5px !important; padding-bottom: 5.5px !important; }
+html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
