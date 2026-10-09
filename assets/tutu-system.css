@@ -4309,3 +4309,17 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
   .footer .footer-col a { font-size: 15.5px !important; }
   .footer .legal { font-size: 13.5px !important; }
 }
+
+/* Pass 353 — phone and tablet footer: tighter rows (sections 60 -> 48px,
+   bottom text line-height 1.7 -> 1.45); tablets drop the QR and show the four
+   store buttons in one row, as on phones. */
+@media (max-width: 1100.98px) {
+  .footer .footer-toggle { padding-top: 6px !important; padding-bottom: 6px !important; min-height: 48px !important; }
+  .footer .legal { line-height: 1.45 !important; }
+  .footer .footer-site { line-height: 1.4 !important; }
+}
+@media (min-width: 768px) and (max-width: 1100.98px) {
+  .footer-app-col .qr { display: none !important; }
+  .footer-app-col .stores { grid-template-columns: repeat(4, 52px) !important; width: auto !important; gap: 8px !important; }
+  .footer-app-col .stores a { width: 52px !important; height: 52px !important; min-height: 0 !important; }
+}
