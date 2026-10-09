@@ -4154,14 +4154,14 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
        the same in every language: the largest size that stays inside the
        search bar's right edge without touching the (longest, Hindi) badges.
        Its visible bottom rests on the search bar. */
-    --suitcase-w: clamp(210px, calc(87.5vw - 750px), 300px);
+    --suitcase-w: clamp(224px, calc(93vw - 796px), 320px);
     width: var(--suitcase-w) !important;
     top: auto !important;
-    bottom: calc(161.3px - 0.142 * var(--suitcase-w)) !important;
+    bottom: calc(164px - 0.142 * var(--suitcase-w)) !important;
     left: auto !important;
     /* Visible right edge = the search bar's right edge (the rotated image
        reaches 0.5% of its width past its box). */
-    right: calc(max(24px, (100% - 1180px) / 2 + 24px) - 0.005 * var(--suitcase-w)) !important;
+    right: calc(max(24px, (100% - 1180px) / 2 + 24px) - 20px - 0.005 * var(--suitcase-w)) !important;
   }
 }
 
@@ -4239,3 +4239,18 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 
 /* Badge icons sit 1px lower, level with the text. */
 .hero .pill svg { transform: translateY(1px); }
+
+/* Pass 338 — hint chips: one 4px gap everywhere, slightly larger chips and
+   text (12.5px instead of 11-11.5px). */
+@media (min-width: 1101px) {
+  .search-hints-v2 .quick-group-v2 { gap: 4px !important; }
+  /* 12.5px from 1200px; on narrower desktops the text and side padding
+     shrink smoothly (to 11px / 5px at 1101px) so each group stays on one line. */
+  .search-hints-v2 .quick-chip-v2 {
+    font-size: clamp(11px, calc(1.6vw - 7px), 12.5px) !important;
+    padding: 5px clamp(5px, calc(3vw - 29px), 8px) !important;
+  }
+  /* The last group has empty space after it (under the travellers field), so it
+     may run on instead of wrapping. */
+  .search-hints-v2 .quick-group-v2:last-child { flex-wrap: nowrap !important; }
+}
