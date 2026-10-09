@@ -4048,3 +4048,19 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   filter: brightness(0) invert(1);
   opacity: .9;
 }
+
+/* Pass 302 — header and footer in the new Tutu lilac (#A180FF) with the
+   orange search button (#FD5626), as in the brand mock-ups of October 2026.
+   Translucent white replaces the violet tints that disappear on lilac. */
+:root { --head-bg: #A180FF; --head-cta: #FD5626; --head-cta-hover: #E8481B; }
+.top, .hero, .footer { background: var(--head-bg) !important; }
+.hero h1 .accent, :lang(hi) .hero h1 .accent { color: var(--deep-blue); }
+.hero .pill { background: rgba(255, 255, 255, .2); border-color: rgba(255, 255, 255, .32); }
+.hero .ico { background: rgba(255, 255, 255, .22); }
+.hero .is-active .ico { background: #fff !important; }
+.hero .is-active .ico img { filter: none; }
+.lang { background: rgba(255, 255, 255, .22); }
+.search-v2 .v2-submit, .btn-search { background: var(--head-cta) !important; }
+.search-v2 .v2-submit:hover, .btn-search:hover { background: var(--head-cta-hover) !important; }
+.search-hints-v2 .quick-chip-v2 { background: rgba(255, 255, 255, .22); }
+.search-hints-v2 .quick-chip-v2:hover { background: rgba(255, 255, 255, .36); }
