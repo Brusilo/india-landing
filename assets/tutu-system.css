@@ -4294,7 +4294,18 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
   .footer .legal { margin-top: 5px !important; }
 }
 /* Every footer heading in the same semibold weight and size. */
-.footer .footer-app-title, .footer .footer-col h4 { font-weight: 600 !important; font-size: 15px !important; }
+.footer .footer-app-title, .footer .footer-col h4 { font-weight: 600 !important; font-size: 16px !important; }
 @media (min-width: 1101px) {
   .footer .footer-logo { height: 38px !important; }
+}
+
+/* Footer text 1px larger everywhere (headings above: 15 -> 16px). */
+.footer .footer-site { font-size: 16px !important; }
+@media (max-width: 1100.98px) {
+  .footer .mobile-footer-group span, .footer .mobile-footer-group a { font-size: 16px !important; }
+  .footer .legal { font-size: 13px !important; }
+}
+@media (min-width: 1101px) {
+  .footer .footer-col a { font-size: 15.5px !important; }
+  .footer .legal { font-size: 13.5px !important; }
 }
