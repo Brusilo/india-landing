@@ -4150,11 +4150,11 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
      can be its positioning box again and "bottom" follows the search bar. */
   html body section.hero { position: relative !important; }
   html body .hero > .hero-decor--suitcase.hero-decor--suitcase {
-    /* Grows smoothly from about 230px at 1101px to 330px at 1200px and wider
-       (300px in Hindi, whose badge row is longer) - the largest size that
-       stays inside the search bar's right edge without touching the badges.
+    /* Grows smoothly from about 210px at 1101px to 300px at 1200px and wider,
+       the same in every language: the largest size that stays inside the
+       search bar's right edge without touching the (longest, Hindi) badges.
        Its visible bottom rests on the search bar. */
-    --suitcase-w: clamp(225px, calc(100vw - 870px), 330px);
+    --suitcase-w: clamp(210px, calc(87.5vw - 750px), 300px);
     width: var(--suitcase-w) !important;
     top: auto !important;
     bottom: calc(161.3px - 0.142 * var(--suitcase-w)) !important;
@@ -4179,10 +4179,6 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   .hero .transport .ico img { width: 40px !important; height: auto !important; margin: 0 !important; translate: none !important; transform: translateY(0) !important; }
   .search-hints-v2 .quick-chip-v2 { font-weight: 600 !important; }
   .search.search-v2 .v2-swap svg { width: 22px !important; height: 22px !important; }
-}
-/* The Hindi badge row is longer, so its suitcase stops at 320px. */
-@media (min-width: 1101px) {
-  html:lang(hi) body .hero > .hero-decor--suitcase.hero-decor--suitcase { --suitcase-w: clamp(210px, calc(87.5vw - 750px), 300px); }
 }
 
 /* Pass 328 — the header details from desktop on every screen: badges with the
