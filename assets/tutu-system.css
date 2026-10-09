@@ -4409,8 +4409,8 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
 }
 
 /* Pass 365 — the offer row copies the reference image (2000x235): the orange
-   plate is its left plate as is (776x235), the white plate is its right plate
-   with a longer straight middle (1695x235), each drawn as one whole image.
+   plate is its left plate as is (776x235), the white plate is the same orange plate
+   in white with a longer straight middle (1695x235), each drawn as one whole image.
    All sizes follow the reference relative to the plate height --ph: digits
    0.68 of it, code caps 0.46, 2px between the plates. */
 #hotels .hotel-offer { --ph: 33px; column-gap: calc(var(--ph) * 14 / 235); }
@@ -4422,7 +4422,7 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
 #hotels .hotel-offer__badge::before, #hotels .hotel-offer__plate::before {
   transform: none !important;
   border-radius: 0 !important;
-  background: url("art/promo-plate-white.webp?v=3") 0 0 / 100% 100% no-repeat !important;
+  background: url("art/promo-plate-white.webp?v=4") 0 0 / 100% 100% no-repeat !important;
 }
 #hotels .hotel-offer__badge::before { background-image: url("art/promo-plate-orange.webp?v=3") !important; }
 #hotels .hotel-offer__plate:hover::before { filter: brightness(.96); }
