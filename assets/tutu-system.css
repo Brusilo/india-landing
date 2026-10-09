@@ -4125,7 +4125,7 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   .search.search-v2 .v2-swap > span { background: transparent !important; }
 
   .hero .transport { gap: 8px !important; margin-top: 22px !important; margin-bottom: 6px !important; }
-  .hero .transport > button { width: 120px !important; min-width: 120px !important; }
+  .hero .transport > * { width: 120px !important; min-width: 120px !important; }
   /* A 60px circle sitting 4px above its label; the 40px icon keeps its size, so
      it ends 14px above the label instead of 28px. The row stays 96px high. */
   .hero .transport > * { gap: 4px !important; }
@@ -4154,12 +4154,15 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
        1120px) so the one-row English and Hindi badges stay clear of it. Its
        visible bottom rests on the search bar; on wide screens it may reach
        into the free right margin. */
-    --suitcase-w: clamp(240px, calc(75vw - 600px), 340px);
+    --suitcase-w: calc(1.15 * clamp(240px, calc(75vw - 600px), 340px));
     width: var(--suitcase-w) !important;
     top: auto !important;
     bottom: calc(161.3px - 0.142 * var(--suitcase-w)) !important;
     left: auto !important;
-    right: max(5px, calc((100% - 1180px) / 2 + 5px)) !important;
+    /* 15% larger than before; it sits 45px further right (50px in Hindi) so its
+       left side clears the rating badge. */
+    --suitcase-shift: 45px;
+    right: calc(max(5px, (100% - 1180px) / 2 + 5px) - var(--suitcase-shift)) !important;
   }
 }
 
@@ -4175,15 +4178,32 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
      the visible pixels), so each is shifted by its own offset; the drawing
      then sits exactly in the middle of the selection circle. */
   .hero .transport .ico img { width: 40px !important; height: auto !important; margin: 0 !important; translate: none !important; transform: translateY(0) !important; }
-  .hero .transport .ico img[src*="icon-hotel"] { transform: translateY(-10.9%) !important; }
-  .hero .transport .ico img[src*="icon-flight"] { transform: translateY(-5.5%) !important; }
-  .hero .transport .ico img[src*="icon-train"] { transform: translateY(-5.1%) !important; }
-  .hero .transport .ico img[src*="icon-bus"] { transform: translateY(-3.5%) !important; }
-  .hero .transport .ico img[src*="icon-tours"] { transform: translateY(0.4%) !important; }
   .search-hints-v2 .quick-chip-v2 { font-weight: 600 !important; }
   .search.search-v2 .v2-swap svg { width: 22px !important; height: 22px !important; }
 }
 /* The Hindi badge row is longer, so its suitcase stops at 320px. */
 @media (min-width: 1101px) {
-  html:lang(hi) body .hero > .hero-decor--suitcase.hero-decor--suitcase { --suitcase-w: clamp(240px, calc(75vw - 600px), 320px); }
+  html:lang(hi) body .hero > .hero-decor--suitcase.hero-decor--suitcase { --suitcase-w: calc(1.15 * clamp(240px, calc(75vw - 600px), 320px)); --suitcase-shift: 50px; }
+}
+
+/* Pass 328 — the header details from desktop on every screen: badges with the
+   language switch's 10px radius, 5px apart, text 1.5px higher inside; icons
+   centred in their circles (offsets measured from each PNG) and closer to the
+   labels; more air around the tab row on tablet and phone; the tablet
+   suitcase 15% larger and a little higher. Rating 4.9. */
+.hero .pills { gap: 5px !important; }
+.hero .pill { border-radius: 10px !important; padding: 4.5px 10px 7.5px 9px !important; gap: 4px !important; line-height: 21px !important; border-width: 0 !important; white-space: nowrap; }
+.hero .transport .ico img { margin: 0 !important; translate: none !important; }
+.hero .transport .ico img[src*="icon-hotel"] { transform: translateY(-10.9%) !important; }
+.hero .transport .ico img[src*="icon-flight"] { transform: translateY(-5.5%) !important; }
+.hero .transport .ico img[src*="icon-train"] { transform: translateY(-5.1%) !important; }
+.hero .transport .ico img[src*="icon-bus"] { transform: translateY(-3.5%) !important; }
+.hero .transport .ico img[src*="icon-tours"] { transform: translateY(0.4%) !important; }
+@media (max-width: 1100.98px) {
+  .hero .transport { margin-top: 24px !important; margin-bottom: 4px !important; }
+  .hero .transport > * { gap: 4px !important; }
+  .hero .transport .ico { margin-top: 4px !important; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { scale: 1.15; translate: 0 -18px; }
 }
