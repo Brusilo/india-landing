@@ -4403,7 +4403,7 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
 #hotels .hotel-offer__plate svg { width: 20px; height: 20px; flex: none; }
 #hotels .hotel-offer__plate .promo-strip__copied-icon { display: none; }
 #hotels .hotel-offer__plate.is-copied .promo-strip__copy-icon { display: none; }
-#hotels .hotel-offer__plate.is-copied .promo-strip__copied-icon { display: block; color: #00894A; }
+#hotels .hotel-offer__plate.is-copied .promo-strip__copied-icon { display: block; color: #1E1E1E; }
 @media (max-width: 599.98px) {
   #hotels .hotel-offer__badge, #hotels .hotel-offer__code { font-size: 18px; }
 }
@@ -4440,4 +4440,13 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
   #hotels .section-head--row > div:first-child { display: flex; align-items: center; column-gap: 11.7px; grid-area: title; min-width: 0; }
   #hotels .section-head--row > div:first-child > h2 { flex: none; }
   #hotels .hotel-offer { grid-column: auto; margin: 4.6px 0 0; flex-wrap: nowrap; }
+}
+
+/* Pass 367 — route cards lost the old price and the discount badge, so the
+   price gets the room: larger on every screen, rupees a size up too. */
+html body #routes .card--route .route-price .price { font-size: 20px; }
+html body #routes .card--route .route-price--inr .route-inr { font-size: 16px; }
+@media (min-width: 1101px) {
+  html body #routes .card--route .route-price .price { font-size: 22px; }
+  html body #routes .card--route .route-price--inr .route-inr { font-size: 17px; }
 }
