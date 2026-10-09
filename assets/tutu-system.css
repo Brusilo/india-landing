@@ -4450,3 +4450,6 @@ html body #routes .card--route .route-price--inr .route-inr { font-size: 16px; }
   html body #routes .card--route .route-price .price { font-size: 21px; }
   html body #routes .card--route .route-price--inr .route-inr { font-size: 17px; }
 }
+
+/* Pass 368 — hotel prices semibold like the route prices. */
+html body #hotels .card--hotel .route-price .price { font-weight: 600; }
