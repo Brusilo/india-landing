@@ -4416,7 +4416,7 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
 #hotels .hotel-offer { --ph: 33px; column-gap: calc(var(--ph) * 14 / 235); }
 #hotels .hotel-offer__badge, #hotels .hotel-offer__plate.hotel-offer__plate { height: var(--ph) !important; box-sizing: border-box; justify-content: center; }
 #hotels .hotel-offer__badge { display: inline-flex; align-items: center; width: calc(var(--ph) * 776 / 235); padding: 0 !important; font-size: calc(var(--ph) * .958); line-height: 1; }
-#hotels .hotel-offer__plate.hotel-offer__plate { width: calc(var(--ph) * 1695 / 235) !important; padding: 0 !important; gap: calc(var(--ph) * 10 / 33); }
+#hotels .hotel-offer__plate.hotel-offer__plate { width: calc(var(--ph) * 1695 / 235) !important; padding: 0 !important; gap: calc(var(--ph) * 10 / 33); overflow: visible !important; border-radius: 0 !important; }
 #hotels .hotel-offer .hotel-offer__code { font-size: calc(var(--ph) * 22 / 33); line-height: 1; }
 #hotels .hotel-offer__plate svg { width: calc(var(--ph) * 20 / 33); height: calc(var(--ph) * 20 / 33); }
 #hotels .hotel-offer__badge::before, #hotels .hotel-offer__plate::before {
