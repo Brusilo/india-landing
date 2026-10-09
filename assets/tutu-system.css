@@ -4124,12 +4124,12 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
      square inside made the gaps beside it look wider than the others. */
   .search.search-v2 .v2-swap > span { background: transparent !important; }
 
-  .hero .transport { gap: 8px !important; margin-top: 22px !important; margin-bottom: 6px !important; }
+  .hero .transport { gap: 8px !important; margin-top: 8px !important; margin-bottom: 6px !important; }
   .hero .transport > * { width: 120px !important; min-width: 120px !important; }
   /* A 60px circle sitting 4px above its label; the 40px icon keeps its size, so
      it ends 14px above the label instead of 28px. The row stays 96px high. */
   .hero .transport > * { gap: 4px !important; }
-  .hero .transport .ico { width: 60px !important; height: 60px !important; margin-top: 16px !important; }
+  .hero .transport .ico { width: 60px !important; height: 60px !important; margin-top: 8px !important; }
   .hero .transport .ico img { width: 62% !important; }
   .hero .transport .lbl { font-size: 16px !important; }
 
@@ -4200,10 +4200,20 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 .hero .transport .ico img[src*="icon-bus"] { transform: translateY(-3.5%) !important; }
 .hero .transport .ico img[src*="icon-tours"] { transform: translateY(0.4%) !important; }
 @media (max-width: 1100.98px) {
-  .hero .transport { margin-top: 24px !important; margin-bottom: 4px !important; }
+  .hero .transport { margin-top: 10px !important; margin-bottom: 4px !important; }
   .hero .transport > * { gap: 4px !important; }
   .hero .transport .ico { margin-top: 4px !important; }
 }
+/* Tablet suitcase keeps its long-tuned place and size; only brighter, as on phones. */
 @media (min-width: 600px) and (max-width: 1100.98px) {
-  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { scale: 1.15; translate: 0 -18px; }
+  html body .hero > .hero-decor--suitcase.hero-decor--suitcase { opacity: .8 !important; }
+}
+
+/* Pass 330 — search fields 30% closer on phones (10 -> 7px) and tablets
+   (12 -> 8px between rows, 10 -> 7px between columns). */
+@media (max-width: 599.98px) {
+  .search.search-v2 { row-gap: 7px !important; column-gap: 7px !important; }
+}
+@media (min-width: 600px) and (max-width: 1100.98px) {
+  .search.search-v2 { row-gap: 8px !important; column-gap: 7px !important; }
 }
