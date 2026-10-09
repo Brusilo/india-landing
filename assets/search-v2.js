@@ -487,7 +487,7 @@
       a=[['in-delhi','from'],['in-mumbai','from'],['ru-moscow','to'],['ru-saint-petersburg','to']];
       b=[[0,0],[1,0]];
     }else{
-      a=[['ru-moscow','from'],['ru-saint-petersburg','from'],['ru-kazan','to'],['ru-tver','to']];
+      a=[['ru-moscow','from'],['ru-saint-petersburg','from'],['ru-veliky-novgorod','to'],['ru-cheboksary','to']];
       b=[[0,0],[1,0]];
     }
     const dayWord=offset=>offset===0?(pageLang==='ru'?'Сегодня':pageLang==='hi'?'आज':'Today'):offset===1?(pageLang==='ru'?'Завтра':pageLang==='hi'?'कल':'Tomorrow'):(pageLang==='ru'?'Послезавтра':pageLang==='hi'?'परसों':'In 2 days');
