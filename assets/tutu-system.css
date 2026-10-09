@@ -4203,19 +4203,20 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   .hero .transport > * { gap: 4px !important; }
   .hero .transport .ico { margin-top: 4px !important; }
 }
-/* Tablet: the suitcase stands on the search bar at its right edge, as on
-   desktop, with no veil (that stays on phones). Its width grows smoothly with
-   the window, limited by the room right of the tabs (they end at 444px) and
-   under the subtitle; the badge row stops before it. */
+/* Tablet: the suitcase is back at the top right beside the title, without
+   the veil (that stays on phones). It fills the free corner between the end of
+   the title text (~431px from the left), the top bar and the subtitle, so it
+   never covers text; its width follows the window smoothly up to 179px. The
+   badge row runs to the screen edge again. */
 @media (min-width: 600px) and (max-width: 1100.98px) {
   html body section.hero { position: relative !important; }
   html body .hero > .hero-decor--suitcase.hero-decor--suitcase {
-    --suitcase-w: clamp(110px, calc(109vw - 540px), 207px);
+    --suitcase-w: clamp(110px, calc((100vw - 486px) * 1.09), 179px);
     width: var(--suitcase-w) !important;
     height: auto !important;
-    top: auto !important;
+    top: calc(132px - 0.82 * var(--suitcase-w)) !important;
+    bottom: auto !important;
     left: auto !important;
-    bottom: calc(322px - 0.142 * var(--suitcase-w)) !important;
     right: calc(24px - 0.005 * var(--suitcase-w)) !important;
     opacity: 1 !important;
     -webkit-mask-image: none !important;
@@ -4224,7 +4225,6 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
     scale: none !important;
     translate: none !important;
   }
-  .hero .pills { margin-right: calc(8px + 0.916 * clamp(110px, calc(109vw - 540px), 207px)) !important; padding-right: 0 !important; }
 }
 
 /* Pass 330 — search fields 30% closer on phones (10 -> 7px) and tablets
@@ -4240,3 +4240,6 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (max-width: 599.98px) {
   html body .hero > .hero-decor--suitcase.hero-decor--suitcase { translate: -5px 0 !important; }
 }
+
+/* Badge icons sit 2px lower, level with the text. */
+.hero .pill svg { transform: translateY(2px); }
