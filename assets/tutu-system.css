@@ -4269,3 +4269,30 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 }
 html:lang(hi) .hero .pill { padding-top: 6.5px !important; padding-bottom: 5.5px !important; }
 html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
+
+/* Pass 344 — desktop footer laid out like the mock-up: columns start at 0 /
+   29 / 53.5 / 78% of the width, a 222px QR with four 48px square store
+   buttons as tall as it, 30px social icons, a 28px link rhythm and the
+   legal lines closer to the columns. Font sizes are unchanged. */
+@media (min-width: 1101px) {
+  .footer-logo { margin-bottom: 18px !important; }
+  .footer-grid {
+    grid-template-columns: 29% 24.5% 24.5% minmax(0, 1fr) !important;
+    column-gap: 0 !important;
+    padding-bottom: 6px !important;
+    margin-bottom: 10px !important;
+  }
+  .footer-app-title { margin-bottom: 12px !important; }
+  .footer-app-body { gap: 10px !important; }
+  .footer-app-col .qr { width: 222px !important; height: 222px !important; padding: 11px !important; border-radius: 14px !important; }
+  .footer-app-col .stores { width: 48px !important; height: 222px !important; gap: 10px !important; }
+  .footer-app-col .stores a { flex: 1 1 0 !important; border-radius: 10px !important; background: #fff; }
+  .footer-col h4 { margin-bottom: 6px !important; }
+  .footer-col a { line-height: 20px !important; padding-top: 4px !important; padding-bottom: 4px !important; min-height: 0 !important; }
+  .footer-col .socials { gap: 8px !important; }
+  .footer-col .socials img.social { width: 30px !important; height: 30px !important; }
+}
+@media (min-width: 1101px) {
+  .footer .footer-site { margin-bottom: 0 !important; }
+  .footer .legal { margin-top: 5px !important; }
+}
