@@ -4277,22 +4277,22 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
 @media (min-width: 1101px) {
   .footer-logo { margin-bottom: 18px !important; }
   .footer-grid {
-    grid-template-columns: 29% 24.5% 24.5% minmax(0, 1fr) !important;
+    grid-template-columns: max(34%, 385px) 23fr 23fr 20fr !important;
     column-gap: 0 !important;
     padding-bottom: 6px !important;
     margin-bottom: 10px !important;
   }
   .footer-app-title { margin-bottom: 12px !important; }
   .footer-app-body { gap: 10px !important; }
-  .footer-app-col .qr { width: 222px !important; height: 222px !important; padding: 11px !important; border-radius: 14px !important; }
-  .footer-app-col .stores { width: 48px !important; height: 222px !important; gap: 10px !important; }
-  .footer-app-col .stores a { flex: 1 1 0 !important; border-radius: 10px !important; background: #fff; }
-  .footer-col h4 { margin-bottom: 6px !important; }
-  .footer-col a { line-height: 20px !important; padding-top: 4px !important; padding-bottom: 4px !important; min-height: 0 !important; }
-  .footer-col .socials { gap: 8px !important; }
-  .footer-col .socials img.social { width: 30px !important; height: 30px !important; }
+  /* 280px box with 10px padding shows the 520px QR at exactly half size, so its
+     squares stay crisp. */
+  .footer-app-col .qr { width: 280px !important; height: 280px !important; padding: 10px !important; border-radius: 18px !important; }
+  .footer-app-col .stores { width: 61px !important; height: 280px !important; gap: 12px !important; }
+  .footer-app-col .stores a { flex: 1 1 0 !important; border-radius: 14px !important; background: #fff; }
 }
 @media (min-width: 1101px) {
   .footer .footer-site { margin-bottom: 0 !important; }
   .footer .legal { margin-top: 5px !important; }
 }
+/* Every footer heading in the same bold weight. */
+.footer .footer-app-title { font-weight: 700 !important; }
