@@ -4116,13 +4116,19 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
 @media (min-width: 1101px) {
   .hero h1, html:lang(hi) .hero h1 { max-width: none !important; min-height: 0 !important; padding-top: 0 !important; }
   .hero .hero-sub { max-width: calc(100% - 330px) !important; }
-  .hero .pills { max-width: calc(100% - 330px) !important; gap: 5px !important; }
+  .hero .pills { max-width: none !important; flex-wrap: nowrap !important; gap: 5px !important; }
+  /* Badge proportions from tutu.ru scaled to our 14px text: ~33px high,
+     tight side padding, icon close to the text. */
+  .hero .pill { padding: 6px 10px 6px 9px !important; gap: 4px !important; line-height: 21px !important; border-width: 0 !important; white-space: nowrap; }
+  /* The swap cell is a plain white cell with arrows, as on tutu.ru; the grey
+     square inside made the gaps beside it look wider than the others. */
+  .search.search-v2 .v2-swap > span { background: transparent !important; }
 
-  .hero .transport { gap: 8px !important; }
-  .hero .transport > button { width: 112px !important; min-width: 112px !important; }
-  .hero .transport .ico { width: 60px !important; height: 60px !important; }
+  .hero .transport { gap: 8px !important; margin-top: 22px !important; margin-bottom: 6px !important; }
+  .hero .transport > button { width: 120px !important; min-width: 120px !important; }
+  .hero .transport .ico { width: 72px !important; height: 72px !important; }
   .hero .transport .ico img { width: 62% !important; }
-  .hero .transport .lbl { font-size: 15px !important; }
+  .hero .transport .lbl { font-size: 16px !important; }
 
   .search.search-v2 { background: transparent !important; column-gap: 2px !important; box-shadow: none !important; }
   .search.search-v2 > *, .search.search-v2 .v2-flight-dates > .v2-field { background: #fff; border-radius: 0 !important; border-left: 0 !important; border-right: 0 !important; }
@@ -4135,10 +4141,15 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
      can be its positioning box again and "bottom" follows the search bar. */
   html body section.hero { position: relative !important; }
   html body .hero > .hero-decor--suitcase.hero-decor--suitcase {
-    width: 340px !important;
+    /* Sized so the one-row badges (longest in Russian) stay clear of it:
+       180px at 1120px wide up to 320px from about 1680px. Its visible bottom
+       (82% down the image) rests on the search bar; on wide screens it may
+       reach 160px into the free margin. */
+    --suitcase-w: clamp(180px, calc(25vw - 100px), 320px);
+    width: var(--suitcase-w) !important;
     top: auto !important;
-    bottom: 113px !important;
+    bottom: calc(161.3px - 0.142 * var(--suitcase-w)) !important;
     left: auto !important;
-    right: max(5px, calc((100% - 1180px) / 2 + 5px)) !important;
+    right: max(16px, calc((100% - 1180px) / 2 - 160px)) !important;
   }
 }
