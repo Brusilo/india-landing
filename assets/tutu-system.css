@@ -4323,3 +4323,9 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
   .footer-app-col .stores { grid-template-columns: repeat(4, 52px) !important; width: auto !important; gap: 8px !important; }
   .footer-app-col .stores a { width: 52px !important; height: 52px !important; min-height: 0 !important; }
 }
+
+/* Top menu links: always bright white; 2px larger on desktop. */
+.top .top-nav a, .top .top-nav a:hover, .top .top-nav a:focus { color: #fff !important; opacity: 1 !important; }
+@media (min-width: 1101px) {
+  .top .top-nav a { font-size: 16px !important; }
+}
