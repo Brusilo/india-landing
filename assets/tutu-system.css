@@ -4329,3 +4329,41 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
 @media (min-width: 1101px) {
   .top .top-nav a { font-size: 16px !important; }
 }
+
+/* Pass 357 — hotels promo: the −15% sticker in the heading (same as routes)
+   and a white chip with the INTHOTELTUTU code that copies on click. */
+#hotels .hotel-promo.hotel-promo {
+  justify-self: start !important;
+  grid-column: 1 !important;
+  width: auto !important;
+  max-width: 100%;
+  justify-content: flex-start !important;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 7px 10px 7px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--deep-blue);
+  font: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+#hotels .hotel-promo:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(13, 11, 104, .18); }
+#hotels .hotel-promo__label {
+  font-size: 13px;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  color: var(--strawberry);
+}
+#hotels .hotel-promo__code { font-size: 16px; font-weight: 600; letter-spacing: .02em; }
+#hotels .hotel-promo svg { width: 20px; height: 20px; flex: none; }
+#hotels .hotel-promo .promo-strip__copied-icon { display: none; }
+#hotels .hotel-promo.is-copied .promo-strip__copy-icon { display: none; }
+#hotels .hotel-promo.is-copied .promo-strip__copied-icon { display: block; color: #00A85A; }
