@@ -4453,3 +4453,10 @@ html body #routes .card--route .route-price--inr .route-inr { font-size: 16px; }
 
 /* Pass 368 — hotel prices semibold like the route prices. */
 html body #hotels .card--hotel .route-price .price { font-weight: 600; }
+
+/* Pass 369 — route cards show the rouble price and the rupee estimate on one
+   line, sharing the baseline; the rupees keep their muted look and size. */
+html body #routes .card--route .route-price .route-inr { margin: 0; font-size: 16px; font-weight: 600; color: #6B6F8F; white-space: nowrap; }
+@media (min-width: 1101px) {
+  html body #routes .card--route .route-price .route-inr { font-size: 17px; }
+}
