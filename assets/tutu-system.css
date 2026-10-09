@@ -4115,7 +4115,8 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
    badges stop 370px short of the edge so the suitcase never covers them. */
 @media (min-width: 1101px) {
   .hero h1, html:lang(hi) .hero h1 { max-width: none !important; min-height: 0 !important; padding-top: 0 !important; }
-  .hero .hero-sub, .hero .pills { max-width: calc(100% - 370px) !important; }
+  .hero .hero-sub { max-width: calc(100% - 330px) !important; }
+  .hero .pills { max-width: calc(100% - 330px) !important; gap: 5px !important; }
 
   .hero .transport { gap: 8px !important; }
   .hero .transport > button { width: 112px !important; min-width: 112px !important; }
@@ -4123,20 +4124,20 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   .hero .transport .ico img { width: 62% !important; }
   .hero .transport .lbl { font-size: 15px !important; }
 
-  .search.search-v2 { background: transparent !important; column-gap: 4px !important; box-shadow: none !important; }
+  .search.search-v2 { background: transparent !important; column-gap: 2px !important; box-shadow: none !important; }
   .search.search-v2 > *, .search.search-v2 .v2-flight-dates > .v2-field { background: #fff; border-radius: 0 !important; border-left: 0 !important; border-right: 0 !important; }
-  .search.search-v2 .v2-flight-dates { column-gap: 4px !important; background: transparent !important; }
+  .search.search-v2 .v2-flight-dates { column-gap: 2px !important; background: transparent !important; }
   .search.search-v2 > :first-child { border-radius: 12px 0 0 12px !important; }
   .search.search-v2 > .v2-submit { border-radius: 0 12px 12px 0 !important; background: var(--head-cta) !important; }
-  .search-hints.search-hints-v2 { column-gap: 4px !important; }
+  .search-hints.search-hints-v2 { column-gap: 2px !important; }
 
   /* The suitcase no longer reaches into the top bar on desktop, so the hero
      can be its positioning box again and "bottom" follows the search bar. */
   html body section.hero { position: relative !important; }
   html body .hero > .hero-decor--suitcase.hero-decor--suitcase {
-    width: 380px !important;
+    width: 340px !important;
     top: auto !important;
-    bottom: 106px !important;
+    bottom: 113px !important;
     left: auto !important;
     right: max(5px, calc((100% - 1180px) / 2 + 5px)) !important;
   }
