@@ -4408,22 +4408,24 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
   #hotels .hotel-offer__badge, #hotels .hotel-offer__code { font-size: 18px; }
 }
 
-/* Pass 365 — both offer plates are drawn by one whole image each, cut from
-   the reference plate (2000x304), with no slicing, so there are no seams.
-   Each box keeps the aspect of its image: the code plate 6.58:1, the badge
-   645x304 (the same ends with a shorter middle), so nothing gets distorted. */
-#hotels .hotel-offer__badge, #hotels .hotel-offer__plate.hotel-offer__plate { height: 33px !important; box-sizing: border-box; justify-content: center; }
-#hotels .hotel-offer__badge { display: inline-flex; align-items: center; width: 70px; padding: 0 3px 0 0 !important; }
-#hotels .hotel-offer__plate.hotel-offer__plate { width: 217px !important; padding: 0 2px 0 0 !important; }
+/* Pass 365 — the offer row copies the reference image (2000x235): the orange
+   plate is its left plate as is (776x235), the white plate is its right plate
+   with a longer straight middle (1695x235), each drawn as one whole image.
+   All sizes follow the reference relative to the plate height --ph: digits
+   0.68 of it, code caps 0.46, 2px between the plates. */
+#hotels .hotel-offer { --ph: 33px; column-gap: calc(var(--ph) * 14 / 235); }
+#hotels .hotel-offer__badge, #hotels .hotel-offer__plate.hotel-offer__plate { height: var(--ph) !important; box-sizing: border-box; justify-content: center; }
+#hotels .hotel-offer__badge { display: inline-flex; align-items: center; width: calc(var(--ph) * 776 / 235); padding: 0 !important; font-size: calc(var(--ph) * .958); line-height: 1; }
+#hotels .hotel-offer__plate.hotel-offer__plate { width: calc(var(--ph) * 1695 / 235) !important; padding: 0 !important; gap: calc(var(--ph) * 10 / 33); }
+#hotels .hotel-offer .hotel-offer__code { font-size: calc(var(--ph) * 22 / 33); line-height: 1; }
+#hotels .hotel-offer__plate svg { width: calc(var(--ph) * 20 / 33); height: calc(var(--ph) * 20 / 33); }
 #hotels .hotel-offer__badge::before, #hotels .hotel-offer__plate::before {
   transform: none !important;
   border-radius: 0 !important;
-  background: url("art/promo-plate-white.webp?v=2") 0 0 / 100% 100% no-repeat !important;
+  background: url("art/promo-plate-white.webp?v=3") 0 0 / 100% 100% no-repeat !important;
 }
-#hotels .hotel-offer__badge::before { background-image: url("art/promo-plate-orange.webp?v=2") !important; }
+#hotels .hotel-offer__badge::before { background-image: url("art/promo-plate-orange.webp?v=3") !important; }
 #hotels .hotel-offer__plate:hover::before { filter: brightness(.96); }
 @media (max-width: 599.98px) {
-  #hotels .hotel-offer__badge, #hotels .hotel-offer__plate.hotel-offer__plate { height: 28px !important; }
-  #hotels .hotel-offer__badge { width: 59.4px; }
-  #hotels .hotel-offer__plate.hotel-offer__plate { width: 184.2px !important; }
+  #hotels .hotel-offer { --ph: 28px; grid-column: 1 / -1; }
 }
