@@ -483,7 +483,7 @@
       a=[['ru-moscow','from'],['ru-saint-petersburg','from'],['ru-kazan','to'],['ru-tver','to']];
       b=[[1,0],[2,0]];
     }
-    const dayWord=offset=>offset===0?(pageLang==='ru'?'Сегодня':pageLang==='hi'?'आज':'Today'):offset===1?(pageLang==='ru'?'Завтра':pageLang==='hi'?'कल':'Tomorrow'):(pageLang==='ru'?'Послезавтра':pageLang==='hi'?'परसों':'Day after tomorrow');
+    const dayWord=offset=>offset===0?(pageLang==='ru'?'Сегодня':pageLang==='hi'?'आज':'Today'):offset===1?(pageLang==='ru'?'Завтра':pageLang==='hi'?'कल':'Tomorrow'):(pageLang==='ru'?'Послезавтра':pageLang==='hi'?'परसों':'In 2 days');
     const placeChip=item=>{const id=item[0],role=mode==='hotel'?'destination':item[1],p=TUTU_PLACES.byId.get(id);if(!p)return '';return '<button type="button" class="quick-chip-v2" data-v2-place="'+esc(id)+'" data-v2-role="'+esc(role)+'">'+esc(TUTU_PLACES.display(p,pageLang).name)+'</button>'};
     const dateHtml=b.map(x=>{
       const start=new Date(today);start.setDate(start.getDate()+x[0]);
