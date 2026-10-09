@@ -4119,14 +4119,17 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   .hero .pills { max-width: none !important; flex-wrap: nowrap !important; gap: 5px !important; }
   /* Badge proportions from tutu.ru scaled to our 14px text: ~33px high,
      tight side padding, icon close to the text. */
-  .hero .pill { padding: 6px 10px 6px 9px !important; gap: 4px !important; line-height: 21px !important; border-width: 0 !important; white-space: nowrap; }
+  .hero .pill { border-radius: 10px !important; padding: 6px 10px 6px 9px !important; gap: 4px !important; line-height: 21px !important; border-width: 0 !important; white-space: nowrap; }
   /* The swap cell is a plain white cell with arrows, as on tutu.ru; the grey
      square inside made the gaps beside it look wider than the others. */
   .search.search-v2 .v2-swap > span { background: transparent !important; }
 
   .hero .transport { gap: 8px !important; margin-top: 22px !important; margin-bottom: 6px !important; }
   .hero .transport > button { width: 120px !important; min-width: 120px !important; }
-  .hero .transport .ico { width: 72px !important; height: 72px !important; }
+  /* A 60px circle sitting 4px above its label; the 40px icon keeps its size, so
+     it ends 14px above the label instead of 28px. The row stays 96px high. */
+  .hero .transport > * { gap: 4px !important; }
+  .hero .transport .ico { width: 60px !important; height: 60px !important; margin-top: 16px !important; }
   .hero .transport .ico img { width: 62% !important; }
   .hero .transport .lbl { font-size: 16px !important; }
 
@@ -4171,7 +4174,7 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   /* Each PNG draws its icon off-centre by a different amount (measured from
      the visible pixels), so each is shifted by its own offset; the drawing
      then sits exactly in the middle of the selection circle. */
-  .hero .transport .ico img { width: 56% !important; height: auto !important; margin: 0 !important; translate: none !important; transform: translateY(0) !important; }
+  .hero .transport .ico img { width: 40px !important; height: auto !important; margin: 0 !important; translate: none !important; transform: translateY(0) !important; }
   .hero .transport .ico img[src*="icon-hotel"] { transform: translateY(-10.9%) !important; }
   .hero .transport .ico img[src*="icon-flight"] { transform: translateY(-5.5%) !important; }
   .hero .transport .ico img[src*="icon-train"] { transform: translateY(-5.1%) !important; }
