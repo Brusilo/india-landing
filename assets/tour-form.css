@@ -204,7 +204,6 @@
   html .search.search-v2[data-mode="tour"] .tour-panel--people{
     position:static!important;
     inset:auto!important;
-    display:block;
     width:100%!important;
     max-width:100%!important;
     min-width:0!important;
