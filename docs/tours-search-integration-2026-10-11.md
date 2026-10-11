@@ -134,6 +134,15 @@ The public Tutu × Travelata results pages were visually opened with working sea
 
 The EN and HI tours search tabs now disclose that the destination page will be in Russian before the user leaves. This is a temporary transparency measure, **not a localization fix**. For production aimed at Indian travellers, the partner team should confirm the supported checkout languages and payment instruments, ideally provide an English search/checkout or an officially supported locale parameter. Do not invent a `lang=en` query parameter without live partner evidence.
 
+## QA workflow ownership and external load
+
+Two types of tests now intentionally run on different schedules:
+
+- **Every PR update:** `.github/workflows/tour-search-qa.yml` (local-only Node catalog verification and 27 Chromium responsive tests), plus `.github/workflows/tour-cross-browser-qa.yml` and Tutu public URL audit when relevant files change.
+- **On demand, via GitHub Actions → “Tours partner live verification” → Run workflow → branch `feature/tour-search-india-20261011`:** `.github/workflows/tour-live-partner-qa.yml` runs the 6 public branded country searches, 4 additional city-ID validations, public resort selector inspection, and selected resort URL format experiments. Screenshots and JSON reports are archived as Actions artifacts. This avoids issuing many expensive live partner searches on every small CSS or copy edit.
+
+The live workflow is read-only. Never enter payment data, bypass authentication or republish partner session tokens. A public page with HTTP 200 and a correctly selected destination is not evidence of available inventory, an affordable price, or successful checkout.
+
 ## Open issues before release
 
 - Obtain/verify eight missing country IDs, precise partner resort IDs (especially Russian winter destinations), and Rostov-on-Don if it becomes supported. The public Travelata `fromCity` directory now grounds 13/14 departure IDs; confirm newly enabled city searches against rendered live results and partner availability. Verify child-age parameters before supporting direct family searches.
