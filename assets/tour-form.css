@@ -29,10 +29,18 @@
     gap:4px;
   }
   .search-hints-v2[data-mode="tour"] .quick-group-v2--destination{
-    grid-column:2 / 5;
+    grid-column:2;
     display:flex;
     align-items:flex-start;
-    flex-wrap:nowrap;
+    flex-wrap:wrap;
+    gap:4px;
+    min-width:0;
+  }
+  .search-hints-v2[data-mode="tour"] .quick-group-v2--date{
+    grid-column:3;
+    display:flex;
+    align-items:flex-start;
+    flex-wrap:wrap;
     gap:4px;
     min-width:0;
   }
