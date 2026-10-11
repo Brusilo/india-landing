@@ -54,3 +54,47 @@
  .search.search-v2[data-mode="tour"] .tour-cell--nights .tour-panel{width:min(315px,calc(100vw - 44px))}
  .search.search-v2[data-mode="tour"] .tour-cell--nights{grid-column:1/-1}
 }
+
+/* A single double-thumb track, matching the supplied tour-search reference. */
+.search.search-v2[data-mode="tour"] .tour-range{
+  display:block;position:relative;height:30px;margin:10px 8px 5px;width:calc(100% - 16px);
+}
+.search.search-v2[data-mode="tour"] .tour-track{
+  position:absolute;left:1px;right:1px;top:13px;height:4px;border-radius:3px;
+  background:linear-gradient(to right,
+    #e6e6ed 0%,#e6e6ed var(--tour-from),
+    #7529e8 var(--tour-from),#7529e8 var(--tour-to),
+    #e6e6ed var(--tour-to),#e6e6ed 100%);
+}
+.search.search-v2[data-mode="tour"] .tour-range input[type="range"]{
+  position:absolute;left:0;top:4px;width:100%;height:22px;margin:0;padding:0;
+  pointer-events:none;background:transparent;accent-color:#7529e8;
+  appearance:none;-webkit-appearance:none;
+}
+.search.search-v2[data-mode="tour"] .tour-range input[type="range"]::-webkit-slider-runnable-track{
+  height:4px;background:transparent;border:0;
+}
+.search.search-v2[data-mode="tour"] .tour-range input[type="range"]::-moz-range-track{
+  height:4px;background:transparent;border:0;
+}
+.search.search-v2[data-mode="tour"] .tour-range input[type="range"]::-webkit-slider-thumb{
+  width:22px;height:22px;margin-top:-9px;border:0;border-radius:50%;
+  background:#7529e8;cursor:grab;pointer-events:auto;appearance:none;-webkit-appearance:none;
+}
+.search.search-v2[data-mode="tour"] .tour-range input[type="range"]::-moz-range-thumb{
+  width:22px;height:22px;border:0;border-radius:50%;
+  background:#7529e8;cursor:grab;pointer-events:auto;
+}
+.search.search-v2[data-mode="tour"] .tour-range input[type="range"]:focus-visible::-webkit-slider-thumb{
+  outline:3px solid #0d0b68;outline-offset:2px;
+}
+.search.search-v2[data-mode="tour"] .tour-range input[type="range"]:focus-visible::-moz-range-thumb{
+  outline:3px solid #0d0b68;outline-offset:2px;
+}
+.search.search-v2[data-mode="tour"] .tour-range input[data-tour-range="min"]{z-index:2}
+.search.search-v2[data-mode="tour"] .tour-range input[data-tour-range="max"]{z-index:3}
+.search.search-v2[data-mode="tour"] .tour-panel--nights{min-width:min(315px,calc(100vw - 42px))}
+@media(max-width:599px){
+ .search.search-v2[data-mode="tour"] .tour-value,
+ .search.search-v2[data-mode="tour"] .tour-destination{font-size:16px!important}
+}
