@@ -135,8 +135,21 @@ const unverifiedPair=build(q('samara','baikal'));
 assert.equal(unverifiedPair.departureApplied,false,
   'Unverified city/resort combination must not fabricate a Tutu SEO route');
 assert.equal(unverifiedPair.url,'https://tours.tutu.ru/strana/rossiya/kurort/baikal/');
-const unknownCity=build(q('kazan','turkey'));
-assert.equal(unknownCity.filtered,false);
+const publicDepartureIds={
+ moscow:2,spb:1,kazan:29,ekaterinburg:25,novosibirsk:53,samara:64,
+ 'nizhny-novgorod':50,irkutsk:28,perm:61,krasnodar:36,
+ ufa:79,cheboksary:83,sochi:67,'rostov-on-don':null
+};
+for(const item of departures){
+ assert.equal(item.id,publicDepartureIds[item.key],item.key+' must match public Travelata fromCity select');
+}
+assert.equal(Object.keys(publicDepartureIds).length,14);
+const knownKazan=build(q('kazan','turkey'));
+assert.equal(knownKazan.filtered,true,'Kazan ID comes from public Travelata selector');
+assert.equal(new URL(knownKazan.url).searchParams.get('departure'),'29',
+ 'partner city ID must NOT be Kazan Tutu SEO code 33');
+const unknownCity=build(q('rostov-on-don','turkey'));
+assert.equal(unknownCity.filtered,false,'Rostov is absent from Travelata public departure list');
 assert.equal(unknownCity.url,'https://tours.tutu.ru/strana/turkey/');
 const noResort=build(q('moscow','goa'));
 assert.equal(noResort.filtered,false);
