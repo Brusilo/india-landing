@@ -141,3 +141,15 @@
   margin-top:8px;box-sizing:border-box;
  }
 }
+
+/* Tour CTA stays purple as on the supplied Tutu form rather than inheriting
+   the orange flight-search button colour used elsewhere on the landing. */
+.search.search-v2[data-mode="tour"] > .tour-submit,
+html .search.search-v2[data-mode="tour"] > .tour-submit {
+ background:#7529e8 !important;
+ color:#fff !important;
+}
+.search.search-v2[data-mode="tour"] > .tour-submit:hover,
+html .search.search-v2[data-mode="tour"] > .tour-submit:hover {
+ background:#6520cf !important;
+}
