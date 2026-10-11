@@ -6,6 +6,7 @@ on:
       - 'assets/tour-catalog.js'
       - 'scripts/audit-tour-directory.py'
       - 'scripts/probe-winter-pairs.py'
+      - 'scripts/probe-public-tour-url-formats.py'
       - 'scripts/probe-public-travelata-directory.py'
       - '.github/workflows/tour-directory-audit.yml'
   workflow_dispatch:
@@ -32,6 +33,9 @@ jobs:
       - name: Audit 28 winter city-to-resort SEO links
         continue-on-error: true
         run: python scripts/probe-winter-pairs.py /tmp/tutu-tour-audit/winter-route-candidates.json
+      - name: Inspect public Travelata link constructor script syntax
+        continue-on-error: true
+        run: python scripts/probe-public-tour-url-formats.py /tmp/tutu-tour-audit/public-resort-url-formats.json
       - name: Archive audit report
         if: always()
         uses: actions/upload-artifact@v4
