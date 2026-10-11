@@ -57,15 +57,24 @@ def verify(page,lang,width):
   assert chips.count()==3,'expected only Kaliningrad Baikal Turkey'
   keys=chips.evaluate_all("xs=>xs.map(e=>e.dataset.tourChoice)")
   assert keys==['kaliningrad','baikal','turkey'],keys
-  if width<=899:
-    assert not chips.first.is_visible(),'chips must be hidden on phone/tablet'
-    assert tourForm['display']=='flex','mobile should use same continuous field stack as Flights'
-    fields=page.locator('form.search-v2 > .v2-field')
-    for i in range(fields.count()-1):
-      a=fields.nth(i).bounding_box();b=fields.nth(i+1).bounding_box()
-      assert abs(a['y']+a['height']-b['y'])<2,'extra vertical gap between fields'
+  if width<=1100:
+    assert not chips.first.is_visible(),'chips must be shown on desktop only'
+    assert tourForm['display']=='grid','Tours must match native Tutu responsive grid'
+    if width<=599:
+      fields=page.locator('form.search-v2 > .v2-field')
+      first=fields.nth(0).bounding_box();second=fields.nth(1).bounding_box()
+      seam=second['y']-(first['y']+first['height'])
+      assert -4<=seam<=2, 'From/To shared mobile card should have no gap: '+str(seam)
+      for i in range(1,fields.count()-1):
+        a=fields.nth(i).bounding_box();b=fields.nth(i+1).bounding_box()
+        assert 5<=b['y']-(a['y']+a['height'])<=9,'wrong 7px phone gap'
+    else:
+      left=page.locator('.tour-cell--departure').bounding_box()
+      right=page.locator('.tour-cell--destination').bounding_box()
+      assert abs(left['y']-right['y'])<=1,'tablet From and To must share a row'
   else:
-    assert chips.first.is_visible(),'desktop chips unexpectedly hidden'
+    assert chips.first.is_visible(),'desktop-only chips unexpectedly hidden'
+  assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2'),'horizontal overflow'
   # Test native autocomplete popup against the actual Flights popup.
   departure=page.locator('.tour-departure-input')
   departure.fill('Kaz')
