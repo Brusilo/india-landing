@@ -339,6 +339,46 @@ with sync_playwright() as playwright:
         assert not errors, f"Private mode browser errors: {errors}"
         ctx.close()
 
-        print("Browser search state passed: five modes, RU/EN/HI transfer, reload and fresh-visit reset, children and draft text.")
+        # Tours validation mirrors the native alert windows used by other
+        # modes. Nothing is appended beneath the hint chips or moves the form.
+        ctx, page, errors = setup(browser)
+        open_page(page)
+        page.locator(".transport .tours-tab").click()
+        form_height = page.locator("#search").bounding_box()["height"]
+        hints_y = page.locator(".search-hints-v2").bounding_box()["y"]
+        dialogs = []
+        def handle_dialog(dialog):
+            dialogs.append(dialog.message)
+            dialog.accept()
+        page.on("dialog", handle_dialog)
+        page.locator(".tour-submit").click()
+        assert dialogs[-1] == "Выберите город отправления из списка", dialogs
+        assert page.locator(".tour-search-issue").count() == 0
+        assert page.locator(".tour-cell--departure .search-suggest").is_visible()
+        page.keyboard.press("Escape")
+        page.locator(".search-hints-v2 [data-tour-dep='moscow']").click()
+        page.locator(".tour-submit").click()
+        assert dialogs[-1] == "Выберите направление из списка", dialogs
+        assert page.locator(".tour-search-issue").count() == 0
+        page.keyboard.press("Escape")
+        page.locator(".search-hints-v2 [data-tour-choice='turkey']").click()
+        page.locator(".tour-submit").click()
+        assert dialogs[-1] == "Выберите дату вылета", dialogs
+        assert page.locator(".tour-cell--date .tour-panel--date").is_visible()
+        assert page.locator(".tour-search-issue").count() == 0
+        assert abs(page.locator("#search").bounding_box()["height"] - form_height) <= 1
+        assert abs(page.locator(".search-hints-v2").bounding_box()["y"] - hints_y) <= 1
+        switch(page, "en")
+        page.locator(".tour-submit").click()
+        assert dialogs[-1] == "Choose your departure date", dialogs
+        assert page.locator(".tour-search-issue").count() == 0
+        switch(page, "hi")
+        page.locator(".tour-submit").click()
+        assert dialogs[-1] == "रवाना होने की तारीख़ चुनें", dialogs
+        assert page.locator(".tour-search-issue").count() == 0
+        assert not errors, f"Tour validation browser errors: {errors}"
+        ctx.close()
+
+        print("Browser search state and tour native alert validation passed: five modes, RU/EN/HI, no layout-shifting error notices.")
     finally:
         browser.close()
