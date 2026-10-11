@@ -13,9 +13,11 @@ BASE = "http://127.0.0.1:8765/"
 PORTABLE = "india-landing-search-state-v1"
 HANDOFF = "india-landing-language-handoff-v2"
 
-def setup(browser):
-    context = browser.new_context(locale="en-GB", timezone_id="Europe/Moscow",
-                                  viewport={"width": 1460, "height": 920})
+def setup(browser, viewport=None, mobile=False):
+    context = browser.new_context(
+        locale="en-GB", timezone_id="Europe/Moscow",
+        viewport=viewport or {"width": 1460, "height": 920},
+        is_mobile=mobile, has_touch=mobile)
     page = context.new_page()
     # Keep the test independent of external font/CDN/Metrika connections.
     page.route("**/*", lambda route: route.continue_() if
@@ -378,6 +380,75 @@ with sync_playwright() as playwright:
         assert page.locator(".tour-search-issue").count() == 0
         assert not errors, f"Tour validation browser errors: {errors}"
         ctx.close()
+
+        # Check the actual phone layout: text input widths must stay fixed as
+        # place autocomplete opens and the first characters are entered.
+        # Autocomplete separators should have the same 16px interior inset
+        # as date and passenger panels, not extend to the card edges.
+        for width in (320, 390, 430):
+            ctx, page, errors = setup(
+                browser, {"width": width, "height": 844}, mobile=True)
+            for locale, filename in (
+                ("ru", "index-ru.html"),
+                ("en", "index.html"),
+                ("hi", "index-hi.html"),
+            ):
+                open_page(page, filename)
+                for mode, roles in (
+                    ("flight", ("from", "to")),
+                    ("hotel", ("destination",)),
+                    ("train", ("from", "to")),
+                    ("bus", ("from", "to")),
+                    ("tour", ("from", "to")),
+                ):
+                    if mode == "tour":
+                        page.locator(".transport .tours-tab").click()
+                    else:
+                        idx = {"hotel": 0, "flight": 1, "train": 2, "bus": 3}[mode]
+                        page.locator(".transport button:not(.tours-tab)").nth(idx).click()
+                    assert page.locator("#search").get_attribute("data-mode") == mode
+                    for role in roles:
+                        css = f"#search .v2-field--place[data-role='{role}']"
+                        selector = css + " .v2-input"
+                        field = page.locator(css)
+                        input_box = page.locator(selector)
+                        def measure():
+                            return page.evaluate("""sel => {
+                                const field=document.querySelector(sel);
+                                const input=field.querySelector('.v2-input');
+                                const panel=field.querySelector('.search-suggest');
+                                const f=field.getBoundingClientRect();
+                                const i=input.getBoundingClientRect();
+                                const p=panel.getBoundingClientRect();
+                                return {fieldWidth:f.width,inputWidth:i.width,
+                                  panelWidth:p.width,panelLeft:p.left,
+                                  panelRight:p.right,fieldLeft:f.left,
+                                  fieldRight:f.right,open:!panel.hidden,
+                                  scrollWidth:document.documentElement.scrollWidth,
+                                  viewport:window.innerWidth};
+                            }""", css)
+                        before = measure()
+                        input_box.click()
+                        focused = measure()
+                        assert focused["open"], (width, locale, mode, role, focused)
+                        input_box.fill("Мос")
+                        typed = measure()
+                        assert typed["open"], (width, locale, mode, role, typed)
+                        for phase, actual in (("focused", focused), ("typed", typed)):
+                            assert abs(actual["fieldWidth"] - before["fieldWidth"]) < 1.1, (
+                                width, locale, mode, role, phase, "field width", before, actual)
+                            assert abs(actual["inputWidth"] - before["inputWidth"]) < 1.1, (
+                                width, locale, mode, role, phase, "input width", before, actual)
+                            assert abs(actual["panelLeft"] - actual["fieldLeft"] - 16) < 2, (
+                                width, locale, mode, role, phase, "left divider inset", actual)
+                            assert abs(actual["fieldRight"] - actual["panelRight"] - 16) < 2, (
+                                width, locale, mode, role, phase, "right divider inset", actual)
+                            assert actual["scrollWidth"] <= before["scrollWidth"] + 2, (
+                                width, locale, mode, role, phase, "horizontal overflow", actual)
+                        page.keyboard.press("Escape")
+                assert not errors, (width, locale, errors)
+            ctx.close()
+        print("Mobile search geometry passed: 320/390/430px, RU/EN/HI, five modes, stable fields and inset dividers.")
 
         print("Browser search state and tour native alert validation passed: five modes, RU/EN/HI, no layout-shifting error notices.")
     finally:
