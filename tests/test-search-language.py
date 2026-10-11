@@ -27,7 +27,7 @@ def setup(browser):
 def open_page(page, filename="index-ru.html"):
     page.goto(BASE + filename, wait_until="domcontentloaded", timeout=30000)
     page.wait_for_function(
-        "() => document.documentElement.classList.contains('search-v2-ready')",
+        "() => document.documentElement.classList.contains('search-ui-ready')",
         timeout=18000,
     )
 
@@ -36,7 +36,7 @@ def switch(page, language):
     page.locator(f".lang a[hreflang='{language}']").click()
     page.wait_for_url("**/" + filename, timeout=15000)
     page.wait_for_function(
-        "() => document.documentElement.classList.contains('search-v2-ready')",
+        "() => document.documentElement.classList.contains('search-ui-ready')",
         timeout=18000,
     )
 
@@ -90,7 +90,7 @@ with sync_playwright() as playwright:
         assert stored(page)["standard"]["flight"]["childAges"] == [7]
         page.reload(wait_until="domcontentloaded")
         page.wait_for_function(
-            "() => document.documentElement.classList.contains('search-v2-ready')"
+            "() => document.documentElement.classList.contains('search-ui-ready')"
         )
         assert page.locator("[data-role='from'] .v2-input").input_value() == "Delhi"
         switch(page, "hi")
@@ -107,7 +107,7 @@ with sync_playwright() as playwright:
         assert stored(page)["standard"]["flight"]["returnDate"] == before["standard"]["flight"]["returnDate"]
         assert stored(page)["standard"]["flight"]["cabin"] == "business"
         page.reload(wait_until="domcontentloaded")
-        page.wait_for_function("() => document.documentElement.classList.contains('search-v2-ready')")
+        page.wait_for_function("() => document.documentElement.classList.contains('search-ui-ready')")
         standard_mode(page, "flight")
         assert page.locator("[data-role='from'] .v2-input").input_value() == "Дели"
         switch(page, "en")
@@ -230,6 +230,15 @@ with sync_playwright() as playwright:
         open_page(page)
         page.locator(".transport .tours-tab").click()
         assert page.locator("#search").get_attribute("data-mode") == "tour"
+        page.locator(".search-hints-v2 [data-tour-dep='moscow']").click()
+        page.locator(".search-hints-v2 [data-tour-choice='turkey']").click()
+        switch(page, "en")
+        assert page.locator("#search").get_attribute("data-mode") == "tour"
+        assert page.locator(".tour-departure-input").input_value() == "Moscow"
+        assert page.locator(".tour-destination").input_value() == "Turkey"
+        switch(page, "ru")
+        assert page.locator("#search").get_attribute("data-mode") == "tour"
+        assert page.locator(".tour-departure-input").input_value() == "Москва"
         assert not errors, f"Private mode browser errors: {errors}"
         ctx.close()
 
