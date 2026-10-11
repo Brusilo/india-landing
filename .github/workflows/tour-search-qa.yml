@@ -9,6 +9,7 @@ on:
       - 'index-ru.html'
       - 'index-hi.html'
       - 'tests/tours-browser.py'
+      - 'tests/tours-live-provider.py'
       - 'tests/tour-catalog.cjs'
       - '.github/workflows/tour-search-qa.yml'
   workflow_dispatch:
@@ -33,6 +34,9 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Test English, Russian, Hindi across viewports
         run: python tests/tours-browser.py . /tmp/tour-qa
+      - name: Probe co-branded live Travelata result pages
+        continue-on-error: true
+        run: python tests/tours-live-provider.py . /tmp/tour-qa
       - name: Store QA screenshots and result
         if: always()
         uses: actions/upload-artifact@v4
