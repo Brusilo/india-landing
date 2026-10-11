@@ -64,7 +64,10 @@ function render(){
  bind();
 }
 function options(list){
- return '<div class="tour-option-list">'+list.map(x=>'<button type="button" role="option" aria-selected="false" id="tour-option-'+esc(x.key)+'" data-tour-choice="'+esc(x.key)+'"><strong>'+esc(x.name[lang])+'</strong>'+(x.kind==='winter'?'<small>'+esc(dict.winter)+'</small>':'')+'</button>').join('')+'</div>';
+ return '<div class="tour-option-list">'+list.map(x=>{
+   const meta=x.kind==='winter'?dict.winter:x.kind==='resort'?(data.byKey.get(x.parent)?.name[lang]||''):dict.countries;
+   return '<button type="button" role="option" aria-selected="false" id="tour-option-'+esc(x.key)+'" data-tour-choice="'+esc(x.key)+'"><strong>'+esc(x.name[lang])+'</strong><small>'+esc(meta)+'</small></button>';
+ }).join('')+'</div>';
 }
 function destinationPanel(q){
  const items=data.find(q,18);
@@ -103,7 +106,7 @@ function bind(){
  form.querySelector('[data-tour-trigger="people"]').addEventListener('click',()=>show('people',guestPanel()));
  form.querySelector('[data-tour-trigger="date"]').addEventListener('click',()=>{const d=new Date(state.date+'T12:00:00');calendarMonth=new Date(d.getFullYear(),d.getMonth(),1);openCalendar()});
  const input=form.querySelector('.tour-destination');
- input.addEventListener('focus',()=>{input.select();show('destination',destinationPanel(input.value))});
+ input.addEventListener('focus',()=>{input.select();show('destination',destinationPanel(''))});
  input.addEventListener('input',()=>{
    const panel=form.querySelector('.tour-panel--destination');
    if(!panel)show('destination',destinationPanel(input.value));
