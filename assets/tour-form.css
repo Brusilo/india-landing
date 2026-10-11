@@ -254,14 +254,14 @@
   font: 400 14px/1.4 var(--font);
 }
 
-/* Slightly raise desktop search popovers and suggestions so the topmost
-   quick chips stay behind white panels instead of peeking out above them.
-   All five tabs use the same native positioning; no change to mobile. */
+/* On desktop, popup top edges meet the quick-chip row (+5px below
+   the search form). The fields keep their original height and remain
+   unobscured; the higher-z-index panels cover any chips underneath. */
 @media (min-width:1101px) {
   html .search.search-v2 .search-suggest,
   html .search.search-v2 .v2-calendar,
   html .search.search-v2 .v2-popover {
-    top:calc(100% - 10px) !important;
+    top:calc(100% + 5px) !important;
   }
 }
 
