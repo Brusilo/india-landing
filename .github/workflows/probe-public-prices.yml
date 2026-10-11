@@ -1,0 +1,66 @@
+name: Probe public Tutu pricing availability
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/probe-public-prices.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check public robots and dated page responses (no bookings)
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from urllib import robotparser,request,parse,error
+          from datetime import datetime,timedelta
+          from zoneinfo import ZoneInfo
+          import re
+          day=(datetime.now(ZoneInfo('Europe/Moscow'))+timedelta(days=1)).strftime('%d.%m.%Y')
+          iso=(datetime.now(ZoneInfo('Europe/Moscow'))+timedelta(days=1)).strftime('%Y-%m-%d')
+          next_iso=(datetime.now(ZoneInfo('Europe/Moscow'))+timedelta(days=2)).strftime('%Y-%m-%d')
+          items=[
+            ('rail SEO','https://www.tutu.ru/poezda/Sankt-Peterburg/Moskva/'),
+            ('rail dated','https://www.tutu.ru/poezda/Sankt-Peterburg/Moskva/?'+parse.urlencode({'date':day,'travelers':1})),
+            ('air SEO','https://avia.tutu.ru/f/Moskva/Deli/'),
+            ('air dated','https://avia.tutu.ru/f/Moskva/Deli/?'+parse.urlencode({'class':'Y','travelers':'1','route[0]':'491-'+day.replace('.','')+'-216'})),
+            ('hotel SEO','https://hotel.tutu.ru/h_otel_izmaylovo_alfa/'),
+            ('hotel dated','https://hotel.tutu.ru/h_otel_izmaylovo_alfa/?'+parse.urlencode({'check_in':iso,'check_out':next_iso,'room[0]':1}))]
+          robots={}
+          for label,url in items:
+            u=parse.urlparse(url)
+            if u.netloc not in robots:
+              robot_url=u.scheme+'://'+u.netloc+'/robots.txt'
+              try:
+                with request.urlopen(request.Request(robot_url,headers={'User-Agent':'Mozilla/5.0'}),timeout=15) as r:
+                  txt=r.read(300000).decode('utf-8','replace')
+                rp=robotparser.RobotFileParser();rp.parse(txt.splitlines())
+                robots[u.netloc]=rp
+                print('ROBOTS',u.netloc,'status=loaded lines='+str(len(txt.splitlines())))
+              except Exception as exc:
+                robots[u.netloc]=None
+                print('ROBOTS',u.netloc,'FAILED',type(exc).__name__,str(exc)[:180])
+            rp=robots[u.netloc]
+            allowed=rp is not None and rp.can_fetch('IndiaLandingPriceResearch',url)
+            print('CHECK',label,'allowed='+str(allowed),'URL='+url)
+            if not allowed:
+              print('SKIP',label,'robot permissions unavailable')
+              continue
+            try:
+              with request.urlopen(request.Request(url,headers={'User-Agent':'IndiaLandingPriceResearch/1.0','Accept-Language':'ru-RU,ru;q=0.9'}),timeout=20) as resp:
+                body=resp.read(1500000).decode('utf-8','replace')
+                print('FETCH',label,'status',resp.status,'bytes',len(body),'final',resp.url)
+              title=re.findall(r'<title[^>]*>(.*?)</title',body,re.I|re.S)
+              print('TITLE',re.sub(r'<[^>]+>','',title[0]).strip()[:120] if title else 'missing')
+              money=re.findall(r'.{0,30}(?:от|\\u043e\\u0442)\\s*[\\d\\s\\u00a0\\u2009\\u202f]{3,12}\\s*(?:₽|руб)',body,re.I)
+              print('PRICE_SNIPPETS',len(money),[re.sub(r'\\s+',' ',m)[:95] for m in money[:6]])
+              for test in ['Выберите дату','Уточните даты проживания','__NEXT_DATA__','application/ld+json']:
+                print('MARKER',test,test in body)
+            except Exception as exc:print('FETCH ERROR',label,type(exc).__name__,str(exc)[:190])
+          PY
