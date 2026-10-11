@@ -4,6 +4,7 @@ Run from the repository root with Node.js, Python 3.10+ and the Python Playwrigh
 
 ```sh
 node tests/landing-data.cjs . /tmp/landing-data.json
+node tests/landing-tours.cjs .
 python3 tests/landing-browser.py . /tmp/landing-browser
 python3 tests/landing-calendar.py . /tmp/landing-calendar
 python3 tests/landing-edges.py . /tmp/landing-edges /path/to/v24-baseline
