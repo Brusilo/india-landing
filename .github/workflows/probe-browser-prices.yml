@@ -33,9 +33,10 @@ jobs:
           after=m+timedelta(days=2)
           hotel='https://hotel.tutu.ru/h_otel_izmaylovo_alfa/?'+urlencode({'check_in':tom.strftime('%Y-%m-%d'),'check_out':after.strftime('%Y-%m-%d'),'room[0]':'1'})
           train='https://www.tutu.ru/poezda/Sankt-Peterburg/Moskva/?'+urlencode({'date':tom.strftime('%d.%m.%Y'),'travelers':'1'})
+          flight='https://avia.tutu.ru/f/Moskva/Deli/?'+urlencode({'class':'Y','travelers':'1','route[0]':'491-'+tom.strftime('%d%m%Y')+'-216'})
           with sync_playwright() as pw:
             browser=pw.chromium.launch(headless=True,args=['--no-sandbox'])
-            for kind,url in [('hotel',hotel),('train',train)]:
+            for kind,url in [('hotel',hotel),('train',train),('flight',flight)]:
               page=browser.new_page(locale='ru-RU',viewport={'width':1400,'height':900})
               errors=[]
               page.on('pageerror',lambda e:errors.append(str(e)[:120]))
@@ -49,6 +50,10 @@ jobs:
                   print('BROWSER_MARKER',kind,marker,'count',text.count(marker))
                 match=list(re.finditer(r'(?<!\\d)\\d[\\d \\u00a0\\u2009\\u202f]{1,12}\\s*(?:₽|рублей|руб\\.)',text,re.I))
                 print('BROWSER_PRICE_MATCHES',kind,len(match))
+                normalized=re.sub('[\\u2009\\u2060\\u00a0\\u202f\\u200b]', '', text)
+                norm_prices=re.findall(r'(?<!\\d)(\\d{3,7})\\s*₽',normalized)
+                print('BROWSER_NORMALIZED_PRICES',kind,len(norm_prices),norm_prices[:30])
+                print('BROWSER_TEXT_HEAD',kind,repr(text[:2400].replace('\\n',' ')))
                 for item in match[:12]:
                   print('BROWSER_PRICE_TEXT',kind,repr(text[max(0,item.start()-45):item.end()+45].replace('\\n',' ')))
                 for marker in ['Доступные варианты','Расписание поездов']:
