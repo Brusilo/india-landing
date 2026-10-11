@@ -229,3 +229,19 @@
     right: auto;
   }
 }
+
+/* Unsupported exact searches are explained in place, never in a modal.
+   Do not change the geometry or colors of the search fields themselves. */
+.search-hints-v2[data-mode="tour"] + .tour-search-issue {
+  position: relative;
+  z-index: 4;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 9px 0 0;
+  padding: 9px 13px;
+  border-radius: 12px;
+  background: #fff;
+  color: #000;
+  font: 400 14px/1.4 var(--font);
+}
