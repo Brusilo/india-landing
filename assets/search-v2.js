@@ -616,6 +616,7 @@
     button.setAttribute('aria-selected',String(selected));
   });
   renderForm();
+  if(!persisted.activeMode)persistence?.setActive(mode);
   window.addEventListener('pagehide',saveStandard);
   document.documentElement.classList.add('search-v2-ready');
 })();
