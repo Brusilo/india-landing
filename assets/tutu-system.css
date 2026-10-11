@@ -4474,3 +4474,9 @@ footer a { font-weight: 400 !important; }
 html body .hero .hero-sub { font-weight: 500 !important; }
 .hero .transport .ico img { scale: .9; }
 footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !important; }
+
+/* Pass 372 — header logo 15% larger at every size (28px tall on desktop,
+   82px wide up to 1100px, 70px wide below 360px). */
+.top .logo { height: 32.2px; }
+@media (max-width: 1100px) { .top .logo { width: 94.3px; height: auto; } }
+@media (max-width: 359px) { .top .logo { width: 80.5px; } }
