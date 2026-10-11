@@ -3,7 +3,7 @@
   'use strict';
   const HOME='https://www.tutu.ru/';
   const OFFERS='https://www.tutu.ru/juicy-offers/';
-  const RUB_TO_INR=1.12888;
+  const RUB_TO_INR=window.TUTU_PRICING?.rubToInr()||1.12888;
   const lang=document.documentElement.lang==='hi'?'hi':document.documentElement.lang==='en'?'en':'ru';
   const routeData={
     r1:{price:831},
@@ -111,8 +111,17 @@
       const id=(card.dataset.cta||'').replace(/^route_/,'').replace(/_combined$/,'');
       const d=routeData[id];
       if(d){
-        const price=card.querySelector('.price');if(price)price.innerHTML=lang==='en'?'<span class="price-from">from</span> '+nf(d.price)+'&nbsp;₽':lang==='hi'?nf(d.price)+'&nbsp;₽ <span class="price-from">से</span>':'<span class="price-from">от</span> '+nf(d.price)+'&nbsp;₽';
-        const alt=card.querySelector('.price-alt');if(alt)alt.textContent='≈ ₹'+nf(Math.round(d.price*RUB_TO_INR));
+        // Current cards are rendered by CONFIG + TUTU_PRICING.
+        // Only populate legacy card markup (which has a .price-alt element);
+        // never overwrite today's recalculated or discounted prices.
+        const alt=card.querySelector('.price-alt');
+        if(alt){
+          const base=window.TUTU_PRICING?.basePrice('routes',id,d.price)??d.price;
+          const actual=window.TUTU_PRICING?.reducedRub(card.dataset.transport==='flight'?'flight':'train',base)??base;
+          const price=card.querySelector('.price');
+          if(price)price.innerHTML=lang==='en'?'<span class="price-from">from</span> '+nf(actual)+'&nbsp;₽':lang==='hi'?nf(actual)+'&nbsp;₽ <span class="price-from">से</span>':'<span class="price-from">от</span> '+nf(actual)+'&nbsp;₽';
+          alt.textContent='≈ ₹'+nf(Math.round(actual*RUB_TO_INR));
+        }
         const meta=card.querySelector('.card-meta');if(meta)meta.textContent=duration(d.h,d.m);
       }
       activate(card,routeUrl(card,id,verifiedRouteUrls[id]));
