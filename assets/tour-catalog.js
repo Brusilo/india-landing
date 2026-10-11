@@ -44,7 +44,7 @@
     {key:'saint-petersburg',kind:'winter',id:null,name:{ru:'Санкт-Петербург',en:'Saint Petersburg',hi:'सेंट पीटर्सबर्ग'},ru:'Санкт-Петербург',browse:'https://tours.tutu.ru/strana/rossiya/kurort/saint_petersburg/',aliases:'spb petersburg питер'},
     {key:'moscow',kind:'winter',id:null,name:{ru:'Москва',en:'Moscow',hi:'मॉस्को'},ru:'Москва',browse:'https://tours.tutu.ru/strana/rossiya/kurort/moscow/',aliases:'moskva'},
     {key:'karelia',kind:'winter',id:null,name:{ru:'Карелия',en:'Karelia',hi:'कारेलिया'},ru:'Карелия',browse:'https://tours.tutu.ru/strana/rossiya/kurort/karelia/',aliases:'petrozavodsk петрозаводск'},
-    {key:'kazan',kind:'winter',id:null,name:{ru:'Казань',en:'Kazan',hi:'कज़ान'},ru:'Казань',browse:'https://tours.tutu.ru/strana/rossiya/',aliases:''},
+    {key:'kazan',kind:'winter',id:null,name:{ru:'Казань',en:'Kazan',hi:'कज़ान'},ru:'Казань',browse:'https://tours.tutu.ru/strana/rossiya/kurort/kazan/',aliases:''},
     {key:'sochi',kind:'winter',id:null,name:{ru:'Сочи',en:'Sochi',hi:'सोची'},ru:'Сочи',browse:'https://tours.tutu.ru/strana/rossiya/kurort/sochi/',aliases:'rosa khutor красная поляна ski'},
     {key:'krasnaya-polyana',kind:'winter',id:null,name:{ru:'Красная Поляна',en:'Krasnaya Polyana',hi:'क्रास्नाया पोल्याना'},ru:'Красная Поляна',browse:'https://tours.tutu.ru/strana/rossiya/kurort/krasnaya_polyana/',aliases:'ski skiing горные лыжи'},
     {key:'sheregesh',kind:'winter',id:null,name:{ru:'Шерегеш',en:'Sheregesh',hi:'शेरेगेश'},ru:'Шерегеш',browse:'https://tours.tutu.ru/strana/rossiya/kurort/sheregesh/',aliases:'snow ski снег'},
