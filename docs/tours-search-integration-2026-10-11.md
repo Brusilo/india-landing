@@ -74,14 +74,14 @@ The PR contains `tests/tours-browser.py`, `tests/tours-cross-browser.py`, `tests
 
 ## India-audience language limitation
 
-The public Tutu × Travelata results pages were visually opened with working Turkey and Egypt results on 11 October 2026. They currently display the search controls, hotel cards and checkout information in **Russian**, even when the referring India landing is EN/HI. We have **not** verified an English or Hindi locale option in this co-branded partner flow.
+The public Tutu × Travelata results pages were visually opened with working searches on 11 October 2026. The search controls and tour-card information are in **Russian**, even when the referring India landing is EN/HI. Checkout language was **not** tested. We have **not** verified an English or Hindi locale option in this co-branded partner flow.
 
 The EN and HI tours search tabs now disclose that the destination page will be in Russian before the user leaves. This is a temporary transparency measure, **not a localization fix**. For production aimed at Indian travellers, the partner team should confirm the supported checkout languages and payment instruments, ideally provide an English search/checkout or an officially supported locale parameter. Do not invent a `lang=en` query parameter without live partner evidence.
 
 ## Open issues before release
 
 - Obtain and validate all partner country, resort and departure IDs (including Russia and its winter resorts); confirm child-age parameter formats before enabling branded direct links for families.
-- Live branded search was confirmed for Moscow → Turkey and Saint Petersburg → Egypt with date 25 October 2026, 7–14 nights and one adult. Partner automatically creates its own `sid`. Confirm additional country/departure combinations before release; country IDs alone do not guarantee inventory.
+- Live branded search was confirmed for **6/6 tested combinations**: Moscow → Turkey, Russia, India, UAE; Saint Petersburg → Egypt, Thailand. In each, the search page displayed the selected city, country, date 25 October 2026, 7–14 nights and one adult, and the partner generated its own `sid`. See https://github.com/Brusilo/india-landing/actions/runs/38155093070 . Confirm remaining country/departure combinations separately; country IDs alone do not guarantee inventory.
 - Run live QA in mobile Safari and Android Chrome, plus desktop browser sessions. Official Travelata limits as of 18 June 2026: up to 29 nights, 6 adults and 3 children: https://travelata.ru/faq/ru/articles/11552685-%D0%BA%D0%B0%D0%BA%D0%BE%D0%B5-%D0%BC%D0%B0%D0%BA%D1%81%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5-%D0%BA%D0%BE%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE-%D0%B4%D0%BD%D0%B5%D0%B9-%D0%B8-%D1%82%D1%83%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2-%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE-%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C
 - Decide whether winter regions should open curated product pages or partner-funnel results; avoid advertising a tour as available before inventory is confirmed.
 
@@ -98,5 +98,11 @@ The EN and HI tours search tabs now disclose that the destination page will be i
 - `node tests/tour-catalog.cjs`: **PASS** (45 countries + 27 winter locations + 9 international resorts + 14 departure cities; checked canonical Tutu SEO slugs, date and guest validations, verified partner IDs, safety fallbacks).
 - `python tests/tours-browser.py`: **27/27 PASS** (3 languages × 9 viewport widths), with no missing local assets or JavaScript exceptions and no horizontal overflow.
 - Public example pages tested by retrieval: Tutu Altai, Listvyanka, Goa, Antalya, and Kazan → Murmansk. These are landing pages, not guarantees of hotel/tour availability.
-- **Live Travelata screenshots confirmed working** on 11 October 2026 for Moscow → Turkey and Saint Petersburg → Egypt. Exact departure city, country, selected date, 7–14-night range, one adult, automatic partner-generated `sid`, and tour cards with prices were visible. See https://github.com/Brusilo/india-landing/actions/runs/38154674745 . This is not evidence that every country or resort combination is available. `tests/tours-live-provider.py` performs a nonblocking partner smoke test.
+- **Live branded search validation 6/6 cases passed** on 11 October 2026. Moscow → Turkey, Russia, India, UAE and Saint Petersburg → Egypt, Thailand each preserved city, country, selected date, 7–14 nights, one adult and a generated `sid`. Tour-card screenshots were reviewed. See https://github.com/Brusilo/india-landing/actions/runs/38155093070 . This is not proof of available tours for every date, or checkout/payment functionality. `tests/tours-live-provider.py` runs these as advisory partner smoke tests.
 - Screenshots from the successful run were reviewed for form layout at 390px and 1440px in EN, RU and HI. A real mobile Safari / Android Chrome acceptance test is still required.
+
+## Expanded live verification and SEO city routes (11 October 2026)
+
+- Run https://github.com/Brusilo/india-landing/actions/runs/38155093070 completed six branded searches successfully (HTTP 200, six form fields verified, partner-created `sid` without one in the incoming URL). Confirmed destinations: Turkey, Egypt, Russia, India, UAE and Thailand. This does not validate every combination of the 37 known country IDs with the two departure cities.
+- `scripts/audit-tour-directory.py` also tests all 11 Murmansk-from-city Tutu SEO links for direct HTTP status and unexpected redirects. These Tutu SEO IDs are **not** Travelata partner IDs; a public landing page can still require the visitor to re-enter dates and guests.
+- The partner interface is currently in Russian, despite EN/HI landing pages. English/Hindi language disclosure is shown before users follow the search link. Checkout, payment, and multilingual support remain open to partner verification.
