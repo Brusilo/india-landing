@@ -9,7 +9,19 @@
 
   const departures=[
     {key:'moscow',id:2,name:{ru:'Москва',en:'Moscow',hi:'मॉस्को'}},
-    {key:'spb',id:1,name:{ru:'Санкт-Петербург',en:'Saint Petersburg',hi:'सेंट पीटर्सबर्ग'}}
+    {key:'spb',id:1,name:{ru:'Санкт-Петербург',en:'Saint Petersburg',hi:'सेंट पीटर्सबर्ग'}},
+    {key:'kazan',id:null,name:{ru:'Казань',en:'Kazan',hi:'कज़ान'}},
+    {key:'ekaterinburg',id:null,name:{ru:'Екатеринбург',en:'Yekaterinburg',hi:'येकातेरिनबुर्ग'}},
+    {key:'novosibirsk',id:null,name:{ru:'Новосибирск',en:'Novosibirsk',hi:'नोवोसिबिर्स्क'}},
+    {key:'samara',id:null,name:{ru:'Самара',en:'Samara',hi:'समारा'}},
+    {key:'nizhny-novgorod',id:null,name:{ru:'Нижний Новгород',en:'Nizhny Novgorod',hi:'निझनी नोवगोरोद'}},
+    {key:'irkutsk',id:null,name:{ru:'Иркутск',en:'Irkutsk',hi:'इर्कुत्स्क'}},
+    {key:'perm',id:null,name:{ru:'Пермь',en:'Perm',hi:'पेर्म'}},
+    {key:'krasnodar',id:null,name:{ru:'Краснодар',en:'Krasnodar',hi:'क्रास्नोदार'}},
+    {key:'rostov-on-don',id:null,name:{ru:'Ростов-на-Дону',en:'Rostov-on-Don',hi:'रोस्तोव-ऑन-डॉन'}},
+    {key:'ufa',id:null,name:{ru:'Уфа',en:'Ufa',hi:'ऊफ़ा'}},
+    {key:'cheboksary',id:null,name:{ru:'Чебоксары',en:'Cheboksary',hi:'चेबोक्सारी'}},
+    {key:'sochi',id:null,name:{ru:'Сочи',en:'Sochi',hi:'सोची'}}
   ];
   // Browse URLs are verified public tours.tutu.ru landing pages.
   // Only numeric IDs confirmed by partner documentation or user examples are used for search.
@@ -72,10 +84,48 @@
     {key:'krasnaya-polyana',kind:'winter',id:null,name:{ru:'Красная Поляна',en:'Krasnaya Polyana',hi:'क्रास्नाया पोल्याना'},ru:'Красная Поляна',browse:'https://tours.tutu.ru/strana/rossiya/kurort/krasnaya_polyana/',aliases:'ski skiing горные лыжи'},
     {key:'sheregesh',kind:'winter',id:null,name:{ru:'Шерегеш',en:'Sheregesh',hi:'शेरेगेश'},ru:'Шерегеш',browse:'https://tours.tutu.ru/strana/rossiya/kurort/sheregesh/',aliases:'snow ski снег'},
     {key:'arkhyz',kind:'winter',id:null,name:{ru:'Архыз',en:'Arkhyz',hi:'आर्खिज़'},ru:'Архыз',browse:'https://tours.tutu.ru/strana/rossiya/kurort/arkhyz/',aliases:'ski mountains кавказ'},
-    {key:'veliky-ustyug',kind:'winter',id:null,name:{ru:'Великий Устюг',en:'Veliky Ustyug',hi:'वेलिकी उस्त्यूग'},ru:'Великий Устюг',browse:'https://tours.tutu.ru/strana/rossiya/kurort/veliky_ustyug/',aliases:'ded moroz дед мороз'}
+    {key:'altai',kind:'winter',id:null,name:{ru:'Алтай',en:'Altai',hi:'अल्ताई'},ru:'Алтай',browse:'https://tours.tutu.ru/strana/rossiya/kurort/altai/',aliases:'mountains nature snow горы'},
+    {key:'gorno-altaysk',kind:'winter',id:null,name:{ru:'Горно-Алтайск',en:'Gorno-Altaysk',hi:'गोर्नो-अल्तायस्क'},ru:'Горно-Алтайск',browse:'https://tours.tutu.ru/strana/rossiya/kurort/gorno_altaysk/',aliases:'altai'},
+    {key:'irkutsk',kind:'winter',id:null,name:{ru:'Иркутск',en:'Irkutsk',hi:'इर्कुत्स्क'},ru:'Иркутск',browse:'https://tours.tutu.ru/strana/rossiya/kurort/irkutsk/',aliases:'lake baikal'},
+    {key:'listvyanka',kind:'winter',id:null,name:{ru:'Листвянка',en:'Listvyanka',hi:'लिस्तव्यांका'},ru:'Листвянка',browse:'https://tours.tutu.ru/strana/rossiya/kurort/listvyanka/',aliases:'baikal lakeside'},
+    {key:'olkhon',kind:'winter',id:null,name:{ru:'Ольхон',en:'Olkhon Island',hi:'ओलखोन द्वीप'},ru:'Ольхон',browse:'https://tours.tutu.ru/strana/rossiya/kurort/olkhon/',aliases:'baikal ice lake island'},
+    {key:'kaliningrad',kind:'winter',id:null,name:{ru:'Калининград',en:'Kaliningrad',hi:'कालिनिनग्राद'},ru:'Калининград',browse:'https://tours.tutu.ru/strana/rossiya/kurort/kaliningrad/',aliases:'baltic christmas'},
+    {key:'yakutsk',kind:'winter',id:null,name:{ru:'Якутск',en:'Yakutsk',hi:'याकुत्स्क'},ru:'Якутск',browse:'https://tours.tutu.ru/strana/rossiya/kurort/yakutsk/',aliases:'snow winter cold'},
+    {key:'suzdal',kind:'winter',id:null,name:{ru:'Суздаль',en:'Suzdal',hi:'सुज़दल'},ru:'Суздаль',browse:'https://tours.tutu.ru/strana/rossiya/kurort/suzdal/',aliases:'golden ring christmas'},
+    {key:'veliky-novgorod',kind:'winter',id:null,name:{ru:'Великий Новгород',en:'Veliky Novgorod',hi:'वेलिकी नोवगोरोद'},ru:'Великий Новгород',browse:'https://tours.tutu.ru/strana/rossiya/kurort/veliky_novgorod/',aliases:'historic winter'},
+    {key:'moscow-oblast',kind:'winter',id:null,name:{ru:'Подмосковье',en:'Moscow Region',hi:'मॉस्को क्षेत्र'},ru:'Подмосковье',browse:'https://tours.tutu.ru/strana/rossiya/kurort/moscow_oblast/',aliases:'winter retreat countryside'},
+    {key:'golden-ring',kind:'winter',id:null,name:{ru:'Золотое кольцо',en:'Golden Ring',hi:'गोल्डन रिंग'},ru:'Золотое кольцо',browse:'https://tours.tutu.ru/strana/rossiya/kurort/golden_ring/',aliases:'suzdal vladimir historic'},
+    {key:'rosa-khutor',kind:'winter',id:null,name:{ru:'Роза Хутор',en:'Rosa Khutor',hi:'रोज़ा खुतोर'},ru:'Роза Хутор',browse:'https://tours.tutu.ru/strana/rossiya/kurort/rosa_khutor/',aliases:'sochi ski'},
+    {key:'dombay',kind:'winter',id:null,name:{ru:'Домбай',en:'Dombay',hi:'दोम्बाय'},ru:'Домбай',browse:'https://tours.tutu.ru/strana/rossiya/kurort/dombay/',aliases:'ski mountains caucasus'},
+    {key:'prielbrusie',kind:'winter',id:null,name:{ru:'Приэльбрусье',en:'Elbrus Region',hi:'एल्ब्रुस क्षेत्र'},ru:'Приэльбрусье',browse:'https://tours.tutu.ru/strana/rossiya/kurort/prielbrusie/',aliases:'mount elbrus ski'},
+    {key:'kislovodsk',kind:'winter',id:null,name:{ru:'Кисловодск',en:'Kislovodsk',hi:'किस्लोवोद्स्क'},ru:'Кисловодск',browse:'https://tours.tutu.ru/strana/rossiya/kurort/kislovodsk/',aliases:'spa north caucasus'},
+    {key:'veliky-ustyug',kind:'winter',id:null,name:{ru:'Великий Устюг',en:'Veliky Ustyug',hi:'वेलिकी उस्त्यूग'},ru:'Великий Устюг',browse:'https://tours.tutu.ru/strana/rossiya/kurort/veliky_ustyug/',aliases:'ded moroz дед мороз'},
+    {key:'antalya',kind:'resort',parent:'turkey',id:null,name:{ru:'Анталья',en:'Antalya',hi:'अंताल्या'},ru:'Анталья',browse:'https://tours.tutu.ru/strana/turkey/kurort/antalya/',aliases:'antalya turkey'},
+    {key:'alanya',kind:'resort',parent:'turkey',id:null,name:{ru:'Аланья',en:'Alanya',hi:'अलान्या'},ru:'Аланья',browse:'https://tours.tutu.ru/strana/turkey/kurort/alanya/',aliases:'alania turkey'},
+    {key:'istanbul',kind:'resort',parent:'turkey',id:null,name:{ru:'Стамбул',en:'Istanbul',hi:'इस्तांबुल'},ru:'Стамбул',browse:'https://tours.tutu.ru/strana/turkey/kurort/stambul/',aliases:'istanbul city'},
+    {key:'hurghada',kind:'resort',parent:'egypt',id:null,name:{ru:'Хургада',en:'Hurghada',hi:'हुरगाडा'},ru:'Хургада',browse:'https://tours.tutu.ru/strana/egypt/kurort/hurgada/',aliases:'egypt red sea'},
+    {key:'sharm-el-sheikh',kind:'resort',parent:'egypt',id:null,name:{ru:'Шарм-эль-Шейх',en:'Sharm El Sheikh',hi:'शर्म अल शेख़'},ru:'Шарм-эль-Шейх',browse:'https://tours.tutu.ru/strana/egypt/kurort/sharm-el-sheyh/',aliases:'sharm el sheikh'},
+    {key:'phuket',kind:'resort',parent:'thailand',id:null,name:{ru:'Пхукет',en:'Phuket',hi:'फुकेत'},ru:'Пхукет',browse:'https://tours.tutu.ru/strana/thailand/kurort/phuket/',aliases:'thailand beach'},
+    {key:'goa',kind:'resort',parent:'india',id:null,name:{ru:'Гоа',en:'Goa',hi:'गोवा'},ru:'Гоа',browse:'https://tours.tutu.ru/strana/india/kurort/goa/',aliases:'goa india beach'},
+    {key:'bali',kind:'resort',parent:'indonesia',id:null,name:{ru:'Бали',en:'Bali',hi:'बाली'},ru:'Бали',browse:'https://tours.tutu.ru/strana/indonesia/kurort/bali/',aliases:'bali indonesia island'},
+    {key:'dubai',kind:'resort',parent:'uae',id:null,name:{ru:'Дубай',en:'Dubai',hi:'दुबई'},ru:'Дубай',browse:'https://tours.tutu.ru/strana/united_arab_emirates/kurort/dubai/',aliases:'dubai emirates'}
   ];
   const byKey=new Map(destinations.map(d=>[d.key,d]));
   const departureByKey=new Map(departures.map(d=>[d.key,d]));
+  // Tutu SEO pages, NOT Travelata search departure IDs.
+  const murmanskFromPages={
+    moscow:'https://tours.tutu.ru/rossiya/murmansk/iz/491_moskva/',
+    spb:'https://tours.tutu.ru/rossiya/murmansk/iz/75_sankt-peterburg/',
+    kazan:'https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/',
+    ekaterinburg:'https://tours.tutu.ru/rossiya/murmansk/iz/29_ekaterinburg/',
+    novosibirsk:'https://tours.tutu.ru/rossiya/murmansk/iz/58_novosibirsk/',
+    samara:'https://tours.tutu.ru/rossiya/murmansk/iz/74_samara/',
+    'nizhny-novgorod':'https://tours.tutu.ru/rossiya/murmansk/iz/55_nijniy_novgorod/',
+    irkutsk:'https://tours.tutu.ru/rossiya/murmansk/iz/31_irkutsk/',
+    perm:'https://tours.tutu.ru/rossiya/murmansk/iz/68_perm/',
+    krasnodar:'https://tours.tutu.ru/rossiya/murmansk/iz/39_krasnodar/',
+    'rostov-on-don':'https://tours.tutu.ru/rossiya/murmansk/iz/72_rostov-na-donu/'
+  };
 
   function normalize(value){
     return String(value||'').toLocaleLowerCase().normalize('NFD')
@@ -83,9 +133,19 @@
   }
   function find(query,limit){
     const q=normalize(query);
-    const filtered=destinations.filter(d=>!q||normalize(Object.values(d.name).join(' ')+' '+d.aliases).includes(q));
-    // Keep Russia's winter destinations prominent in the unfiltered list.
-    return filtered.slice(0,limit||12);
+    const featured=['russia','murmansk','baikal','teriberka','karelia','sheregesh',
+      'moscow','saint-petersburg','goa','india','turkey','uae','egypt','dubai','phuket'];
+    const rank=d=>{
+      if(!q){const i=featured.indexOf(d.key);return i<0?100:i}
+      const names=Object.values(d.name).map(normalize);
+      if(names.some(n=>n===q))return 0;
+      if(names.some(n=>n.startsWith(q)))return 1;
+      if(normalize(d.aliases).split(' ').some(n=>n===q||n.startsWith(q)))return 2;
+      if(names.some(n=>n.includes(q)))return 3;
+      return 4;
+    };
+    return destinations.filter(d=>!q||normalize(Object.values(d.name).join(' ')+' '+d.aliases).includes(q))
+      .sort((a,b)=>rank(a)-rank(b)).slice(0,Math.min(30,Math.max(1,limit||12)));
   }
   function dateParts(isoDate){
     const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(isoDate||''));
@@ -98,11 +158,26 @@
   function build(state){
     const dep=departureByKey.get(state.departure),d=byKey.get(state.destination),date=dateParts(state.date);
     const min=Number(state.nightsMin),max=Number(state.nightsMax),adults=Number(state.adults);
+    const children=state.children===undefined?0:Number(state.children);
+    const ages=Array.isArray(state.childAges)?state.childAges:[];
     if(!dep||!d||!date||!Number.isInteger(min)||!Number.isInteger(max)||min<1||max>30||min>max||
-       !Number.isInteger(adults)||adults<1||adults>9)throw new Error('Invalid tour search');
-    // For browse-only locations, returning an unfiltered provider category page
-    // is safer than inventing an arrival_id (or silently searching the wrong city).
-    if(!Number.isInteger(d.id))return {url:d.browse,filtered:false,destination:d,reason:'destination'};
+       !Number.isInteger(adults)||adults<1||adults>9||
+       !Number.isInteger(children)||children<0||children>3||adults+children>9||
+       (children>0&&(ages.length!==children||ages.some(a=>!Number.isInteger(a)||a<0||a>17))))
+       throw new Error('Invalid tour search');
+    const today=new Date(),pad=n=>String(n).padStart(2,'0');
+    const todayIso=today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
+    const maxDate=new Date(today.getFullYear(),today.getMonth()+11,today.getDate());
+    const maxIso=maxDate.getFullYear()+'-'+pad(maxDate.getMonth()+1)+'-'+pad(maxDate.getDate());
+    if(date.iso<todayIso||date.iso>maxIso)throw new Error('Invalid tour date');
+
+    // Unverified resort, departure or family parameters never enter a deep link.
+    if(!Number.isInteger(d.id)||!Number.isInteger(dep.id)||children>0){
+      const target=(d.key==='murmansk'||d.browseAs==='murmansk')&&murmanskFromPages[dep.key];
+      return {url:target||d.browse,filtered:false,destination:d,departure:dep,
+        departureApplied:Boolean(target),reason:children>0?'children':
+         !Number.isInteger(dep.id)?'departure':'destination'};
+    }
     if(d.kind!=='country')throw new Error('Unverified destination type');
 
     const q=new URLSearchParams();
@@ -135,5 +210,5 @@
     hash.set('sort','recommend');
     return {url:'https://web.tutu.travelata.ru/search/?'+q.toString()+'#?'+hash.toString(),filtered:true,destination:d};
   }
-  root.TUTU_TOURS={departures,destinations,byKey,departureByKey,find,build,dateParts};
+  root.TUTU_TOURS={departures,destinations,byKey,departureByKey,find,build,dateParts,murmanskFromPages};
 })(window);
