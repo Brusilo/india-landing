@@ -43,8 +43,9 @@ for(const d of destinations.filter(d=>d.kind==='country')){
     ? verifiedCountries[d.key]:null;
   assert.equal(d.id,expected,d.key+' country ID from public Travelata constructor or branded sample');
 }
-assert.deepEqual(destinations.filter(d=>d.kind==='country'&&d.id===null)
-  .map(d=>d.key).sort(),unknownCountries.slice().sort());
+assert.equal(destinations.filter(d=>d.kind==='country'&&d.id===null)
+  .map(d=>d.key).sort().join(','),unknownCountries.slice().sort().join(','),
+  '8 country IDs still unavailable in public Travelata options');
 
 
 function pairs(s){return Object.fromEntries(s.trim().split(/\s+/).map(x=>x.split(':')))}
