@@ -174,7 +174,7 @@
 .panel--photo {
   position: relative;
   overflow: hidden;
-  background: #A181FF url("photos/skate-train.jpg") right 38% / cover no-repeat;
+  background: #986FF7 url("photos/skate-train.jpg") right 38% / cover no-repeat;
   min-height: 300px;
   align-items: center;
 }
@@ -189,7 +189,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, #A181FF 0%, #A181FF 38%, rgba(161, 129, 255, .88) 50%, rgba(161, 129, 255, 0) 72%);
+  background: linear-gradient(100deg, #986FF7 0%, #986FF7 38%, rgba(152, 111, 247, .88) 50%, rgba(152, 111, 247, 0) 72%);
 }
 
 .panel--photo .panel-ico { display: none !important; }
@@ -199,7 +199,7 @@
      solid purple underneath, so it stays readable. */
   .panel.panel--transport.panel--photo {
     background-image: none;
-    background-color: #A181FF;
+    background-color: #986FF7;
     min-height: 0;
     padding-top: 186px;
   }
@@ -260,7 +260,7 @@
   gap: 8px;
   padding: 18px;
   border-radius: 20px;
-  background: #A181FF;
+  background: #986FF7;
   color: #fff;
 }
 
@@ -583,7 +583,7 @@
   padding: 0;
   min-height: 0;
   display: block;
-  background: #A181FF url("photos/skate-train.jpg") right 38% / cover no-repeat;
+  background: #986FF7 url("photos/skate-train.jpg") right 38% / cover no-repeat;
 }
 
 .panel--photo::before {
@@ -591,7 +591,7 @@
   position: absolute;
   inset: 0 auto 0 0;
   width: 66%;
-  background: #A181FF;
+  background: #986FF7;
   border-radius: 0 44% 44% 0 / 0 54% 46% 0;
 }
 
@@ -673,7 +673,7 @@
     margin: -34px 12px 0;
     padding: 24px 22px 26px;
     border-radius: var(--r-panel);
-    background: #A181FF;
+    background: #986FF7;
     align-items: center;
     text-align: center;
   }
@@ -935,7 +935,7 @@
    ========================================================================= */
 
 .panel--photo {
-  background: #A181FF url("photos/plane-window.webp") right center / cover no-repeat;
+  background: #986FF7 url("photos/plane-window.webp") right center / cover no-repeat;
 }
 
 /* The purple shape is the artwork from the landing system, stretched to the
@@ -1140,7 +1140,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background: #A181FF !important;
+    background: #986FF7 !important;
     background-image: none !important;
     border-radius: 28px !important;
     padding: 22px 26px 20px;
@@ -2976,7 +2976,7 @@ br.br-wide { display: none; }
 
 @media (min-width: 600px) and (max-width: 900px) {
   .panel.panel--transport.panel--photo {
-    background: #A181FF url("photos/plane-window-2.webp") right center / auto 106% no-repeat;
+    background: #986FF7 url("photos/plane-window-2.webp") right center / auto 106% no-repeat;
     padding: 0;
     overflow: hidden;
     border-radius: var(--r-panel);
@@ -4049,10 +4049,10 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   opacity: .9;
 }
 
-/* Pass 302 — header and footer in the new Tutu lilac (#A181FF) with the
+/* Pass 302 — header and footer in the new Tutu lilac (#986FF7) with the
    orange search button (#FD5626), as in the brand mock-ups of October 2026.
    Translucent white replaces the violet tints that disappear on lilac. */
-:root { --head-bg: #A181FF; --head-cta: #FD5626; --head-cta-hover: #E8481B; }
+:root { --head-bg: #986FF7; --head-cta: #FD5626; --head-cta-hover: #E8481B; }
 .top, .hero, .footer { background: var(--head-bg) !important; }
 .hero h1 .accent, :lang(hi) .hero h1 .accent { color: var(--deep-blue); }
 .hero .pill { background: rgba(255, 255, 255, .2); border-color: rgba(255, 255, 255, .32); }
@@ -4460,3 +4460,7 @@ html body #routes .card--route .route-price .route-inr { margin: 0; font-size: 1
 @media (min-width: 1101px) {
   html body #routes .card--route .route-price .route-inr { font-size: 17px; }
 }
+
+/* Pass 370 — the lilac is #986FF7, as tutu.ru shows it (the user's screenshot);
+   footer links regular weight like on tutu.ru, only the headings semibold. */
+footer a { font-weight: 400 !important; }
