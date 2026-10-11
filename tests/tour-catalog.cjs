@@ -107,10 +107,30 @@ for(const [country,id] of [['russia',76],['india',33],['maldives',56],
 assert.equal(build(q('moscow','japan')).filtered,false,
   'unverified country must remain a Tutu browse link');
 
+// Live search confirmed toCity=1726 selects Murmansk, without a sid.
 const kazan=build(q('kazan','murmansk'));
-assert.equal(kazan.filtered,false);
-assert.equal(kazan.departureApplied,true);
-assert.equal(kazan.url,'https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/');
+assert.equal(kazan.filtered,true,'Murmansk now preserves nights and travellers');
+assert.equal(kazan.resortApplied,true,'verified resort flag');
+const kazanBranded=new URL(kazan.url);
+const kazanHash=new URLSearchParams(kazanBranded.hash.slice(2));
+assert.equal(kazanBranded.searchParams.get('departure'),'29','Travelata Kazan origin');
+assert.equal(kazanBranded.searchParams.get('arrival_id'),'76','Russia country query');
+assert.equal(kazanBranded.searchParams.get('arrival_type'),'country');
+assert.equal(kazanHash.get('toCountry'),'76');
+assert.equal(kazanHash.get('toCity'),'1726','Travelata Murmansk resort ID');
+assert.equal(kazanHash.get('nightFrom'),'7');
+assert.equal(kazanHash.get('nightTo'),'14');
+assert.equal(kazanHash.get('sid'),null,'never copy a partner session ID');
+const rostovMurmansk=build(q('rostov-on-don','murmansk'));
+assert.equal(rostovMurmansk.filtered,false);
+assert.equal(rostovMurmansk.url,'https://tours.tutu.ru/rossiya/murmansk/iz/72_rostov-na-donu/');
+const familyMurmansk=build(q('moscow','murmansk',1,[7]));
+assert.equal(familyMurmansk.filtered,false);
+assert.equal(familyMurmansk.reason,'children');
+assert.equal(familyMurmansk.url,'https://tours.tutu.ru/rossiya/murmansk/iz/491_moskva/');
+const teriberka=build(q('moscow','teriberka'));
+assert.equal(teriberka.filtered,false,'Teriberka has no exact Travelata city ID');
+assert.equal(teriberka.url,'https://tours.tutu.ru/rossiya/murmansk/iz/491_moskva/');
 // Verified 7 winter destinations from each of 4 city origins (28/28 pages).
 const winterOrigins={
  moscow:'491_moskva',spb:'75_sankt-peterburg',kazan:'33_kazan',
