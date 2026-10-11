@@ -451,10 +451,11 @@ with sync_playwright() as playwright:
         print("Mobile search geometry passed: 320/390/430px, RU/EN/HI, five modes, stable fields and inset dividers.")
 
 
-        # Desktop regression diagnostics: the RU support chat artwork should
-        # occupy the same slot as its EN/HI counterparts, independent of copy.
+        # Desktop support chat illustration must take the same relative
+        # footprint and bottom-right position across RU, EN and HI.
         for width in (1101, 1200, 1366, 1600):
             ctx, page, errors = setup(browser, {"width": width, "height": 900})
+            artwork = {}
             for locale, filename in (
                 ("ru", "index-ru.html"), ("en", "index.html"), ("hi", "index-hi.html")
             ):
@@ -476,9 +477,21 @@ with sync_playwright() as playwright:
                       maxHeight:css.maxHeight,
                       scale:css.scale,translate:css.translate};
                 }""")
-                print("SUPPORT_BUBBLES_GEOMETRY", width, locale, dims)
+                artwork[locale] = dims
+            ru, en, hi = (artwork[x] for x in ("ru", "en", "hi"))
+            assert ru["maxHeight"] == hi["maxHeight"] == en["maxHeight"] == "52%", (
+                width, artwork)
+            for reference in (en, hi):
+                # Copy lengths can change card height, so compare artwork
+                # size relative to its card, not the absolute image pixels.
+                actual_ratio = ru["imgHeight"] / ru["cardHeight"]
+                expected_ratio = reference["imgHeight"] / reference["cardHeight"]
+                assert abs(actual_ratio - expected_ratio) <= .025, (width, artwork)
+                assert abs(ru["right"] - reference["right"]) <= 9, (width, artwork)
+                assert abs(ru["bottom"] - reference["bottom"]) <= 9, (width, artwork)
             assert not errors
             ctx.close()
+        print("RU/EN/HI desktop support illustration geometry passed at 1101/1200/1366/1600px.")
         print("Browser search state and tour native alert validation passed: five modes, RU/EN/HI, no layout-shifting error notices.")
     finally:
         browser.close()
