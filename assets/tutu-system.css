@@ -3977,40 +3977,40 @@ html:lang(en) #routes .card--route .price { font-size: 16px; }
   html .panel--photo p { font-size: clamp(17px, 2.1vw, 21px); line-height: 1.4; }
 }
 
-/* Phones: the city list opens inside the field. The field used to drop its
-   centring then, so the input jumped 10px up and the field looked squeezed;
-   the open field now keeps the closed field's top spacing. */
+/* Mobile place autocomplete:
+   - Opening suggestions must never change the field's horizontal padding.
+     Before this fix, the right padding jumped from 66px to 16px on focus,
+     widening the input while typing.
+   - Divider lines are inset exactly like the calendar and guest popovers.
+   - Standard modes reserve a 50px swap-button column in the input, but the
+     list itself can use that column while the swap button is hidden.
+     Tour fields have no swap button and retain their own 16px insets. */
 @media (max-width: 599.98px) {
-  html .search.search-v2 .v2-field--place:not(.has-value):has(> .search-suggest:not([hidden])) { padding-top: 20px; }
-  html .search.search-v2 .v2-field--place.has-value:has(> .search-suggest:not([hidden])) { padding-top: 12px; }
-}
-/* Phones: the open city list (and its top line) runs the full field width,
-   past the swap button's column, from the first tap on. */
-@media (max-width: 599.98px) {
-  html .search.search-v2 .v2-field--place > .search-suggest:not([hidden]) { margin-right: -50px !important; width: auto !important; max-width: none !important; }
-}
-
-/* Phones: a tapped city field looks the way it does while typing, so
-   nothing moves when the first letter appears. The "From" / "To" label sits
-   above at once (the placeholder hides), the field keeps the typing state's
-   spacing, and the swap button steps aside while the list is open, so the
-   input and the list use the field's full width. */
-@media (max-width: 599.98px) {
-  html .search.search-v2 .v2-field--place:focus-within .v2-caption { display: block; }
-  html .search.search-v2 .v2-field--place:focus-within .v2-input::placeholder { color: transparent !important; }
-  html .search.search-v2 .v2-field--place:has(> .search-suggest:not([hidden])),
-  html .search.search-v2 .v2-field--place.has-value:has(> .search-suggest:not([hidden])),
-  html .search.search-v2 .v2-field--place:not(.has-value):has(> .search-suggest:not([hidden])) { padding-top: 12px; padding-right: 16px; }
-  html .search.search-v2 .v2-field--place > .search-suggest:not([hidden]) { margin-right: 0 !important; width: 100% !important; max-width: 100% !important; }
-  html .search.search-v2:has(.v2-field--place > .search-suggest:not([hidden])) .v2-swap { visibility: hidden; }
-}
-/* Phones: the line under a tapped city field runs edge to edge, like the
-   line between "From" and "To"; the suggestions keep their inset. */
-@media (max-width: 599.98px) {
+  html .search.search-v2 .v2-field--place:focus-within .v2-caption {
+    display: block;
+  }
+  html .search.search-v2 .v2-field--place:focus-within .v2-input::placeholder {
+    color: transparent !important;
+  }
+  html .search.search-v2 .v2-field--place:has(> .search-suggest:not([hidden])) {
+    padding-top: 12px;
+  }
   html .search.search-v2 .v2-field--place > .search-suggest:not([hidden]) {
-    margin-left: -16px !important; margin-right: -16px !important;
-    width: auto !important; max-width: none !important;
-    padding-left: 16px !important; padding-right: 16px !important;
+    margin: 10px 0 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px 0 0 !important;
+    border-top: 1px solid #e6e7f3;
+  }
+  html .search.search-v2:not([data-mode="tour"])
+    .v2-field--place:is([data-role="from"], [data-role="to"])
+    > .search-suggest:not([hidden]) {
+    margin-right: -50px !important;
+    width: calc(100% + 50px) !important;
+    max-width: none !important;
+  }
+  html .search.search-v2:has(.v2-field--place > .search-suggest:not([hidden])) .v2-swap {
+    visibility: hidden;
   }
 }
 
