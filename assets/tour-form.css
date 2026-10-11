@@ -253,3 +253,24 @@
   color: #000;
   font: 400 14px/1.4 var(--font);
 }
+
+/* Slightly raise desktop search popovers and suggestions so the topmost
+   quick chips stay behind white panels instead of peeking out above them.
+   All five tabs use the same native positioning; no change to mobile. */
+@media (min-width:1101px) {
+  html .search.search-v2 .search-suggest,
+  html .search.search-v2 .v2-calendar,
+  html .search.search-v2 .v2-popover {
+    top:calc(100% - 10px) !important;
+  }
+}
+
+/* Tours now uses exactly the shared travellers structure and child-age
+   select controls from Hotels/Flights/Trains/Buses, including mobile sizing. */
+.search.search-v2[data-mode="tour"] .tour-panel--people .child-age-v2 {
+  color:#000;
+}
+.search.search-v2[data-mode="tour"] .tour-panel--people .child-age-v2 select {
+  font:500 14px var(--font);
+  color:#000;
+}
