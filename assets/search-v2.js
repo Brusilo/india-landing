@@ -14,7 +14,7 @@
     ru:{
       from:'Откуда',to:'Куда',when:'Когда',back:'Обратно',flightWho:'Кто летит',travelWho:'Кто едет',swap:'Поменять местами',search:'Найти',
       hotelWhere:'Город',hotelDates:'Заезд — выезд',guests:'Кто едет',
-      adults:'Взрослые',adultSub:'От 12 лет',children:'Дети',childSub:'До 18 лет',childAge:'Возраст ребёнка',years:'лет',
+      adults:'Взрослые',adultSub:'От 12 лет',childSub:'До 12 лет',hotelAdultSub:'От 18 лет',hotelChildSub:'До 18 лет',children:'Дети',childAge:'Возраст ребёнка',years:'лет',
       economy:'Эконом',business:'Бизнес',cabin:'Класс обслуживания',
       passenger1:'пассажир',passenger2:'пассажира',passenger5:'пассажиров',
       guest1:'гость',guest2:'гостя',guest5:'гостей',
@@ -23,7 +23,7 @@
     en:{
       from:'From',to:'To',when:'Departure',back:'Return',flightWho:'Travellers',travelWho:'Travellers',swap:'Swap departure and destination',search:'Search',
       hotelWhere:'City',hotelDates:'Check-in — check-out',guests:'Guests',
-      adults:'Adults',adultSub:'12+ years',children:'Children',childSub:'Under 18',childAge:'Child age',years:'years',
+      adults:'Adults',adultSub:'12+ years',childSub:'Under 12',hotelAdultSub:'18+ years',hotelChildSub:'Under 18',children:'Children',childAge:'Child age',years:'years',
       economy:'Economy',business:'Business',cabin:'Cabin class',
       passenger1:'traveller',passenger2:'travellers',passenger5:'travellers',
       guest1:'guest',guest2:'guests',guest5:'guests',
@@ -32,7 +32,7 @@
     hi:{
       from:'कहाँ से',to:'कहाँ तक',when:'प्रस्थान',back:'वापसी',flightWho:'यात्री',travelWho:'यात्री',swap:'कहाँ से और कहाँ तक की जगह बदलें',search:'खोजें',
       hotelWhere:'शहर',hotelDates:'चेक-इन — चेक-आउट',guests:'मेहमान',
-      adults:'वयस्क',adultSub:'12 साल या उससे ज़्यादा',children:'बच्चे',childSub:'18 साल से कम',childAge:'बच्चे की उम्र',years:'साल',
+      adults:'वयस्क',adultSub:'12 साल या उससे ज़्यादा',childSub:'12 साल से कम',hotelAdultSub:'18 साल या उससे ज़्यादा',hotelChildSub:'18 साल से कम',children:'बच्चे',childAge:'बच्चे की उम्र',years:'साल',
       economy:'इकोनॉमी',business:'बिज़नेस',cabin:'ट्रैवल क्लास',
       passenger1:'यात्री',passenger2:'यात्री',passenger5:'यात्री',
       guest1:'मेहमान',guest2:'मेहमान',guest5:'मेहमान',
@@ -103,6 +103,16 @@
         state.childAges=Array.isArray(raw.childAges)
           ?raw.childAges.slice(0,state.children).map(age=>Number.isInteger(age)&&age>=0&&age<=17?age:5):[];
         while(state.childAges.length<state.children)state.childAges.push(5);
+        // A 12+ passenger is an adult in flight/train/bus. Fix old saved
+        // data rather than keeping an impossible child age in those modes.
+        if(key!=='hotel'){
+          const grown=state.childAges.filter(age=>age>=12).length;
+          if(grown){
+            state.adults+=grown;
+            state.children-=grown;
+            state.childAges=state.childAges.filter(age=>age<12);
+          }
+        }
         if(key==='hotel'){
           state.start=safeDate(raw.start);
           state.end=state.start?safeDate(raw.end):null;
@@ -454,10 +464,13 @@
     if(!Array.isArray(s.childAges))s.childAges=[];
     while(s.childAges.length<s.children)s.childAges.push(5);
     if(s.childAges.length>s.children)s.childAges=s.childAges.slice(0,s.children);
-    const ageOptions=value=>Array.from({length:18},(_,age)=>'<option value="'+age+'" '+(Number(value)===age?'selected':'')+'>'+age+' '+esc(labels.years)+'</option>').join('');
+    const adultSub=mode==='hotel'?labels.hotelAdultSub:labels.adultSub;
+    const childSub=mode==='hotel'?labels.hotelChildSub:labels.childSub;
+    const maxChildAge=mode==='hotel'?17:11;
+    const ageOptions=value=>Array.from({length:maxChildAge+1},(_,age)=>'<option value="'+age+'" '+(Number(value)===age?'selected':'')+'>'+age+' '+esc(labels.years)+'</option>').join('');
     const agesHtml=s.children?'<div class="child-ages-v2">'+s.childAges.map((age,i)=>'<label class="child-age-v2"><span>'+esc(labels.childAge)+' '+(i+1)+'</span><select data-child-age="'+i+'">'+ageOptions(age)+'</select></label>').join('')+'</div>':'';
-    box.innerHTML='<div class="guest-row"><div><div class="guest-name">'+esc(labels.adults)+'</div><div class="guest-sub">'+esc(labels.adultSub)+'</div></div><div class="guest-stepper"><button type="button" data-person="adult" data-step="-1" '+(s.adults<=1?'disabled':'')+'>−</button><output>'+s.adults+'</output><button type="button" data-person="adult" data-step="1" '+(total>=9?'disabled':'')+'>+</button></div></div>'+
-      '<div class="guest-row"><div><div class="guest-name">'+esc(labels.children)+'</div><div class="guest-sub">'+esc(labels.childSub)+'</div></div><div class="guest-stepper"><button type="button" data-person="child" data-step="-1" '+(s.children<=0?'disabled':'')+'>−</button><output>'+s.children+'</output><button type="button" data-person="child" data-step="1" '+(total>=9?'disabled':'')+'>+</button></div></div>'+agesHtml+
+    box.innerHTML='<div class="guest-row"><div><div class="guest-name">'+esc(labels.adults)+'</div><div class="guest-sub">'+esc(adultSub)+'</div></div><div class="guest-stepper"><button type="button" data-person="adult" data-step="-1" '+(s.adults<=1?'disabled':'')+'>−</button><output>'+s.adults+'</output><button type="button" data-person="adult" data-step="1" '+(total>=9?'disabled':'')+'>+</button></div></div>'+
+      '<div class="guest-row"><div><div class="guest-name">'+esc(labels.children)+'</div><div class="guest-sub">'+esc(childSub)+'</div></div><div class="guest-stepper"><button type="button" data-person="child" data-step="-1" '+(s.children<=0?'disabled':'')+'>−</button><output>'+s.children+'</output><button type="button" data-person="child" data-step="1" '+(total>=9?'disabled':'')+'>+</button></div></div>'+agesHtml+
       (mode==='flight'?'<div class="cabin-row"><div class="cabin-title">'+esc(labels.cabin)+'</div><div class="cabin-tabs"><button type="button" data-cabin="economy" class="'+(s.cabin==='economy'?'is-active':'')+'">'+esc(labels.economy)+'</button><button type="button" data-cabin="business" class="'+(s.cabin==='business'?'is-active':'')+'">'+esc(labels.business)+'</button></div></div>':'');
   }
 
