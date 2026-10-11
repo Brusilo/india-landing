@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Full browser regression for multilingual search-state continuity.
+"""Full browser regression: language-only handoff, but reload/new visit reset.
 
 Run in the repository root with an HTTP server on port 8765:
   python -m http.server 8765 --bind 127.0.0.1 &
@@ -11,6 +11,7 @@ from playwright.sync_api import sync_playwright
 
 BASE = "http://127.0.0.1:8765/"
 PORTABLE = "india-landing-search-state-v1"
+HANDOFF = "india-landing-language-handoff-v2"
 
 def setup(browser):
     context = browser.new_context(locale="en-GB", timezone_id="Europe/Moscow",
@@ -51,9 +52,12 @@ def pick_place(page, role, name):
     hint.click()
 
 def stored(page):
+    """The in-memory snapshot; neither F5 nor a new visit can restore it."""
+    return page.evaluate("() => window.TUTU_SEARCH_PERSIST.read()")
+
+def handoff_consumed(page):
     return page.evaluate(
-        "(key) => JSON.parse(localStorage.getItem(key))",
-        PORTABLE
+        "(key) => sessionStorage.getItem(key) === null", HANDOFF
     )
 
 def check_desktop_popup_geometry(page, panel_selector, field_selector):
@@ -120,11 +124,7 @@ with sync_playwright() as playwright:
         assert "Business".lower() in page.locator(".v2-field--pax .v2-value").inner_text().lower()
         assert page.locator(".v2-field--date[data-role='date'] .has-value").count() == 0 or True
         assert stored(page)["standard"]["flight"]["childAges"] == [7]
-        page.reload(wait_until="domcontentloaded")
-        page.wait_for_function(
-            "() => document.documentElement.classList.contains('search-ui-ready')"
-        )
-        assert page.locator("[data-role='from'] .v2-input").input_value() == "Delhi"
+        assert handoff_consumed(page)
         switch(page, "hi")
         standard_mode(page, "flight")
         assert page.locator("[data-role='from'] .v2-input").input_value() != "Delhi"
@@ -138,16 +138,34 @@ with sync_playwright() as playwright:
         assert stored(page)["standard"]["flight"]["childAges"] == [7]
         assert stored(page)["standard"]["flight"]["returnDate"] == before["standard"]["flight"]["returnDate"]
         assert stored(page)["standard"]["flight"]["cabin"] == "business"
-        page.reload(wait_until="domcontentloaded")
-        page.wait_for_function("() => document.documentElement.classList.contains('search-ui-ready')")
-        standard_mode(page, "flight")
-        assert page.locator("[data-role='from'] .v2-input").input_value() == "Дели"
+        assert handoff_consumed(page)
         switch(page, "en")
         standard_mode(page, "flight")
         assert page.locator("[data-role='from'] .v2-input").input_value() == "Delhi"
         switch(page, "ru")
         standard_mode(page, "flight")
         assert page.locator("[data-role='to'] .v2-input").input_value() == "Москва"
+        # A plain reload and an obsolete localStorage snapshot must NOT restore
+        # language-handoff fields or tab selections.
+        page.evaluate("""key => localStorage.setItem(key, JSON.stringify({
+            version:1,activeMode:'tour',standardMode:'hotel',
+            standard:{flight:{fromId:'in-delhi'}}
+        }))""", PORTABLE)
+        page.reload(wait_until="domcontentloaded")
+        page.wait_for_function("() => document.documentElement.classList.contains('search-ui-ready')")
+        standard_mode(page, "flight")
+        assert page.locator("[data-role='from'] .v2-input").input_value() == ""
+        assert page.locator("[data-role='to'] .v2-input").input_value() == ""
+        assert stored(page)["standard"]["flight"]["children"] == 0
+        assert stored(page)["standard"]["flight"]["date"] is None
+        assert page.evaluate("key => localStorage.getItem(key)", PORTABLE) is None
+        assert handoff_consumed(page)
+        # Typing a fresh URL (without language-button click) is also a reset.
+        page.locator(".transport button:not(.tours-tab)").nth(0).click()
+        page.goto(BASE + "index-hi.html", wait_until="domcontentloaded")
+        page.wait_for_function("() => document.documentElement.classList.contains('search-ui-ready')")
+        standard_mode(page, "flight")
+        assert page.locator("[data-role='from'] .v2-input").input_value() == ""
         assert not errors, f"Flight mode browser errors: {errors}"
         ctx.close()
 
@@ -221,10 +239,7 @@ with sync_playwright() as playwright:
         assert page.locator(".tour-departure-input").input_value() != "Moscow"
         assert stored(page)["tour"]["date"] == tour_before["tour"]["date"]
         assert stored(page)["tour"]["childAges"] == [9]
-        page.reload(wait_until="domcontentloaded")
-        page.wait_for_function(
-            "() => document.querySelector('#search').dataset.mode==='tour'"
-        )
+        assert handoff_consumed(page)
         assert page.locator("[data-tour-trigger='nights'] .v2-value").inner_text().startswith("8–16")
         switch(page, "ru")
         assert page.locator("#search").get_attribute("data-mode") == "tour"
@@ -247,6 +262,16 @@ with sync_playwright() as playwright:
         page.locator(".transport .tours-tab").click()
         assert page.locator(".tour-departure-input").input_value()
         assert stored(page)["tour"]["children"] == 1
+        page.reload(wait_until="domcontentloaded")
+        page.wait_for_function("() => document.documentElement.classList.contains('search-ui-ready')")
+        standard_mode(page, "flight")
+        page.locator(".transport .tours-tab").click()
+        assert page.locator(".tour-departure-input").input_value() == ""
+        assert page.locator(".tour-destination").input_value() == ""
+        assert page.locator("[data-tour-trigger='nights'] .v2-value").inner_text().startswith("7–14")
+        assert stored(page)["tour"]["children"] == 0
+        assert stored(page)["tour"]["date"] is None
+        assert handoff_consumed(page)
         assert not errors, f"Tour mode browser errors: {errors}"
         ctx.close()
 
@@ -281,6 +306,11 @@ with sync_playwright() as playwright:
         page.locator(".transport button:not(.tours-tab)").nth(3).click()
         standard_mode(page, "bus")
         assert page.locator("[data-role='from'] .v2-input").input_value() == "Москва"
+        page.reload(wait_until="domcontentloaded")
+        page.wait_for_function("() => document.documentElement.classList.contains('search-ui-ready')")
+        standard_mode(page, "flight")
+        page.locator(".transport button:not(.tours-tab)").nth(0).click()
+        assert page.locator("[data-role='destination'] .v2-input").input_value() == ""
         assert not errors, f"Other modes browser errors: {errors}"
         ctx.close()
 
@@ -301,9 +331,13 @@ with sync_playwright() as playwright:
         switch(page, "ru")
         assert page.locator("#search").get_attribute("data-mode") == "tour"
         assert page.locator(".tour-departure-input").input_value() == "Москва"
+        assert handoff_consumed(page)
+        page.reload(wait_until="domcontentloaded")
+        page.wait_for_function("() => document.documentElement.classList.contains('search-ui-ready')")
+        standard_mode(page, "flight")
         assert not errors, f"Private mode browser errors: {errors}"
         ctx.close()
 
-        print("Browser search persistence passed: 5 modes, RU/EN/HI, reload, child ages and draft text.")
+        print("Browser search state passed: five modes, RU/EN/HI transfer, reload and fresh-visit reset, children and draft text.")
     finally:
         browser.close()
