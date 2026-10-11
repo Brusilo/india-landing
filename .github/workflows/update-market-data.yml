@@ -31,6 +31,10 @@ jobs:
           python-version: '3.12'
       - name: Check FX and quote parsing against fixtures (offline)
         run: python scripts/update-market-data.py --self-test
+      - name: Validate price displays and all languages (offline)
+        run: node tests/landing-pricing.cjs
+      - name: Verify tour deep links (offline)
+        run: node tests/landing-tours.cjs
       - name: Fetch today's CBR FX and any configured supplier prices
         env:
           PRICE_FEED_URL: ${{ secrets.TUTU_PRICE_FEED_URL }}
