@@ -24,14 +24,20 @@ with sync_playwright() as pw:
     assert not errors,'initial page JS errors '+repr(errors[:2])
     tab=page.locator('.transport .tours-tab')
     assert tab.evaluate('e=>e.tagName')=='BUTTON' and not tab.get_attribute('href')
+    original=page.locator('.search-hints-v2 .quick-chip-v2').first.evaluate(
+      "e=>({radius:getComputedStyle(e).borderRadius,font:getComputedStyle(e).fontSize,"
+      "padding:getComputedStyle(e).padding,weight:getComputedStyle(e).fontWeight,"
+      "bg:getComputedStyle(e).backgroundColor})")
     tab.click()
     assert page.locator('form.search-v2').get_attribute('data-mode')=='tour'
     assert page.locator('.search-hints-v2 .quick-chip-v2').count()==6,'expected six native chips'
     assert page.locator('.search-hints-v2 .quick-group-v2').count()==3,'expected three native groups'
     assert page.locator('.tour-hints-winter').count()==0,'extra winter chip row'
     style=page.locator('.search-hints-v2 .quick-chip-v2').first.evaluate(
-      "e=>({radius:getComputedStyle(e).borderRadius,font:getComputedStyle(e).fontSize})")
-    assert style['radius']=='9px' and style['font']=='12px','wrong chip styling '+str(style)
+      "e=>({radius:getComputedStyle(e).borderRadius,font:getComputedStyle(e).fontSize,"
+      "padding:getComputedStyle(e).padding,weight:getComputedStyle(e).fontWeight,"
+      "bg:getComputedStyle(e).backgroundColor})")
+    assert style==original,'Tours chip style differs from Flights '+str((original,style))
     counts=page.evaluate("""()=>({
       countries:window.TUTU_TOURS.destinations.filter(d=>d.kind==='country').length,
       departures:window.TUTU_TOURS.departures.length,
