@@ -24,6 +24,10 @@
     width:100%;
     margin-top:5px;
   }
+  .search-hints-v2[data-mode="tour"] .quick-group-v2--from{
+    grid-column:1;
+    gap:4px;
+  }
   .search-hints-v2[data-mode="tour"] .quick-group-v2--destination{
     grid-column:2 / 5;
     display:flex;
