@@ -1,0 +1,92 @@
+/* Offline Tutu tours catalog URL and partner-ID safety regression tests.
+   Canonical paths matched against the official Tutu directory, 11 Oct 2026.
+   Run: node tests/tour-catalog.cjs */
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const path=require('node:path');
+const context={window:{},URLSearchParams,Date,Map,Number,String,Array,Object};
+vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../assets/tour-catalog.js'),'utf8'),context);
+const api=context.window.TUTU_TOURS;
+assert.ok(api);
+const {destinations,departures,build,find}=api;
+const types={};
+for(const d of destinations){
+  types[d.kind]=(types[d.kind]||0)+1;
+  assert.deepEqual(Object.keys(d.name).sort(),['en','hi','ru'],d.key+' localized labels');
+  assert.equal(d.id===null||Number.isInteger(d.id),true,d.key+' verified partner ID only');
+  assert.ok(/^https:\/\/tours\.tutu\.ru\/(strana|rossiya)\//.test(d.browse),d.key+' Tutu URL');
+}
+assert.equal(types.country,45);
+assert.equal(types.winter,27);
+assert.equal(types.resort,9);
+assert.equal(departures.length,14);
+assert.equal(new Set(destinations.map(d=>d.key)).size,81);
+
+function pairs(s){return Object.fromEntries(s.trim().split(/\s+/).map(x=>x.split(':')))}
+const countries=pairs(
+ 'russia:rossiya turkey:turkey egypt:egypt uae:united_arab_emirates thailand:thailand india:india maldives:maldives abkhazia:abkhazia uzbekistan:uzbekistan cuba:cuba '+
+ 'belarus:belarus kazakhstan:kazahstan georgia:georgia armenia:armeniya azerbaijan:azerbaydjan kyrgyzstan:kirgizstan vietnam:vietnam indonesia:indonesia srilanka:sri_lanka '+
+ 'china:china japan:japan southkorea:south_korea serbia:serbiya austria:austria andorra:andorra bulgaria:bulgaria germany:germany greece:greece '+
+ 'dominican-republic:dominican_republic israel:israel jordan:jordan spain:spain italy:italy cyprus:cyprus malta:malta morocco:morocco mexico:mexico portugal:portugal '+
+ 'tanzania:tanzaniya tunisia:tunisia france:france croatia:croatia montenegro:chernogoriya czech-republic:czech_republic switzerland:switzerland');
+assert.equal(Object.keys(countries).length,45);
+for(const d of destinations.filter(d=>d.kind==='country'))
+  assert.equal(d.browse,'https://tours.tutu.ru/strana/'+countries[d.key]+'/',d.key+' canonical country URL');
+
+const russia=pairs(
+ 'murmansk:murmansk teriberka:murmansk baikal:baikal saint-petersburg:saint_petersburg moscow:moscow karelia:karelia kazan:kazan sochi:sochi '+
+ 'krasnaya-polyana:krasnaya_polyana sheregesh:sheregesh arkhyz:arkhyz veliky-ustyug:veliky_ustyug altai:altai gorno-altaysk:gorno_altaysk '+
+ 'irkutsk:irkutsk listvyanka:listvyanka olkhon:olkhon kaliningrad:kaliningrad yakutsk:yakutsk suzdal:suzdal veliky-novgorod:veliky_novgorod '+
+ 'moscow-oblast:moscow_oblast golden-ring:golden_ring rosa-khutor:rosa_khutor dombay:dombay prielbrusie:prielbrusie kislovodsk:kislovodsk');
+assert.equal(Object.keys(russia).length,27);
+for(const d of destinations.filter(d=>d.kind==='winter'))
+  assert.equal(d.browse,'https://tours.tutu.ru/strana/rossiya/kurort/'+russia[d.key]+'/',d.key+' canonical winter URL');
+
+const resorts=pairs('antalya:turkey/antalya alanya:turkey/alanya istanbul:turkey/stambul hurghada:egypt/hurgada sharm-el-sheikh:egypt/sharm-el-sheyh phuket:thailand/phuket goa:india/goa bali:indonesia/bali dubai:united_arab_emirates/dubai');
+assert.equal(Object.keys(resorts).length,9);
+for(const d of destinations.filter(d=>d.kind==='resort'))
+  assert.equal(d.browse,'https://tours.tutu.ru/strana/'+resorts[d.key].replace('/','/kurort/')+'/',d.key+' canonical resort URL');
+
+assert.equal(find('goa')[0].key,'goa');
+assert.equal(find('lake')[0].key,'baikal');
+assert.equal(find('Казань')[0].key,'kazan');
+assert.equal(find('गोवा')[0].key,'goa');
+assert.equal(find('aurora')[0].key,'murmansk');
+
+const date=new Date();date.setDate(date.getDate()+9);
+const future=[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
+const q=(departure,destination,children=0,childAges=[])=>({
+ departure,destination,date:future,nightsMin:7,nightsMax:14,adults:2,children,childAges
+});
+const exact=build(q('moscow','turkey'));
+assert.equal(exact.filtered,true);
+const url=new URL(exact.url);
+assert.equal(url.hostname,'web.tutu.travelata.ru');
+assert.equal(url.searchParams.get('departure'),'2');
+assert.equal(url.searchParams.get('arrival_id'),'92');
+assert.equal(url.searchParams.get('nights_min'),'7');
+assert.equal(url.searchParams.get('nights_max'),'14');
+assert.equal(url.searchParams.get('sid'),null,'no copied sid');
+assert.equal(new URLSearchParams(url.hash.slice(2)).get('toCountry'),'92');
+assert.equal(build(q('spb','egypt')).filtered,true);
+
+const kazan=build(q('kazan','murmansk'));
+assert.equal(kazan.filtered,false);
+assert.equal(kazan.departureApplied,true);
+assert.equal(kazan.url,'https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/');
+const unknownCity=build(q('kazan','turkey'));
+assert.equal(unknownCity.filtered,false);
+assert.equal(unknownCity.url,'https://tours.tutu.ru/strana/turkey/');
+const noResort=build(q('moscow','goa'));
+assert.equal(noResort.filtered,false);
+assert.equal(noResort.url,'https://tours.tutu.ru/strana/india/kurort/goa/');
+const family=build(q('moscow','egypt',2,[4,11]));
+assert.equal(family.filtered,false);
+assert.equal(family.reason,'children');
+assert.throws(()=>build(q('moscow','egypt',1,[])));
+assert.throws(()=>build({...q('moscow','egypt'),nightsMin:15,nightsMax:7}));
+assert.throws(()=>build({...q('moscow','egypt'),date:'2025-09-01'}));
+assert.throws(()=>build({...q('moscow','egypt'),departure:'unknown'}));
+console.log('PASS Tutu catalog: 45 countries, 27 Russia, 9 resorts, 14 departures; verified paths and safe fallbacks');
