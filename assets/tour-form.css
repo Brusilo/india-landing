@@ -133,7 +133,8 @@
    than covering the following "Travellers" field. Verified Chromium QA found
    a tap interception at 320/360/390px when it was absolutely positioned. */
 @media(max-width:599px){
- .search.search-v2[data-mode="tour"] .tour-cell--nights .tour-panel--nights{
+ .search.search-v2[data-mode="tour"] .tour-cell--nights .tour-panel--nights,
+ .search.search-v2[data-mode="tour"] .tour-cell--people .tour-panel--people{
   position:static!important;
   top:auto!important;left:auto!important;right:auto!important;
   display:block;width:100%!important;min-width:0!important;
@@ -153,3 +154,5 @@ html .search.search-v2[data-mode="tour"] > .tour-submit {
 html .search.search-v2[data-mode="tour"] > .tour-submit:hover {
  background:#6520cf !important;
 }
+
+/* Unlike a floating menu, phone guest controls must not block Search tours. */
