@@ -80,16 +80,36 @@ def run_case(pg,lang,width):
     pg.evaluate("window.__qaNavigations=[]")
     pg.locator(".tour-submit").click()
     fallback=pg.evaluate("window.__qaNavigations")
-    check(fallback==["https://tours.tutu.ru/rossiya/murmansk/iz/491_moskva/"],
-          "Moscow-Murmansk preserves departure city on a Tutu SEO page")
+    check(len(fallback)==1,"Moscow-Murmansk opens exactly one link")
+    murmansk=urlparse(fallback[0])
+    murmansk_q=parse_qs(murmansk.query)
+    murmansk_h=parse_qs(murmansk.fragment.lstrip("?"))
+    check(murmansk.netloc=="web.tutu.travelata.ru"
+          and murmansk_q.get("departure")==["2"]
+          and murmansk_q.get("arrival_id")==["76"]
+          and murmansk_q.get("arrival_type")==["country"]
+          and murmansk_h.get("toCity")==["1726"]
+          and murmansk_h.get("toCountry")==["76"]
+          and murmansk_q.get("nights_min")==["9"]
+          and murmansk_q.get("nights_max")==["14"]
+          and murmansk_q.get("adults")==["2"],
+          "Moscow-Murmansk live-verified resort URL retains all search filters")
     # Extra student departure city: Kazan and Murmansk SEO route (Tutu SEO IDs
     # must never be accidentally used as Travelata partner IDs).
     pg.evaluate("window.__qaNavigations=[]")
     pg.locator('[data-tour-trigger="departure"]').click()
     pg.locator('.tour-panel--departure [data-tour-dep="kazan"]').click()
     pg.locator(".tour-submit").click()
-    check(pg.evaluate("window.__qaNavigations")==["https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/"],
-          "Kazan-Murmansk route matching Tutu page")
+    kazan_mur=pg.evaluate("window.__qaNavigations")
+    check(len(kazan_mur)==1,"Kazan-Murmansk opens one link")
+    kazan_parsed=urlparse(kazan_mur[0])
+    kazan_query=parse_qs(kazan_parsed.query)
+    kazan_hash=parse_qs(kazan_parsed.fragment.lstrip("?"))
+    check(kazan_parsed.netloc=="web.tutu.travelata.ru"
+          and kazan_query.get("departure")==["29"]
+          and kazan_query.get("arrival_id")==["76"]
+          and kazan_hash.get("toCity")==["1726"],
+          "Kazan-Murmansk retains the verified resort and Travelata city IDs")
     pg.evaluate("window.__qaNavigations=[]")
     choose(pg,"Baikal","baikal")
     pg.locator(".tour-submit").click()
