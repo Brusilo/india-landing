@@ -115,6 +115,32 @@
     {key:'dubai',kind:'resort',parent:'uae',id:null,name:{ru:'Дубай',en:'Dubai',hi:'दुबई'},ru:'Дубай',browse:'https://tours.tutu.ru/strana/united_arab_emirates/kurort/dubai/',aliases:'dubai emirates'}
   ];
   const byKey=new Map(destinations.map(d=>[d.key,d]));
+  // Each of the following 7 x 4 city/resort combinations was independently
+  // checked to return an exact-path HTTP 200 page whose heading matches the
+  // selected origin and resort (11 October 2026, CI winter-route audit).
+  // These numbers are Tutu SEO city slugs, never Travelata partner IDs.
+  // Do not expand either whitelist without testing the new combinations.
+  const winterSeoOriginSlugs={
+    moscow:'491_moskva',
+    spb:'75_sankt-peterburg',
+    kazan:'33_kazan',
+    ekaterinburg:'29_ekaterinburg'
+  };
+  const winterSeoResortSlugs={
+    baikal:'baikal',
+    karelia:'karelia',
+    'krasnaya-polyana':'krasnaya_polyana',
+    sheregesh:'sheregesh',
+    altai:'altai',
+    sochi:'sochi',
+    'veliky-ustyug':'veliky_ustyug'
+  };
+  function winterCityTourPage(destination,origin){
+    const resort=winterSeoResortSlugs[destination],city=winterSeoOriginSlugs[origin];
+    return resort&&city
+      ?'https://tours.tutu.ru/rossiya/'+resort+'/iz/'+city+'/'
+      :null;
+  }
   const departureByKey=new Map(departures.map(d=>[d.key,d]));
   // Tutu SEO pages, NOT Travelata search departure IDs.
   const murmanskFromPages={
@@ -177,7 +203,9 @@
 
     // Unverified resort, departure or family parameters never enter a deep link.
     if(!Number.isInteger(d.id)||!Number.isInteger(dep.id)||children>0){
-      const target=(d.key==='murmansk'||d.browseAs==='murmansk')&&murmanskFromPages[dep.key];
+      const target=(d.key==='murmansk'||d.browseAs==='murmansk')
+        ?murmanskFromPages[dep.key]
+        :d.kind==='winter'?winterCityTourPage(d.key,dep.key):null;
       return {url:target||d.browse,filtered:false,destination:d,departure:dep,
         departureApplied:Boolean(target),reason:children>0?'children':
          !Number.isInteger(dep.id)?'departure':'destination'};
@@ -214,5 +242,5 @@
     hash.set('sort','recommend');
     return {url:'https://web.tutu.travelata.ru/search/?'+q.toString()+'#?'+hash.toString(),filtered:true,destination:d};
   }
-  root.TUTU_TOURS={departures,destinations,byKey,departureByKey,find,build,dateParts,murmanskFromPages};
+  root.TUTU_TOURS={departures,destinations,byKey,departureByKey,find,build,dateParts,murmanskFromPages,winterCityTourPage};
 })(window);
