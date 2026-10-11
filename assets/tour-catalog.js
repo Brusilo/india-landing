@@ -12,26 +12,26 @@
     {key:'spb',id:1,name:{ru:'Санкт-Петербург',en:'Saint Petersburg',hi:'सेंट पीटर्सबर्ग'}}
   ];
   const destinations=[
-    {key:'russia',kind:'country',id:null,name:{ru:'Россия',en:'Russia',hi:'रूस'},ru:'Россия',browse:'https://travelata.ru/rossiya',aliases:'rossiya winter snow'},
-    {key:'turkey',kind:'country',id:92,name:{ru:'Турция',en:'Turkey',hi:'तुर्किये'},ru:'Турция',browse:'https://travelata.ru/turkey',aliases:'turkiye turkiye türkiye'},
-    {key:'egypt',kind:'country',id:29,name:{ru:'Египет',en:'Egypt',hi:'मिस्र'},ru:'Египет',browse:'https://travelata.ru/egypt',aliases:'misr'},
-    {key:'uae',kind:'country',id:null,name:{ru:'ОАЭ',en:'UAE',hi:'संयुक्त अरब अमीरात'},ru:'ОАЭ',browse:'https://travelata.ru/uae',aliases:'emirates dubai дубай दुबई'},
-    {key:'thailand',kind:'country',id:null,name:{ru:'Таиланд',en:'Thailand',hi:'थाईलैंड'},ru:'Таиланд',browse:'https://travelata.ru/thailand',aliases:'тайланд'},
-    {key:'india',kind:'country',id:null,name:{ru:'Индия',en:'India',hi:'भारत'},ru:'Индия',browse:'https://travelata.ru/india',aliases:'bharat'},
-    {key:'maldives',kind:'country',id:null,name:{ru:'Мальдивы',en:'Maldives',hi:'मालदीव'},ru:'Мальдивы',browse:'https://travelata.ru/maldives',aliases:'maldivy'},
-    {key:'abkhazia',kind:'country',id:1,name:{ru:'Абхазия',en:'Abkhazia',hi:'अब्खाज़िया'},ru:'Абхазия',browse:'https://travelata.ru/abkhazia',aliases:''},
-    {key:'uzbekistan',kind:'country',id:null,name:{ru:'Узбекистан',en:'Uzbekistan',hi:'उज़्बेकिस्तान'},ru:'Узбекистан',browse:'https://travelata.ru/uzbekistan',aliases:''},
-    {key:'cuba',kind:'country',id:null,name:{ru:'Куба',en:'Cuba',hi:'क्यूबा'},ru:'Куба',browse:'https://travelata.ru/cuba',aliases:''},
+    {key:'russia',kind:'country',id:null,name:{ru:'Россия',en:'Russia',hi:'रूस'},ru:'Россия',browse:'https://tours.tutu.ru/',aliases:'rossiya winter snow'},
+    {key:'turkey',kind:'country',id:92,name:{ru:'Турция',en:'Turkey',hi:'तुर्किये'},ru:'Турция',browse:'https://tours.tutu.ru/',aliases:'turkiye turkiye türkiye'},
+    {key:'egypt',kind:'country',id:29,name:{ru:'Египет',en:'Egypt',hi:'मिस्र'},ru:'Египет',browse:'https://tours.tutu.ru/',aliases:'misr'},
+    {key:'uae',kind:'country',id:null,name:{ru:'ОАЭ',en:'UAE',hi:'संयुक्त अरब अमीरात'},ru:'ОАЭ',browse:'https://tours.tutu.ru/',aliases:'emirates dubai дубай दुबई'},
+    {key:'thailand',kind:'country',id:null,name:{ru:'Таиланд',en:'Thailand',hi:'थाईलैंड'},ru:'Таиланд',browse:'https://tours.tutu.ru/',aliases:'тайланд'},
+    {key:'india',kind:'country',id:null,name:{ru:'Индия',en:'India',hi:'भारत'},ru:'Индия',browse:'https://tours.tutu.ru/',aliases:'bharat'},
+    {key:'maldives',kind:'country',id:null,name:{ru:'Мальдивы',en:'Maldives',hi:'मालदीव'},ru:'Мальдивы',browse:'https://tours.tutu.ru/',aliases:'maldivy'},
+    {key:'abkhazia',kind:'country',id:null,name:{ru:'Абхазия',en:'Abkhazia',hi:'अब्खाज़िया'},ru:'Абхазия',browse:'https://tours.tutu.ru/',aliases:''},
+    {key:'uzbekistan',kind:'country',id:null,name:{ru:'Узбекистан',en:'Uzbekistan',hi:'उज़्बेकिस्तान'},ru:'Узбекистан',browse:'https://tours.tutu.ru/',aliases:''},
+    {key:'cuba',kind:'country',id:null,name:{ru:'Куба',en:'Cuba',hi:'क्यूबा'},ru:'Куба',browse:'https://tours.tutu.ru/',aliases:''},
     // Winter interests are explicit browse-only items, NOT unverified resorts.
-    {key:'murmansk',kind:'winter',id:null,name:{ru:'Мурманск',en:'Murmansk',hi:'मुर्मांस्क'},ru:'Мурманск',browse:'https://travelata.ru/rossiya',aliases:'northern lights aurora северное сияние'},
-    {key:'teriberka',kind:'winter',id:null,name:{ru:'Териберка',en:'Teriberka',hi:'तेरिबेरका'},ru:'Териберка',browse:'https://travelata.ru/rossiya',aliases:'arctic lights арктика'},
-    {key:'baikal',kind:'winter',id:null,name:{ru:'Байкал',en:'Lake Baikal',hi:'बैकाल झील'},ru:'Байкал',browse:'https://travelata.ru/rossiya',aliases:'irkutsk иркутск frozen lake'},
-    {key:'saint-petersburg',kind:'winter',id:null,name:{ru:'Санкт-Петербург',en:'Saint Petersburg',hi:'सेंट पीटर्सबर्ग'},ru:'Санкт-Петербург',browse:'https://travelata.ru/rossiya',aliases:'spb petersburg питер'},
-    {key:'moscow',kind:'winter',id:null,name:{ru:'Москва',en:'Moscow',hi:'मॉस्को'},ru:'Москва',browse:'https://travelata.ru/rossiya',aliases:'moskva'},
-    {key:'karelia',kind:'winter',id:null,name:{ru:'Карелия',en:'Karelia',hi:'कारेलिया'},ru:'Карелия',browse:'https://travelata.ru/rossiya',aliases:'petrozavodsk петрозаводск'},
-    {key:'kazan',kind:'winter',id:null,name:{ru:'Казань',en:'Kazan',hi:'कज़ान'},ru:'Казань',browse:'https://travelata.ru/rossiya',aliases:''},
-    {key:'sochi',kind:'winter',id:null,name:{ru:'Сочи',en:'Sochi',hi:'सोची'},ru:'Сочи',browse:'https://travelata.ru/rossiya',aliases:'rosa khutor красная поляна ski'},
-    {key:'veliky-ustyug',kind:'winter',id:null,name:{ru:'Великий Устюг',en:'Veliky Ustyug',hi:'वेलिकी उस्त्यूग'},ru:'Великий Устюг',browse:'https://travelata.ru/rossiya',aliases:'ded moroz дед мороз'}
+    {key:'murmansk',kind:'winter',id:null,name:{ru:'Мурманск',en:'Murmansk',hi:'मुर्मांस्क'},ru:'Мурманск',browse:'https://tours.tutu.ru/',aliases:'northern lights aurora северное сияние'},
+    {key:'teriberka',kind:'winter',id:null,name:{ru:'Териберка',en:'Teriberka',hi:'तेरिबेरका'},ru:'Териберка',browse:'https://tours.tutu.ru/',aliases:'arctic lights арктика'},
+    {key:'baikal',kind:'winter',id:null,name:{ru:'Байкал',en:'Lake Baikal',hi:'बैकाल झील'},ru:'Байкал',browse:'https://tours.tutu.ru/',aliases:'irkutsk иркутск frozen lake'},
+    {key:'saint-petersburg',kind:'winter',id:null,name:{ru:'Санкт-Петербург',en:'Saint Petersburg',hi:'सेंट पीटर्सबर्ग'},ru:'Санкт-Петербург',browse:'https://tours.tutu.ru/',aliases:'spb petersburg питер'},
+    {key:'moscow',kind:'winter',id:null,name:{ru:'Москва',en:'Moscow',hi:'मॉस्को'},ru:'Москва',browse:'https://tours.tutu.ru/',aliases:'moskva'},
+    {key:'karelia',kind:'winter',id:null,name:{ru:'Карелия',en:'Karelia',hi:'कारेलिया'},ru:'Карелия',browse:'https://tours.tutu.ru/',aliases:'petrozavodsk петрозаводск'},
+    {key:'kazan',kind:'winter',id:null,name:{ru:'Казань',en:'Kazan',hi:'कज़ान'},ru:'Казань',browse:'https://tours.tutu.ru/',aliases:''},
+    {key:'sochi',kind:'winter',id:null,name:{ru:'Сочи',en:'Sochi',hi:'सोची'},ru:'Сочи',browse:'https://tours.tutu.ru/',aliases:'rosa khutor красная поляна ski'},
+    {key:'veliky-ustyug',kind:'winter',id:null,name:{ru:'Великий Устюг',en:'Veliky Ustyug',hi:'वेलिकी उस्त्यूग'},ru:'Великий Устюг',browse:'https://tours.tutu.ru/',aliases:'ded moroz дед мороз'}
   ];
   const byKey=new Map(destinations.map(d=>[d.key,d]));
   const departureByKey=new Map(departures.map(d=>[d.key,d]));
