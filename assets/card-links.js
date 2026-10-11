@@ -55,7 +55,13 @@
 
   const nf=n=>lang==='ru'?String(Math.trunc(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g,'\u202F'):new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.trunc(Number(n)));
   const duration=(h,m)=>lang==='ru'?(h+' ч'+(m?' '+m+' мин':'')):lang==='hi'?(h+' घं.'+(m?' '+m+' मि.':'')):(h+' h'+(m?' '+m+' min':''));
-  const tomorrow=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+1);return d};
+  // Use tomorrow in Moscow, just like the nightly quote. A traveller outside
+  // Russia can otherwise open a different date around Moscow midnight.
+  const tomorrow=()=>{
+    const p=window.TUTU_PRICING;
+    if(p?.moscowDate&&p?.nextDate)return new Date(p.nextDate(p.moscowDate())+'T12:00:00');
+    const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+1);return d;
+  };
   const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
   const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   const hotelAllUrl=()=>{
