@@ -1,0 +1,42 @@
+name: Tours partner live verification
+
+# Live Travelata searches are an external partner service. Do not run 15
+# searches on every source-file commit; request an intentional read-only run.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  partner-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Review public Travelata country, city, and resort selectors
+        continue-on-error: true
+        run: python tests/probe-public-resorts.py /tmp/tour-live
+      - name: Validate six co-branded public country searches
+        continue-on-error: true
+        run: python tests/tours-live-provider.py . /tmp/tour-live
+      - name: Validate four newly sourced departure city IDs
+        continue-on-error: true
+        run: python tests/probe-live-departures.py . /tmp/tour-live
+      - name: Test co-branded resort link variations without publishing
+        continue-on-error: true
+        run: python tests/probe-branded-resort-search.py . /tmp/tour-live
+      - name: Archive live partner screenshots and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: travelata-live-research
+          path: /tmp/tour-live/
+          if-no-files-found: warn
