@@ -137,6 +137,13 @@
     destinations.push({key:'catalog-country-'+sourceId,kind:'country',id:Number(sourceId),source:'travelata-public',
       ru,name:{ru,en,hi:en},aliases:en,providerId:Number(sourceId),browse:null});
   }
+  // Some curated country cards had no partner ID even though that same
+  // country is present in the bundled public Travelata selector. Reconcile
+  // strictly by its exact Russian label; never infer numeric IDs from slugs.
+  for(const [sourceId,ru] of provider.countries||[]){
+    const item=destinations.find(d=>d.kind==='country'&&sameName(d.ru,ru));
+    if(item&&!Number.isInteger(item.id))item.id=Number(sourceId);
+  }
   for(const [sourceId,ru,en] of provider.departures||[]){
     if(departures.some(d=>sameName(d.name.ru,ru)))continue;
     departures.push({key:'catalog-departure-'+sourceId,id:Number(sourceId),source:'travelata-public',
@@ -154,6 +161,30 @@
     }
   }
   const byKey=new Map(destinations.map(d=>[d.key,d]));
+  // These seven curated labels have a longer unambiguous name in the SAME
+  // public partner resort directory (the numeric ID is checked against it).
+  const catalogResortAliases={
+    arkhyz:1660,
+    'gorno-altaysk':3120,
+    listvyanka:3998,
+    olkhon:1757,
+    'rosa-khutor':3158,
+    dombay:1624,
+    kislovodsk:1675
+  };
+  function catalogResort(d){
+    const parent=d.kind==='winter'?'russia':d.parent;
+    const country=byKey.get(parent);
+    const options=country&&provider.resorts?.[String(country.id)];
+    if(!Array.isArray(options))return null;
+    const expectedId=catalogResortAliases[d.key];
+    const matched=Number.isInteger(expectedId)
+      ?options.filter(([id])=>Number(id)===expectedId)
+      :options.filter(([,ru])=>sameName(ru,d.ru));
+    if(matched.length!==1)return null;
+    const cityId=Number(matched[0][0]);
+    return Number.isInteger(cityId)?{country:parent,cityId}:null;
+  }
   // Each of the following 7 x 4 city/resort combinations was independently
   // checked to return an exact-path HTTP 200 page whose heading matches the
   // selected origin and resort (11 October 2026, CI winter-route audit).
@@ -246,19 +277,17 @@
     if(date.iso<todayIso||date.iso>maxIso)throw new Error('Invalid tour date');
 
     // Only allow verified resort/country pairs into the branded search.
-    const resort=d.kind==='winter'?brandedResorts[d.key]:
+    const resort=d.kind==='winter'?(catalogResort(d)||brandedResorts[d.key]):
+      d.kind==='resort'?catalogResort(d):
       d.kind==='place'&&Number.isInteger(d.providerId)?{country:d.parent,cityId:d.providerId}:null;
     const searchCountry=resort?byKey.get(resort.country):d;
-    if((!resort&&!Number.isInteger(d.id))||!Number.isInteger(dep.id)||children>0){
-      const target=(d.key==='murmansk'||d.browseAs==='murmansk')
-        ?murmanskFromPages[dep.key]
-        :d.kind==='winter'?winterCityTourPage(d.key,dep.key):null;
-      const exactBrowse=target||d.browse;
-      const parentBrowse=d.parent&&byKey.get(d.parent)?.browse;
-      return {url:exactBrowse||parentBrowse||'https://tours.tutu.ru/strana/',filtered:false,destination:d,departure:dep,
-        destinationApplied:Boolean(exactBrowse),
-        departureApplied:Boolean(target),reason:children>0?'children':
-         !Number.isInteger(dep.id)?'departure':'destination'};
+    // Do not redirect to a generic SEO/browse page and silently discard
+    // departure/date/night/destination filters. An unsupported exact search
+    // stays on the form with an inline (non-modal) explanation instead.
+    if((!resort&&!Number.isInteger(d.id))||!Number.isInteger(dep.id)||
+       !Number.isInteger(searchCountry?.id)||children>0){
+      return {url:null,filtered:false,destination:d,departure:dep,
+        reason:children>0?'children':!Number.isInteger(dep.id)?'departure':'destination'};
     }
     if(d.kind!=='country'&&!resort)throw new Error('Unverified destination type');
 
@@ -272,6 +301,7 @@
     q.set('adults',String(adults));
     q.set('nights_min',String(min));
     q.set('nights_max',String(max));
+    if(resort)q.append('resorts[]',String(resort.cityId));
     q.set('utm_source','tutu_main');
     q.set('utm_medium','internal');
     q.set('utm_content','tours_search_form');
