@@ -64,3 +64,38 @@ jobs:
                 print('MARKER',test,test in body)
             except Exception as exc:print('FETCH ERROR',label,type(exc).__name__,str(exc)[:190])
           PY
+
+      - name: Inspect dated hotel page and visible room offers
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re,html,urllib.request,urllib.parse,datetime
+          from html.parser import HTMLParser
+          from zoneinfo import ZoneInfo
+          class Txt(HTMLParser):
+            def __init__(self):super().__init__();self.skip=0;self.out=[]
+            def handle_starttag(self,tag,attrs):
+              if tag in ('script','style','template','noscript'):self.skip+=1
+            def handle_endtag(self,tag):
+              if tag in ('script','style','template','noscript') and self.skip:self.skip-=1
+            def handle_data(self,data):
+              if not self.skip and data.strip():self.out.append(data.strip())
+          dates=[(datetime.datetime.now(ZoneInfo('Europe/Moscow'))+datetime.timedelta(days=n)).strftime('%Y-%m-%d') for n in (1,2)]
+          url='https://hotel.tutu.ru/h_otel_izmaylovo_alfa/?'+urllib.parse.urlencode({'check_in':dates[0],'check_out':dates[1],'room[0]':'1'})
+          for u in ['https://hotel.tutu.ru/robots.txt',url]:
+            try:
+              r=urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'}),timeout=25)
+              body=r.read(1500000).decode('utf-8','replace')
+              print('TARGET',u,'bytes',len(body),'status',r.status)
+              if u.endswith('robots.txt'):
+                print('ROBOTS_TEXT',body[:2500]);continue
+              t=Txt();t.feed(body);txt=' '.join(t.out)
+              idx=txt.find('Доступные варианты')
+              print('VISIBLE_OFFER_CONTEXT',txt[idx:idx+1200] if idx>=0 else txt[:500])
+              currency_matches=list(re.finditer('₽|RUB|руб\\.',txt,re.I))
+              print('VISIBLE_CURRENCY',len(currency_matches),[txt[max(0,m.start()-75):m.end()+60] for m in currency_matches[:12]])
+              for x in ('check_in','check_out','priceWithDiscount','totalPrice','pricePerNight','currency','priceAmount','amountBeforeDiscount','rooms','variants'):
+                print('MARKER',x,'count',body.count(x))
+              print('ROBOT_HTML_START',body[:100].replace('\\n',' '))
+            except Exception as ex:print('TARGET_ERROR',type(ex).__name__,str(ex)[:160])
+          PY
