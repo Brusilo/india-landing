@@ -50,7 +50,7 @@
     root.TUTU_SAVE_STANDARD_NOW?.();
     root.TUTU_SAVE_TOUR_NOW?.();
     const tour=document.querySelector('.transport .tours-tab.is-active');
-    const current=tour?'tour':document.querySelector('.transport button.is-active:not(.tours-tab)')?.dataset.mode;
+    const current=tour?'tour':document.querySelector('form.search-v2')?.dataset.mode;
     if(current)root.TUTU_SEARCH_PERSIST.setActive(current);
   },true);
 })(window);
