@@ -52,15 +52,26 @@ function render(){
  field(dict.nights,button(state.nightsMin+'–'+state.nightsMax+' '+dict.night,'nights'),'nights')+
  field(dict.who,button(guestValue(),'people'),'people')+
  '<button type="submit" class="v2-submit tour-submit">'+esc(dict.search)+'</button>';
- const hintButton=(key)=>{const d=data.byKey.get(key);return '<button type="button" data-tour-choice="'+key+'">'+esc(d.name[lang])+'</button>'};
+ const quickDestination=key=>{
+  const d=data.byKey.get(key);
+  return '<button type="button" class="quick-chip-v2" data-tour-choice="'+esc(key)+'">'+esc(d.name[lang])+'</button>';
+ };
+ const quickDeparture=key=>{
+  const d=data.departureByKey.get(key);
+  return '<button type="button" class="quick-chip-v2" data-tour-dep="'+esc(key)+'">'+esc(d.name[lang])+'</button>';
+ };
  const tomorrow=lang==='ru'?'Завтра':lang==='hi'?'कल':'Tomorrow';
- const afterTomorrow=lang==='ru'?'Послезавтра':lang==='hi'?'परसों':'In two days';
- hints.innerHTML='<div class="tour-hints-top">'+
-   '<div class="tour-hint-group tour-hint-departure">'+data.departures.filter(d=>['moscow','spb'].includes(d.key)).map(d=>'<button type="button" data-tour-dep="'+d.key+'">'+esc(d.name[lang])+'</button>').join('')+'</div>'+
-   '<div class="tour-hint-group tour-hint-destination">'+['russia','turkey','egypt','uae'].map(hintButton).join('')+'</div>'+
-   '<div class="tour-hint-group tour-hint-date"><button type="button" data-tour-offset="1">'+tomorrow+'</button><button type="button" data-tour-offset="2">'+afterTomorrow+'</button></div></div>'+
-   '<div class="tour-hints-winter"><span>'+esc(dict.winter)+':</span>'+
-   ['murmansk','teriberka','baikal','karelia','sheregesh','krasnaya-polyana'].map(hintButton).join('')+'</div>';
+ const afterTomorrow=lang==='ru'?'Послезавтра':lang==='hi'?'परसों':'In 2 days';
+ // Same compact 3-group markup and existing quick-chip-v2 styling
+ // as the Flights / Trains / Buses search hints. No second winter row.
+ hints.innerHTML=
+   '<div class="quick-group-v2 quick-group-v2--from">'+
+      ['moscow','spb'].map(quickDeparture).join('')+'</div>'+
+   '<div class="quick-group-v2 quick-group-v2--to">'+
+      ['russia','murmansk'].map(quickDestination).join('')+'</div>'+
+   '<div class="quick-group-v2 quick-group-v2--date">'+
+      '<button type="button" class="quick-chip-v2" data-tour-offset="1">'+tomorrow+'</button>'+
+      '<button type="button" class="quick-chip-v2" data-tour-offset="2">'+afterTomorrow+'</button></div>';
  bind();
 }
 function options(list){
@@ -233,16 +244,46 @@ form.addEventListener('change',e=>{
  if(!active)return;const select=e.target.closest('[data-tour-child-age]');if(!select)return;
  state.childAges[Number(select.dataset.tourChildAge)]=select.value===''?null:Number(select.value);
 });
-// This release is a VISUAL-ONLY prototype. No external travel links,
-// redirects, partner API requests, booking or payment actions on submit.
+// A link-free Tours tab activates this form. Unlike the tab itself, the
+// Search Tours button launches a search with the chosen parameters.
 form.addEventListener('submit',e=>{
- if(!active)return;e.preventDefault();e.stopImmediatePropagation();
- const d=data.byKey.get(state.destination);
- if(!d||form.querySelector('.tour-destination').value!==d.name[lang]){alert(dict.select);return}
+ if(!active)return;
+ e.preventDefault();e.stopImmediatePropagation();
+ const input=form.querySelector('.tour-destination');
+ let selected=data.byKey.get(state.destination);
+ const typed=input.value.trim();
+ const norm=x=>String(x).toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ё/g,'е').trim();
+ if(!selected||norm(typed)!==norm(selected.name[lang])){
+   // An exact typed name or a unique autocomplete hit is a valid selection.
+   const matches=data.find(typed,25);
+   selected=matches.find(d=>Object.values(d.name).some(n=>norm(n)===norm(typed)))||
+     (matches.length===1?matches[0]:null);
+   if(!selected){
+     show('destination',destinationPanel(typed));
+     alert(dict.select);
+     return;
+   }
+   state.destination=selected.key;
+ }
  if(state.children&&state.childAges.some(age=>!Number.isInteger(age))){alert(dict.ageRequired);return}
- let message=hints.querySelector('.tour-preview-message');
- if(!message){message=document.createElement('p');message.className='tour-preview-message';message.setAttribute('role','status');hints.appendChild(message)}
- message.textContent=dict.previewMessage;
+ try{
+   const result=data.build(state);
+   if(!result.url||!/^https:\/\/(web\.tutu\.travelata\.ru|tours\.tutu\.ru)\//.test(result.url)){
+     throw new Error('Unsupported destination');
+   }
+   if(!result.filtered){
+     const message=selected.browseAs==='murmansk'?dict.fallbackNearby:
+       result.reason==='children'?dict.fallbackChildren:
+       result.departureApplied?dict.fallbackPair:
+       result.destinationApplied===false?
+         (lang==='ru'?'Точный поиск этого курорта пока недоступен. Откроется страница страны, где потребуется заново выбрать направление, даты и туристов. Продолжить?':
+          lang==='hi'?'इस रिज़ॉर्ट की सीधी खोज अभी उपलब्ध नहीं है। देश का पेज खुलेगा, जहाँ जगह, तारीख़ और यात्रियों को फिर चुनना होगा। आगे बढ़ें?':
+          'This resort cannot be preselected yet. Open the country page and choose your destination, dates and travellers again?'):
+       result.reason==='departure'?dict.fallbackDeparture:dict.fallback;
+     if(!confirm(message))return;
+   }
+   window.location.assign(result.url);
+ }catch(err){alert(dict.invalid)}
 },true);
 document.addEventListener('click',e=>{if(active&&!e.target.closest('.tour-cell')&&!e.target.closest('.tour-panel'))close()});
 document.addEventListener('keydown',e=>{if(active&&e.key==='Escape')close()});
