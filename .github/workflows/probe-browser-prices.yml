@@ -1,0 +1,60 @@
+name: Diagnostic Tutu browser price extraction
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/probe-browser-prices.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Open two public card searches in standard Chromium (no login)
+        shell: bash
+        run: |
+          python - <<'PY'
+          from playwright.sync_api import sync_playwright
+          from datetime import datetime,timedelta
+          from zoneinfo import ZoneInfo
+          from urllib.parse import urlencode
+          import re
+          m=datetime.now(ZoneInfo('Europe/Moscow'))
+          tom=m+timedelta(days=1)
+          after=m+timedelta(days=2)
+          hotel='https://hotel.tutu.ru/h_otel_izmaylovo_alfa/?'+urlencode({'check_in':tom.strftime('%Y-%m-%d'),'check_out':after.strftime('%Y-%m-%d'),'room[0]':'1'})
+          train='https://www.tutu.ru/poezda/Sankt-Peterburg/Moskva/?'+urlencode({'date':tom.strftime('%d.%m.%Y'),'travelers':'1'})
+          with sync_playwright() as pw:
+            browser=pw.chromium.launch(headless=True,args=['--no-sandbox'])
+            for kind,url in [('hotel',hotel),('train',train)]:
+              page=browser.new_page(locale='ru-RU',viewport={'width':1400,'height':900})
+              errors=[]
+              page.on('pageerror',lambda e:errors.append(str(e)[:120]))
+              try:
+                response=page.goto(url,wait_until='domcontentloaded',timeout=35000)
+                page.wait_for_timeout(10000)
+                text=page.locator('body').inner_text(timeout=12000)
+                print('BROWSER_KIND',kind,'status',response.status if response else 'none','title',page.title(),'url',page.url,'characters',len(text))
+                print('BROWSER_ERROR_COUNT',kind,len(errors),'example',errors[:2])
+                for marker in ['Доступные варианты','Уточните даты','Расписание поездов','Выберите дату','Нет доступных','Нет вариантов','Номера','₽','руб.']:
+                  print('BROWSER_MARKER',kind,marker,'count',text.count(marker))
+                match=list(re.finditer(r'(?<!\\d)\\d[\\d \\u00a0\\u2009\\u202f]{1,12}\\s*(?:₽|рублей|руб\\.)',text,re.I))
+                print('BROWSER_PRICE_MATCHES',kind,len(match))
+                for item in match[:12]:
+                  print('BROWSER_PRICE_TEXT',kind,repr(text[max(0,item.start()-45):item.end()+45].replace('\\n',' ')))
+                for marker in ['Доступные варианты','Расписание поездов']:
+                  idx=text.find(marker)
+                  if idx>=0:print('BROWSER_CONTEXT',kind,marker,repr(text[idx:idx+1300].replace('\\n',' ')))
+              except Exception as exc:print('BROWSER_FAILED',kind,type(exc).__name__,str(exc)[:400])
+              finally:page.close()
+            browser.close()
+          PY
