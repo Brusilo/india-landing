@@ -165,7 +165,7 @@ def get_quotes(now: datetime) -> dict:
                "hotels": {}, "updatedAt": None}
     feed = os.environ.get("PRICE_FEED_URL", "").strip()
     if not feed:
-        print("No PRICE_FEED_URL configured; tariff cards remain labelled as examples.")
+        print("::warning::TUTU_PRICE_FEED_URL not configured; hotel and route card prices remain illustrative until a verified booking-price API is connected.")
         return default
     token = os.environ.get("PRICE_FEED_TOKEN", "").strip()
     return parse_quotes(fetch_bytes(feed, token), now.date() + timedelta(days=1), now)
