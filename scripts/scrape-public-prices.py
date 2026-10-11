@@ -136,7 +136,7 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
         if response is None or response.status != 200:
             return None
         if kind == "hotel":
-            ready = "Доступные варианты"  # only bookable rows are parsed
+            ready = "Забронировать"  # wait until at least one rate actually loads
         elif kind == "flight":
             ready = "Выбрать билет"
         else:
