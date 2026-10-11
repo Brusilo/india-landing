@@ -7,21 +7,26 @@
 (function(root){
   'use strict';
 
+  // IDs below are Travelata partner departure IDs from its public
+  // https://traff.travelata.ru/constructor.php fromCity and departureCity
+  // option lists, cross-checked with known Moscow=2 and Petersburg=1.
+  // Never confuse these with Tutu SEO city slugs (e.g. Kazan SEO=33 vs
+  // Travelata departure=29). Rostov-on-Don is absent and stays browse-only.
   const departures=[
     {key:'moscow',id:2,name:{ru:'Москва',en:'Moscow',hi:'मॉस्को'}},
     {key:'spb',id:1,name:{ru:'Санкт-Петербург',en:'Saint Petersburg',hi:'सेंट पीटर्सबर्ग'}},
-    {key:'kazan',id:null,name:{ru:'Казань',en:'Kazan',hi:'कज़ान'}},
-    {key:'ekaterinburg',id:null,name:{ru:'Екатеринбург',en:'Yekaterinburg',hi:'येकातेरिनबुर्ग'}},
-    {key:'novosibirsk',id:null,name:{ru:'Новосибирск',en:'Novosibirsk',hi:'नोवोसिबिर्स्क'}},
-    {key:'samara',id:null,name:{ru:'Самара',en:'Samara',hi:'समारा'}},
-    {key:'nizhny-novgorod',id:null,name:{ru:'Нижний Новгород',en:'Nizhny Novgorod',hi:'निझनी नोवगोरोद'}},
-    {key:'irkutsk',id:null,name:{ru:'Иркутск',en:'Irkutsk',hi:'इर्कुत्स्क'}},
-    {key:'perm',id:null,name:{ru:'Пермь',en:'Perm',hi:'पेर्म'}},
-    {key:'krasnodar',id:null,name:{ru:'Краснодар',en:'Krasnodar',hi:'क्रास्नोदार'}},
+    {key:'kazan',id:29,name:{ru:'Казань',en:'Kazan',hi:'कज़ान'}},
+    {key:'ekaterinburg',id:25,name:{ru:'Екатеринбург',en:'Yekaterinburg',hi:'येकातेरिनबुर्ग'}},
+    {key:'novosibirsk',id:53,name:{ru:'Новосибирск',en:'Novosibirsk',hi:'नोवोसिबिर्स्क'}},
+    {key:'samara',id:64,name:{ru:'Самара',en:'Samara',hi:'समारा'}},
+    {key:'nizhny-novgorod',id:50,name:{ru:'Нижний Новгород',en:'Nizhny Novgorod',hi:'निझनी नोवगोरोद'}},
+    {key:'irkutsk',id:28,name:{ru:'Иркутск',en:'Irkutsk',hi:'इर्कुत्स्क'}},
+    {key:'perm',id:61,name:{ru:'Пермь',en:'Perm',hi:'पेर्म'}},
+    {key:'krasnodar',id:36,name:{ru:'Краснодар',en:'Krasnodar',hi:'क्रास्नोदार'}},
     {key:'rostov-on-don',id:null,name:{ru:'Ростов-на-Дону',en:'Rostov-on-Don',hi:'रोस्तोव-ऑन-डॉन'}},
-    {key:'ufa',id:null,name:{ru:'Уфа',en:'Ufa',hi:'ऊफ़ा'}},
-    {key:'cheboksary',id:null,name:{ru:'Чебоксары',en:'Cheboksary',hi:'चेबोक्सारी'}},
-    {key:'sochi',id:null,name:{ru:'Сочи',en:'Sochi',hi:'सोची'}}
+    {key:'ufa',id:79,name:{ru:'Уфа',en:'Ufa',hi:'ऊफ़ा'}},
+    {key:'cheboksary',id:83,name:{ru:'Чебоксары',en:'Cheboksary',hi:'चेबोक्सारी'}},
+    {key:'sochi',id:67,name:{ru:'Сочи',en:'Sochi',hi:'सोची'}}
   ];
   // Browse URLs are verified public tours.tutu.ru landing pages.
   // Only numeric IDs confirmed by partner documentation or user examples are used for search.
