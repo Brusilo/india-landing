@@ -199,3 +199,15 @@ html .search.search-v2[data-mode="tour"] > .tour-submit:hover {
    width:100%!important;max-width:100%!important;min-width:0!important;
  }
 }
+
+/* Guest panel at tablet widths must open inward from its own cell: at 600px
+   its previous right alignment pushed 33px beyond the left edge. */
+@media (min-width:600px) and (max-width:1100px) {
+  .search.search-v2[data-mode="tour"] .tour-cell--people .tour-panel--people {
+    left:0!important;
+    right:auto!important;
+    width:min(330px, calc(100vw - 48px))!important;
+    max-width:calc(100vw - 48px)!important;
+    min-width:0!important;
+  }
+}
