@@ -1,0 +1,33 @@
+name: Tours hints and working search hotfix QA
+
+on:
+  push:
+    branches:
+      - fix/tour-search-and-chips-20261011
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Run EN RU HI search form and styles checks
+        run: python tests/tours-hotfix-qa.py . /tmp/tours-hotfix
+      - name: Upload screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tours-hotfix-qa
+          path: /tmp/tours-hotfix/
+          if-no-files-found: warn
