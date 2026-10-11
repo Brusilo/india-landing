@@ -450,6 +450,35 @@ with sync_playwright() as playwright:
             ctx.close()
         print("Mobile search geometry passed: 320/390/430px, RU/EN/HI, five modes, stable fields and inset dividers.")
 
+
+        # Desktop regression diagnostics: the RU support chat artwork should
+        # occupy the same slot as its EN/HI counterparts, independent of copy.
+        for width in (1101, 1200, 1366, 1600):
+            ctx, page, errors = setup(browser, {"width": width, "height": 900})
+            for locale, filename in (
+                ("ru", "index-ru.html"), ("en", "index.html"), ("hi", "index-hi.html")
+            ):
+                open_page(page, filename)
+                dims = page.evaluate("""() => {
+                    const card=document.querySelector('#about .bento-pos-tl');
+                    const img=card.querySelector('.bento-art');
+                    const c=card.getBoundingClientRect();
+                    const i=img.getBoundingClientRect();
+                    const css=getComputedStyle(img);
+                    return {cardWidth:+c.width.toFixed(2),
+                      cardHeight:+c.height.toFixed(2),
+                      imgWidth:+i.width.toFixed(2),imgHeight:+i.height.toFixed(2),
+                      right:+(c.right-i.right).toFixed(2),
+                      bottom:+(c.bottom-i.bottom).toFixed(2),
+                      left:+(i.left-c.left).toFixed(2),
+                      top:+(i.top-c.top).toFixed(2),
+                      rawWidth:css.width,rawHeight:css.height,
+                      maxHeight:css.maxHeight,
+                      scale:css.scale,translate:css.translate};
+                }""")
+                print("SUPPORT_BUBBLES_GEOMETRY", width, locale, dims)
+            assert not errors
+            ctx.close()
         print("Browser search state and tour native alert validation passed: five modes, RU/EN/HI, no layout-shifting error notices.")
     finally:
         browser.close()
