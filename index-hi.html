@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Keep the static flight form hidden until scripts restore the correct tab.
+     Visibility (not display) preserves hero layout; no JS means no hiding. -->
+<script>document.documentElement.classList.add('search-ui-initializing');</script>
+<style>
+html.search-ui-initializing .hero .transport,
+html.search-ui-initializing .hero #search,
+html.search-ui-initializing .hero .search-hints { visibility:hidden !important; }
+</style>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -666,7 +674,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 <link rel="stylesheet" href="assets/responsive.css?v=20261009-copy-ru">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
 <link rel="stylesheet" href="assets/tutu-system.css?v=379">
-<link rel="stylesheet" href="assets/tour-form.css?v=20261011-country-and-date-chips">
+<link rel="stylesheet" href="assets/tour-form.css?v=20261011-child-age-popup-v2">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1176,13 +1184,14 @@ initCarousel('reviews-row', 'reviews');
 </script>
 
 <script src="assets/tutu-destinations.js?v=20261009-routes"></script>
-<script src="assets/tutu-link-builder.js?v=20261008-nukta"></script>
-<script src="assets/search-state.js?v=20261011-keep-search-state"></script>
-<script src="assets/search-v2.js?v=20261011-keep-search-state"></script>
+<script src="assets/tutu-link-builder.js?v=20261011-age-bands-v2"></script>
+<script src="assets/search-state.js?v=20261011-state-sync-v3"></script>
+<script src="assets/search-v2.js?v=20261011-state-sync-v3"></script>
 <script src="assets/card-links.js?v=20261011-moscow-booking-date"></script>
 <script src="assets/responsive.js?v=20261008-no-flash"></script>
 <script src="assets/tour-public-options.js?v=20261011-visual-catalog"></script>
 <script src="assets/tour-catalog.js?v=20261011-partner-resort-deeplinks"></script>
-<script src="assets/tour-form.js?v=20261011-keep-search-state"></script>
+<script src="assets/tour-form.js?v=20261011-state-sync-v3"></script>
+<script>document.documentElement.classList.remove('search-ui-initializing');document.documentElement.classList.add('search-ui-ready');</script>
 </body>
 </html>
