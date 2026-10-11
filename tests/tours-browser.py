@@ -72,7 +72,7 @@ def run_case(pg,lang,width):
     check(pg.locator(".tour-range .tour-track").count()==1,"shared two-handle night track")
     pg.locator('[data-tour-trigger="people"]').click()
     fit(pg,".tour-panel--people")
-    pg.locator('[data-tour-step="1"]').click()
+    pg.locator('[data-tour-person="adult"][data-tour-step="1"]').click()
     check("2" in pg.locator('[data-tour-trigger="people"]').inner_text(),"adults increment")
     # Fallback must preserve destination (not dump the user at an unrelated home page).
     pg.evaluate("window.__qaNavigations=[]")
