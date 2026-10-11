@@ -146,6 +146,11 @@
       ?'https://tours.tutu.ru/rossiya/'+resort+'/iz/'+city+'/'
       :null;
   }
+  // Travelata's public toCity dropdown lists Murmansk=1726 under Russia=76.
+  // Read-only live Tutu x Travelata search confirmed that the country-level
+  // query with #?toCountry=76&toCity=1726 visibly selects Murmansk.
+  // Other winter resorts stay browse-only until the same check is completed.
+  const brandedResorts={murmansk:{country:'russia',cityId:1726}};
   const departureByKey=new Map(departures.map(d=>[d.key,d]));
   // Tutu SEO pages, NOT Travelata search departure IDs.
   const murmanskFromPages={
@@ -206,8 +211,10 @@
     const maxIso=maxDate.getFullYear()+'-'+pad(maxDate.getMonth()+1)+'-'+pad(maxDate.getDate());
     if(date.iso<todayIso||date.iso>maxIso)throw new Error('Invalid tour date');
 
-    // Unverified resort, departure or family parameters never enter a deep link.
-    if(!Number.isInteger(d.id)||!Number.isInteger(dep.id)||children>0){
+    // Only allow verified resort/country pairs into the branded search.
+    const resort=d.kind==='winter'?brandedResorts[d.key]:null;
+    const searchCountry=resort?byKey.get(resort.country):d;
+    if((!resort&&!Number.isInteger(d.id))||!Number.isInteger(dep.id)||children>0){
       const target=(d.key==='murmansk'||d.browseAs==='murmansk')
         ?murmanskFromPages[dep.key]
         :d.kind==='winter'?winterCityTourPage(d.key,dep.key):null;
@@ -215,13 +222,13 @@
         departureApplied:Boolean(target),reason:children>0?'children':
          !Number.isInteger(dep.id)?'departure':'destination'};
     }
-    if(d.kind!=='country')throw new Error('Unverified destination type');
+    if(d.kind!=='country'&&!resort)throw new Error('Unverified destination type');
 
     const q=new URLSearchParams();
     q.set('departure',String(dep.id));
-    q.set('arrival_id',String(d.id));
+    q.set('arrival_id',String(searchCountry.id));
     q.set('arrival_type','country');
-    q.set('arrival_text',d.ru);
+    q.set('arrival_text',searchCountry.ru);
     q.set('date_begin',date.local);
     q.set('date_end',date.local);
     q.set('adults',String(adults));
@@ -234,7 +241,8 @@
     // sid is a provider-generated session token; never copy one from a sample URL.
     const hash=new URLSearchParams();
     hash.set('fromCity',String(dep.id));
-    hash.set('toCountry',String(d.id));
+    hash.set('toCountry',String(searchCountry.id));
+    if(resort)hash.set('toCity',String(resort.cityId));
     hash.set('dateFrom',date.local);
     hash.set('dateTo',date.local);
     hash.set('nightFrom',String(min));
@@ -245,7 +253,7 @@
     hash.set('priceFrom','6000');
     hash.set('priceTo','21000000');
     hash.set('sort','recommend');
-    return {url:'https://web.tutu.travelata.ru/search/?'+q.toString()+'#?'+hash.toString(),filtered:true,destination:d};
+    return {url:'https://web.tutu.travelata.ru/search/?'+q.toString()+'#?'+hash.toString(),filtered:true,destination:d,resortApplied:Boolean(resort)};
   }
-  root.TUTU_TOURS={departures,destinations,byKey,departureByKey,find,build,dateParts,murmanskFromPages,winterCityTourPage};
+  root.TUTU_TOURS={departures,destinations,byKey,departureByKey,find,build,dateParts,murmanskFromPages,winterCityTourPage,brandedResorts};
 })(window);
