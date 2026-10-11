@@ -13,7 +13,7 @@
 
 1. Departure choices with numeric \`departure\` IDs only when independently confirmed.
 2. Country and Russia-winter destination choices, multilingual RU/EN/HI names and search aliases.
-3. Every destination's public \`https://tours.tutu.ru/strana/.../\` browse URL.
+3. All **45 current Tutu country browse pages** plus 12 curated Russia/winter choices. The country list is for discovery, not a guarantee that inventory is available from each departure city. Every destination's public \`https://tours.tutu.ru/strana/.../\` browse URL.
 4. The numeric partner \`arrival_id\` only when independently confirmed. No guessing or transcribing human-readable slugs into IDs.
 
 **Verified numerical search IDs** (not a guarantee of live inventory):
