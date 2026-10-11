@@ -4464,3 +4464,13 @@ html body #routes .card--route .route-price .route-inr { margin: 0; font-size: 1
 /* Pass 370 — the lilac is #986FF7, as tutu.ru shows it (the user's screenshot);
    footer links regular weight like on tutu.ru, only the headings semibold. */
 footer a { font-weight: 400 !important; }
+
+/* Pass 371 — inactive languages brighter (they still turn full white on
+   hover), the hero subtitle medium instead of demibold, the transport icons
+   10% smaller (scale keeps their centring offsets in proportion), and the
+   footer's small print in the regular weight. */
+.top .lang a:not(.is-active) { color: rgba(255, 255, 255, .9); }
+.top .lang a:not(.is-active):hover { color: #fff; }
+html body .hero .hero-sub { font-weight: 500 !important; }
+.hero .transport .ico img { scale: .9; }
+footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !important; }
