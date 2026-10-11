@@ -11,7 +11,7 @@
 
 `assets/tour-catalog.js` maintains:
 
-1. **14 departure cities** frequently relevant to people travelling in Russia; only Moscow and Saint Petersburg have verified numeric Travelata `departure` IDs. Other cities can be chosen without fabricating an API ID.
+1. **14 departure cities** relevant to residents and visitors travelling within Russia; **13 of 14 have numeric Travelata departure IDs** from the public link-constructor `fromCity` and `departureCity` selections. Moscow=2 and Saint Petersburg=1 match the originally supplied branded URLs. Rostov-on-Don was absent from the public city directory and remains browse-only. Data source: https://traff.travelata.ru/constructor.php
 2. Country and Russia-winter destination choices, multilingual RU/EN/HI names and search aliases.
 3. All **45 current Tutu country browse pages**, **27 Russia/winter locations**, and **9 foreign resorts** (Antalya, Alanya, Istanbul, Hurghada, Sharm El Sheikh, Phuket, Goa, Bali, Dubai). Each has an evidenced Tutu country/resort landing URL, not a guarantee of live tour inventory.
 4. Numeric `arrival_id` only when independently sourced: **37 of 45 countries** have validated Travelata IDs. Eight countries and all 36 specific resort/city choices keep unverified IDs null. Never substitute Tutu SEO slug numbers.
@@ -27,13 +27,36 @@
 | Country | Abkhazia | 1 | 2026 partner API countries example |
 | Country | Belarus | 11 | 2026 partner API countries example |
 
-Eight countries and all 36 specific resort/city choices, plus 12 of the 14 departure cities, deliberately have `id:null`. Their public Tutu links are *not* full branded search URLs. A fallback opens the matching destination page **only after warning users** that departure city, dates, nights and guests may need to be re-entered; no invented IDs are inserted.
+Eight countries, all 36 specific resort/city choices, and Rostov-on-Don as a departure city deliberately have `id:null`. Their public Tutu links are *not* full branded search URLs. A fallback opens the matching destination page **only after warning users** that departure city, dates, nights and guests may need to be re-entered; no invented IDs are inserted.
 
 Teriberka is a **separate user intent** with no verified separate Tutu landing; the form warns users and opens Murmansk instead. For **Murmansk**, a curated table of existing Tutu SEO pages preserves some city-of-departure intent (including Moscow, Saint Petersburg, Kazan, Yekaterinburg, Novosibirsk, Samara, Nizhny Novgorod, Irkutsk, Perm, Krasnodar and Rostov-on-Don). Examples:
 - Kazan → Murmansk: https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/
 - Moscow → Murmansk: https://tours.tutu.ru/rossiya/murmansk/iz/491_moskva/
 
 **Crucial:** the numeric IDs in these Tutu SEO URL paths are **not interchangeable** with the departure IDs required by the branded Travelata search form. SEO pages do not pass the chosen nights, date or guest count; the form discloses this instead of implying a fully filtered search.
+
+## Verified departure IDs from the public Travelata city selector
+
+The public Travelata widget/link-constructor's `fromCity` and `departureCity` options were loaded in Chromium and yielded the same values for 13 of the 14 departure cities on our landing. These are **Travelata departure IDs**, distinct from the Tutu SEO path numbers.
+
+| Destination city | Travelata departure ID | Tutu winter SEO city slug (different namespace) |
+| --- | ---: | --- |
+| Moscow | 2 | 491_moskva |
+| Saint Petersburg | 1 | 75_sankt-peterburg |
+| Kazan | 29 | 33_kazan |
+| Yekaterinburg | 25 | 29_ekaterinburg |
+| Novosibirsk | 53 | 58_novosibirsk |
+| Samara | 64 | 74_samara |
+| Nizhny Novgorod | 50 | 55_nijniy_novgorod |
+| Irkutsk | 28 | 31_irkutsk |
+| Perm | 61 | 68_perm |
+| Krasnodar | 36 | 39_krasnodar |
+| Ufa | 79 | Not whitelisted |
+| Cheboksary | 83 | Not whitelisted |
+| Sochi | 67 | Not whitelisted |
+| Rostov-on-Don | **Not listed** | 72_rostov-na-donu |
+
+The IDs for Moscow and Saint Petersburg also matched supplied co-branded Travelata links. The other 11 IDs have the same official public-dropdown provenance; separate live branded-search checks are included in `tests/probe-live-departures.py` to ensure the cities remain correctly selected after navigation. Missing IDs must never be inferred from Tutu SEO numbers.
 
 ## Verified country IDs from the public Travelata link constructor
 
@@ -88,7 +111,7 @@ The EN and HI tours search tabs now disclose that the destination page will be i
 
 ## Open issues before release
 
-- Obtain and validate all partner country, resort and departure IDs (including Russia and its winter resorts); confirm child-age parameter formats before enabling branded direct links for families.
+- Obtain/verify eight missing country IDs, precise partner resort IDs (especially Russian winter destinations), and Rostov-on-Don if it becomes supported. The public Travelata `fromCity` directory now grounds 13/14 departure IDs; confirm newly enabled city searches against rendered live results and partner availability. Verify child-age parameters before supporting direct family searches.
 - Live branded search was confirmed for **6/6 tested combinations**: Moscow → Turkey, Russia, India, UAE; Saint Petersburg → Egypt, Thailand. In each, the search page displayed the selected city, country, date 25 October 2026, 7–14 nights and one adult, and the partner generated its own `sid`. See https://github.com/Brusilo/india-landing/actions/runs/38155093070 . Confirm remaining country/departure combinations separately; country IDs alone do not guarantee inventory.
 - Run live QA in mobile Safari and Android Chrome, plus desktop browser sessions. Official Travelata limits as of 18 June 2026: up to 29 nights, 6 adults and 3 children: https://travelata.ru/faq/ru/articles/11552685-%D0%BA%D0%B0%D0%BA%D0%BE%D0%B5-%D0%BC%D0%B0%D0%BA%D1%81%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5-%D0%BA%D0%BE%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE-%D0%B4%D0%BD%D0%B5%D0%B9-%D0%B8-%D1%82%D1%83%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2-%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE-%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C
 - Decide whether winter regions should open curated product pages or partner-funnel results; avoid advertising a tour as available before inventory is confirmed.
