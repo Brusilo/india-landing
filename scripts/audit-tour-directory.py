@@ -97,6 +97,16 @@ def load_destinations():
     return json.loads(subprocess.check_output(["node", "-e", code], text=True))
 
 
+def load_departure_destination_routes():
+    code = (
+        "const fs=require('fs'),vm=require('vm');"
+        "const ctx={window:{},URLSearchParams};"
+        "vm.runInNewContext(fs.readFileSync('assets/tour-catalog.js','utf8'),ctx);"
+        "process.stdout.write(JSON.stringify(ctx.window.TUTU_TOURS.murmanskFromPages))"
+    )
+    return json.loads(subprocess.check_output(["node", "-e", code], text=True))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="/tmp/tutu-tour-directory-audit.json")
@@ -168,7 +178,28 @@ def main():
             "unknown")
         for item in output
     )
+    # City-of-departure Tutu SEO links use their own path IDs. Verify
+    # every resulting page instead of assuming these IDs match Travelata's.
+    city_routes = load_departure_destination_routes()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+        route_responses = list(pool.map(fetch, city_routes.values()))
+    seo_routes = []
+    for (city, route), res in zip(city_routes.items(), route_responses):
+        seo_routes.append({
+            "departure": city, "requested": route, "status": res["status"],
+            "final_url": res.get("final_url"), "bytes": res.get("length", 0),
+            "exact_target": canonical(res.get("final_url", "")) == canonical(route),
+            "error": res.get("error")
+        })
+    seo_summary = dict(Counter(
+        "matched" if row["status"] == 200 and row["exact_target"] else
+        "redirected" if row["status"] == 200 else
+        "http_error" if isinstance(row["status"], int) else "network_unknown"
+        for row in seo_routes
+    ))
     report = {
+        "departure_city_murmansk_seo_routes": seo_routes,
+        "departure_city_seo_summary": seo_summary,
         "source": "public live Tutu HTML; advisory only, not a Travelata API",
         "directories": [{k: v for k, v in d.items() if k != "links"} for d in fetched],
         "summary": dict(counts),
@@ -178,6 +209,10 @@ def main():
     with open(args.output, "w", encoding="utf-8") as file:
         json.dump(report, file, ensure_ascii=False, indent=2)
     print("Audit:", json.dumps(report["summary"], ensure_ascii=False))
+    print("MURMANSK SEO ROUTES:", json.dumps(seo_summary, ensure_ascii=False))
+    for row in seo_routes:
+        if row["status"] != 200 or not row["exact_target"]:
+            print("SEO ROUTE WARN", row["departure"], row["status"], row["requested"], "resolved", row.get("final_url"))
     for d in fetched:
         print("DIR", d["status"], d["number_links"], d["url"], d.get("error") or "")
     for d in output:
