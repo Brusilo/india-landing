@@ -105,6 +105,7 @@ with sync_playwright() as pw:
         for width in widths:
             pg=browser.new_page(viewport={"width":width,"height":900},device_scale_factor=1,
                                 is_mobile=width<600,has_touch=width<=1100)
+            pg.set_default_timeout(6500)
             pg.on("dialog",lambda dialog:dialog.accept())
             name=f"{lang}-{width}"
             try:
