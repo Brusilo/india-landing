@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -62,4 +63,15 @@ jobs:
               except Exception as exc:print('BROWSER_FAILED',kind,type(exc).__name__,str(exc)[:400])
               finally:page.close()
             browser.close()
+          PY
+
+      - name: Check newly authored public price parser and smoke 3 exact-day offers
+        shell: bash
+        run: |
+          python scripts/scrape-public-prices.py --self-test
+          python scripts/scrape-public-prices.py --only r1,r2,h1 --out /tmp/tutu-price-smoke.json
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/tutu-price-smoke.json'))
+          print('SMOKE_RESULT',data)
           PY
