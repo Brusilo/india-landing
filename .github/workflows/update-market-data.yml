@@ -9,6 +9,8 @@ on:
   push:
     paths:
       - 'scripts/update-market-data.py'
+      - 'scripts/scrape-public-prices.py'
+      - 'scripts/price-targets.json'
       - '.github/workflows/update-market-data.yml'
 
 permissions:
@@ -21,7 +23,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -35,10 +37,19 @@ jobs:
         run: node tests/landing-pricing.cjs
       - name: Verify tour deep links (offline)
         run: node tests/landing-tours.cjs
-      - name: Fetch today's CBR FX and any configured supplier prices
+      - name: Verify Tutu minimum-price extraction against fixtures (offline)
+        run: python scripts/scrape-public-prices.py --self-test
+      - name: Install headless browser for public Tutu booking pages
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Find minimum bookable prices for tomorrow on public Tutu pages
+        run: python scripts/scrape-public-prices.py --out /tmp/tutu-public-price-feed.json
+      - name: Fetch CBR FX and publish only verified date-matched prices
         env:
           PRICE_FEED_URL: ${{ secrets.TUTU_PRICE_FEED_URL }}
           PRICE_FEED_TOKEN: ${{ secrets.TUTU_PRICE_FEED_TOKEN }}
+          PRICE_FEED_FILE: /tmp/tutu-public-price-feed.json
         run: python scripts/update-market-data.py
       - name: Commit changed public snapshot and trigger Pages rebuild
         run: |
