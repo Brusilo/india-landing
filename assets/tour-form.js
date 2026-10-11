@@ -135,21 +135,7 @@ function renderHints(){
      esc(offset===0?(lang==='ru'?'Сегодня':lang==='hi'?'आज':'Today'):
        (lang==='ru'?'Завтра':lang==='hi'?'कल':'Tomorrow'))+'</button>').join('')+'</div>';
 }
-function showSearchIssue(message){
- let issue=document.querySelector('.tour-search-issue');
- if(!issue){
-   issue=document.createElement('p');
-   issue.className='tour-search-issue';
-   issue.setAttribute('role','status');
-   hints.insertAdjacentElement('afterend',issue);
- }
- issue.textContent=message;
-}
-function hideSearchIssue(){
- document.querySelector('.tour-search-issue')?.remove();
-}
 function render(){
- hideSearchIssue();
  close();
  form.innerHTML=
    placeField('departure',dict.from)+
@@ -355,7 +341,7 @@ function activate(){
 }
 function deactivate(){
  if(!active)return;
- active=false;close();hideSearchIssue();
+ active=false;close();
  form.replaceChildren(...savedForm);hints.replaceChildren(...savedHints);
  form.dataset.mode=savedMode;hints.dataset.mode=savedMode;
  tab.classList.remove('is-active');tab.setAttribute('aria-selected','false');
@@ -414,7 +400,6 @@ hints.addEventListener('click',e=>{
 },true);
 form.addEventListener('input',e=>{
  if(!active)return;
- hideSearchIssue();
  const el=e.target.closest('[data-tour-range]');
  if(!el)return;
  const val=Number(el.value);
@@ -450,7 +435,7 @@ function resolveInput(role){
  if(exact){state[role]=exact.key;state[role+'Text']='';saveTour();return true}
  input.focus();
  show(role,role==='departure'?departurePanel(input.value):destinationPanel(input.value),true);
- showSearchIssue(role==='departure'?dict.selectDeparture:dict.select);
+ window.alert(role==='departure'?dict.selectDeparture:dict.select);
  return false;
 }
 form.addEventListener('submit',e=>{
@@ -459,23 +444,23 @@ form.addEventListener('submit',e=>{
  if(!resolveInput('departure')||!resolveInput('destination'))return;
  if(!state.date){
    calendarMonth=new Date(initialDate.getFullYear(),initialDate.getMonth(),1);
-   openCalendar(true);showSearchIssue(dict.selectDate);return;
+   openCalendar(true);window.alert(dict.selectDate);return;
  }
  if(state.children&&(state.childAges.length!==state.children||
      state.childAges.some(age=>!Number.isInteger(age)||age<0||age>17))){
-   showSearchIssue(dict.ageRequired);return;
+   window.alert(dict.ageRequired);return;
  }
  try{
    const result=data.build(state);
    if(!result.filtered||!result.url){
      const message=result.reason==='departure'?dict.unavailableDeparture:dict.unavailableDestination;
-     showSearchIssue(message);
+     window.alert(message);
      return;
    }
    if(!/^https:\/\/web\.tutu\.travelata\.ru\/search\/\?/.test(result.url))
      throw new Error('Unsupported partner destination');
    window.location.assign(result.url);
- }catch(err){showSearchIssue(dict.invalid)}
+ }catch(err){window.alert(dict.invalid)}
 },true);
 document.addEventListener('click',e=>{
  if(active&&!e.target.closest('.tour-cell')&&!e.target.closest('.search-suggest'))close();
