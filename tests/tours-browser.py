@@ -39,6 +39,14 @@ def run_case(pg,lang,width):
     check(not missing,"missing assets "+str(missing[:3]))
     check(not errors,"page Javascript errors "+str(errors))
     click_tab(pg)
+    catalog=pg.evaluate("""() => ({
+       countries:window.TUTU_TOURS.destinations.filter(x=>x.kind==='country').length,
+       winter:window.TUTU_TOURS.destinations.filter(x=>x.kind==='winter').length,
+       duplicateKeys:window.TUTU_TOURS.destinations.map(x=>x.key).filter((k,i,a)=>a.indexOf(k)!==i),
+       badLinks:window.TUTU_TOURS.destinations.filter(x=>!x.browse.startsWith('https://tours.tutu.ru/')).length
+    })""")
+    check(catalog['countries']==45 and catalog['winter']==12 and not catalog['duplicateKeys']
+          and not catalog['badLinks'],"45 countries, 12 winter places, unique keys and Tutu links")
     fit(pg,"form.search-v2")
     fit(pg,".tour-destination")
     # The suggestions were broken in v1 because the input was not a tour-trigger.
@@ -83,6 +91,14 @@ def run_case(pg,lang,width):
           "search constraints passed")
     check(q.get("utm_source")==["tutu_main"],"attribution passed")
     check("sid=" not in searches[0],"no reused session ID")
+    # Keyboard access and typeahead must work in every locale.
+    dest=pg.locator(".tour-destination")
+    dest.fill("Japan")
+    dest.press("ArrowDown")
+    check(dest.get_attribute("aria-activedescendant")=="tour-option-japan","keyboard focused option")
+    dest.press("Enter")
+    check(dest.input_value()==pg.evaluate("() => window.TUTU_TOURS.byKey.get('japan').name[document.documentElement.lang]"),
+          "keyboard selection localized")
     # No side effects on existing transport modes.
     pg.locator(".transport button").nth(1).click()
     check(pg.locator("form.search-v2").get_attribute("data-mode")=="flight","flight restored")
