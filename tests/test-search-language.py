@@ -6,7 +6,7 @@ Run in the repository root with an HTTP server on port 8765:
   python tests/test-search-language.py
 """
 from __future__ import annotations
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 from playwright.sync_api import sync_playwright
 
 BASE = "http://127.0.0.1:8765/"
@@ -185,6 +185,30 @@ with sync_playwright() as playwright:
         assert tour_before["tour"]["children"] == 1
         assert tour_before["tour"]["childAges"] == [9]
         assert tour_before["tour"]["date"]
+
+        # Add a second child in the live UI, confirm default age 5 and
+        # verify that the generated Travelata URL contains both ages.
+        page.locator("[data-tour-person='child'][data-tour-step='1']").click()
+        assert page.locator("[data-tour-child-age='1']").input_value() == "5"
+        page.locator("[data-tour-child-age='1']").select_option("8")
+        assert page.locator(".tour-panel--people").is_visible()
+        family_state = stored(page)["tour"]
+        assert family_state["children"] == 2
+        assert family_state["childAges"] == [9, 8]
+        family_url = page.evaluate(
+            "(state) => window.TUTU_TOURS.build(state).url", family_state
+        )
+        assert family_url.startswith("https://web.tutu.travelata.ru/search/?")
+        query = parse_qs(urlparse(family_url).query)
+        fragment = parse_qs(urlparse(family_url).fragment.removeprefix("?"))
+        assert query["children"] == ["2"]
+        assert query["ages[0]"] == ["9"]
+        assert query["ages[1]"] == ["8"]
+        assert fragment["kids"] == ["2"]
+        assert fragment["ages[]"] == ["9", "8"]
+        # Restore the original single-child selection for RU/EN/HI tests.
+        page.locator("[data-tour-person='child'][data-tour-step='-1']").click()
+        assert stored(page)["tour"]["childAges"] == [9]
         switch(page, "en")
         assert page.locator("#search").get_attribute("data-mode") == "tour"
         assert page.locator(".transport .tours-tab").get_attribute("aria-selected") == "true"
