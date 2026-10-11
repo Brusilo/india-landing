@@ -20,6 +20,7 @@ def assert_visible_and_fit(page,selector,width):
     assert box and box['x']>=-2 and box['x']+box['width']<=width+2,selector+' outside viewport '+str(box)
 
 def hittable(page,selector):
+    page.locator(selector).scroll_into_view_if_needed()
     return page.locator(selector).evaluate('''el=>{
       const r=el.getBoundingClientRect(),x=r.x+r.width/2,y=r.y+r.height/2;
       const top=document.elementFromPoint(x,y);
