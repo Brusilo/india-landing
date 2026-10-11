@@ -5,7 +5,7 @@ window.TUTU_DAILY_PRICES={
     "rateDate": "2026-10-10",
     "rubToInr": 1.13792052,
     "source": "https://www.cbr.ru/scripts/XML_daily.asp",
-    "updatedAt": "2026-10-11T21:36:30+03:00"
+    "updatedAt": "2026-10-11T21:37:14+03:00"
   },
   "quotes": {
     "currency": "RUB",
