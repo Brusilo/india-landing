@@ -112,12 +112,13 @@
     background:#fff;
   }
   .search.search-v2[data-mode="tour"]>.v2-field[data-role="from"]{
-    padding-right:66px;
+    /* No swap button in Tours: keep the same 16px right inset before/after focus. */
+    padding-right:16px;
     border-radius:16px 16px 0 0;
     margin-bottom:-10px;
   }
   .search.search-v2[data-mode="tour"]>.v2-field[data-role="to"]{
-    padding-right:66px;
+    padding-right:16px;
     border-radius:0 0 16px 16px;
     border-top:1px solid #e6e7f3;
   }
