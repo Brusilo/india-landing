@@ -42,11 +42,14 @@ def run_case(pg,lang,width):
     catalog=pg.evaluate("""() => ({
        countries:window.TUTU_TOURS.destinations.filter(x=>x.kind==='country').length,
        winter:window.TUTU_TOURS.destinations.filter(x=>x.kind==='winter').length,
+       resorts:window.TUTU_TOURS.destinations.filter(x=>x.kind==='resort').length,
+       departures:window.TUTU_TOURS.departures.length,
        duplicateKeys:window.TUTU_TOURS.destinations.map(x=>x.key).filter((k,i,a)=>a.indexOf(k)!==i),
        badLinks:window.TUTU_TOURS.destinations.filter(x=>!x.browse.startsWith('https://tours.tutu.ru/')).length
     })""")
-    check(catalog['countries']==45 and catalog['winter']==12 and not catalog['duplicateKeys']
-          and not catalog['badLinks'],"45 countries, 12 winter places, unique keys and Tutu links")
+    check(catalog['countries']==45 and catalog['winter']==27 and catalog['resorts']==9 and
+          catalog['departures']==14 and not catalog['duplicateKeys'] and not catalog['badLinks'],
+          "45 countries, 27 Russia places, 9 resorts, 14 departures, unique URLs")
     fit(pg,"form.search-v2")
     fit(pg,".tour-destination")
     # The suggestions were broken in v1 because the input was not a tour-trigger.
@@ -75,8 +78,24 @@ def run_case(pg,lang,width):
     pg.evaluate("window.__qaNavigations=[]")
     pg.locator(".tour-submit").click()
     fallback=pg.evaluate("window.__qaNavigations")
-    check(fallback==["https://tours.tutu.ru/strana/rossiya/kurort/murmansk/"],
-          "Murmansk opens matching Tutu landing page, got "+repr(fallback))
+    check(fallback==["https://tours.tutu.ru/rossiya/murmansk/iz/491_moskva/"],
+          "Moscow-Murmansk preserves departure city on a Tutu SEO page")
+    # Extra student departure city: Kazan and Murmansk SEO route (Tutu SEO IDs
+    # must never be accidentally used as Travelata partner IDs).
+    pg.evaluate("window.__qaNavigations=[]")
+    pg.locator('[data-tour-trigger="departure"]').click()
+    pg.locator('.tour-panel--departure [data-tour-dep="kazan"]').click()
+    pg.locator(".tour-submit").click()
+    check(pg.evaluate("window.__qaNavigations")==["https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/"],
+          "Kazan-Murmansk route matching Tutu page")
+    pg.evaluate("window.__qaNavigations=[]")
+    choose(pg,"Egypt","egypt")
+    pg.locator(".tour-submit").click()
+    check(pg.evaluate("window.__qaNavigations")==["https://tours.tutu.ru/strana/egypt/"],
+          "Unknown Travelata city ID falls back rather than sending a fabricated ID")
+    pg.evaluate("window.__qaNavigations=[]")
+    pg.locator('[data-tour-trigger="departure"]').click()
+    pg.locator('.tour-panel--departure [data-tour-dep="moscow"]').click()
     # Known destination IDs must preserve date / nights / people / attribution.
     pg.evaluate("window.__qaNavigations=[]")
     choose(pg,"Egypt","egypt")
@@ -91,6 +110,19 @@ def run_case(pg,lang,width):
           "search constraints passed")
     check(q.get("utm_source")==["tutu_main"],"attribution passed")
     check("sid=" not in searches[0],"no reused session ID")
+    # Child ages require explicit selection. Until the partner's children URL
+    # semantics are verified, family tours open the correct country page.
+    pg.evaluate("window.__qaNavigations=[];window.__qaAlerts=[]")
+    pg.locator('[data-tour-trigger="people"]').click()
+    pg.locator('[data-tour-person="child"][data-tour-step="1"]').click()
+    pg.locator(".tour-submit").click()
+    check(bool(pg.evaluate("window.__qaAlerts")) and not pg.evaluate("window.__qaNavigations"),
+          "family flow cannot silently submit unspecified child age")
+    pg.locator('[data-tour-trigger="people"]').click()
+    pg.locator('[data-tour-child-age="0"]').select_option("7")
+    pg.locator(".tour-submit").click()
+    check(pg.evaluate("window.__qaNavigations")==["https://tours.tutu.ru/strana/egypt/"],
+          "family search has a safe fallback until partner ages format is verified")
     # Keyboard access and typeahead must work in every locale.
     dest=pg.locator(".tour-destination")
     dest.fill("Japan")
