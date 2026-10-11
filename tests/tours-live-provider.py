@@ -19,7 +19,7 @@ const d=new Date();d.setDate(d.getDate()+14);
 const day=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
 for(const [departure,destination] of [['moscow','turkey'],['spb','egypt']]){
   const result=ctx.window.TUTU_TOURS.build({departure,destination,date:day,nightsMin:7,nightsMax:14,adults:1});
-  console.log(JSON.stringify({departure,destination,date:day,...result}));
+  console.log(JSON.stringify({...result,departure,destination,date:day}));
 }
 """
 items=[json.loads(line) for line in subprocess.check_output(['node','-e',js],cwd=root,text=True).splitlines()]
@@ -45,7 +45,7 @@ with sync_playwright() as playwright:
             assert q['nights_min']==['7'] and q['nights_max']==['14']
             assert 'sid' not in q
             response=page.goto(item['url'],wait_until='domcontentloaded',timeout=25000)
-            page.wait_for_timeout(4500)
+            page.wait_for_timeout(12000)
             data['http_status']=response.status if response else None
             data['final_url']=page.url
             data['title']=page.title()[:250]
@@ -67,7 +67,7 @@ with sync_playwright() as playwright:
             if data['network']=='reachable' and not matches:
                 data['review_note']='Page loaded, but selected destination could not be confirmed from rendered text/inputs'
         except Exception as exc:
-            data['error']=str(exc)[:950]
+            data['error']=repr(exc)[:950]
             data['network']='blocked_or_timeout'
         finally:
             try:
