@@ -61,7 +61,7 @@ with sync_playwright() as pw:
     # Search must work for curated country, and its origin must be correct.
     page.locator('[data-tour-trigger="departure"]').click()
     page.locator('.tour-departure-filter').fill('Moscow')
-    page.locator('[data-tour-dep="moscow"]').click()
+    page.locator('.tour-panel--departure [data-tour-dep="moscow"]').click()
     field.fill('Turkey')
     page.locator('[data-tour-choice="turkey"]').click()
     page.evaluate('window.__qaNavigations=[]')
