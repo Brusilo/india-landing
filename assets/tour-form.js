@@ -482,5 +482,6 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('keydown',e=>{if(active&&e.key==='Escape')close()});
 if(persistence?.read().activeMode==='tour')activate();
+window.TUTU_SAVE_TOUR_NOW=saveTour;
 window.addEventListener('pagehide',saveTour);
 })();
