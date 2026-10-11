@@ -19,6 +19,13 @@ with sync_playwright() as pw:
         response=page.goto(result['source'],wait_until='domcontentloaded',timeout=28000)
         result['http_status']=response.status if response else None
         page.wait_for_timeout(2600)
+        try:
+            tab=page.get_by_role('link',name='Конструктор ссылок')
+            tab.first.click(timeout=6000)
+            page.wait_for_timeout(2400)
+            print('PUBLIC LINK CONSTRUCTOR TAB OPEN',flush=True)
+        except Exception as exc:
+            result['notes'].append('Cannot activate public link constructor tab: '+repr(exc)[:200])
         selector_snapshot="""() => Array.from(document.querySelectorAll('select')).map((s,i)=>({
           index:i,name:s.name, value:s.value,
           options:Array.from(s.options).slice(0,1000).map(o=>({id:o.value,name:o.textContent.trim()}))
@@ -28,10 +35,8 @@ with sync_playwright() as pw:
         for name,idx,country in [
             ('toCountry',0,'76'),
             ('toCountry',0,'92'),
-            ('defaultCountry',0,'76'),
-            ('defaultCountry',0,'92'),
-            ('defaultCountry',1,'76'),
-            ('countries',0,'76')
+            ('toCountry',0,'33'),
+            ('defaultCountry',0,'76')
         ]:
             nodes=page.locator('select[name="'+name+'"]')
             if nodes.count()<=idx:
