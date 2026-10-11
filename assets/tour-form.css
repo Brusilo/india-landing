@@ -228,3 +228,10 @@ html .search.search-v2[data-mode="tour"] > .tour-submit:hover {
     align-self:start;min-height:58px;
   }
 }
+
+/* Language transparency: the partner's live tours results page is Russian. */
+.search-hints-v2[data-mode="tour"] .tour-language-note {
+  margin:5px 0 0;
+  font:400 12px/1.35 var(--font);
+  color:rgba(255,255,255,.93);
+}
