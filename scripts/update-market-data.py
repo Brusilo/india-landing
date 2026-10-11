@@ -1,0 +1,219 @@
+#!/usr/bin/env python3
+"""Update the Indian landing's nightly RUB/INR rate and, when authorized, tariff quotes.
+
+Runs from the scheduled GitHub Action around 00:00 Europe/Moscow.
+The Central Bank is the FX source. Provider quotes are optional and NEVER
+guessed from undated SEO text, promotional widgets, or hotel landing pages.
+
+Optional secret PRICE_FEED_URL: HTTPS endpoint returning JSON:
+{
+  "quote_date": "YYYY-MM-DD",  # TOMORROW in Moscow, matching card links
+  "currency": "RUB",
+  "routes": {"r1": 2000, ... "r14": 4500}, # full undiscounted ruble prices
+  "hotels": {"h1": 5000, ... "h13": 2000}, # per room, one night, one guest
+  "source": "supplier booking API identifier or documentation"
+}
+Optional PRICE_FEED_TOKEN: Bearer token (not exposed in generated assets).
+A feed can be partial. Unsupported IDs are dropped, never mapped by title.
+"""
+from __future__ import annotations
+
+import json
+import os
+import re
+import sys
+import urllib.error
+import urllib.request
+import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta, date
+from decimal import Decimal, InvalidOperation
+from pathlib import Path
+from zoneinfo import ZoneInfo
+
+ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = ROOT / "assets" / "daily-prices.js"
+CBR_URL = "https://www.cbr.ru/scripts/XML_daily.asp"
+CBR_MIRROR = "https://www.cbr-xml-daily.ru/daily_json.js"
+MSK = ZoneInfo("Europe/Moscow")
+MAX_BYTES = 2_000_000
+ROUTES = {f"r{i}" for i in range(1, 15)}
+HOTELS = {f"h{i}" for i in range(1, 14)}
+
+
+def fetch_bytes(url: str, token: str = "") -> bytes:
+    if not url.startswith("https://"):
+        raise ValueError("Remote source must use HTTPS")
+    headers = {
+        "User-Agent": "IndiaLandingPriceUpdater/1.0 (contact repository maintainers)",
+        "Accept": "application/json, application/xml, text/xml;q=0.9",
+    }
+    if token:
+        headers["Authorization"] = "Bearer " + token
+    request = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(request, timeout=25) as response:
+        if not response.url.startswith("https://"):
+            raise ValueError("Remote source redirected away from HTTPS")
+        body = response.read(MAX_BYTES + 1)
+        if len(body) > MAX_BYTES:
+            raise ValueError("Remote data is too large")
+        return body
+
+
+def dec(value: object) -> Decimal:
+    return Decimal(str(value).replace(",", "."))
+
+
+def check_rate(rate: Decimal, rate_date: date, now: datetime) -> float:
+    if not (Decimal("0.1") < rate < Decimal("10")):
+        raise ValueError("INR/RUB quote out of plausible bounds")
+    if (now.date() - rate_date).days not in range(-2, 11):
+        raise ValueError("Currency rate is stale or from an implausible future date")
+    return float(round(rate, 8))
+
+
+def parse_cbr_xml(raw: bytes, now: datetime) -> dict:
+    root = ET.fromstring(raw)
+    if root.tag != "ValCurs":
+        raise ValueError("Unexpected CBR XML response")
+    cbr_date = datetime.strptime(root.attrib["Date"], "%d.%m.%Y").date()
+    for valute in root.findall("Valute"):
+        if valute.findtext("CharCode") == "INR":
+            nominal = dec(valute.findtext("Nominal"))
+            rubles = dec(valute.findtext("Value"))
+            if nominal <= 0 or rubles <= 0:
+                raise ValueError("Invalid INR quote")
+            return {
+                "rubToInr": check_rate(nominal / rubles, cbr_date, now),
+                "rateDate": cbr_date.isoformat(),
+                "updatedAt": now.isoformat(timespec="seconds"),
+                "source": CBR_URL,
+            }
+    raise ValueError("INR missing from CBR XML")
+
+
+def parse_cbr_mirror(raw: bytes, now: datetime) -> dict:
+    payload = json.loads(raw)
+    cbr_date = date.fromisoformat(payload["Date"][:10])
+    inr = payload["Valute"]["INR"]
+    nominal = dec(inr["Nominal"])
+    rubles = dec(inr["Value"])
+    if nominal <= 0 or rubles <= 0:
+        raise ValueError("Invalid mirrored INR quote")
+    return {
+        "rubToInr": check_rate(nominal / rubles, cbr_date, now),
+        "rateDate": cbr_date.isoformat(),
+        "updatedAt": now.isoformat(timespec="seconds"),
+        "source": CBR_MIRROR + " (mirror of CBR)",
+    }
+
+
+def get_rate(now: datetime) -> dict:
+    errors = []
+    for endpoint, parser in [(CBR_URL, parse_cbr_xml), (CBR_MIRROR, parse_cbr_mirror)]:
+        try:
+            return parser(fetch_bytes(endpoint), now)
+        except (ValueError, KeyError, InvalidOperation, ET.ParseError,
+                OSError, urllib.error.URLError, json.JSONDecodeError) as exc:
+            errors.append(type(exc).__name__ + " at " + endpoint)
+    raise RuntimeError("No reliable CBR INR rate available: " + ", ".join(errors))
+
+
+def money_prices(prices: object, allowed: set[str]) -> dict[str, int]:
+    if not isinstance(prices, dict):
+        raise ValueError("Supplier prices should be an ID-to-RUB map")
+    result: dict[str, int] = {}
+    for key, amount in prices.items():
+        if key not in allowed:
+            continue
+        if isinstance(amount, bool):
+            raise ValueError("Boolean is not a valid price")
+        try:
+            numeric = dec(amount)
+        except InvalidOperation as exc:
+            raise ValueError(f"Invalid price for {key}") from exc
+        if numeric != numeric.to_integral_value() or not (100 <= numeric <= 2_000_000):
+            raise ValueError(f"Invalid RUB price for {key}")
+        result[key] = int(numeric)
+    return result
+
+
+def parse_quotes(raw: bytes, quoted_for: date, now: datetime) -> dict:
+    doc = json.loads(raw)
+    if doc.get("quote_date") != quoted_for.isoformat():
+        raise ValueError("Supplier quote is not for tomorrow in Moscow")
+    if doc.get("currency") != "RUB":
+        raise ValueError("Supplier must quote base prices in RUB")
+    # Undiscounted prices only; promo 15% and RUB caps are applied client-side.
+    routes = money_prices(doc.get("routes", {}), ROUTES)
+    hotels = money_prices(doc.get("hotels", {}), HOTELS)
+    if not routes and not hotels:
+        raise ValueError("Supplier sent no usable prices")
+    if not isinstance(doc.get("source"), str) or not doc["source"].strip():
+        raise ValueError("Supplier quote provenance is required")
+    return {
+        "for": quoted_for.isoformat(),
+        "currency": "RUB",
+        "routes": routes,
+        "hotels": hotels,
+        "updatedAt": now.isoformat(timespec="seconds"),
+        "source": doc["source"].strip()[:160],
+    }
+
+
+def get_quotes(now: datetime) -> dict:
+    default = {"for": None, "currency": "RUB", "routes": {},
+               "hotels": {}, "updatedAt": None}
+    feed = os.environ.get("PRICE_FEED_URL", "").strip()
+    if not feed:
+        print("No PRICE_FEED_URL configured; tariff cards remain labelled as examples.")
+        return default
+    token = os.environ.get("PRICE_FEED_TOKEN", "").strip()
+    return parse_quotes(fetch_bytes(feed, token), now.date() + timedelta(days=1), now)
+
+
+def render_js(snapshot: dict) -> str:
+    # Validated numeric/canonical values only; encode all strings as JSON.
+    payload = json.dumps(snapshot, ensure_ascii=True, sort_keys=True, indent=2)
+    return ("/* Generated from CBR daily INR rate and optional verified supplier quotes.\n"
+            " * Do not edit manually. Generated data is not a booking guarantee. */\n"
+            "window.TUTU_DAILY_PRICES=" + payload + ";\n")
+
+
+def self_test() -> None:
+    now = datetime(2026, 10, 11, 0, 0, tzinfo=MSK)
+    xml = (b'<?xml version="1.0"?><ValCurs Date="11.10.2026">'
+           b'<Valute><CharCode>INR</CharCode><Nominal>100</Nominal>'
+           b'<Value>80,0000</Value></Valute></ValCurs>')
+    assert parse_cbr_xml(xml, now)["rubToInr"] == 1.25
+    payload = json.dumps({
+        "quote_date": "2026-10-12", "currency": "RUB",
+        "source": "partner-test", "routes": {"r1": 1500, "ignored": 1000},
+        "hotels": {"h1": 4000},
+    }).encode()
+    doc = parse_quotes(payload, now.date() + timedelta(days=1), now)
+    assert doc["routes"] == {"r1": 1500} and doc["hotels"] == {"h1": 4000}
+    assert doc["for"] == "2026-10-12"
+    assert '"rubToInr": 1.25' in render_js({"fx": parse_cbr_xml(xml, now)})
+    print("Market data unit checks: OK")
+
+
+def main() -> None:
+    if "--self-test" in sys.argv:
+        self_test()
+        return
+    now = datetime.now(MSK)
+    fx = get_rate(now)  # Fail closed when no valid currency rate was fetched.
+    quotes = get_quotes(now)
+    snapshot = {"fx": fx, "quotes": quotes}
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    result = render_js(snapshot)
+    temp = OUTPUT.with_suffix(".js.tmp")
+    temp.write_text(result, encoding="utf-8")
+    temp.replace(OUTPUT)
+    print("Updated", str(OUTPUT.relative_to(ROOT)),
+          "FX source:", fx["source"], "rate date:", fx["rateDate"],
+          "quotes:", len(quotes["routes"]), "routes /", len(quotes["hotels"]), "hotels")
+
+
+if __name__ == "__main__":
+    main()
