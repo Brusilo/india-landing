@@ -99,6 +99,23 @@ with sync_playwright() as playwright:
         assert page.locator("[data-role='to'] .v2-input").input_value() != "Moscow"
         assert stored(page)["standard"]["flight"]["fromId"] == "in-delhi"
         assert stored(page)["standard"]["flight"]["date"] == before["standard"]["flight"]["date"]
+        switch(page, "ru")
+        standard_mode(page, "flight")
+        assert page.locator("[data-role='from'] .v2-input").input_value() == "Дели"
+        assert page.locator("[data-role='to'] .v2-input").input_value() == "Москва"
+        assert stored(page)["standard"]["flight"]["childAges"] == [7]
+        assert stored(page)["standard"]["flight"]["returnDate"] == before["standard"]["flight"]["returnDate"]
+        assert stored(page)["standard"]["flight"]["cabin"] == "business"
+        page.reload(wait_until="domcontentloaded")
+        page.wait_for_function("() => document.documentElement.classList.contains('search-v2-ready')")
+        standard_mode(page, "flight")
+        assert page.locator("[data-role='from'] .v2-input").input_value() == "Дели"
+        switch(page, "en")
+        standard_mode(page, "flight")
+        assert page.locator("[data-role='from'] .v2-input").input_value() == "Delhi"
+        switch(page, "ru")
+        standard_mode(page, "flight")
+        assert page.locator("[data-role='to'] .v2-input").input_value() == "Москва"
         assert not errors, f"Flight mode browser errors: {errors}"
         ctx.close()
 
@@ -147,6 +164,21 @@ with sync_playwright() as playwright:
             "() => document.querySelector('#search').dataset.mode==='tour'"
         )
         assert page.locator("[data-tour-trigger='nights'] .v2-value").inner_text().startswith("8–16")
+        switch(page, "ru")
+        assert page.locator("#search").get_attribute("data-mode") == "tour"
+        assert page.locator(".transport .tours-tab").get_attribute("aria-selected") == "true"
+        assert page.locator(".tour-departure-input").input_value() == "Москва"
+        assert page.locator(".tour-destination").input_value() == "Турция"
+        assert page.locator("[data-tour-trigger='people'] .v2-value").inner_text().startswith("2 взрослых, 1 ребёнок")
+        assert stored(page)["tour"]["date"] == tour_before["tour"]["date"]
+        assert stored(page)["tour"]["nightsMin"] == 8
+        assert stored(page)["tour"]["childAges"] == [9]
+        switch(page, "en")
+        assert page.locator("#search").get_attribute("data-mode") == "tour"
+        assert page.locator(".tour-destination").input_value() == "Turkey"
+        switch(page, "ru")
+        assert page.locator("#search").get_attribute("data-mode") == "tour"
+        assert page.locator(".tour-departure-input").input_value() == "Москва"
         # Changing to Train and back doesn't clear tour state.
         page.locator(".transport button:not(.tours-tab)").nth(2).click()
         standard_mode(page, "train")
@@ -180,6 +212,13 @@ with sync_playwright() as playwright:
         page.locator(".transport button:not(.tours-tab)").nth(0).click()
         assert page.locator("[data-role='destination'] .v2-input").input_value() == "Moscow"
         assert stored(page)["standard"]["hotel"]["start"] == hotel_date
+        switch(page, "ru")
+        standard_mode(page, "hotel")
+        assert page.locator("[data-role='destination'] .v2-input").input_value() == "Москва"
+        assert stored(page)["standard"]["hotel"]["start"] == hotel_date
+        page.locator(".transport button:not(.tours-tab)").nth(3).click()
+        standard_mode(page, "bus")
+        assert page.locator("[data-role='from'] .v2-input").input_value() == "Москва"
         assert not errors, f"Other modes browser errors: {errors}"
         ctx.close()
 
