@@ -36,7 +36,9 @@ function show(type,html,refresh=false){
  if(!cell)return;
  if(overlay===type&&!refresh){close();return}
  close();
- const panel=document.createElement('div');panel.className='tour-panel tour-panel--'+type;panel.innerHTML=html;cell.appendChild(panel);
+ const panel=document.createElement('div');panel.className='tour-panel tour-panel--'+type;
+ if(type==='destination'){panel.id='tour-destination-list';panel.setAttribute('role','listbox')}
+ panel.innerHTML=html;cell.appendChild(panel);
  overlay=type;btn.setAttribute('aria-expanded','true');
 }
 function render(){
@@ -62,7 +64,7 @@ function render(){
  bind();
 }
 function options(list){
- return '<div class="tour-option-list">'+list.map(x=>'<button type="button" data-tour-choice="'+esc(x.key)+'"><strong>'+esc(x.name[lang])+'</strong>'+(x.kind==='winter'?'<small>'+esc(dict.winter)+'</small>':'')+'</button>').join('')+'</div>';
+ return '<div class="tour-option-list">'+list.map(x=>'<button type="button" role="option" aria-selected="false" id="tour-option-'+esc(x.key)+'" data-tour-choice="'+esc(x.key)+'"><strong>'+esc(x.name[lang])+'</strong>'+(x.kind==='winter'?'<small>'+esc(dict.winter)+'</small>':'')+'</button>').join('')+'</div>';
 }
 function destinationPanel(q){
  const items=data.find(q,18);
@@ -83,7 +85,35 @@ function bind(){
  form.querySelector('[data-tour-trigger="date"]').addEventListener('click',()=>{const d=new Date(state.date+'T12:00:00');calendarMonth=new Date(d.getFullYear(),d.getMonth(),1);openCalendar()});
  const input=form.querySelector('.tour-destination');
  input.addEventListener('focus',()=>{input.select();show('destination',destinationPanel(input.value))});
- input.addEventListener('input',()=>{const panel=form.querySelector('.tour-panel--destination');if(!panel)show('destination',destinationPanel(input.value));else panel.innerHTML=destinationPanel(input.value)});
+ input.addEventListener('input',()=>{
+   const panel=form.querySelector('.tour-panel--destination');
+   if(!panel)show('destination',destinationPanel(input.value));
+   else{panel.innerHTML=destinationPanel(input.value);panel.dataset.active='-1';input.removeAttribute('aria-activedescendant')}
+ });
+ input.addEventListener('keydown',e=>{
+   if(e.isComposing)return;
+   if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+     e.preventDefault();
+     let panel=form.querySelector('.tour-panel--destination');
+     if(!panel){show('destination',destinationPanel(input.value));panel=form.querySelector('.tour-panel--destination')}
+     if(!panel)return;
+     const items=[...panel.querySelectorAll('[data-tour-choice]')];if(!items.length)return;
+     const prev=Number(panel.dataset.active??-1),delta=e.key==='ArrowDown'?1:-1;
+     const next=prev<0?(delta===1?0:items.length-1):(prev+delta+items.length)%items.length;
+     panel.dataset.active=String(next);
+     items.forEach((item,i)=>item.setAttribute('aria-selected',String(i===next)));
+     input.setAttribute('aria-activedescendant',items[next].id);
+     items[next].scrollIntoView({block:'nearest'});
+   }else if(e.key==='Enter'){
+     let panel=form.querySelector('.tour-panel--destination');
+     const selected=panel&&panel.querySelector('[data-tour-choice][aria-selected="true"]');
+     const normalized=x=>String(x).normalize('NFD').toLocaleLowerCase().trim();
+     const typed=normalized(input.value);
+     const exact=data.destinations.find(x=>Object.values(x.name).some(name=>normalized(name)===typed));
+     const key=selected?.dataset.tourChoice||exact?.key;
+     if(key){e.preventDefault();e.stopPropagation();state.destination=key;render()}
+   }else if(e.key==='Escape'){close()}
+ });
 }
 function openCalendar(refresh=false){
  const year=calendarMonth.getFullYear(),month=calendarMonth.getMonth();
