@@ -14,9 +14,9 @@
 1. **14 departure cities** frequently relevant to people travelling in Russia; only Moscow and Saint Petersburg have verified numeric Travelata `departure` IDs. Other cities can be chosen without fabricating an API ID.
 2. Country and Russia-winter destination choices, multilingual RU/EN/HI names and search aliases.
 3. All **45 current Tutu country browse pages**, **27 Russia/winter locations**, and **9 foreign resorts** (Antalya, Alanya, Istanbul, Hurghada, Sharm El Sheikh, Phuket, Goa, Bali, Dubai). Each has an evidenced Tutu country/resort landing URL, not a guarantee of live tour inventory.
-4. The numeric partner `arrival_id` only when independently confirmed. No guessing or transcribing human-readable slugs into IDs.
+4. Numeric `arrival_id` only when independently sourced: **37 of 45 countries** have validated Travelata IDs. Eight countries and all 36 specific resort/city choices keep unverified IDs null. Never substitute Tutu SEO slug numbers.
 
-**Verified numerical search IDs** (not a guarantee of live inventory):
+**Originally confirmed branded-link examples** (not a guarantee of live inventory):
 
 | Kind | Selection | ID | Evidence |
 | --- | --- | ---: | --- |
@@ -27,13 +27,21 @@
 | Country | Abkhazia | 1 | 2026 partner API countries example |
 | Country | Belarus | 11 | 2026 partner API countries example |
 
-Unverified destinations and departure cities deliberately have `id:null`. Their public Tutu links are *not* full branded search URLs. A fallback opens the matching destination page **only after warning users** that departure city, dates, nights and guests may need to be re-entered; no invented IDs are inserted.
+Eight countries and all 36 specific resort/city choices, plus 12 of the 14 departure cities, deliberately have `id:null`. Their public Tutu links are *not* full branded search URLs. A fallback opens the matching destination page **only after warning users** that departure city, dates, nights and guests may need to be re-entered; no invented IDs are inserted.
 
 Teriberka is a **separate user intent** with no verified separate Tutu landing; the form warns users and opens Murmansk instead. For **Murmansk**, a curated table of existing Tutu SEO pages preserves some city-of-departure intent (including Moscow, Saint Petersburg, Kazan, Yekaterinburg, Novosibirsk, Samara, Nizhny Novgorod, Irkutsk, Perm, Krasnodar and Rostov-on-Don). Examples:
 - Kazan → Murmansk: https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/
 - Moscow → Murmansk: https://tours.tutu.ru/rossiya/murmansk/iz/491_moskva/
 
 **Crucial:** the numeric IDs in these Tutu SEO URL paths are **not interchangeable** with the departure IDs required by the branded Travelata search form. SEO pages do not pass the chosen nights, date or guest count; the form discloses this instead of implying a fully filtered search.
+
+## Verified country IDs from the public Travelata link constructor
+
+On 11 October 2026 we fetched https://traff.travelata.ru/constructor.php (public, unauthenticated). Its `defaultCountry` field contains the same numeric values as the authenticated partner country's dictionary. The previously confirmed Turkey (92), Abkhazia (1), Belarus (11) values match it; Russia (76), India (33), Maldives (56) and 30 further named countries were sourced from the official public options.
+
+**37/45 Tutu-listed countries have supported IDs**: 36 from the public Travelata link constructor plus Egypt (29) from the user's co-branded search example. **8 countries do not have sufficiently verified IDs and retain browse-only links**: Uzbekistan, Kazakhstan, Azerbaijan, Kyrgyzstan, Japan, South Korea, Tanzania and Switzerland. All 27 Russia/winter destinations and nine foreign resorts also remain browse-only; a country ID cannot select an individual resort.
+
+Run `scripts/probe-public-travelata-directory.py` to inspect the public option source again. The official Tutu directory audit `scripts/audit-tour-directory.py` confirmed all **81/81** country/resort links are listed in the Tutu site directory. These results validate IDs and browse pages, **not live tour availability or filtered partner search results**.
 
 ## URL algorithm
 
@@ -50,7 +58,7 @@ For **browse-only** locations, return the **exact Tutu public page** without fab
 
 ## Extending safely
 
-Travelata's current partner API (updated 2026-06-05) requires **HTTP Basic Auth**. Obtain authorized credentials from the partnerships team, and fetch:
+Travelata's private partner API (updated 2026-06-05) still requires **HTTP Basic Auth**, even though the public link constructor exposes many country IDs. Obtain authorized credentials from the partnerships team, and fetch:
 
 - `GET /partners/directory/countries`
 - `GET /partners/directory/resorts?country[]=COUNTRY_ID`
