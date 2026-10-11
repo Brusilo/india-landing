@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - '.github/workflows/probe-browser-prices.yml'
+      - 'scripts/scrape-public-prices.py'
+      - 'scripts/price-targets.json'
 
 permissions:
   contents: read
