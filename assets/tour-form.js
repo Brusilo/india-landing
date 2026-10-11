@@ -60,9 +60,17 @@ function destinationPanel(q){
  const items=data.find(q,18);
  return items.length?options(items):'<p class="tour-empty">'+esc(dict.noResults)+'</p>';
 }
+function rangePercent(n){return ((n-1)/29*100).toFixed(2)+'%'}
+function nightsPanel(){
+ return '<div class="tour-night-head"><span>'+dict.min+' <b data-tour-min>'+state.nightsMin+'</b></span><span>'+dict.max+' <b data-tour-max>'+state.nightsMax+'</b> '+dict.night+'</span></div>'+
+   '<div class="tour-range" style="--tour-from:'+rangePercent(state.nightsMin)+';--tour-to:'+rangePercent(state.nightsMax)+'">'+
+   '<div class="tour-track" aria-hidden="true"></div>'+
+   '<input type="range" min="1" max="30" value="'+state.nightsMin+'" data-tour-range="min" aria-label="'+esc(dict.min+' '+dict.night)+'">'+
+   '<input type="range" min="1" max="30" value="'+state.nightsMax+'" data-tour-range="max" aria-label="'+esc(dict.max+' '+dict.night)+'"></div>';
+}
 function bind(){
  form.querySelector('[data-tour-trigger="departure"]').addEventListener('click',()=>show('departure','<div class="tour-option-list">'+data.departures.map(d=>'<button type="button" data-tour-dep="'+d.key+'">'+esc(d.name[lang])+'</button>').join('')+'</div>'));
- form.querySelector('[data-tour-trigger="nights"]').addEventListener('click',()=>show('nights','<div class="tour-night-head"><span>'+dict.min+' <b data-tour-min>'+state.nightsMin+'</b></span><span>'+dict.max+' <b data-tour-max>'+state.nightsMax+'</b> '+dict.night+'</span></div><div class="tour-range"><label><span class="sr-only">'+dict.min+'</span><input type="range" min="1" max="30" value="'+state.nightsMin+'" data-tour-range="min"></label><label><span class="sr-only">'+dict.max+'</span><input type="range" min="1" max="30" value="'+state.nightsMax+'" data-tour-range="max"></label></div>'));
+ form.querySelector('[data-tour-trigger="nights"]').addEventListener('click',()=>show('nights',nightsPanel()));
  form.querySelector('[data-tour-trigger="people"]').addEventListener('click',()=>show('people','<div class="tour-people"><span>'+dict.adults+'</span><button type="button" data-tour-step="-1" aria-label="-">−</button><strong>'+state.adults+'</strong><button type="button" data-tour-step="1" aria-label="+">+</button></div>'));
  form.querySelector('[data-tour-trigger="date"]').addEventListener('click',()=>{const d=new Date(state.date+'T12:00:00');calendarMonth=new Date(d.getFullYear(),d.getMonth(),1);openCalendar()});
  const input=form.querySelector('.tour-destination');
@@ -116,6 +124,7 @@ form.addEventListener('input',e=>{
  panel.querySelector('[data-tour-max]').textContent=state.nightsMax;
  panel.querySelector('[data-tour-range="min"]').value=state.nightsMin;
  panel.querySelector('[data-tour-range="max"]').value=state.nightsMax;
+ const slider=panel.querySelector('.tour-range');slider.style.setProperty('--tour-from',rangePercent(state.nightsMin));slider.style.setProperty('--tour-to',rangePercent(state.nightsMax));
  form.querySelector('[data-tour-trigger="nights"]').textContent=state.nightsMin+'–'+state.nightsMax+' '+dict.night;
 });
 form.addEventListener('submit',e=>{
