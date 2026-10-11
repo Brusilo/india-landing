@@ -24,6 +24,29 @@ assert.equal(types.resort,9);
 assert.equal(departures.length,14);
 assert.equal(new Set(destinations.map(d=>d.key)).size,81);
 
+const verifiedCountries={
+  abkhazia:1,austria:3,andorra:4,armenia:6,belarus:11,bulgaria:13,
+  vietnam:22,germany:24,greece:26,georgia:129,'dominican-republic':28,
+  israel:32,india:33,indonesia:34,jordan:35,spain:38,italy:39,
+  cyprus:43,china:44,cuba:48,maldives:56,malta:57,morocco:59,mexico:60,
+  uae:68,portugal:75,russia:76,serbia:81,thailand:87,tunisia:91,
+  turkey:92,france:99,croatia:101,montenegro:104,'czech-republic':105,
+  srilanka:110,egypt:29
+};
+const unknownCountries=[
+ 'uzbekistan','kazakhstan','azerbaijan','kyrgyzstan',
+ 'japan','southkorea','tanzania','switzerland'
+];
+assert.equal(Object.keys(verifiedCountries).length,37);
+for(const d of destinations.filter(d=>d.kind==='country')){
+  const expected=Object.prototype.hasOwnProperty.call(verifiedCountries,d.key)
+    ? verifiedCountries[d.key]:null;
+  assert.equal(d.id,expected,d.key+' country ID from public Travelata constructor or branded sample');
+}
+assert.deepEqual(destinations.filter(d=>d.kind==='country'&&d.id===null)
+  .map(d=>d.key).sort(),unknownCountries.slice().sort());
+
+
 function pairs(s){return Object.fromEntries(s.trim().split(/\s+/).map(x=>x.split(':')))}
 const countries=pairs(
  'russia:rossiya turkey:turkey egypt:egypt uae:united_arab_emirates thailand:thailand india:india maldives:maldives abkhazia:abkhazia uzbekistan:uzbekistan cuba:cuba '+
@@ -71,6 +94,14 @@ assert.equal(url.searchParams.get('nights_max'),'14');
 assert.equal(url.searchParams.get('sid'),null,'no copied sid');
 assert.equal(new URLSearchParams(url.hash.slice(2)).get('toCountry'),'92');
 assert.equal(build(q('spb','egypt')).filtered,true);
+for(const [country,id] of [['russia',76],['india',33],['maldives',56],
+                           ['uae',68],['thailand',87],['greece',26]]){
+ const deep=build(q('moscow',country));
+ assert.equal(deep.filtered,true,country+' expected to be a branded search');
+ assert.equal(new URL(deep.url).searchParams.get('arrival_id'),String(id));
+}
+assert.equal(build(q('moscow','japan')).filtered,false,
+  'unverified country must remain a Tutu browse link');
 
 const kazan=build(q('kazan','murmansk'));
 assert.equal(kazan.filtered,false);
