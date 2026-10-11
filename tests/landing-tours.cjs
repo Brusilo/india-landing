@@ -72,6 +72,60 @@ for(const dest of ['teriberka','golden-ring','hurghada','sharm-el-sheikh','phuke
   eq(result.filtered,false,dest+' is not silently misdirected');
   eq(result.url,null,dest+' has no fabricated search URL');
 }
-eq(catalogue.build({...state,children:1,childAges:[7]}).url,null,'child ages must not be silently omitted');
+// Match a real Tutu -> Travelata reference: SPB to Egypt, 1 adult,
+// 2 children aged 5 and 8. Verify both independently parsed URL sections.
+const family=catalogue.build({
+  ...state,departure:'spb',destination:'egypt',
+  adults:1,children:2,childAges:[5,8]
+});
+eq(family.filtered,true,'two-child country link is supported');
+const familyUrl=new URL(family.url);
+const fq=familyUrl.searchParams,fh=new URLSearchParams(familyUrl.hash.slice(2));
+eq(fq.get('departure'),'1','SPB departure for family');
+eq(fq.get('arrival_id'),'29','Egypt country for family');
+eq(fq.get('adults'),'1','1 adult still passed');
+eq(fq.get('children'),'2','2 children in query');
+eq(fq.get('ages[0]'),'5','first indexed age in query');
+eq(fq.get('ages[1]'),'8','second indexed age in query');
+eq(fh.get('fromCity'),'1','SPB in hash');
+eq(fh.get('toCountry'),'29','Egypt in hash');
+eq(fh.get('adults'),'1','adult in hash');
+eq(fh.get('kids'),'2','children count in hash');
+eq(fh.getAll('ages[]').join(','),'5,8','repeatable ages in hash in order');
+eq(familyUrl.hash.includes('ages[]=5&ages[]=8'),true,'hash keeps native bracket syntax');
+eq(fq.get('date_begin'),partnerDate,'family date retained');
+eq(fh.get('nightFrom'),'7','family nights minimum retained');
+eq(fh.get('nightTo'),'14','family nights maximum retained');
+
+const resortFamily=catalogue.build({
+  ...state,departure:'moscow',destination:'baikal',
+  children:3,childAges:[0,5,17]
+});
+const rfu=new URL(resortFamily.url);
+eq(resortFamily.filtered,true,'resort with three children supported');
+eq(rfu.searchParams.get('resorts[]'),'3997','resort ID with children');
+eq(rfu.searchParams.get('ages[0]'),'0','infant age 0');
+eq(rfu.searchParams.get('ages[2]'),'17','maximum tour child age 17');
+eq(new URLSearchParams(rfu.hash.slice(2)).getAll('ages[]').join(','),'0,5,17',
+  'three child ages repeated in hash');
+const childless=new URL(catalogue.build({...state,children:0,childAges:[]}).url);
+eq(childless.searchParams.has('children'),false,'omit children query when none');
+eq(childless.searchParams.has('ages[0]'),false,'omit age query when none');
+eq(new URLSearchParams(childless.hash.slice(2)).has('kids'),false,
+  'omit kids from hash when none');
+const badChildren=[
+  {children:1,childAges:[]},
+  {children:2,childAges:[5]},
+  {children:1,childAges:[18]},
+  {children:1,childAges:[-1]},
+  {children:1,childAges:[4.5]},
+  {children:1,childAges:[null]},
+  {children:4,childAges:[5,5,5,5]},
+];
+for(const invalid of badChildren){
+  assert.throws(()=>catalogue.build({...state,...invalid}),
+    /Invalid tour search/,'reject mismatched or invalid child age input');
+  assertions++;
+}
 eq(catalogue.build({...state,departure:'rostov-on-don'}).url,null,'unverified departure must not be silently changed');
 console.log('Tours URL regression assertions passed:',assertions);
