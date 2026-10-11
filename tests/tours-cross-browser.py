@@ -61,7 +61,9 @@ with sync_playwright() as pw:
                     assert hittable(pg,'.tour-submit'),'submit button is blocked by an overlay'
                     pg.locator('.tour-submit').click()
                     nav=pg.evaluate('window.__qaNavigations')
-                    assert len(nav)==1 and 'tours.tutu.ru/' in nav[0],'fallback navigation '+repr(nav)
+                    assert nav==[],'visual-only prototype unexpectedly navigated '+repr(nav)
+                    assert pg.locator('.tour-preview-message[role="status"]').is_visible(), 'demo notice on submit'
+                    assert pg.locator('.transport .tours-tab').get_attribute('href') is None, 'Tours tab must not link'
                     pg.locator('.transport button').nth(1).click()
                     assert pg.locator('form.search-v2').get_attribute('data-mode')=='flight'
                     pg.locator('.transport .tours-tab').click()
