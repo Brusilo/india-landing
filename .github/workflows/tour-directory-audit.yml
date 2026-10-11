@@ -5,6 +5,7 @@ on:
     paths:
       - 'assets/tour-catalog.js'
       - 'scripts/audit-tour-directory.py'
+      - 'scripts/probe-public-travelata-directory.py'
       - '.github/workflows/tour-directory-audit.yml'
   workflow_dispatch:
 
@@ -24,6 +25,9 @@ jobs:
         run: |
           mkdir -p /tmp/tutu-tour-audit
           python scripts/audit-tour-directory.py --output /tmp/tutu-tour-audit/directory-audit.json
+      - name: Check public Travelata link-constructor for verified metadata
+        continue-on-error: true
+        run: python scripts/probe-public-travelata-directory.py
       - name: Archive audit report
         if: always()
         uses: actions/upload-artifact@v4
