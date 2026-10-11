@@ -24,8 +24,42 @@ const dateLabel=d=>new Intl.DateTimeFormat(lang==='ru'?'ru-RU':lang==='hi'?'hi-I
 
 // Same unfilled defaults as all other Tutu search modes.
 // Nights and travellers are the only pre-selected values.
-const state={departure:null,destination:null,date:null,
+const state={departure:null,destination:null,departureText:'',destinationText:'',date:null,
   nightsMin:7,nightsMax:14,adults:1,children:0,childAges:[]};
+const persistence=window.TUTU_SEARCH_PERSIST;
+function restoreTour(){
+ const raw=persistence?.read().tour;
+ if(!raw||typeof raw!=='object')return;
+ for(const role of ['departure','destination']){
+   const item=role==='departure'?data.departureByKey.get(raw[role]):data.byKey.get(raw[role]);
+   state[role]=item?item.key:null;
+   state[role+'Text']=item?'':typeof raw[role+'Text']==='string'?raw[role+'Text'].slice(0,128):'';
+ }
+ const date=raw.date;
+ if(typeof date==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(date)){
+   const d=new Date(date+'T12:00:00');
+   if(!Number.isNaN(d.getTime())&&iso(d)===date&&date>=iso(new Date()))state.date=date;
+ }
+ state.nightsMin=Number.isInteger(raw.nightsMin)?Math.max(1,Math.min(29,raw.nightsMin)):7;
+ state.nightsMax=Number.isInteger(raw.nightsMax)
+   ?Math.max(state.nightsMin,Math.min(29,raw.nightsMax)):Math.max(14,state.nightsMin);
+ state.adults=Number.isInteger(raw.adults)?Math.max(1,Math.min(6,raw.adults)):1;
+ state.children=Number.isInteger(raw.children)
+   ?Math.max(0,Math.min(3,9-state.adults,raw.children)):0;
+ state.childAges=Array.isArray(raw.childAges)
+   ?raw.childAges.slice(0,state.children).map(age=>Number.isInteger(age)&&age>=0&&age<=17?age:null):[];
+ while(state.childAges.length<state.children)state.childAges.push(null);
+}
+function saveTour(){
+ if(!persistence)return;
+ persistence.saveTour({
+   departure:state.departure,destination:state.destination,
+   departureText:state.departureText,destinationText:state.destinationText,
+   date:state.date,nightsMin:state.nightsMin,nightsMax:state.nightsMax,
+   adults:state.adults,children:state.children,childAges:[...state.childAges]
+ });
+}
+restoreTour();
 let active=false;
 let savedForm=null,savedHints=null,savedMode=null;
 let calendarMonth=new Date(initialDate.getFullYear(),initialDate.getMonth(),1);
@@ -33,7 +67,7 @@ let overlay=null;
 
 function placeField(role,caption){
  const item=role==='departure'?data.departureByKey.get(state.departure):data.byKey.get(state.destination);
- const value=item?(item.name[lang]||item.name.en||item.ru):'';
+ const value=item?(item.name[lang]||item.name.en||item.ru):state[role+'Text']||'';
  return '<div class="v2-field v2-field--place tour-cell tour-cell--'+role+(value?' has-value':'')+
    '" data-role="'+(role==='departure'?'from':'to')+'">'+
    '<span class="v2-caption">'+esc(caption)+'</span>'+
@@ -126,6 +160,7 @@ function render(){
    '<button type="submit" class="v2-submit tour-submit">'+esc(dict.search)+'</button>';
  renderHints();
  bind();
+ saveTour();
 }
 function placeMeta(d){
  if(d.kind==='winter')return data.byKey.get('russia').name[lang];
@@ -250,6 +285,7 @@ function commitSelection(role,key){
  const item=role==='departure'?data.departureByKey.get(key):data.byKey.get(key);
  if(!item)return;
  state[role]=key;
+ state[role+'Text']='';
  render();
 }
 function bind(){
@@ -260,7 +296,10 @@ function bind(){
    input.addEventListener('focus',()=>{input.select();open()});
    input.addEventListener('click',e=>{e.stopPropagation();open()});
    input.addEventListener('input',()=>{
-     state[role]=null;field.classList.toggle('has-value',Boolean(input.value.trim()));
+     state[role]=null;
+     state[role+'Text']=input.value;
+     field.classList.toggle('has-value',Boolean(input.value.trim()));
+     saveTour();
      open();
    });
    input.addEventListener('keydown',e=>{
@@ -310,6 +349,7 @@ function activate(){
    b.classList.remove('is-active');b.setAttribute('aria-selected','false');
  });
  render();
+ persistence?.setActive('tour');
 }
 function deactivate(){
  if(!active)return;
@@ -384,12 +424,16 @@ form.addEventListener('input',e=>{
  slider.style.setProperty('--tour-to',rangePercent(state.nightsMax));
  form.querySelector('[data-tour-trigger="nights"] .v2-value').textContent=
    state.nightsMin+'–'+state.nightsMax+' '+dict.night;
+ saveTour();
 });
 form.addEventListener('change',e=>{
  if(!active)return;
  const select=e.target.closest('[data-tour-child-age]');
- if(select)state.childAges[Number(select.dataset.tourChildAge)]=
-   select.value===''?null:Number(select.value);
+ if(select){
+   state.childAges[Number(select.dataset.tourChildAge)]=
+     select.value===''?null:Number(select.value);
+   saveTour();
+ }
 });
 function resolveInput(role){
  if(state[role])return true;
@@ -397,7 +441,7 @@ function resolveInput(role){
  const value=normalize(input.value);
  const list=role==='departure'?data.departures:data.destinations;
  const exact=list.find(x=>Object.values(x.name).some(n=>normalize(n)===value));
- if(exact){state[role]=exact.key;return true}
+ if(exact){state[role]=exact.key;state[role+'Text']='';saveTour();return true}
  input.focus();
  show(role,role==='departure'?departurePanel(input.value):destinationPanel(input.value),true);
  showSearchIssue(role==='departure'?dict.selectDeparture:dict.select);
@@ -431,4 +475,6 @@ document.addEventListener('click',e=>{
  if(active&&!e.target.closest('.tour-cell')&&!e.target.closest('.search-suggest'))close();
 });
 document.addEventListener('keydown',e=>{if(active&&e.key==='Escape')close()});
+if(persistence?.read().activeMode==='tour')activate();
+window.addEventListener('pagehide',saveTour);
 })();
