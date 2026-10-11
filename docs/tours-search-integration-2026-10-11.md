@@ -60,7 +60,7 @@ Base URL: `https://api-gateway.travelata.ru`. Filter `disabled=false`, verify ID
 
 ## Responsive / functional QA
 
-**Browser QA passed: 27/27 scenarios across English, Russian and Hindi at 9 widths (320–1440px), after correcting the mobile nights/travellers popovers.** Successful GitHub Actions run with 390px and 1440px screenshots: https://github.com/Brusilo/india-landing/actions/runs/38152298931.
+**Browser QA passed: 27/27 scenarios across English, Russian and Hindi at 9 widths (320–1440px), including the child-age controls and fallback links.** Final expanded-search GitHub Actions run on 11 October 2026: https://github.com/Brusilo/india-landing/actions/runs/38153562247 — **27 passed, 0 failed**, after adding family traveller ages, 14 departure cities, 81 destinations and correcting popover clipping at 600px. Six screenshots (RU/EN/HI at 390px and 1440px) were visually reviewed.
 
 The PR contains `tests/tours-browser.py` and workflow `.github/workflows/tour-search-qa.yml`. Chromium loads the actual EN, RU and HI pages with local assets and intercepts external navigation; tests cover nine widths (320, 360, 390, 600, 768, 1024, 1101, 1280, 1440), destination dropdown, calendar month navigation, night range, adults, winter fallback, numeric search links, and switching back to other transport modes. These are **offline smoke tests**. They do not verify live Travelata results, payment, availability or Android/iOS-specific rendering; release should remain a draft until live QA is finished.
 
@@ -78,3 +78,11 @@ The PR contains `tests/tours-browser.py` and workflow `.github/workflows/tour-se
 - Travelata documented country IDs include Abkhazia 1 and Belarus 11; branded user samples confirm Turkey 92 and Egypt 29, Moscow departure 2 and Saint Petersburg departure 1. Official auth flow: https://support.travelpayouts.com/hc/ru/articles/360022674591-API-%D0%BE%D1%82-Travelata
 - Tutu exposes SEO routes with city-dependent IDs that should never be interpreted as partner IDs, e.g. https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/
 - Indian tourists' visa and entry requirements **must not** be copied from Tutu's generic Russian-traveller pages; those visa snippets are not tailored to the India audience.
+
+## Final stage verification
+
+- `node tests/tour-catalog.cjs`: **PASS** (45 countries + 27 winter locations + 9 international resorts + 14 departure cities; checked canonical Tutu SEO slugs, date and guest validations, verified partner IDs, safety fallbacks).
+- `python tests/tours-browser.py`: **27/27 PASS** (3 languages × 9 viewport widths), with no missing local assets or JavaScript exceptions and no horizontal overflow.
+- Public example pages tested by retrieval: Tutu Altai, Listvyanka, Goa, Antalya, and Kazan → Murmansk. These are landing pages, not guarantees of hotel/tour availability.
+- Direct live Travelata search (with the selected filters but no `sid`) **could not be opened from the available web inspection tool**. That partner-side verification remains a release blocker.
+- Screenshots from the successful run were reviewed for form layout at 390px and 1440px in EN, RU and HI. A real mobile Safari / Android Chrome acceptance test is still required.
