@@ -1,0 +1,35 @@
+name: Verify multilingual search persistence
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'assets/search-state.js'
+      - 'assets/search-v2.js'
+      - 'assets/tour-form.js'
+      - 'index.html'
+      - 'index-ru.html'
+      - 'index-hi.html'
+      - 'tests/test-search-language.py'
+      - '.github/workflows/test-search-language.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Chromium for browser regression tests
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Run local landing and verify RU / EN / HI state
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/india-landing-web.log 2>&1 &
+          python tests/test-search-language.py
