@@ -4,7 +4,7 @@
 
   const oldForm=document.querySelector('.search');
   const oldHints=document.querySelector('.search-hints');
-  const buttons=[...document.querySelectorAll('.transport button')];
+  const buttons=[...document.querySelectorAll('.transport button:not(.tours-tab)')];
   if(!oldForm||!oldHints||buttons.length<4||!window.TUTU_PLACES)return;
 
   const pageLang=document.documentElement.lang==='hi'?'hi':document.documentElement.lang==='en'?'en':'ru';

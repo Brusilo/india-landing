@@ -1,0 +1,46 @@
+name: Tour search browser QA
+
+on:
+  pull_request:
+    paths:
+      - 'assets/tour-*.js'
+      - 'assets/tour-*.css'
+      - 'index.html'
+      - 'index-ru.html'
+      - 'index-hi.html'
+      - 'tests/tours-browser.py'
+      - 'tests/tour-catalog.cjs'
+      - '.github/workflows/tour-search-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tour-browser-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tour-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate canonical Tutu URLs and URL builder
+        run: node tests/tour-catalog.cjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Playwright browser
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Test English, Russian, Hindi across viewports
+        run: python tests/tours-browser.py . /tmp/tour-qa
+      - name: Store QA screenshots and result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tour-search-qa
+          path: /tmp/tour-qa/
+          if-no-files-found: warn
