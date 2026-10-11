@@ -1,0 +1,33 @@
+name: Tours exact UI parity and search regression
+
+on:
+  push:
+    branches:
+      - fix/tours-match-search-fields-20261011
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pixel-and-behaviour:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Compare Tours against existing Flights on 30 viewports/locales
+        run: python tests/tours-design-parity.py . /tmp/tours-parity
+      - name: Save mobile and desktop screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tours-design-parity
+          path: /tmp/tours-parity/
+          if-no-files-found: warn
