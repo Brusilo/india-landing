@@ -211,3 +211,20 @@ html .search.search-v2[data-mode="tour"] > .tour-submit:hover {
     min-width:0!important;
   }
 }
+
+/* The 600px tablet layout puts travellers and Search in adjacent grid cells.
+   An overlaid guest stepper blocks the search CTA, so it expands only its
+   own column at this width. Above 768px the floating panel is safe. */
+@media (min-width:600px) and (max-width:767px) {
+  .search.search-v2[data-mode="tour"] .tour-cell--people .tour-panel--people {
+    position:static!important;left:auto!important;right:auto!important;
+    display:block!important;box-sizing:border-box!important;
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    max-height:none!important;overflow:visible!important;margin-top:8px!important;
+    padding:8px!important;
+    box-shadow:none!important;border:1px solid #ebeaf6!important;
+  }
+  .search.search-v2[data-mode="tour"] .tour-cell--people {
+    align-self:start;min-height:58px;
+  }
+}
