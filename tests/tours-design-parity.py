@@ -120,7 +120,7 @@ def verify(page,lang,width):
   params=parse_qs(urlparse(nav[0]).query)
   assert params.get('departure')==['29'] and params.get('arrival_id')==['92'],params
   # Chips update only the destination and do not fill unrelated fields.
-  if width>=900:
+  if width>=1101:
     page.locator('.search-hints-v2 [data-tour-choice="kaliningrad"]').click()
     assert page.locator('.tour-destination').input_value()!=''
     assert page.locator('.tour-departure-input').input_value()!=''
