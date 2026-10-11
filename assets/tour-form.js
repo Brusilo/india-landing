@@ -380,7 +380,7 @@ form.addEventListener('click',e=>{
  }
  const step=e.target.closest('[data-tour-step]');
  if(step){
-   e.preventDefault();
+   e.preventDefault();e.stopPropagation();
    const delta=Number(step.dataset.tourStep);
    if(step.dataset.tourPerson==='child'){
      state.children=Math.max(0,Math.min(3,9-state.adults,state.children+delta));
