@@ -11,7 +11,9 @@
     {key:'moscow',id:2,name:{ru:'Москва',en:'Moscow',hi:'मॉस्को'}},
     {key:'spb',id:1,name:{ru:'Санкт-Петербург',en:'Saint Petersburg',hi:'सेंट पीटर्सबर्ग'}}
   ];
-  // Browse URLs are verified public tours.tutu.ru landing pages.\n  // Only numeric IDs confirmed by partner documentation or user examples are used for search.\n  const destinations=[
+  // Browse URLs are verified public tours.tutu.ru landing pages.
+  // Only numeric IDs confirmed by partner documentation or user examples are used for search.
+  const destinations=[
     {key:'russia',kind:'country',id:null,name:{ru:'Россия',en:'Russia',hi:'रूस'},ru:'Россия',browse:'https://tours.tutu.ru/strana/rossiya/',aliases:'rossiya winter snow'},
     {key:'turkey',kind:'country',id:92,name:{ru:'Турция',en:'Turkey',hi:'तुर्किये'},ru:'Турция',browse:'https://tours.tutu.ru/strana/turkey/',aliases:'turkiye turkiye türkiye'},
     {key:'egypt',kind:'country',id:29,name:{ru:'Египет',en:'Egypt',hi:'मिस्र'},ru:'Египет',browse:'https://tours.tutu.ru/strana/egypt/',aliases:'misr'},
