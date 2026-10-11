@@ -26,7 +26,7 @@ MONTHS = ("янв", "фев", "мар", "апр", "мая", "июн", "июл",
 VALID_HOSTS = {"www.tutu.ru", "avia.tutu.ru", "hotel.tutu.ru"}
 # Tutu displays number grouping with nonbreaking spaces and word joiners.
 INVISIBLE = str.maketrans("", "", "\u2009\u2060\u00a0\u202f\u200b\u200a\u2007")
-CURRENCY_RE = re.compile(r"(?<!\d)(\d{3,7})\s*₽")
+CURRENCY_RE = re.compile(r"(?<!\d)(\d{1,3}(?:[ \t]\d{3})+|\d{3,7})\s*₽")
 MAX_PER_CARD = 2_000_000
 
 
@@ -35,8 +35,9 @@ def clean(text: str) -> str:
 
 
 def rubles(text: str) -> list[int]:
-    return [int(num) for num in CURRENCY_RE.findall(clean(text))
-            if 100 <= int(num) <= MAX_PER_CARD]
+    amounts = [int(num.replace(" ", "").replace("\t", ""))
+               for num in CURRENCY_RE.findall(clean(text))]
+    return [value for value in amounts if 100 <= value <= MAX_PER_CARD]
 
 
 def stamp(day: date) -> str:
