@@ -74,6 +74,31 @@ The application uses these 28 whitelisted combinations, plus 11 separately verif
 
 **Important limits:** Tutu SEO page route IDs are not Travelata IDs; the booking dates, number of nights, travellers, and child ages are **not transferred** into those pages. The user is informed before the redirect. No route page confirms live booking availability for a chosen date. The 28-pair audit is scripted in `scripts/probe-winter-pairs.py` (the public directory audit workflow). The fallback text for Teriberka explicitly explains that it opens Murmansk instead.
 
+## Public Travelata Russia resort directory: candidate IDs (research only)
+
+On 11 October 2026 the public, unauthenticated affiliate link constructor at https://traff.travelata.ru/constructor.php was opened and the `Конструктор ссылок` tab selected. Choosing `toCountry=76` (Russia) populated **532 distinct public `toCity` options**. An earlier static source inspection was insufficient because the list is loaded dynamically. The evidence and selector diagnostics are in the automated report `tests/probe-public-resorts.py` and [public resort options artifact](https://github.com/Brusilo/india-landing/actions/runs/38157140467).
+
+| India-winter relevant Tutu selection | Exact public Travelata `toCity` label | Public ID |
+| --- | --- | ---: |
+| Murmansk / Northern Lights | Мурманск | 1726 |
+| Lake Baikal | Байкал | 3997 |
+| Karelia | Карелия | 3981 |
+| Sheregesh | Шерегеш | 1615 |
+| Krasnaya Polyana | Красная Поляна | 1691 |
+| Altai | Алтай | 3114 |
+| Sochi | Сочи | 3097 |
+| Veliky Ustyug | Великий Устюг | 1589 |
+| Rosa Khutor | Красная Поляна: Роза Хутор | 3158 |
+| Listvyanka | Байкал: Листвянка | 3998 |
+| Olkhon Island | Байкал: остров Ольхон | 1757 |
+| Irkutsk | Иркутск | 1647 |
+| Arkhyz | Карачаево-Черкессия: Архыз | 1660 |
+| Dombay | Карачаево-Черкессия: Домбай | 1624 |
+
+**Teriberka is absent as its own public `toCity` selection.** The existing explicit Teriberka → Murmansk warning remains necessary.
+
+**These are research IDs, NOT enabled filtered search routes.** Before mapping any `kind:'winter'` entry to `arrival_type` / `arrival_id`, verify the exact Tutu-branded search URL schema using a live result page, and assert that the resort field—not merely the country—is populated with the requested destination. Probes are in `tests/probe-branded-resort-search.py` and are run manually through the read-only `.github/workflows/tour-live-partner-qa.yml`. Until then the 39 confirmed Tutu city-specific SEO pages remain the safest usable links.
+
 ## URL algorithm
 
 For supported **country** IDs only:
