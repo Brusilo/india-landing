@@ -12,6 +12,7 @@ on:
       - 'tests/tours-live-provider.py'
       - 'tests/probe-public-resorts.py'
       - 'tests/probe-live-departures.py'
+      - 'tests/probe-branded-resort-search.py'
       - 'tests/tour-catalog.cjs'
       - '.github/workflows/tour-search-qa.yml'
   workflow_dispatch:
@@ -45,6 +46,9 @@ jobs:
       - name: Validate public departure city IDs on live branded search
         continue-on-error: true
         run: python tests/probe-live-departures.py . /tmp/tour-qa
+      - name: Research live partner resort selection format
+        continue-on-error: true
+        run: python tests/probe-branded-resort-search.py . /tmp/tour-qa
       - name: Store QA screenshots and result
         if: always()
         uses: actions/upload-artifact@v4
