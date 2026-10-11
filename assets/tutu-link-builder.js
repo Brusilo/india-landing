@@ -61,15 +61,16 @@
   function iso(d){return d?d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()):''}
   function dotted(d){return d?pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear():''}
   function compact(d){return d?pad(d.getDate())+pad(d.getMonth()+1)+d.getFullYear():''}
-  function passengerData(s){
+  function passengerData(s,mode='flight'){
     const adults=Number(s.adults??1),children=Number(s.children??0);
     if(!Number.isInteger(adults)||adults<1||!Number.isInteger(children)||children<0||adults+children>9)fail('passengers');
-    const ages=(s.childAges||[]).slice(0,children).map(Number);
-    if(ages.length!==children||ages.some(age=>!Number.isInteger(age)||age<0||age>17))fail('passengers');
+    const maxChildAge=mode==='hotel'?17:11;
+    const ages=Array.isArray(s.childAges)?s.childAges.slice(0,children):[];
+    if(ages.length!==children||ages.some(age=>!Number.isInteger(age)||age<0||age>maxChildAge))fail('passengers');
     return {adults,children,ages};
   }
-  function total(s){const p=passengerData(s);return p.adults+p.children}
-  function travelerToken(s){const p=passengerData(s);return [p.adults,...p.ages].join('.')}
+  function total(s,mode){const p=passengerData(s,mode);return p.adults+p.children}
+  function travelerToken(s,mode){const p=passengerData(s,mode);return [p.adults,...p.ages].join('.')}
   function requireDate(value,code){
     if(!value||typeof value.getTime!=='function'||!Number.isFinite(value.getTime()))fail(code);
     const today=new Date();today.setHours(0,0,0,0);
@@ -118,7 +119,7 @@
     requireValue(s.destination,'destination');
     requireDate(s.start,'hotelDates');requireDate(s.end,'hotelDates');
     if(s.end<=s.start)fail('hotelDates');
-    const token=travelerToken(s),place=s.destination,d=destinations.hotel[place.id];
+    const token=travelerToken(s,'hotel'),place=s.destination,d=destinations.hotel[place.id];
     if(!supports('hotel',place)||!d)return HOME;
     const q={check_in:iso(s.start),check_out:iso(s.end),details_params:''};
     if(d[2])q.geo_id=d[2];
@@ -130,7 +131,7 @@
   function routeState(s,mode){
     requireValue(s.from,'from');requireValue(s.to,'to');requireDate(s.date,'date');
     if(samePlace(s.from,s.to))fail('sameCity');
-    const token=travelerToken(s);
+    const token=travelerToken(s,mode);
     return supports(mode,s.from)&&supports(mode,s.to)?token:null;
   }
   function buildAvia(s){
@@ -160,16 +161,16 @@
       // If neither mapping is known, buildTrain safely returns the official home.
       return buildTrain(s);
     }
-    return 'https://bus.tutu.ru/raspisanie/gorod_'+encodeURIComponent(from[0])+'/gorod_'+encodeURIComponent(to[0])+'/?'+params({from:from[1],to:to[1],date:dotted(s.date),travelers:token,amount:total(s)});
+    return 'https://bus.tutu.ru/raspisanie/gorod_'+encodeURIComponent(from[0])+'/gorod_'+encodeURIComponent(to[0])+'/?'+params({from:from[1],to:to[1],date:dotted(s.date),travelers:token,amount:total(s,'bus')});
   }
 
   function buildComposite(s){
     requireValue(s.from,'from');requireValue(s.to,'to');requireDate(s.date,'date');
     if(samePlace(s.from,s.to))fail('sameCity');
     if(!supportsCompositePair(s.from,s.to))return HOME;
-    const token=travelerToken(s),from=compositeCities[s.from.id],to=compositeCities[s.to.id];
+    const token=travelerToken(s,'bus'),from=compositeCities[s.from.id],to=compositeCities[s.to.id];
     return 'https://bus.tutu.ru/raspisanie/gorod_'+encodeURIComponent(from.slug)+'/gorod_'+encodeURIComponent(to.slug)+'/?'+
-      params({from:from.geo,to:to.geo,date:dotted(s.date),travelers:token,amount:total(s)});
+      params({from:from.geo,to:to.geo,date:dotted(s.date),travelers:token,amount:total(s,'bus')});
   }
 
   function build(mode,state){
