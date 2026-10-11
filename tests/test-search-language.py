@@ -56,6 +56,23 @@ def stored(page):
         PORTABLE
     )
 
+def check_desktop_popup_geometry(page, panel_selector, field_selector):
+    """Top of a dropdown should cover the chips row but not overlap its field."""
+    rects = page.evaluate("""([panelSelector,fieldSelector]) => {
+        const panel=document.querySelector(panelSelector);
+        const field=document.querySelector(fieldSelector);
+        const hints=document.querySelector('.search-hints-v2');
+        if (!panel || !field || !hints || panel.hidden) return null;
+        const p=panel.getBoundingClientRect();
+        const f=field.getBoundingClientRect();
+        const h=hints.getBoundingClientRect();
+        return {panelTop:p.top,fieldBottom:f.bottom,hintsTop:h.top};
+    }""", [panel_selector, field_selector])
+    assert rects, f"Popup failed to open: {panel_selector}"
+    assert rects["panelTop"] >= rects["fieldBottom"] - 1, rects
+    assert abs(rects["panelTop"] - rects["hintsTop"]) <= 2, rects
+
+
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=True, args=["--no-sandbox"])
     try:
@@ -63,6 +80,21 @@ with sync_playwright() as playwright:
         ctx, page, errors = setup(browser)
         open_page(page)
         standard_mode(page, "flight")
+        page.locator("[data-role='from'] .v2-input").click()
+        check_desktop_popup_geometry(page,
+            ".v2-field--place[data-role='from'] .search-suggest",
+            ".v2-field--place[data-role='from']")
+        page.keyboard.press("Escape")
+        page.locator("[data-trigger='pax']").click()
+        check_desktop_popup_geometry(page,
+            ".v2-field--pax .v2-popover",
+            ".v2-field--pax")
+        page.keyboard.press("Escape")
+        page.locator("[data-trigger='date']").click()
+        check_desktop_popup_geometry(page,
+            ".v2-flight-dates .v2-flight-calendar",
+            ".v2-flight-dates")
+        page.keyboard.press("Escape")
         pick_place(page, "from", "in-delhi")
         pick_place(page, "to", "ru-moscow")
         page.locator(".search-hints-v2 [data-v2-date='1']").click()
@@ -128,12 +160,18 @@ with sync_playwright() as playwright:
         page.locator(".search-hints-v2 [data-tour-choice='turkey']").click()
         page.locator(".search-hints-v2 [data-tour-date='1']").click()
         page.locator("[data-tour-trigger='nights']").click()
+        check_desktop_popup_geometry(page,
+            ".tour-cell--nights .tour-panel--nights",
+            ".tour-cell--nights")
         for part, value in (("min", 8), ("max", 16)):
             page.locator(f"[data-tour-range='{part}']").evaluate(
                 "(el,value) => {el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}))}",
                 value,
             )
         page.locator("[data-tour-trigger='people']").click()
+        check_desktop_popup_geometry(page,
+            ".tour-cell--people .tour-panel--people",
+            ".tour-cell--people")
         page.locator("[data-tour-person='adult'][data-tour-step='1']").click()
         page.locator("[data-tour-person='child'][data-tour-step='1']").click()
         page.locator("[data-tour-child-age='0']").select_option("9")
