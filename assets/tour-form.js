@@ -8,9 +8,9 @@ const hints=document.querySelector('.search-hints-v2');
 if(!data||!tab||!form||!hints)return;
 const lang=document.documentElement.lang==='hi'?'hi':document.documentElement.lang==='ru'?'ru':'en';
 const dict={
-ru:{from:'Откуда',destination:'Страна, курорт или город',date:'Когда',nights:'Кол-во ночей',who:'Кто едет',search:'Найти туры',min:'от',max:'до',night:'ночей',adults:'Взрослые',adult:'взрослый',adult2:'взрослых',select:'Выберите направление из списка',fallback:'По этому направлению открываем общий каталог туров: точный поиск ещё не подтверждён.',winter:'Зимняя сказка в России',countries:'Страны',dates:'Дата вылета',reset:'Вернуться к поиску',chipDate:'Завтра',noResults:'Ничего не найдено',range:'Диапазон ночей'},
-en:{from:'From',destination:'Country, resort or city',date:'Departure',nights:'Nights',who:'Travellers',search:'Search tours',min:'from',max:'to',night:'nights',adults:'Adults',adult:'adult',adult2:'adults',select:'Select a destination from the suggestions',fallback:'This opens the general tours catalogue; an exact search link is not yet verified.',winter:'Winter in Russia',countries:'Countries',dates:'Departure date',reset:'Back to search',chipDate:'Tomorrow',noResults:'No results',range:'Number of nights'},
-hi:{from:'कहाँ से',destination:'देश, रिज़ॉर्ट या शहर',date:'कब',nights:'कितनी रातें',who:'यात्री',search:'टूर खोजें',min:'से',max:'तक',night:'रातें',adults:'वयस्क',adult:'वयस्क',adult2:'वयस्क',select:'सूची से जगह चुनें',fallback:'इस जगह के लिए सामान्य टूर कैटलॉग खुलेगा; सटीक खोज लिंक अभी सत्यापित नहीं है।',winter:'रूस की सर्दियाँ',countries:'देश',dates:'रवाना होने की तारीख़',reset:'खोज पर वापस जाएँ',chipDate:'कल',noResults:'कोई परिणाम नहीं',range:'रातों की संख्या'}
+ru:{from:'Откуда',destination:'Страна, курорт или город',date:'Когда',nights:'Кол-во ночей',who:'Кто едет',search:'Найти туры',min:'от',max:'до',night:'ночей',adults:'Взрослые',adult:'взрослый',adult2:'взрослых',select:'Выберите направление из списка',fallback:'Откроется страница выбранного направления на Туту. Дату, ночи и число туристов, возможно, потребуется указать повторно. Продолжить?',fallbackNearby:'Для Териберки пока не подтверждена отдельная страница туров. Открыть туры в Мурманск?',winter:'Зимняя сказка в России',countries:'Страны',dates:'Дата вылета',reset:'Вернуться к поиску',chipDate:'Завтра',noResults:'Ничего не найдено',range:'Диапазон ночей'},
+en:{from:'From',destination:'Country, resort or city',date:'Departure',nights:'Nights',who:'Travellers',search:'Search tours',min:'from',max:'to',night:'nights',adults:'Adults',adult:'adult',adult2:'adults',select:'Select a destination from the suggestions',fallback:'This opens the selected Tutu destination. Dates, nights and travellers may need to be set again on the next page. Continue?',fallbackNearby:'A separate tour page for Teriberka is not verified. Open tours to Murmansk instead?',winter:'Winter in Russia',countries:'Countries',dates:'Departure date',reset:'Back to search',chipDate:'Tomorrow',noResults:'No results',range:'Number of nights'},
+hi:{from:'कहाँ से',destination:'देश, रिज़ॉर्ट या शहर',date:'कब',nights:'कितनी रातें',who:'यात्री',search:'टूर खोजें',min:'से',max:'तक',night:'रातें',adults:'वयस्क',adult:'वयस्क',adult2:'वयस्क',select:'सूची से जगह चुनें',fallback:'टूटू पर चुनी हुई जगह का पेज खुलेगा। तारीख़, रातों की संख्या और यात्रियों को वहाँ दोबारा चुनना पड़ सकता है। आगे बढ़ें?',fallbackNearby:'तेरिबेरका के लिए अलग टूर पेज की पुष्टि नहीं हुई है। मुर्मांस्क के टूर खोलें?',winter:'रूस की सर्दियाँ',countries:'देश',dates:'रवाना होने की तारीख़',reset:'खोज पर वापस जाएँ',chipDate:'कल',noResults:'कोई परिणाम नहीं',range:'रातों की संख्या'}
 }[lang];
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const initialDate=new Date();initialDate.setDate(initialDate.getDate()+2);
@@ -29,12 +29,12 @@ function button(label,name){
 }
 function close(){
  const box=form.querySelector('.tour-panel'); if(box)box.remove();overlay=null;
- form.querySelectorAll('[data-tour-trigger]').forEach(b=>b.setAttribute('aria-expanded','false'));
+ form.querySelectorAll('[data-tour-trigger],.tour-destination').forEach(b=>b.setAttribute('aria-expanded','false'));
 }
-function show(type,html){
- const btn=form.querySelector('[data-tour-trigger="'+type+'"]');const cell=btn&&btn.closest('.tour-cell');
+function show(type,html,refresh=false){
+ const btn=form.querySelector('[data-tour-trigger="'+type+'"]')||(type==='destination'?form.querySelector('.tour-destination'):null);const cell=btn&&btn.closest('.tour-cell');
  if(!cell)return;
- if(overlay===type){close();return}
+ if(overlay===type&&!refresh){close();return}
  close();
  const panel=document.createElement('div');panel.className='tour-panel tour-panel--'+type;panel.innerHTML=html;cell.appendChild(panel);
  overlay=type;btn.setAttribute('aria-expanded','true');
@@ -45,12 +45,12 @@ function render(){
  const dest=data.byKey.get(state.destination);
  form.innerHTML=
  field(dict.from,button(dep.name[lang],'departure'),'departure')+
- field(dict.destination,'<input class="tour-destination" role="combobox" aria-label="'+esc(dict.destination)+'" aria-autocomplete="list" autocomplete="off" value="'+esc(dest.name[lang])+'">','destination')+
+ field(dict.destination,'<input class="tour-destination" role="combobox" aria-label="'+esc(dict.destination)+'" aria-autocomplete="list" autocomplete="off" aria-expanded="false" aria-controls="tour-destination-list" value="'+esc(dest.name[lang])+'">','destination')+
  field(dict.date,button(dateLabel(state.date),'date'),'date')+
  field(dict.nights,button(state.nightsMin+'–'+state.nightsMax+' '+dict.night,'nights'),'nights')+
  field(dict.who,button(state.adults+' '+(state.adults===1?dict.adult:dict.adult2),'people'),'people')+
  '<button type="submit" class="v2-submit tour-submit">'+esc(dict.search)+'</button>';
- hints.innerHTML='<div class="tour-hints"><span>'+esc(dict.winter)+':</span>'+['murmansk','teriberka','baikal','saint-petersburg','moscow'].map(key=>{const d=data.byKey.get(key);return '<button type="button" data-tour-choice="'+key+'">'+esc(d.name[lang])+'</button>'}).join('')+'</div>';
+ hints.innerHTML='<div class="tour-hints"><span>'+esc(dict.winter)+':</span>'+['murmansk','teriberka','baikal','karelia','sheregesh','krasnaya-polyana'].map(key=>{const d=data.byKey.get(key);return '<button type="button" data-tour-choice="'+key+'">'+esc(d.name[lang])+'</button>'}).join('')+'</div>';
  bind();
 }
 function options(list){
@@ -66,10 +66,10 @@ function bind(){
  form.querySelector('[data-tour-trigger="people"]').addEventListener('click',()=>show('people','<div class="tour-people"><span>'+dict.adults+'</span><button type="button" data-tour-step="-1" aria-label="-">−</button><strong>'+state.adults+'</strong><button type="button" data-tour-step="1" aria-label="+">+</button></div>'));
  form.querySelector('[data-tour-trigger="date"]').addEventListener('click',()=>{const d=new Date(state.date+'T12:00:00');calendarMonth=new Date(d.getFullYear(),d.getMonth(),1);openCalendar()});
  const input=form.querySelector('.tour-destination');
- input.addEventListener('focus',()=>show('destination',destinationPanel(input.value)));
+ input.addEventListener('focus',()=>{input.select();show('destination',destinationPanel(input.value))});
  input.addEventListener('input',()=>{const panel=form.querySelector('.tour-panel--destination');if(!panel)show('destination',destinationPanel(input.value));else panel.innerHTML=destinationPanel(input.value)});
 }
-function openCalendar(){
+function openCalendar(refresh=false){
  const year=calendarMonth.getFullYear(),month=calendarMonth.getMonth();
  const first=new Date(year,month,1),startOffset=(first.getDay()+6)%7,last=new Date(year,month+1,0).getDate();
  const monthLabel=new Intl.DateTimeFormat(lang==='ru'?'ru-RU':lang==='hi'?'hi-IN':'en-GB',{month:'long',year:'numeric'}).format(first);
@@ -78,7 +78,7 @@ function openCalendar(){
  const weekdays=lang==='ru'?['Пн','Вт','Ср','Чт','Пт','Сб','Вс']:lang==='hi'?['सो','मं','बु','गु','शु','श','र']:['Mo','Tu','We','Th','Fr','Sa','Su'];
  html+=weekdays.map(x=>'<span>'+x+'</span>').join('')+'<span></span>'.repeat(startOffset);
  for(let i=1;i<=last;i++){const d=iso(new Date(year,month,i));html+='<button type="button" data-tour-day="'+d+'" '+(d<today||d>iso(cutoff)?'disabled':'')+' class="'+(d===state.date?'is-selected':'')+'">'+i+'</button>'}
- show('date',html+'</div>');
+ show('date',html+'</div>',refresh);
 }
 function activate(){
  if(active)return;active=true;
@@ -102,7 +102,7 @@ form.addEventListener('click',e=>{
  if(!active)return;
  const d=e.target.closest('[data-tour-dep]');if(d){state.departure=d.dataset.tourDep;render();return}
  const choice=e.target.closest('[data-tour-choice]');if(choice){state.destination=choice.dataset.tourChoice;render();return}
- const nav=e.target.closest('[data-tour-nav]');if(nav){calendarMonth.setMonth(calendarMonth.getMonth()+Number(nav.dataset.tourNav));openCalendar();return}
+ const nav=e.target.closest('[data-tour-nav]');if(nav){calendarMonth.setMonth(calendarMonth.getMonth()+Number(nav.dataset.tourNav));openCalendar(true);return}
  const day=e.target.closest('[data-tour-day]');if(day){state.date=day.dataset.tourDay;render();return}
  const step=e.target.closest('[data-tour-step]');if(step){state.adults=Math.min(9,Math.max(1,state.adults+Number(step.dataset.tourStep)));render();form.querySelector('[data-tour-trigger="people"]').click();return}
 });
@@ -125,7 +125,7 @@ form.addEventListener('submit',e=>{
  if(form.querySelector('.tour-destination').value!==d.name[lang]){alert(dict.select);return}
  try{
   const result=data.build(state);
-  if(!result.filtered&&!confirm(dict.fallback))return;
+  if(!result.filtered&&!confirm(result.destination.browseAs==='murmansk'?dict.fallbackNearby:dict.fallback))return;
   window.location.assign(result.url);
  }catch(err){alert(dict.select)}
 },true);
