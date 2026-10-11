@@ -70,6 +70,81 @@
   const weekdayFmt=new Intl.DateTimeFormat(locale,{weekday:'short'});
   const compactDayFmt=new Intl.DateTimeFormat(locale,{day:'numeric',month:'short'});
 
+  const persistence=window.TUTU_SEARCH_PERSIST;
+  const persisted=persistence?.read()||{};
+
+  function safeDate(raw){
+    if(typeof raw!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(raw))return null;
+    const d=parseIso(raw);
+    return iso(d)===raw&&d>=today?d:null;
+  }
+  function restoreStandard(){
+    const stored=persisted.standard;
+    if(stored&&typeof stored==='object'){
+      modes.forEach(key=>{
+        const raw=stored[key],state=states[key];
+        if(!raw||typeof raw!=='object')return;
+        const roles=key==='hotel'?['destination']:['from','to'];
+        roles.forEach(role=>{
+          const place=typeof raw[role+'Id']==='string'
+            ?TUTU_PLACES.byId.get(raw[role+'Id']):null;
+          if(place){
+            state[role]=place;
+            state[role+'Text']=TUTU_PLACES.display(place,pageLang).name;
+          }else{
+            state[role]=null;
+            state[role+'Text']=typeof raw[role+'Text']==='string'
+              ?raw[role+'Text'].slice(0,128):'';
+          }
+        });
+        state.adults=Number.isInteger(raw.adults)?Math.max(1,Math.min(9,raw.adults)):state.adults;
+        state.children=Number.isInteger(raw.children)
+          ?Math.max(0,Math.min(9-state.adults,raw.children)):0;
+        state.childAges=Array.isArray(raw.childAges)
+          ?raw.childAges.slice(0,state.children).map(age=>Number.isInteger(age)&&age>=0&&age<=17?age:5):[];
+        while(state.childAges.length<state.children)state.childAges.push(5);
+        if(key==='hotel'){
+          state.start=safeDate(raw.start);
+          state.end=state.start?safeDate(raw.end):null;
+          if(state.end&&state.end<=state.start)state.end=null;
+        }else{
+          state.date=safeDate(raw.date);
+          if(key==='flight'){
+            state.returnDate=safeDate(raw.returnDate);
+            if(state.date&&state.returnDate&&state.returnDate<state.date)state.returnDate=null;
+            state.cabin=raw.cabin==='business'?'business':'economy';
+          }
+        }
+      });
+    }
+    const selected=['hotel','flight','train','bus'].includes(persisted.activeMode)
+      ?persisted.activeMode:persisted.standardMode;
+    if(modes.includes(selected))mode=selected;
+  }
+
+  function saveStandard(){
+    if(!persistence)return;
+    const all={};
+    modes.forEach(key=>{
+      const state=states[key],item={
+        adults:state.adults,children:state.children,childAges:[...state.childAges]
+      };
+      (key==='hotel'?['destination']:['from','to']).forEach(role=>{
+        item[role+'Id']=state[role]?.id||null;
+        item[role+'Text']=state[role+'Text']||'';
+      });
+      if(key==='hotel'){
+        item.start=iso(state.start);item.end=iso(state.end);
+      }else{
+        item.date=iso(state.date);
+        if(key==='flight'){item.returnDate=iso(state.returnDate);item.cabin=state.cabin}
+      }
+      all[key]=item;
+    });
+    persistence.saveStandard(all,mode);
+  }
+  restoreStandard();
+
   function plural(n,type){
     if(pageLang==='hi')return type==='guest'?labels.guest1:labels.passenger1;
     if(pageLang==='en')return n===1?(type==='guest'?labels.guest1:labels.passenger1):(type==='guest'?labels.guest5:labels.passenger5);
@@ -206,6 +281,7 @@
     }else{
       s.to=place;s.toText=d.name;
     }
+    saveStandard();
   }
 
   function bindPlaces(){
@@ -221,6 +297,7 @@
         else if(role==='from'){s.from=null;s.fromText=input.value}
         else{s.to=null;s.toText=input.value}
         renderSuggestions(input,role);
+        saveStandard();
       });
       input.addEventListener('keydown',e=>{
         if(e.isComposing)return;
@@ -331,6 +408,7 @@
       setCalendarActive(null);
     }
     renderHints();
+    saveStandard();
   }
 
   function bindCalendar(){
@@ -395,6 +473,7 @@
       const age=e.target.closest('[data-child-age]');if(!age)return;
       const s=states[mode],i=Number(age.dataset.childAge);
       if(!Array.isArray(s.childAges))s.childAges=[];s.childAges[i]=Number(age.value);
+      saveStandard();
     });
     box.addEventListener('click',e=>{
       if(e.target.closest('select,option')){e.stopPropagation();return}
@@ -409,10 +488,15 @@
           while(s.childAges.length<s.children)s.childAges.push(5);
           if(s.childAges.length>s.children)s.childAges=s.childAges.slice(0,s.children);
         }
-        field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box);return;
+        field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box);
+        saveStandard();return;
       }
       const cab=e.target.closest('[data-cabin]');
-      if(cab){states[mode].cabin=cab.dataset.cabin;field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box)}
+      if(cab){
+        states[mode].cabin=cab.dataset.cabin;
+        field.querySelector('.v2-value').textContent=travellerValue();renderGuestPopover(box);
+        saveStandard();
+      }
     });
   }
 
@@ -420,7 +504,8 @@
     const swap=form.querySelector('.v2-swap');if(!swap)return;
     swap.addEventListener('click',()=>{
       const s=states[mode];
-      [s.fromText,s.toText]=[s.toText,s.fromText];[s.from,s.to]=[s.to,s.from];renderForm();
+      [s.fromText,s.toText]=[s.toText,s.fromText];[s.from,s.to]=[s.to,s.from];
+      renderForm();saveStandard();
     });
   }
 
@@ -467,14 +552,14 @@
     if(mode==='hotel'){
       const end=new Date(start);end.setDate(end.getDate()+(length||1));s.start=start;s.end=end;
     }else{s.date=start;if(s.returnDate&&s.returnDate<start)s.returnDate=null}
-    renderForm();
+    renderForm();saveStandard();
   }
   /* A return earlier than the chosen departure clears the departure,
      the same way a later departure clears the return. */
   function setQuickReturn(offset){
     const back=new Date(today);back.setDate(back.getDate()+offset);
     const s=states[mode];s.returnDate=back;if(s.date&&s.date>back)s.date=null;
-    renderForm();
+    renderForm();saveStandard();
   }
 
   function renderHints(){
@@ -518,11 +603,19 @@
     mode=modes[index];
     buttons.forEach((b,i)=>{const active=i===index;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active))});
     closeOverlays();renderForm();
+    saveStandard();
+    persistence?.setActive(mode);
   }));
 
   document.addEventListener('click',e=>{if(!e.target.closest('.search-v2'))closeOverlays()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlays()});
 
+  buttons.forEach((button,index)=>{
+    const selected=modes[index]===mode;
+    button.classList.toggle('is-active',selected);
+    button.setAttribute('aria-selected',String(selected));
+  });
   renderForm();
+  window.addEventListener('pagehide',saveStandard);
   document.documentElement.classList.add('search-v2-ready');
 })();
