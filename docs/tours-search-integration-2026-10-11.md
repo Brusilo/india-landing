@@ -43,6 +43,14 @@ On 11 October 2026 we fetched https://traff.travelata.ru/constructor.php (public
 
 Run `scripts/probe-public-travelata-directory.py` to inspect the public option source again. The official Tutu directory audit `scripts/audit-tour-directory.py` confirmed all **81/81** country/resort links are listed in the Tutu site directory. These results validate IDs and browse pages, **not live tour availability or filtered partner search results**.
 
+## Additional verified winter city-to-resort pages
+
+On 11 October 2026, public Tutu pages were checked for **28/28 exact city-to-winter-destination routes**: Moscow, Saint Petersburg, Kazan and Yekaterinburg as starting cities, combined with Baikal, Karelia, Krasnaya Polyana, Sheregesh, Altai, Sochi and Veliky Ustyug. Every route returned HTTP 200 on its expected URL, and its HTML title or H1 confirmed both the origin and the intended destination. Evidence: https://github.com/Brusilo/india-landing/actions/runs/38156832823
+
+The application uses these 28 whitelisted combinations, plus 11 separately verified Murmansk city routes (**39 distinct winter-tour city pairs total**), so a visitor choosing, for example, Kazan → Baikal opens the corresponding Tutu route page instead of a country-wide or Russia-wide catalog. Unknown pairs still fall back to the chosen destination's public Tutu page, with a warning before navigating.
+
+**Important limits:** Tutu SEO page route IDs are not Travelata IDs; the booking dates, number of nights, travellers, and child ages are **not transferred** into those pages. The user is informed before the redirect. No route page confirms live booking availability for a chosen date. The 28-pair audit is scripted in `scripts/probe-winter-pairs.py` (the public directory audit workflow). The fallback text for Teriberka explicitly explains that it opens Murmansk instead.
+
 ## URL algorithm
 
 For supported **country** IDs only:
