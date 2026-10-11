@@ -181,12 +181,25 @@ def main():
     # City-of-departure Tutu SEO links use their own path IDs. Verify
     # every resulting page instead of assuming these IDs match Travelata's.
     city_routes = load_departure_destination_routes()
+    def probe_city_route(url):
+        first = fetch(url)
+        # Tutu SEO pages can sporadically return 502/503/504 from an edge;
+        # a second independent attempt distinguishes a brief glitch from a
+        # reproducible failure. Do not interpret stale search-engine cache as
+        # proof of current HTTP availability.
+        if first.get("status") not in (429, 502, 503, 504):
+            return {"response": first, "attempts": 1}
+        second = fetch(url)
+        return {"response": second, "attempts": 2, "first_status": first.get("status")}
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
-        route_responses = list(pool.map(fetch, city_routes.values()))
+        route_attempts = list(pool.map(probe_city_route, city_routes.values()))
+    route_responses = [entry["response"] for entry in route_attempts]
     seo_routes = []
-    for (city, route), res in zip(city_routes.items(), route_responses):
+    for (city, route), attempt in zip(city_routes.items(), route_attempts):
+        res = attempt["response"]
         seo_routes.append({
             "departure": city, "requested": route, "status": res["status"],
+            "attempts": attempt["attempts"], "first_status": attempt.get("first_status"),
             "final_url": res.get("final_url"), "bytes": res.get("length", 0),
             "exact_target": canonical(res.get("final_url", "")) == canonical(route),
             "error": res.get("error")
