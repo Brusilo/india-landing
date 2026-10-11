@@ -91,6 +91,11 @@ def run_case(pg,lang,width):
     check(pg.evaluate("window.__qaNavigations")==["https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/"],
           "Kazan-Murmansk route matching Tutu page")
     pg.evaluate("window.__qaNavigations=[]")
+    choose(pg,"Baikal","baikal")
+    pg.locator(".tour-submit").click()
+    check(pg.evaluate("window.__qaNavigations")==["https://tours.tutu.ru/rossiya/baikal/iz/33_kazan/"],
+          "Kazan-Baikal retains both origin and destination from verified official Tutu page")
+    pg.evaluate("window.__qaNavigations=[]")
     choose(pg,"Egypt","egypt")
     pg.locator(".tour-submit").click()
     check(pg.evaluate("window.__qaNavigations")==["https://tours.tutu.ru/strana/egypt/"],
