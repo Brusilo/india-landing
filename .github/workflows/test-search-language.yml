@@ -7,6 +7,8 @@ on:
       - 'assets/search-state.js'
       - 'assets/search-v2.js'
       - 'assets/tour-form.js'
+      - 'assets/tour-catalog.js'
+      - 'tests/landing-tours.cjs'
       - 'index.html'
       - 'index-ru.html'
       - 'index-hi.html'
@@ -25,6 +27,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Verify Travelata tour links, including children (offline)
+        run: node tests/landing-tours.cjs
       - name: Install Chromium for browser regression tests
         run: |
           python -m pip install --disable-pip-version-check playwright
