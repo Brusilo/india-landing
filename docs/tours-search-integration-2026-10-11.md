@@ -72,6 +72,12 @@ Base URL: `https://api-gateway.travelata.ru`. Filter `disabled=false`, verify ID
 
 The PR contains `tests/tours-browser.py`, `tests/tours-cross-browser.py`, `tests/tours-live-provider.py`, and related CI workflows. Chromium/Firefox/WebKit checks passed for EN/RU/HI at 375/768/1440 px, with 27/27 successful scenarios in https://github.com/Brusilo/india-landing/actions/runs/38154808519. Physical iOS Safari and Android Chrome remain untested. The original browser suite is also checked by `.github/workflows/tour-search-qa.yml`. Chromium loads the actual EN, RU and HI pages with local assets and intercepts external navigation; tests cover nine widths (320, 360, 390, 600, 768, 1024, 1101, 1280, 1440), destination dropdown, calendar month navigation, night range, adults, winter fallback, numeric search links, and switching back to other transport modes. These are **offline smoke tests**. They do not verify live Travelata results, payment, availability or Android/iOS-specific rendering; release should remain a draft until live QA is finished.
 
+## India-audience language limitation
+
+The public Tutu × Travelata results pages were visually opened with working Turkey and Egypt results on 11 October 2026. They currently display the search controls, hotel cards and checkout information in **Russian**, even when the referring India landing is EN/HI. We have **not** verified an English or Hindi locale option in this co-branded partner flow.
+
+The EN and HI tours search tabs now disclose that the destination page will be in Russian before the user leaves. This is a temporary transparency measure, **not a localization fix**. For production aimed at Indian travellers, the partner team should confirm the supported checkout languages and payment instruments, ideally provide an English search/checkout or an officially supported locale parameter. Do not invent a `lang=en` query parameter without live partner evidence.
+
 ## Open issues before release
 
 - Obtain and validate all partner country, resort and departure IDs (including Russia and its winter resorts); confirm child-age parameter formats before enabling branded direct links for families.
