@@ -62,7 +62,7 @@ The IDs for Moscow and Saint Petersburg also matched supplied co-branded Travela
 
 On 11 October 2026 we fetched https://traff.travelata.ru/constructor.php (public, unauthenticated). Its `defaultCountry` field contains the same numeric values as the authenticated partner country's dictionary. The previously confirmed Turkey (92), Abkhazia (1), Belarus (11) values match it; Russia (76), India (33), Maldives (56) and 30 further named countries were sourced from the official public options.
 
-**37/45 Tutu-listed countries have supported IDs**: 36 from the public Travelata link constructor plus Egypt (29) from the user's co-branded search example. **8 countries do not have sufficiently verified IDs and retain browse-only links**: Uzbekistan, Kazakhstan, Azerbaijan, Kyrgyzstan, Japan, South Korea, Tanzania and Switzerland. All 27 Russia/winter destinations and nine foreign resorts also remain browse-only; a country ID cannot select an individual resort.
+**37/45 Tutu-listed countries have supported IDs**: 36 from the public Travelata link constructor plus Egypt (29) from the user's co-branded search example. **8 countries do not have sufficiently verified IDs and retain browse-only links**: Uzbekistan, Kazakhstan, Azerbaijan, Kyrgyzstan, Japan, South Korea, Tanzania and Switzerland. Of 27 Russia/winter destinations, only Murmansk is now enabled for branded `toCity=1726` search; other resort entries remain browse-only pending a verified live URL format. A country ID alone cannot select a specific resort.
 
 Run `scripts/probe-public-travelata-directory.py` to inspect the public option source again. The official Tutu directory audit `scripts/audit-tour-directory.py` confirmed all **81/81** country/resort links are listed in the Tutu site directory. These results validate IDs and browse pages, **not live tour availability or filtered partner search results**.
 
@@ -72,7 +72,7 @@ On 11 October 2026, public Tutu pages were checked for **28/28 exact city-to-win
 
 The application uses these 28 whitelisted combinations, plus 11 separately verified Murmansk city routes (**39 distinct winter-tour city pairs total**), so a visitor choosing, for example, Kazan → Baikal opens the corresponding Tutu route page instead of a country-wide or Russia-wide catalog. Unknown pairs still fall back to the chosen destination's public Tutu page, with a warning before navigating.
 
-**Important limits:** Tutu SEO page route IDs are not Travelata IDs; the booking dates, number of nights, travellers, and child ages are **not transferred** into those pages. The user is informed before the redirect. No route page confirms live booking availability for a chosen date. The 28-pair audit is scripted in `scripts/probe-winter-pairs.py` (the public directory audit workflow). The fallback text for Teriberka explicitly explains that it opens Murmansk instead.
+**Important limits:** Tutu SEO page route IDs are not Travelata IDs; the booking dates, number of nights, travellers, and child ages are **not transferred** into those pages. For the separately verified direct Murmansk search (adult-only with known departure ID), the branded URL now carries these filters instead. The user is informed before the redirect. No route page confirms live booking availability for a chosen date. The 28-pair audit is scripted in `scripts/probe-winter-pairs.py` (the public directory audit workflow). The fallback text for Teriberka explicitly explains that it opens Murmansk instead.
 
 ## Public Travelata Russia resort directory: candidate IDs (research only)
 
@@ -97,17 +97,19 @@ On 11 October 2026 the public, unauthenticated affiliate link constructor at htt
 
 **Teriberka is absent as its own public `toCity` selection.** The existing explicit Teriberka → Murmansk warning remains necessary.
 
-**These are research IDs, NOT enabled filtered search routes.** Before mapping any `kind:'winter'` entry to `arrival_type` / `arrival_id`, verify the exact Tutu-branded search URL schema using a live result page, and assert that the resort field—not merely the country—is populated with the requested destination. Probes are in `tests/probe-branded-resort-search.py` and are run manually through the read-only `.github/workflows/tour-live-partner-qa.yml`. Until then the 39 confirmed Tutu city-specific SEO pages remain the safest usable links.
+**Direct Murmansk search is now enabled.** Read-only Chromium tested five co-branded URL variations: adding `#?toCountry=76&toCity=1726` selected **Мурманск** as the input destination and generated the provider's `sid`; the unsupported `toResort` variations reverted to **Россия**. Evidence: https://github.com/Brusilo/india-landing/actions/runs/38157753491 . The implemented link retains `arrival_type=country&arrival_id=76&arrival_text=Россия` in the query and adds `toCity=1726` in its hash. The selected departure city, date, nights and adults are also included in the generated link and checked by catalog and EN/RU/HI browser tests.
+
+**All other specific resort IDs remain research only.** Do not enable them until an independently verified live branded result explicitly displays the selected resort. Teriberka remains a separate user intent with an honest Murmansk fallback. Family searches and departures without a confirmed Travelata ID retain the relevant whitelisted Tutu SEO page with a disclosure that dates/guests must be chosen again.
 
 ## URL algorithm
 
-For supported **country** IDs only:
+For supported **country** IDs and the separately verified Murmansk `toCity=1726` under Russia=76:
 
 - Path: `https://web.tutu.travelata.ru/search/`.
 - Query: `departure`, `arrival_id`, `arrival_type=country`, `arrival_text` (Russian name), `date_begin`, `date_end` (DD.MM.YYYY), `adults`, `nights_min`, `nights_max`, attribution `utm_source=tutu_main&utm_medium=internal&utm_content=tours_search_form`.
 - Hash (Travelata's client-side search state): `#?fromCity=...&toCountry=...&dateFrom=...&dateTo=...&nightFrom=...&nightTo=...&adults=...&hotelClass=all&meal=all&priceFrom=6000&priceTo=21000000&sort=recommend`.
 - Never reuse `sid`: it is per-session and generated by the provider. It should not be copied from somebody else's URL.
-- Do not invent `arrival_type=resort` or `toResort` until co-branded end-to-end behaviour has been verified against genuine partner links.
+- Do not invent `arrival_type=resort` or `toResort`. Both `toResort` experiments reset the live partner input to `Россия`, whereas the verified `toCity=1726` selected `Мурманск`.
 - Validation: valid departure date (today through about 11 months ahead), 1–29 nights with min≤max, 1–6 adults, up to 3 children with explicit ages 0–17 (total group ≤9), and known selections. Because the co-branded child-age URL format is not verified, family searches use the safe Tutu browse fallback and explain that ages must be selected again.
 
 For **browse-only** locations, return the **exact Tutu public page** without fabricated filters; ask confirmation and clearly say the parameters will need to be selected on that page.
