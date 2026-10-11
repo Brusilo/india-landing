@@ -77,7 +77,7 @@ function show(type,html,refresh=false){
 }
 function guestValue(){
  let summary=state.adults+' '+(state.adults===1?dict.adult:dict.adult2);
- if(state.children)summary+=(lang==='ru'?' · ':', ')+state.children+' '+
+ if(state.children)summary+=', '+state.children+' '+
    (state.children===1?dict.child:dict.child2);
  return summary;
 }
