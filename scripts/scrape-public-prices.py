@@ -96,7 +96,11 @@ def hotel_minimum(text: str) -> int | None:
 def name_ok(expected: str, title: str) -> bool:
     norm = lambda value: re.sub(r"[^\w]+", "", value.casefold().replace("ё", "е"))
     # Avoid accidentally assigning another property's price to this card.
-    return bool(expected and norm(expected) in norm(title))
+    # A booking title may add a locality/brand qualifier between name words,
+    # e.g. "Novotel Москва Аэропорт Шереметьево" for "Novotel Шереметьево".
+    words = [norm(word) for word in expected.split() if len(norm(word)) >= 4]
+    title_normalized = norm(title)
+    return bool(words and all(word in title_normalized for word in words))
 
 
 def dated_link(kind: str, target: dict, day: date) -> str:
@@ -229,6 +233,7 @@ def self_test() -> None:
     assert route_minimum(sample_flight, day, "flight") == 32090
     assert route_minimum(sample_flight, day, "train") is None
     assert name_ok("Альфа Измайлово", "Альфа Измайлово 4* в городе Москва")
+    assert name_ok("Novotel Шереметьево", "Отель Novotel Москва Аэропорт Шереметьево 4*")
     assert not name_ok("Альфа Измайлово", "Venera в городе Казань")
     targets = json.loads(TARGETS.read_text(encoding="utf-8"))
     assert len(targets["routes"]) == 14 and len(targets["hotels"]) == 13
