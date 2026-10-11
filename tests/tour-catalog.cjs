@@ -78,6 +78,9 @@ assert.equal(find('lake')[0].key,'baikal');
 assert.equal(find('Казань')[0].key,'kazan');
 assert.equal(find('गोवा')[0].key,'goa');
 assert.equal(find('aurora')[0].key,'murmansk');
+assert.equal(find('santa claus')[0].key,'veliky-ustyug','winter Santa search');
+assert.equal(find('blue ice')[0].key,'baikal','Baikal ice search');
+assert.equal(find('snowboarding')[0].key,'krasnaya-polyana','winter ski search');
 
 const date=new Date();date.setDate(date.getDate()+9);
 const future=[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
