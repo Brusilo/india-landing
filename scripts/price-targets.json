@@ -1,0 +1,117 @@
+{
+  "notes": "Public site search targets, maintained alongside assets/card-links.js. Prices must match the card's booking date and guest count.",
+  "routes": {
+    "r1": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Sankt-Peterburg/Moskva/"
+    },
+    "r2": {
+      "kind": "flight",
+      "url": "https://avia.tutu.ru/f/Moskva/Deli/",
+      "fromId": 491,
+      "toId": 216
+    },
+    "r3": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Moskva/Sankt-Peterburg/"
+    },
+    "r4": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Novgorod/Sankt-Peterburg/"
+    },
+    "r5": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Cheboksary/Moskva/"
+    },
+    "r6": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Rostov-Na-Donu/Moskva/"
+    },
+    "r7": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Moskva/Ulyanovsk/"
+    },
+    "r8": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Ufa/Moskva/"
+    },
+    "r9": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Moskva/Orel/"
+    },
+    "r10": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Stavropol/Moskva/"
+    },
+    "r11": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Moskva/Yoshkar-Ola/"
+    },
+    "r12": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Sankt-Peterburg/Novgorod/"
+    },
+    "r13": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Moskva/Cheboksary/"
+    },
+    "r14": {
+      "kind": "train",
+      "url": "https://www.tutu.ru/poezda/Moskva/Rostov-Na-Donu/"
+    }
+  },
+  "hotels": {
+    "h1": {
+      "name": "Альфа Измайлово",
+      "url": "https://hotel.tutu.ru/h_otel_izmaylovo_alfa/"
+    },
+    "h2": {
+      "name": "Номера на Садовой",
+      "url": "https://hotel.tutu.ru/h_otel_nomera_na_sadovoy/"
+    },
+    "h3": {
+      "name": "Грейс Горизонт",
+      "url": "https://hotel.tutu.ru/h_otel_greys_gorizont/"
+    },
+    "h4": {
+      "name": "Venera",
+      "url": "https://hotel.tutu.ru/h_otel_imereti/"
+    },
+    "h5": {
+      "name": "Pana Москва",
+      "url": "https://hotel.tutu.ru/h_pana_white_moscow_hotel_ex_holiday_inn_express_moscow_baumanskaya/"
+    },
+    "h6": {
+      "name": "Астерия",
+      "url": "https://hotel.tutu.ru/h_asteriya_191023_sanktpeterburg_nab_reki_fontanki_d_71/"
+    },
+    "h7": {
+      "name": "Волхов",
+      "url": "https://hotel.tutu.ru/h_otel_volkhov/"
+    },
+    "h8": {
+      "name": "Cascade Resort",
+      "url": "https://hotel.tutu.ru/h_otel_kaskad_sochi/"
+    },
+    "h9": {
+      "name": "Весна",
+      "url": "https://hotel.tutu.ru/h_vesna_rossiya_nizhny_novgorod_manufakturnaya_ulitsa_18/"
+    },
+    "h10": {
+      "name": "Cosmos Москва Павелецкая",
+      "url": "https://hotel.tutu.ru/h_kortyard_marriott_moskva_paveletskaya/"
+    },
+    "h11": {
+      "name": "Сити Роуз",
+      "url": "https://hotel.tutu.ru/h_siti_rouz_rossiya_rostovnadonu_ul_shaumyana_d90/"
+    },
+    "h12": {
+      "name": "Novotel Шереметьево",
+      "url": "https://hotel.tutu.ru/h_otel_novotel_moskva_aeroport_sheremetyevo/"
+    },
+    "h13": {
+      "name": "Hotel Amax Inn",
+      "url": "https://hotel.tutu.ru/h_hotel_amax_inn/"
+    }
+  }
+}
