@@ -83,7 +83,7 @@ function guestPanel(){
    '<button type="button" data-tour-person="'+kind+'" data-tour-step="-1" '+(count<=min?'disabled':'')+' aria-label="-">−</button>'+
    '<output>'+count+'</output>'+
    '<button type="button" data-tour-person="'+kind+'" data-tour-step="1" '+(count>=max?'disabled':'')+' aria-label="+">+</button></div></div>';
- let html=row('adult',dict.adults,state.adults,1,9-state.children)+row('child',dict.children,state.children,0,Math.min(3,9-state.adults));
+ let html=row('adult',dict.adults,state.adults,1,6)+row('child',dict.children,state.children,0,Math.min(3,9-state.adults));
  for(let i=0;i<state.children;i++){
    html+='<label class="tour-age"><span>'+esc(dict.childAge)+' '+(i+1)+'</span><select data-tour-child-age="'+i+'" aria-label="'+esc(dict.childAge)+' '+(i+1)+'">'+
      '<option value="" '+(state.childAges[i]==null?'selected':'disabled')+'>—</option>'+
@@ -92,13 +92,13 @@ function guestPanel(){
  }
  return html;
 }
-function rangePercent(n){return ((n-1)/29*100).toFixed(2)+'%'}
+function rangePercent(n){return ((n-1)/28*100).toFixed(2)+'%'}
 function nightsPanel(){
  return '<div class="tour-night-head"><span>'+dict.min+' <b data-tour-min>'+state.nightsMin+'</b></span><span>'+dict.max+' <b data-tour-max>'+state.nightsMax+'</b> '+dict.night+'</span></div>'+
    '<div class="tour-range" style="--tour-from:'+rangePercent(state.nightsMin)+';--tour-to:'+rangePercent(state.nightsMax)+'">'+
    '<div class="tour-track" aria-hidden="true"></div>'+
-   '<input type="range" min="1" max="30" value="'+state.nightsMin+'" data-tour-range="min" aria-label="'+esc(dict.min+' '+dict.night)+'">'+
-   '<input type="range" min="1" max="30" value="'+state.nightsMax+'" data-tour-range="max" aria-label="'+esc(dict.max+' '+dict.night)+'"></div>';
+   '<input type="range" min="1" max="29" value="'+state.nightsMin+'" data-tour-range="min" aria-label="'+esc(dict.min+' '+dict.night)+'">'+
+   '<input type="range" min="1" max="29" value="'+state.nightsMax+'" data-tour-range="max" aria-label="'+esc(dict.max+' '+dict.night)+'"></div>';
 }
 function bind(){
  form.querySelector('[data-tour-trigger="departure"]').addEventListener('click',()=>show('departure','<div class="tour-option-list">'+data.departures.map(d=>'<button type="button" data-tour-dep="'+d.key+'">'+esc(d.name[lang])+'</button>').join('')+'</div>'));
@@ -180,7 +180,7 @@ form.addEventListener('click',e=>{
      while(state.childAges.length<state.children)state.childAges.push(null);
      state.childAges.length=state.children;
    }else{
-     state.adults=Math.max(1,Math.min(9-state.children,state.adults+delta));
+     state.adults=Math.max(1,Math.min(6,state.adults+delta));
    }
    render();form.querySelector('[data-tour-trigger="people"]').click();return
  }
