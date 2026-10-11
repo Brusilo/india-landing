@@ -8,9 +8,9 @@ const hints=document.querySelector('.search-hints-v2');
 if(!data||!tab||!form||!hints)return;
 const lang=document.documentElement.lang==='hi'?'hi':document.documentElement.lang==='ru'?'ru':'en';
 const dict={
-ru:{from:'Откуда',destination:'Страна, курорт или город',date:'Когда',nights:'Кол-во ночей',who:'Кто едет',search:'Найти туры',min:'от',max:'до',night:'ночей',adults:'Взрослые',adult:'взрослый',adult2:'взрослых',children:'Дети',child:'ребёнок',child2:'детей',childAge:'Возраст на конец поездки',ageRequired:'Укажите возраст каждого ребёнка.',invalid:'Проверьте параметры тура.',fallbackDeparture:'Этот город вылета пока нельзя передать в поиск автоматически. На Туту потребуется снова выбрать город, даты, ночи и туристов. Продолжить?',fallbackPair:'Откроется страница выбранного маршрута из вашего города. Даты, ночи и туристов понадобится указать на Туту ещё раз. Продолжить?',fallbackChildren:'Для поиска тура с детьми нужно повторно выбрать количество и возраст детей на Туту, а также даты и ночи. Продолжить?',select:'Выберите направление из списка',fallback:'Откроется страница выбранного направления на Туту. Дату, ночи и число туристов, возможно, потребуется указать повторно. Продолжить?',fallbackNearby:'Для Териберки пока не подтверждена отдельная страница туров. Откроется страница туров в Мурманск: даты, ночи и туристов нужно будет выбрать заново. Продолжить?',winter:'Зимняя сказка в России',countries:'Страны',dates:'Дата вылета',reset:'Вернуться к поиску',chipDate:'Завтра',noResults:'Ничего не найдено',range:'Диапазон ночей'},
-en:{partnerLanguage:'Tour search opens a Russian-language partner site.',from:'From',destination:'Country, resort or city',date:'Departure',nights:'Nights',who:'Travellers',search:'Search tours',min:'from',max:'to',night:'nights',adults:'Adults',adult:'adult',adult2:'adults',children:'Children',child:'child',child2:'children',childAge:'Age at end of trip',ageRequired:'Select the age of each child.',invalid:'Check your tour details.',fallbackDeparture:'This departure city cannot yet be passed automatically. On Tutu, choose the departure city, dates, nights and travellers again. Continue?',fallbackPair:'This opens the route page from your chosen city. Please choose dates, nights and travellers again on Tutu. Continue?',fallbackChildren:'For tours with children, please choose the children’s ages and count again on Tutu, along with the dates and nights. Continue?',select:'Select a destination from the suggestions',fallback:'This opens the selected Tutu destination. Dates, nights and travellers may need to be set again on the next page. Continue?',fallbackNearby:'A separate tour page for Teriberka is not verified. Open Murmansk tours instead? You will need to choose the dates, nights and travellers again.',winter:'Winter in Russia',countries:'Countries',dates:'Departure date',reset:'Back to search',chipDate:'Tomorrow',noResults:'No results',range:'Number of nights'},
-hi:{partnerLanguage:'टूर खोजने पर रूसी भाषा वाली पार्टनर साइट खुलेगी।',from:'कहाँ से',destination:'देश, रिज़ॉर्ट या शहर',date:'कब',nights:'कितनी रातें',who:'यात्री',search:'टूर खोजें',min:'से',max:'तक',night:'रातें',adults:'वयस्क',adult:'वयस्क',adult2:'वयस्क',children:'बच्चे',child:'बच्चा',child2:'बच्चे',childAge:'यात्रा के अंत में उम्र',ageRequired:'हर बच्चे की उम्र चुनें।',invalid:'टूर की जानकारी जाँचें।',fallbackDeparture:'इस शहर से प्रस्थान को अभी सीधे खोज में नहीं भेज सकते। टूटू पर शहर, तारीख़, रातें और यात्रियों को दोबारा चुनना होगा। आगे बढ़ें?',fallbackPair:'आपके चुने हुए शहर से इस मार्ग का पेज खुलेगा। टूटू पर तारीख़, रातें और यात्रियों को फिर चुनें। आगे बढ़ें?',fallbackChildren:'बच्चों के साथ टूर के लिए टूटू पर बच्चों की संख्या, उम्र, तारीख़ और रातें दोबारा चुननी होंगी। आगे बढ़ें?',select:'सूची से जगह चुनें',fallback:'टूटू पर चुनी हुई जगह का पेज खुलेगा। तारीख़, रातों की संख्या और यात्रियों को वहाँ दोबारा चुनना पड़ सकता है। आगे बढ़ें?',fallbackNearby:'तेरिबेरका के लिए अलग टूर पेज की पुष्टि नहीं हुई है। मुर्मांस्क के टूर खुलेंगे, जहाँ तारीख़, रातें और यात्रियों को दोबारा चुनना होगा। आगे बढ़ें?',winter:'रूस की सर्दियाँ',countries:'देश',dates:'रवाना होने की तारीख़',reset:'खोज पर वापस जाएँ',chipDate:'कल',noResults:'कोई परिणाम नहीं',range:'रातों की संख्या'}
+ru:{previewMessage:'Это демонстрационная форма: направления и параметры выбираются, но поиск и бронирование пока не запускаются.',from:'Откуда',findDeparture:'Поиск города отправления',destination:'Страна, курорт или город',date:'Когда',nights:'Кол-во ночей',who:'Кто едет',search:'Найти туры',min:'от',max:'до',night:'ночей',adults:'Взрослые',adult:'взрослый',adult2:'взрослых',children:'Дети',child:'ребёнок',child2:'детей',childAge:'Возраст на конец поездки',ageRequired:'Укажите возраст каждого ребёнка.',invalid:'Проверьте параметры тура.',fallbackDeparture:'Этот город вылета пока нельзя передать в поиск автоматически. На Туту потребуется снова выбрать город, даты, ночи и туристов. Продолжить?',fallbackPair:'Откроется страница выбранного маршрута из вашего города. Даты, ночи и туристов понадобится указать на Туту ещё раз. Продолжить?',fallbackChildren:'Для поиска тура с детьми нужно повторно выбрать количество и возраст детей на Туту, а также даты и ночи. Продолжить?',select:'Выберите направление из списка',fallback:'Откроется страница выбранного направления на Туту. Дату, ночи и число туристов, возможно, потребуется указать повторно. Продолжить?',fallbackNearby:'Для Териберки пока не подтверждена отдельная страница туров. Откроется страница туров в Мурманск: даты, ночи и туристов нужно будет выбрать заново. Продолжить?',winter:'Зимняя сказка в России',countries:'Страны',dates:'Дата вылета',reset:'Вернуться к поиску',chipDate:'Завтра',noResults:'Ничего не найдено',range:'Диапазон ночей'},
+en:{previewMessage:'Preview only: you can choose a destination and dates, but tour search and booking are not active yet.',findDeparture:'Search departure cities',from:'From',destination:'Country, resort or city',date:'Departure',nights:'Nights',who:'Travellers',search:'Search tours',min:'from',max:'to',night:'nights',adults:'Adults',adult:'adult',adult2:'adults',children:'Children',child:'child',child2:'children',childAge:'Age at end of trip',ageRequired:'Select the age of each child.',invalid:'Check your tour details.',fallbackDeparture:'This departure city cannot yet be passed automatically. On Tutu, choose the departure city, dates, nights and travellers again. Continue?',fallbackPair:'This opens the route page from your chosen city. Please choose dates, nights and travellers again on Tutu. Continue?',fallbackChildren:'For tours with children, please choose the children’s ages and count again on Tutu, along with the dates and nights. Continue?',select:'Select a destination from the suggestions',fallback:'This opens the selected Tutu destination. Dates, nights and travellers may need to be set again on the next page. Continue?',fallbackNearby:'A separate tour page for Teriberka is not verified. Open Murmansk tours instead? You will need to choose the dates, nights and travellers again.',winter:'Winter in Russia',countries:'Countries',dates:'Departure date',reset:'Back to search',chipDate:'Tomorrow',noResults:'No results',range:'Number of nights'},
+hi:{previewMessage:'यह डेमो फ़ॉर्म है। जगह और तारीख़ चुन सकते हैं, लेकिन अभी टूर खोज और बुकिंग चालू नहीं है।',findDeparture:'प्रस्थान का शहर खोजें',from:'कहाँ से',destination:'देश, रिज़ॉर्ट या शहर',date:'कब',nights:'कितनी रातें',who:'यात्री',search:'टूर खोजें',min:'से',max:'तक',night:'रातें',adults:'वयस्क',adult:'वयस्क',adult2:'वयस्क',children:'बच्चे',child:'बच्चा',child2:'बच्चे',childAge:'यात्रा के अंत में उम्र',ageRequired:'हर बच्चे की उम्र चुनें।',invalid:'टूर की जानकारी जाँचें।',fallbackDeparture:'इस शहर से प्रस्थान को अभी सीधे खोज में नहीं भेज सकते। टूटू पर शहर, तारीख़, रातें और यात्रियों को दोबारा चुनना होगा। आगे बढ़ें?',fallbackPair:'आपके चुने हुए शहर से इस मार्ग का पेज खुलेगा। टूटू पर तारीख़, रातें और यात्रियों को फिर चुनें। आगे बढ़ें?',fallbackChildren:'बच्चों के साथ टूर के लिए टूटू पर बच्चों की संख्या, उम्र, तारीख़ और रातें दोबारा चुननी होंगी। आगे बढ़ें?',select:'सूची से जगह चुनें',fallback:'टूटू पर चुनी हुई जगह का पेज खुलेगा। तारीख़, रातों की संख्या और यात्रियों को वहाँ दोबारा चुनना पड़ सकता है। आगे बढ़ें?',fallbackNearby:'तेरिबेरका के लिए अलग टूर पेज की पुष्टि नहीं हुई है। मुर्मांस्क के टूर खुलेंगे, जहाँ तारीख़, रातें और यात्रियों को दोबारा चुनना होगा। आगे बढ़ें?',winter:'रूस की सर्दियाँ',countries:'देश',dates:'रवाना होने की तारीख़',reset:'खोज पर वापस जाएँ',chipDate:'कल',noResults:'कोई परिणाम नहीं',range:'रातों की संख्या'}
 }[lang];
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const initialDate=new Date();initialDate.setDate(initialDate.getDate()+2);
@@ -60,19 +60,30 @@ function render(){
    '<div class="tour-hint-group tour-hint-destination">'+['russia','turkey','egypt','uae'].map(hintButton).join('')+'</div>'+
    '<div class="tour-hint-group tour-hint-date"><button type="button" data-tour-offset="1">'+tomorrow+'</button><button type="button" data-tour-offset="2">'+afterTomorrow+'</button></div></div>'+
    '<div class="tour-hints-winter"><span>'+esc(dict.winter)+':</span>'+
-   ['murmansk','teriberka','baikal','karelia','sheregesh','krasnaya-polyana'].map(hintButton).join('')+'</div>'+ 
-   (lang==='ru'?'':'<p class="tour-language-note">'+esc(dict.partnerLanguage)+'</p>');
+   ['murmansk','teriberka','baikal','karelia','sheregesh','krasnaya-polyana'].map(hintButton).join('')+'</div>';
  bind();
 }
 function options(list){
  return '<div class="tour-option-list">'+list.map(x=>{
-   const meta=x.kind==='winter'?dict.winter:x.kind==='resort'?(data.byKey.get(x.parent)?.name[lang]||''):dict.countries;
+   const meta=x.kind==='winter'?dict.winter:
+     (x.kind==='resort'||x.kind==='place')?(data.byKey.get(x.parent)?.name[lang]||''):dict.countries;
    return '<button type="button" role="option" aria-selected="false" id="tour-option-'+esc(x.key)+'" data-tour-choice="'+esc(x.key)+'"><strong>'+esc(x.name[lang])+'</strong><small>'+esc(meta)+'</small></button>';
  }).join('')+'</div>';
 }
 function destinationPanel(q){
  const items=data.find(q,18);
  return items.length?options(items):'<p class="tour-empty">'+esc(dict.noResults)+'</p>';
+}
+function departurePanel(q){
+ const query=String(q||'').trim().toLocaleLowerCase();
+ const matching=data.departures.filter(d=>!query||
+   Object.values(d.name).some(v=>String(v).toLocaleLowerCase().includes(query))||
+   String(d.aliases||'').toLocaleLowerCase().includes(query)).slice(0,35);
+ return '<div class="tour-departure-search">'+
+   '<input type="text" class="tour-departure-filter" autocomplete="off" aria-label="'+esc(dict.findDeparture)+'" placeholder="'+esc(dict.findDeparture)+'" value="'+esc(q||'')+'"></div>'+
+   '<div class="tour-option-list tour-departure-list">'+
+   matching.map(d=>'<button type="button" data-tour-dep="'+esc(d.key)+'">'+esc(d.name[lang])+'</button>').join('')+
+   (matching.length?'':'<p class="tour-empty">'+esc(dict.noResults)+'</p>')+'</div>';
 }
 function guestValue(){
  let summary=state.adults+' '+(state.adults===1?dict.adult:dict.adult2);
@@ -102,7 +113,7 @@ function nightsPanel(){
    '<input type="range" min="1" max="29" value="'+state.nightsMax+'" data-tour-range="max" aria-label="'+esc(dict.max+' '+dict.night)+'"></div>';
 }
 function bind(){
- form.querySelector('[data-tour-trigger="departure"]').addEventListener('click',()=>show('departure','<div class="tour-option-list">'+data.departures.map(d=>'<button type="button" data-tour-dep="'+d.key+'">'+esc(d.name[lang])+'</button>').join('')+'</div>'));
+ form.querySelector('[data-tour-trigger="departure"]').addEventListener('click',()=>{show('departure',departurePanel(''));const field=form.querySelector('.tour-departure-filter');if(field)field.focus()});
  form.querySelector('[data-tour-trigger="nights"]').addEventListener('click',()=>show('nights',nightsPanel()));
  form.querySelector('[data-tour-trigger="people"]').addEventListener('click',()=>show('people',guestPanel()));
  form.querySelector('[data-tour-trigger="date"]').addEventListener('click',()=>{const d=new Date(state.date+'T12:00:00');calendarMonth=new Date(d.getFullYear(),d.getMonth(),1);openCalendar()});
@@ -156,7 +167,7 @@ function activate(){
  savedForm.forEach(n=>n.remove());savedHints.forEach(n=>n.remove());
  form.dataset.mode='tour';hints.dataset.mode='tour';
  tab.classList.add('is-active');tab.setAttribute('aria-selected','true');
- document.querySelectorAll('.transport button').forEach(b=>{b.classList.remove('is-active');b.setAttribute('aria-selected','false')});
+ document.querySelectorAll('.transport button:not(.tours-tab)').forEach(b=>{b.classList.remove('is-active');b.setAttribute('aria-selected','false')});
  render();
 }
 function deactivate(){
@@ -166,7 +177,7 @@ function deactivate(){
  tab.classList.remove('is-active');tab.setAttribute('aria-selected','false');
 }
 tab.addEventListener('click',e=>{e.preventDefault();activate()});
-document.querySelectorAll('.transport button').forEach(b=>b.addEventListener('click',()=>deactivate(),true));
+document.querySelectorAll('.transport button:not(.tours-tab)').forEach(b=>b.addEventListener('click',()=>deactivate(),true));
 form.addEventListener('click',e=>{
  if(!active)return;
  const d=e.target.closest('[data-tour-dep]');if(d){state.departure=d.dataset.tourDep;render();return}
@@ -194,7 +205,20 @@ hints.addEventListener('click',e=>{
  if(date){const d=new Date();d.setDate(d.getDate()+Number(date.dataset.tourOffset));state.date=iso(d);render()}
 },true);
 form.addEventListener('input',e=>{
- if(!active)return;const el=e.target.closest('[data-tour-range]');if(!el)return;
+ if(!active)return;
+ const departureFilter=e.target.closest('.tour-departure-filter');
+ if(departureFilter){
+   const panel=form.querySelector('.tour-departure-list');
+   if(!panel)return;
+   const query=departureFilter.value.trim().toLocaleLowerCase();
+   const matching=data.departures.filter(d=>!query||
+     Object.values(d.name).some(v=>String(v).toLocaleLowerCase().includes(query))||
+     String(d.aliases||'').toLocaleLowerCase().includes(query)).slice(0,35);
+   panel.innerHTML=matching.map(d=>'<button type="button" data-tour-dep="'+esc(d.key)+'">'+esc(d.name[lang])+'</button>').join('')||
+     '<p class="tour-empty">'+esc(dict.noResults)+'</p>';
+   return;
+ }
+ const el=e.target.closest('[data-tour-range]');if(!el)return;
  const val=Number(el.value);
  if(el.dataset.tourRange==='min'){state.nightsMin=Math.min(val,state.nightsMax)}else{state.nightsMax=Math.max(val,state.nightsMin)}
  const panel=form.querySelector('.tour-panel--nights');if(!panel)return;
@@ -209,23 +233,16 @@ form.addEventListener('change',e=>{
  if(!active)return;const select=e.target.closest('[data-tour-child-age]');if(!select)return;
  state.childAges[Number(select.dataset.tourChildAge)]=select.value===''?null:Number(select.value);
 });
+// This release is a VISUAL-ONLY prototype. No external travel links,
+// redirects, partner API requests, booking or payment actions on submit.
 form.addEventListener('submit',e=>{
  if(!active)return;e.preventDefault();e.stopImmediatePropagation();
  const d=data.byKey.get(state.destination);
- // Never search a silently substituted location; the visible input must match choice.
- if(form.querySelector('.tour-destination').value!==d.name[lang]){alert(dict.select);return}
+ if(!d||form.querySelector('.tour-destination').value!==d.name[lang]){alert(dict.select);return}
  if(state.children&&state.childAges.some(age=>!Number.isInteger(age))){alert(dict.ageRequired);return}
- try{
-  const result=data.build(state);
-  if(!result.filtered){
-   const message=result.destination.browseAs==='murmansk'?dict.fallbackNearby:
-       result.reason==='children'?dict.fallbackChildren:
-       result.departureApplied?dict.fallbackPair:
-       result.reason==='departure'?dict.fallbackDeparture:dict.fallback;
-   if(!confirm(message))return;
-  }
-  window.location.assign(result.url);
- }catch(err){alert(dict.invalid)}
+ let message=hints.querySelector('.tour-preview-message');
+ if(!message){message=document.createElement('p');message.className='tour-preview-message';message.setAttribute('role','status');hints.appendChild(message)}
+ message.textContent=dict.previewMessage;
 },true);
 document.addEventListener('click',e=>{if(active&&!e.target.closest('.tour-cell')&&!e.target.closest('.tour-panel'))close()});
 document.addEventListener('keydown',e=>{if(active&&e.key==='Escape')close()});
