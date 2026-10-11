@@ -39,6 +39,8 @@ def run_case(pg,lang,width):
     check(not missing,"missing assets "+str(missing[:3]))
     check(not errors,"page Javascript errors "+str(errors))
     click_tab(pg)
+    check(pg.locator('.tour-language-note').count()==(0 if lang=='ru' else 1),
+          "EN and HI visitors are informed the downstream tour site is Russian")
     catalog=pg.evaluate("""() => ({
        countries:window.TUTU_TOURS.destinations.filter(x=>x.kind==='country').length,
        winter:window.TUTU_TOURS.destinations.filter(x=>x.kind==='winter').length,
