@@ -630,6 +630,7 @@
   });
   renderForm();
   if(!persisted.activeMode)persistence?.setActive(mode);
+  window.TUTU_SAVE_STANDARD_NOW=saveStandard;
   window.addEventListener('pagehide',saveStandard);
   document.documentElement.classList.add('search-v2-ready');
 })();
