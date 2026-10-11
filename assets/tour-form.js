@@ -50,7 +50,15 @@ function render(){
  field(dict.nights,button(state.nightsMin+'–'+state.nightsMax+' '+dict.night,'nights'),'nights')+
  field(dict.who,button(state.adults+' '+(state.adults===1?dict.adult:dict.adult2),'people'),'people')+
  '<button type="submit" class="v2-submit tour-submit">'+esc(dict.search)+'</button>';
- hints.innerHTML='<div class="tour-hints"><span>'+esc(dict.winter)+':</span>'+['murmansk','teriberka','baikal','karelia','sheregesh','krasnaya-polyana'].map(key=>{const d=data.byKey.get(key);return '<button type="button" data-tour-choice="'+key+'">'+esc(d.name[lang])+'</button>'}).join('')+'</div>';
+ const hintButton=(key)=>{const d=data.byKey.get(key);return '<button type="button" data-tour-choice="'+key+'">'+esc(d.name[lang])+'</button>'};
+ const tomorrow=lang==='ru'?'Завтра':lang==='hi'?'कल':'Tomorrow';
+ const afterTomorrow=lang==='ru'?'Послезавтра':lang==='hi'?'परसों':'In two days';
+ hints.innerHTML='<div class="tour-hints-top">'+
+   '<div class="tour-hint-group tour-hint-departure">'+data.departures.map(d=>'<button type="button" data-tour-dep="'+d.key+'">'+esc(d.name[lang])+'</button>').join('')+'</div>'+
+   '<div class="tour-hint-group tour-hint-destination">'+['russia','turkey','egypt','uae'].map(hintButton).join('')+'</div>'+
+   '<div class="tour-hint-group tour-hint-date"><button type="button" data-tour-offset="1">'+tomorrow+'</button><button type="button" data-tour-offset="2">'+afterTomorrow+'</button></div></div>'+
+   '<div class="tour-hints-winter"><span>'+esc(dict.winter)+':</span>'+
+   ['murmansk','teriberka','baikal','karelia','sheregesh','krasnaya-polyana'].map(hintButton).join('')+'</div>';
  bind();
 }
 function options(list){
@@ -114,7 +122,13 @@ form.addEventListener('click',e=>{
  const day=e.target.closest('[data-tour-day]');if(day){state.date=day.dataset.tourDay;render();return}
  const step=e.target.closest('[data-tour-step]');if(step){state.adults=Math.min(9,Math.max(1,state.adults+Number(step.dataset.tourStep)));render();form.querySelector('[data-tour-trigger="people"]').click();return}
 });
-hints.addEventListener('click',e=>{if(!active)return;const el=e.target.closest('[data-tour-choice]');if(el){state.destination=el.dataset.tourChoice;render()}},true);
+hints.addEventListener('click',e=>{
+ if(!active)return;
+ const dest=e.target.closest('[data-tour-choice]');if(dest){state.destination=dest.dataset.tourChoice;render();return}
+ const dep=e.target.closest('[data-tour-dep]');if(dep){state.departure=dep.dataset.tourDep;render();return}
+ const date=e.target.closest('[data-tour-offset]');
+ if(date){const d=new Date();d.setDate(d.getDate()+Number(date.dataset.tourOffset));state.date=iso(d);render()}
+},true);
 form.addEventListener('input',e=>{
  if(!active)return;const el=e.target.closest('[data-tour-range]');if(!el)return;
  const val=Number(el.value);
