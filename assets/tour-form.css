@@ -149,7 +149,7 @@
   display:flex;align-items:center;justify-content:space-between;
   gap:10px;margin-bottom:15px;
   font:400 14px/1.35 var(--font);
-  color:var(--ink,#0d0b68);
+  color:#000;
 }
 .search.search-v2[data-mode="tour"] .tour-night-head b{font-weight:600}
 .search.search-v2[data-mode="tour"] .tour-range{
@@ -198,7 +198,7 @@
   outline:3px solid #0d0b68;outline-offset:2px;
 }
 .search.search-v2[data-mode="tour"] .tour-empty{
-  padding:12px;color:#8c8ca1;font:400 14px/1.35 var(--font);
+  padding:12px;color:#000;font:400 14px/1.35 var(--font);
 }
 
 /* At the narrowest tablet width the floating traveller stepper can cover
@@ -218,5 +218,14 @@
     border-radius:0!important;
     box-shadow:none!important;
     box-sizing:border-box!important;
+  }
+}
+
+/* Desktop nights picker opens rightward from the left edge of Nights.
+   Tablet popovers already use left anchoring; phone popovers stay inline. */
+@media (min-width: 1101px) {
+  .search.search-v2[data-mode="tour"] .tour-cell--nights > .tour-panel--nights {
+    left: 0;
+    right: auto;
   }
 }
