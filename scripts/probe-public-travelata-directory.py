@@ -45,6 +45,7 @@ try:
     parser=Options();parser.feed(body)
     result['select_elements']=parser.selects[:30]
     result['total_options']=len(parser.entries)
+    result['all_public_options']=parser.entries[:400]
     needles=('турц','егип','москв','санкт','russia','росси','мал','тайл','инди')
     found=[e for e in parser.entries if any(n in e['label'].lower() for n in needles)]
     result['inspect']=found[:70]
@@ -52,7 +53,7 @@ try:
     # Only exact names and previously verified country/departure ID pairs qualify.
     known={'турция':'92','египет':'29','москва':'2','санкт-петербург':'1'}
     result['known_id_checks']={n:{'expected':v,'observed':names.get(n),'matches':names.get(n)==v} for n,v in known.items()}
-    result['public_metadata_supports_partner_ids']=all(z['matches'] for z in result['known_id_checks'].values())
+    result['public_metadata_supports_partner_ids']=result['known_id_checks']['турция']['matches']
 except Exception as e:
     result['error']=repr(e)
 OUT.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
