@@ -35,7 +35,7 @@ function placeField(role,caption){
  const item=role==='departure'?data.departureByKey.get(state.departure):data.byKey.get(state.destination);
  const value=item?(item.name[lang]||item.name.en||item.ru):'';
  return '<div class="v2-field v2-field--place tour-cell tour-cell--'+role+(value?' has-value':'')+
-   '" data-role="'+role+'">'+
+   '" data-role="'+(role==='departure'?'from':'to')+'">'+
    '<span class="v2-caption">'+esc(caption)+'</span>'+
    '<input type="text" class="v2-input tour-'+(role==='departure'?'departure-input':'destination')+
    '" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list"'+
