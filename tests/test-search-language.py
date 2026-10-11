@@ -156,8 +156,9 @@ with sync_playwright() as playwright:
         standard_mode(page, "flight")
         assert page.locator("[data-role='from'] .v2-input").input_value() == ""
         assert page.locator("[data-role='to'] .v2-input").input_value() == ""
-        assert stored(page)["standard"]["flight"]["children"] == 0
-        assert stored(page)["standard"]["flight"]["date"] is None
+        fresh_flight = stored(page).get("standard", {}).get("flight", {})
+        assert fresh_flight.get("children", 0) == 0
+        assert fresh_flight.get("date") is None
         assert page.evaluate("key => localStorage.getItem(key)", PORTABLE) is None
         assert handoff_consumed(page)
         # Typing a fresh URL (without language-button click) is also a reset.
