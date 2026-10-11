@@ -95,7 +95,11 @@ function renderHints(){
      const d=data.byKey.get(key);
      return '<button type="button" class="quick-chip-v2" data-tour-choice="'+esc(key)+'">'+
        esc(d.name[lang]||d.name.en)+'</button>';
-   }).join('')+'</div>';
+   }).join('')+'</div>'+
+   '<div class="quick-group-v2 quick-group-v2--date">'+
+   [0,1].map(offset=>'<button type="button" class="quick-chip-v2" data-tour-date="'+offset+'">'+
+     esc(offset===0?(lang==='ru'?'Сегодня':lang==='hi'?'आज':'Today'):
+       (lang==='ru'?'Завтра':lang==='hi'?'कल':'Tomorrow'))+'</button>').join('')+'</div>';
 }
 function showSearchIssue(message){
  let issue=document.querySelector('.tour-search-issue');
@@ -151,12 +155,32 @@ function originMatches(q){
  };
  return ranked.sort((a,b)=>priority(a)-priority(b)).slice(0,6);
 }
+
+const departureCountryIds={
+ kazakhstan:[3,4,5,9,11,31,59,77,86,197],
+ kyrgyzstan:[14,155,198],
+ belarus:[17,45,194,195,196],
+ uzbekistan:[94,199,200,201,202,203,205],
+ azerbaijan:[204,212],
+ georgia:[206,208],
+ armenia:[209]
+};
+const departureCountryNames={
+ ru:{russia:'Россия',kazakhstan:'Казахстан',kyrgyzstan:'Кыргызстан',belarus:'Беларусь',uzbekistan:'Узбекистан',azerbaijan:'Азербайджан',georgia:'Грузия',armenia:'Армения'},
+ en:{russia:'Russia',kazakhstan:'Kazakhstan',kyrgyzstan:'Kyrgyzstan',belarus:'Belarus',uzbekistan:'Uzbekistan',azerbaijan:'Azerbaijan',georgia:'Georgia',armenia:'Armenia'},
+ hi:{russia:'रूस',kazakhstan:'कज़ाख़स्तान',kyrgyzstan:'किर्गिज़स्तान',belarus:'बेलारूस',uzbekistan:'उज़्बेकिस्तान',azerbaijan:'अज़रबैजान',georgia:'जॉर्जिया',armenia:'आर्मेनिया'}
+};
+function departureCountryName(d){
+ const id=Number(d.id);
+ const key=Object.keys(departureCountryIds).find(country=>departureCountryIds[country].includes(id))||'russia';
+ return departureCountryNames[lang][key];
+}
 function departurePanel(q){
  const items=originMatches(q);
  return items.map((d,i)=>'<button type="button" class="suggest-item" role="option"'+
   ' aria-selected="false" id="tour-departure-option-'+i+'" data-tour-dep="'+esc(d.key)+'">'+
   '<span class="suggest-main">'+esc(d.name[lang]||d.name.en)+'</span>'+
-  '<span class="suggest-meta">'+esc(dict.departureMeta)+'</span></button>').join('')||
+  '<span class="suggest-meta">'+esc(departureCountryName(d))+'</span></button>').join('')||
   '<p class="tour-empty">'+esc(dict.noResults)+'</p>';
 }
 function guestPanel(){
@@ -332,7 +356,15 @@ hints.addEventListener('click',e=>{
  const departure=e.target.closest('[data-tour-dep]');
  if(departure){e.preventDefault();commitSelection('departure',departure.dataset.tourDep);return}
  const selected=e.target.closest('[data-tour-choice]');
- if(selected){e.preventDefault();commitSelection('destination',selected.dataset.tourChoice)}
+ if(selected){e.preventDefault();commitSelection('destination',selected.dataset.tourChoice);return}
+ const dateHint=e.target.closest('[data-tour-date]');
+ if(dateHint){
+   e.preventDefault();
+   const d=new Date();
+   d.setDate(d.getDate()+Number(dateHint.dataset.tourDate));
+   state.date=iso(d);
+   render();
+ }
 },true);
 form.addEventListener('input',e=>{
  if(!active)return;
