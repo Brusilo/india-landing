@@ -108,6 +108,30 @@ const kazan=build(q('kazan','murmansk'));
 assert.equal(kazan.filtered,false);
 assert.equal(kazan.departureApplied,true);
 assert.equal(kazan.url,'https://tours.tutu.ru/rossiya/murmansk/iz/33_kazan/');
+// Verified 7 winter destinations from each of 4 city origins (28/28 pages).
+const winterOrigins={
+ moscow:'491_moskva',spb:'75_sankt-peterburg',kazan:'33_kazan',
+ ekaterinburg:'29_ekaterinburg'
+};
+const winterDestinations={
+ baikal:'baikal',karelia:'karelia','krasnaya-polyana':'krasnaya_polyana',
+ sheregesh:'sheregesh',altai:'altai',sochi:'sochi',
+ 'veliky-ustyug':'veliky_ustyug'
+};
+for(const [from,originSlug] of Object.entries(winterOrigins)){
+ for(const [to,resortSlug] of Object.entries(winterDestinations)){
+  const result=build(q(from,to));
+  assert.equal(result.filtered,false,from+' to '+to+' is a public Tutu SEO page');
+  assert.equal(result.departureApplied,true,from+' departure is preserved to '+to);
+  assert.equal(result.url,
+    'https://tours.tutu.ru/rossiya/'+resortSlug+'/iz/'+originSlug+'/',
+    from+' to '+to+' uses exact verified Tutu URL');
+ }
+}
+const unverifiedPair=build(q('samara','baikal'));
+assert.equal(unverifiedPair.departureApplied,false,
+  'Unverified city/resort combination must not fabricate a Tutu SEO route');
+assert.equal(unverifiedPair.url,'https://tours.tutu.ru/strana/rossiya/kurort/baikal/');
 const unknownCity=build(q('kazan','turkey'));
 assert.equal(unknownCity.filtered,false);
 assert.equal(unknownCity.url,'https://tours.tutu.ru/strana/turkey/');
