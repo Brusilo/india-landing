@@ -5,6 +5,7 @@ Do not treat an ID as verified unless it matches known independent examples.
 Never scrape private partner API endpoints or introduce credentials in frontend.
 """
 import json
+import subprocess
 from html.parser import HTMLParser
 from urllib.request import Request, urlopen
 from pathlib import Path
@@ -54,8 +55,40 @@ try:
     known={'турция':'92','египет':'29','москва':'2','санкт-петербург':'1'}
     result['known_id_checks']={n:{'expected':v,'observed':names.get(n),'matches':names.get(n)==v} for n,v in known.items()}
     result['public_metadata_supports_partner_ids']=result['known_id_checks']['турция']['matches']
+    # Detect future catalog ID drift without automatically publishing live HTML.
+    js=(
+        "const fs=require('fs'),vm=require('vm');"
+        "const c={window:{},URLSearchParams};"
+        "vm.runInNewContext(fs.readFileSync('assets/tour-catalog.js','utf8'),c);"
+        "console.log(JSON.stringify(c.window.TUTU_TOURS.destinations.filter(x=>x.kind==='country')))"
+    )
+    catalog=json.loads(subprocess.check_output(['node','-e',js],text=True))
+    public_by_name={o['label']:int(o['value']) for o in parser.entries
+        if (o.get('select') or {}).get('name')=='defaultCountry'
+           and o.get('value') not in (None,'','0')
+           and str(o['value']).isdigit()}
+    confirmed=[];incomplete=[];conflicting=[]
+    for d in catalog:
+        expected=public_by_name.get(d['ru'])
+        if expected is None:
+            incomplete.append({'key':d['key'],'name':d['ru'],'catalog_id':d['id']})
+        elif expected==d['id']:
+            confirmed.append(d['key'])
+        else:
+            conflicting.append({'key':d['key'],'name':d['ru'],
+                                'public_id':expected,'catalog_id':d['id']})
+    result['catalog_comparison']={
+        'public_country_values':len(public_by_name),
+        'catalog_country_count':len(catalog),
+        'verified_by_public_constructor':len(confirmed),
+        'verified_keys':confirmed,
+        'not_in_public_constructor':incomplete,
+        'conflicting_ids':conflicting
+    }
+
 except Exception as e:
     result['error']=repr(e)
 OUT.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
 print('PUBLIC TRAVELATA CONSTRUCTOR',json.dumps({k:result.get(k) for k in ('http_status','bytes','total_options','known_id_checks','public_metadata_supports_partner_ids','error')},ensure_ascii=False))
 print('OPTIONS',json.dumps(result['inspect'][:15],ensure_ascii=False))
+print('CATALOG COMPARISON',json.dumps(result.get('catalog_comparison'),ensure_ascii=False))
