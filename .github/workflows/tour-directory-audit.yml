@@ -1,0 +1,33 @@
+name: Live Tutu destination directory audit
+
+on:
+  pull_request:
+    paths:
+      - 'assets/tour-catalog.js'
+      - 'scripts/audit-tour-directory.py'
+      - '.github/workflows/tour-directory-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  directory-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compare catalog links with live official Tutu directories
+        run: |
+          mkdir -p /tmp/tutu-tour-audit
+          python scripts/audit-tour-directory.py --output /tmp/tutu-tour-audit/directory-audit.json
+      - name: Archive audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-tutu-directory-audit
+          path: /tmp/tutu-tour-audit/
+          if-no-files-found: warn
