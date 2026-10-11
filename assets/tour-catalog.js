@@ -119,6 +119,40 @@
     {key:'bali',kind:'resort',parent:'indonesia',id:null,name:{ru:'Бали',en:'Bali',hi:'बाली'},ru:'Бали',browse:'https://tours.tutu.ru/strana/indonesia/kurort/bali/',aliases:'bali indonesia island'},
     {key:'dubai',kind:'resort',parent:'uae',id:null,name:{ru:'Дубай',en:'Dubai',hi:'दुबई'},ru:'Дубай',browse:'https://tours.tutu.ru/strana/united_arab_emirates/kurort/dubai/',aliases:'dubai emirates'}
   ];
+  // Display-only additions from the public Travelata country/fromCity/toCity
+  // dictionaries. The curated 81 items take precedence because their RU/EN/HI
+  // names and Tutu URLs have been checked separately. Entries below are
+  // selectable suggestions, not guarantees of availability or booking links.
+  const provider=root.TUTU_TOUR_PUBLIC_OPTIONS||{countries:[],departures:[],resorts:{}};
+  const providerStats={
+    countries:(provider.countries||[]).length,
+    departures:(provider.departures||[]).length,
+    locations:Object.values(provider.resorts||{}).reduce((n,items)=>n+items.length,0)
+  };
+  const sameName=(a,b)=>String(a).toLocaleLowerCase('ru-RU').replace(/ё/g,'е').trim()===
+                          String(b).toLocaleLowerCase('ru-RU').replace(/ё/g,'е').trim();
+  const alreadyCountry=name=>destinations.some(d=>d.kind==='country'&&sameName(d.ru,name));
+  for(const [sourceId,ru,en] of provider.countries||[]){
+    if(alreadyCountry(ru))continue;
+    destinations.push({key:'catalog-country-'+sourceId,kind:'country',id:null,source:'travelata-visual',
+      ru,name:{ru,en,hi:en},aliases:en,providerId:Number(sourceId),browse:null});
+  }
+  for(const [sourceId,ru,en] of provider.departures||[]){
+    if(departures.some(d=>sameName(d.name.ru,ru)))continue;
+    departures.push({key:'catalog-departure-'+sourceId,id:null,source:'travelata-visual',
+      name:{ru,en,hi:en},aliases:en,providerId:Number(sourceId)});
+  }
+  const providerParent={'76':'russia','92':'turkey','33':'india'};
+  for(const [countryId,places] of Object.entries(provider.resorts||{})){
+    const parent=providerParent[countryId];if(!parent)continue;
+    for(const [sourceId,ru,en] of places){
+      if(destinations.some(d=>(d.kind==='winter'||d.kind==='resort'||d.kind==='place')
+         &&(d.parent||'russia')===parent&&sameName(d.ru,ru)))continue;
+      destinations.push({key:'catalog-place-'+countryId+'-'+sourceId,kind:'place',
+        parent,id:null,source:'travelata-visual',providerId:Number(sourceId),
+        ru,name:{ru,en,hi:en},aliases:en,browse:null});
+    }
+  }
   const byKey=new Map(destinations.map(d=>[d.key,d]));
   // Each of the following 7 x 4 city/resort combinations was independently
   // checked to return an exact-path HTTP 200 page whose heading matches the
@@ -255,5 +289,5 @@
     hash.set('sort','recommend');
     return {url:'https://web.tutu.travelata.ru/search/?'+q.toString()+'#?'+hash.toString(),filtered:true,destination:d,resortApplied:Boolean(resort)};
   }
-  root.TUTU_TOURS={departures,destinations,byKey,departureByKey,find,build,dateParts,murmanskFromPages,winterCityTourPage,brandedResorts};
+  root.TUTU_TOURS={departures,destinations,byKey,departureByKey,find,build,dateParts,murmanskFromPages,winterCityTourPage,brandedResorts,providerStats};
 })(window);
