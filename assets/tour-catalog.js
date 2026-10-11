@@ -134,12 +134,12 @@
   const alreadyCountry=name=>destinations.some(d=>d.kind==='country'&&sameName(d.ru,name));
   for(const [sourceId,ru,en] of provider.countries||[]){
     if(alreadyCountry(ru))continue;
-    destinations.push({key:'catalog-country-'+sourceId,kind:'country',id:null,source:'travelata-visual',
+    destinations.push({key:'catalog-country-'+sourceId,kind:'country',id:Number(sourceId),source:'travelata-public',
       ru,name:{ru,en,hi:en},aliases:en,providerId:Number(sourceId),browse:null});
   }
   for(const [sourceId,ru,en] of provider.departures||[]){
     if(departures.some(d=>sameName(d.name.ru,ru)))continue;
-    departures.push({key:'catalog-departure-'+sourceId,id:null,source:'travelata-visual',
+    departures.push({key:'catalog-departure-'+sourceId,id:Number(sourceId),source:'travelata-public',
       name:{ru,en,hi:en},aliases:en,providerId:Number(sourceId)});
   }
   const providerParent={'76':'russia','92':'turkey','33':'india'};
@@ -246,13 +246,17 @@
     if(date.iso<todayIso||date.iso>maxIso)throw new Error('Invalid tour date');
 
     // Only allow verified resort/country pairs into the branded search.
-    const resort=d.kind==='winter'?brandedResorts[d.key]:null;
+    const resort=d.kind==='winter'?brandedResorts[d.key]:
+      d.kind==='place'&&Number.isInteger(d.providerId)?{country:d.parent,cityId:d.providerId}:null;
     const searchCountry=resort?byKey.get(resort.country):d;
     if((!resort&&!Number.isInteger(d.id))||!Number.isInteger(dep.id)||children>0){
       const target=(d.key==='murmansk'||d.browseAs==='murmansk')
         ?murmanskFromPages[dep.key]
         :d.kind==='winter'?winterCityTourPage(d.key,dep.key):null;
-      return {url:target||d.browse,filtered:false,destination:d,departure:dep,
+      const exactBrowse=target||d.browse;
+      const parentBrowse=d.parent&&byKey.get(d.parent)?.browse;
+      return {url:exactBrowse||parentBrowse||'https://tours.tutu.ru/strana/',filtered:false,destination:d,departure:dep,
+        destinationApplied:Boolean(exactBrowse),
         departureApplied:Boolean(target),reason:children>0?'children':
          !Number.isInteger(dep.id)?'departure':'destination'};
     }
