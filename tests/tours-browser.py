@@ -98,8 +98,21 @@ def run_case(pg,lang,width):
     pg.evaluate("window.__qaNavigations=[]")
     choose(pg,"Egypt","egypt")
     pg.locator(".tour-submit").click()
+    kaz_et=pg.evaluate("window.__qaNavigations")
+    check(len(kaz_et)==1,"Kazan-Egypt has one branded navigation")
+    kaz_url=urlparse(kaz_et[0]);kaz_params=parse_qs(kaz_url.query)
+    check(kaz_url.netloc=="web.tutu.travelata.ru" and
+          kaz_params.get("departure")==["29"] and kaz_params.get("arrival_id")==["29"],
+          "Kazan Travelata origin ID 29 is distinct from its Tutu SEO origin code 33")
+    pg.evaluate("window.__qaNavigations=[]")
+    # Rostov-on-Don is not present in the publicly available Travelata
+    # departure directory and must remain browse-only, even for Egypt.
+    pg.evaluate("window.__qaNavigations=[]")
+    pg.locator('[data-tour-trigger="departure"]').click()
+    pg.locator('.tour-panel--departure [data-tour-dep="rostov-on-don"]').click()
+    pg.locator(".tour-submit").click()
     check(pg.evaluate("window.__qaNavigations")==["https://tours.tutu.ru/strana/egypt/"],
-          "Unknown Travelata city ID falls back rather than sending a fabricated ID")
+          "Rostov still safely falls back instead of inventing a city ID")
     pg.evaluate("window.__qaNavigations=[]")
     pg.locator('[data-tour-trigger="departure"]').click()
     pg.locator('.tour-panel--departure [data-tour-dep="moscow"]').click()
