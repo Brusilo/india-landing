@@ -56,7 +56,7 @@ The public Travelata widget/link-constructor's `fromCity` and `departureCity` op
 | Sochi | 67 | Not whitelisted |
 | Rostov-on-Don | **Not listed** | 72_rostov-na-donu |
 
-The IDs for Moscow and Saint Petersburg also matched supplied co-branded Travelata links. The other 11 IDs have the same official public-dropdown provenance; separate live branded-search checks are included in `tests/probe-live-departures.py` to ensure the cities remain correctly selected after navigation. Missing IDs must never be inferred from Tutu SEO numbers.
+The IDs for Moscow and Saint Petersburg also matched supplied co-branded Travelata links. The other 11 IDs have the same official public-dropdown provenance. **Four additional cities were independently live-tested on the branded results page: Kazan (29), Yekaterinburg (25), Novosibirsk (53), Samara (64), all 4/4 passed**, retaining the city, country, date, URL fields and an automatically generated `sid`. Evidence: https://github.com/Brusilo/india-landing/actions/runs/38157085243 . The remaining seven publicly sourced city IDs have not each been end-to-end tested yet; live acceptance for those pairs remains recommended. The probe code is in `tests/probe-live-departures.py`. Missing IDs must never be inferred from Tutu SEO numbers.
 
 ## Verified country IDs from the public Travelata link constructor
 
