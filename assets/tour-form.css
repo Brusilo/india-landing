@@ -196,3 +196,24 @@
 .search.search-v2[data-mode="tour"] .tour-empty{
   padding:12px;color:#8c8ca1;font:400 14px/1.35 var(--font);
 }
+
+/* At the narrowest tablet width the floating traveller stepper can cover
+   the Search CTA. Keep the same native traveller controls and colours, but
+   expand their panel inside its own white field so the button remains tappable. */
+@media(min-width:600px) and (max-width:767.98px){
+  html .search.search-v2[data-mode="tour"] .tour-panel--people{
+    position:static!important;
+    inset:auto!important;
+    display:block;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin:9px 0 0!important;
+    padding:9px 0 0!important;
+    border:0!important;
+    border-top:1px solid #e6e7f3!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    box-sizing:border-box!important;
+  }
+}
