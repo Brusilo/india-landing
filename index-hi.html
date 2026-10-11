@@ -666,7 +666,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 <link rel="stylesheet" href="assets/responsive.css?v=20261009-copy-ru">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
 <link rel="stylesheet" href="assets/tutu-system.css?v=379">
-<link rel="stylesheet" href="assets/tour-form.css?v=20261011-direct-tour-search-feedback">
+<link rel="stylesheet" href="assets/tour-form.css?v=20261011-country-and-date-chips">
 </head>
 <body>
 <!-- Yandex.Metrika counter (noscript) -->
@@ -1046,12 +1046,14 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 </footer>
 
 <script src="assets/search-places.js?v=20261009-routes"></script>
+<script src="assets/daily-prices.js"></script>
+<script src="assets/pricing.js?v=20261011-shared-fx-promo"></script>
 <script>
 const CONFIG = {
   currency: '₽',
   hotelDiscount: 15,
   hotelDiscountMax: 3000,
-  rubToInr: 1.12888,
+  rubToInr: window.TUTU_PRICING.rubToInr(),
 
   routes: [
     { id:'r1', from:'सेंट पीटर्सबर्ग', to:'मॉस्को', typeLine:'ट्रेन', transport:'train', combined:false, price:'831', img:'assets/routes/moscow-kremlin.jpg', gradient:'linear-gradient(135deg,#BA61FF 0%,#0D0B68 100%)' },
@@ -1097,7 +1099,9 @@ const CTA_CARD = `
   </a>`;
 
 document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
-  const rub = parseInt(r.price.replace(/\s/g, ''), 10);
+  const baseRub = window.TUTU_PRICING.basePrice('routes',r.id,r.price);
+  const promoRub = r.transport==='flight' ? window.TUTU_PRICING.discountRub('flight',baseRub) : 0;
+  const rub = baseRub - promoRub;
   return `
   <article class="card card--route" data-cta="route_${r.id}${r.combined ? '_combined' : ''}" data-transport="${r.transport}">
     <div class="card-media${r.img ? '' : ' card-media--placeholder'}" style="background:${r.img ? `url('${r.img}') center/cover no-repeat, ` : ''}${r.gradient}">${r.img ? '' : `<img src="assets/icon-${r.transport === 'flight' ? 'flight' : 'train'}.png" alt="" aria-hidden="true">`}</div>
@@ -1113,8 +1117,8 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
 
 document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
   // INTHOTELTUTU: 15% off Tutu's price, at most 3000 ₽.
-  const oldRub = toRub(h.price);
-  const offRub = Math.min(Math.round(oldRub * CONFIG.hotelDiscount / 100), CONFIG.hotelDiscountMax);
+  const oldRub = window.TUTU_PRICING.basePrice('hotels',h.id,h.price);
+  const offRub = window.TUTU_PRICING.discountRub('hotel',oldRub);
   const rub = oldRub - offRub;
   return `
   <article class="card card--hotel" data-cta="hotel_${h.id}">
@@ -1129,12 +1133,12 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
       <p class="hotel-name">${h.name}</p>
       <div class="route-price">
         <span class="price">${fmtNum(rub)}&nbsp;₽</span>
-        <s class="route-old">${fmtNum(oldRub)}&nbsp;${CONFIG.currency}</s>
-        <span class="route-discount">-${Math.round(offRub / oldRub * 100)}%</span>
+        ${offRub ? `<s class="route-old">${fmtNum(oldRub)}&nbsp;${CONFIG.currency}</s>` : ''}
+        ${offRub ? `<span class="route-discount">-${Math.round(offRub / oldRub * 100)}%</span>` : ''}
       </div>
       <div class="route-price route-price--inr">
         <span class="route-inr">≈&nbsp;₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
-        <s class="route-old">₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>
+        ${offRub ? `<s class="route-old">₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>` : ''}
         <span class="hotel-night">प्रति रात</span>
       </div>
     </div>
@@ -1178,6 +1182,6 @@ initCarousel('reviews-row', 'reviews');
 <script src="assets/responsive.js?v=20261008-no-flash"></script>
 <script src="assets/tour-public-options.js?v=20261011-visual-catalog"></script>
 <script src="assets/tour-catalog.js?v=20261011-partner-resort-deeplinks"></script>
-<script src="assets/tour-form.js?v=20261011-direct-tour-search"></script>
+<script src="assets/tour-form.js?v=20261011-country-and-date-chips"></script>
 </body>
 </html>
