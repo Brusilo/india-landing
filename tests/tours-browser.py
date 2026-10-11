@@ -118,7 +118,8 @@ def run_case(pg,lang,width):
     pg.locator(".tour-submit").click()
     check(bool(pg.evaluate("window.__qaAlerts")) and not pg.evaluate("window.__qaNavigations"),
           "family flow cannot silently submit unspecified child age")
-    pg.locator('[data-tour-trigger="people"]').click()
+    if not pg.locator(".tour-panel--people").count():
+        pg.locator('[data-tour-trigger="people"]').click()
     pg.locator('[data-tour-child-age="0"]').select_option("7")
     pg.locator(".tour-submit").click()
     check(pg.evaluate("window.__qaNavigations")==["https://tours.tutu.ru/strana/egypt/"],
