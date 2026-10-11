@@ -92,8 +92,8 @@ with sync_playwright() as playwright:
         page.keyboard.press("Escape")
         page.locator("[data-trigger='date']").click()
         check_desktop_popup_geometry(page,
-            ".v2-flight-dates .v2-flight-calendar",
-            ".v2-flight-dates")
+            ".v2-field--date[data-role='date'] > .v2-calendar",
+            ".v2-field--date[data-role='date']")
         page.keyboard.press("Escape")
         pick_place(page, "from", "in-delhi")
         pick_place(page, "to", "ru-moscow")
