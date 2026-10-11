@@ -160,8 +160,8 @@
     const min=Number(state.nightsMin),max=Number(state.nightsMax),adults=Number(state.adults);
     const children=state.children===undefined?0:Number(state.children);
     const ages=Array.isArray(state.childAges)?state.childAges:[];
-    if(!dep||!d||!date||!Number.isInteger(min)||!Number.isInteger(max)||min<1||max>30||min>max||
-       !Number.isInteger(adults)||adults<1||adults>9||
+    if(!dep||!d||!date||!Number.isInteger(min)||!Number.isInteger(max)||min<1||max>29||min>max||
+       !Number.isInteger(adults)||adults<1||adults>6||
        !Number.isInteger(children)||children<0||children>3||adults+children>9||
        (children>0&&(ages.length!==children||ages.some(a=>!Number.isInteger(a)||a<0||a>17))))
        throw new Error('Invalid tour search');
