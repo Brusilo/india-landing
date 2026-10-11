@@ -285,9 +285,9 @@
     // departure/date/night/destination filters. An unsupported exact search
     // stays on the form with an inline (non-modal) explanation instead.
     if((!resort&&!Number.isInteger(d.id))||!Number.isInteger(dep.id)||
-       !Number.isInteger(searchCountry?.id)||children>0){
+       !Number.isInteger(searchCountry?.id)){
       return {url:null,filtered:false,destination:d,departure:dep,
-        reason:children>0?'children':!Number.isInteger(dep.id)?'departure':'destination'};
+        reason:!Number.isInteger(dep.id)?'departure':'destination'};
     }
     if(d.kind!=='country'&&!resort)throw new Error('Unverified destination type');
 
@@ -299,8 +299,11 @@
     q.set('date_begin',date.local);
     q.set('date_end',date.local);
     q.set('adults',String(adults));
+    if(children)q.set('children',String(children));
     q.set('nights_min',String(min));
     q.set('nights_max',String(max));
+    // Travelata's Tutu form uses indexed age keys in the query string.
+    ages.slice(0,children).forEach((age,i)=>q.set('ages['+i+']',String(age)));
     if(resort)q.append('resorts[]',String(resort.cityId));
     q.set('utm_source','tutu_main');
     q.set('utm_medium','internal');
@@ -316,12 +319,20 @@
     hash.set('nightFrom',String(min));
     hash.set('nightTo',String(max));
     hash.set('adults',String(adults));
+    if(children){
+      hash.set('kids',String(children));
+      // The client-side router expects repeated ages[]=5&ages[]=8.
+      ages.slice(0,children).forEach(age=>hash.append('ages[]',String(age)));
+    }
     hash.set('hotelClass','all');
     hash.set('meal','all');
     hash.set('priceFrom','6000');
     hash.set('priceTo','21000000');
     hash.set('sort','recommend');
-    return {url:'https://web.tutu.travelata.ru/search/?'+q.toString()+'#?'+hash.toString(),filtered:true,destination:d,resortApplied:Boolean(resort)};
+    // Match the hash syntax of native Tutu -> Travelata links, which keep
+    // the array brackets literal in the client-side fragment.
+    const hashQuery=hash.toString().replace(/ages%5B%5D/g,'ages[]');
+    return {url:'https://web.tutu.travelata.ru/search/?'+q.toString()+'#?'+hashQuery,filtered:true,destination:d,resortApplied:Boolean(resort)};
   }
   root.TUTU_TOURS={departures,destinations,byKey,departureByKey,find,build,dateParts,murmanskFromPages,winterCityTourPage,brandedResorts,providerStats};
 })(window);
