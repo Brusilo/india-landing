@@ -580,7 +580,7 @@ with sync_playwright() as playwright:
                                 iconWidth:svg.width};
                     }""")
                     assert styling == {
-                        "background":"rgb(245, 245, 249)",
+                        "background": "rgb(255, 255, 255)" if section_id == "hotels" else "rgb(245, 245, 249)",
                         "color":"rgb(95, 23, 197)",
                         "border":"0px",
                         "radius":"24px",

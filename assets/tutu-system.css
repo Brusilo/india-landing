@@ -4565,3 +4565,8 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
    optical misalignment inside the purple transport circles. */
 .hero .transport .ico img[src*="icon-flight"] { transform: translateY(0.5%) !important; }
 .hero .transport .ico img[src*="icon-train"] { transform: translate(2px, -5.1%) !important; }
+
+/* Hotel carousel: the final See all tile has the same white surface as hotel cards.
+   Keep the neutral tile in the routes carousel unchanged. */
+#hotels .card.card--cta { background: #fff; }
+#hotels .card.card--cta:hover { background: #FAFAFD; }
