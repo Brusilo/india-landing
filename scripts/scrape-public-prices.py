@@ -14,6 +14,7 @@ import argparse
 import json
 import re
 import sys
+from time import monotonic
 from datetime import datetime, timedelta, date
 from pathlib import Path
 from urllib.parse import urlencode, urlparse
@@ -25,18 +26,32 @@ MOSCOW = ZoneInfo("Europe/Moscow")
 MONTHS = ("янв", "фев", "мар", "апр", "мая", "июн", "июл",
           "авг", "сен", "окт", "ноя", "дек")
 VALID_HOSTS = {"www.tutu.ru", "avia.tutu.ru", "hotel.tutu.ru"}
-# Tutu displays number grouping with nonbreaking spaces and word joiners.
-INVISIBLE = str.maketrans("", "", "\u2009\u2060\u00a0\u202f\u200b\u200a\u2007")
-CURRENCY_RE = re.compile(r"(?<!\d)(\d{1,3}(?:[ \t]\d{3})+|\d{3,7})\s*₽")
+# Normalize spaces instead of deleting them: the same non-breaking spaces can
+# separate both digits in a fare and the day/month in a calendar cell.
+SPACES = str.maketrans({
+    "\u00a0": " ", "\u202f": " ", "\u2009": " ",
+    "\u200a": " ", "\u2007": " ", "\u2060": None, "\u200b": None,
+})
+CURRENCY_RE = re.compile(r"(?<!\\d)(\\d{1,3}(?:[ \\t]\\d{3})+|\\d{3,7})[ \\t]*₽")
 MAX_PER_CARD = 2_000_000
+WEEKDAYS = "пн|вт|ср|чт|пт|сб|вс"
+# The visible Tutu date navigation has a date on one line and the minimum
+# fare immediately underneath. Never infer the date from other prices nearby.
+CALENDAR_DATE_RE = re.compile(
+    rf"(?P<day>\\d{{1,2}})[ \\t]+(?P<month>{'|'.join(MONTHS)})\\.?"
+    rf"(?:[ \\t]*,[ \\t]*(?:{WEEKDAYS}))?", re.I
+)
+CALENDAR_PRICE_RE = re.compile(
+    r"(?:от[ \\t]+)?(?P<amount>\\d{1,3}(?:[ \\t]+\\d{3})+|\\d{3,7})[ \\t]*₽", re.I
+)
 
 
 def clean(text: str) -> str:
-    return str(text).translate(INVISIBLE)
+    return str(text).translate(SPACES)
 
 
 def rubles(text: str) -> list[int]:
-    amounts = [int(num.replace(" ", "").replace("\t", ""))
+    amounts = [int(num.replace(" ", "").replace("\\t", ""))
                for num in CURRENCY_RE.findall(clean(text))]
     return [value for value in amounts if 100 <= value <= MAX_PER_CARD]
 
@@ -46,26 +61,36 @@ def stamp(day: date) -> str:
 
 
 def route_minimum(text: str, day: date, kind: str) -> int | None:
-    """Read the minimum summary of the SELECTED day's booking results.
+    """Extract only the minimum fare printed in the target day's calendar cell.
 
-    The search page also contains unavailable "~" fares, other-day prices,
-    partner hotels and ancillary fees. Never take a global regex minimum.
+    Do not use the global "Авиа от", "Ж/д от", ticket prices, filter prices
+    or any adjacent calendar day. The browser may render the calendar well
+    before "Выбрать билет" appears, and that button is not a prerequisite.
     """
-    text = clean(text)
-    if stamp(day) not in text:
+    if kind not in ("flight", "train"):
         return None
-    if kind == "flight":
-        if "Выбрать билет" not in text:
-            return None
-        match = re.search(r"Авиа\s*от\s*(\d{3,7})\s*₽", text, re.I)
-    elif kind == "train":
-        if "Выбрать места" not in text:
-            return None
-        match = re.search(r"Ж/д\s*от\s*(\d{3,7})\s*₽", text, re.I)
-    else:
-        return None
-    value = int(match.group(1)) if match else None
-    return value if value and 100 <= value <= MAX_PER_CARD else None
+    lines = clean(text).splitlines()
+    matches: set[int] = set()
+    for i, line in enumerate(lines):
+        label = CALENDAR_DATE_RE.fullmatch(line.strip())
+        if not label or int(label.group("day")) != day.day or (
+            label.group("month").casefold() != MONTHS[day.month - 1]
+        ):
+            continue
+        # Price must be the next nonempty line of THIS date cell. Never scan
+        # through text until the next price, which could belong to another day.
+        for next_line in lines[i + 1:i + 4]:
+            candidate = next_line.strip()
+            if not candidate:
+                continue
+            price = CALENDAR_PRICE_RE.fullmatch(candidate)
+            if price:
+                amount = int(price.group("amount").replace(" ", ""))
+                if 100 <= amount <= MAX_PER_CARD:
+                    matches.add(amount)
+            break
+    # Conflicting same-day labels are ambiguous; refuse to publish.
+    return next(iter(matches)) if len(matches) == 1 else None
 
 
 def hotel_minimum(text: str) -> int | None:
@@ -132,7 +157,7 @@ def dated_link(kind: str, target: dict, day: date) -> str:
 
 
 def extract_page(page, group: str, target: dict, day: date) -> int | None:
-    """Wait for final, date-specific bookable results or an explicit sold-out state."""
+    """Read the exact-day calendar fare, or a date-matched hotel room price."""
     from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
     kind = "hotel" if group == "hotels" else target["kind"]
@@ -143,48 +168,60 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
             print("::warning::Non-200 public search", kind,
                   response.status if response else None)
             return None
-        ready = {"hotel": "Забронировать",
-                 "flight": "Выбрать билет",
-                 "train": "Выбрать места"}[kind]
-        try:
-            page.wait_for_function(
-                """arg => {
-                  const text = document.body?.innerText || '';
-                  if (text.includes(arg.ready)) return true;
-                  // Absence must be declared by the selected-date booking UI,
-                  // not inferred from a delayed network response or price tiles.
-                  if (arg.kind === 'hotel' &&
-                      /выбранныедаты.{0,20}всёраспродано/i.test(text.replace(/\s/g,'')))
-                    return true;
-                  if (arg.kind === 'train' &&
-                      text.includes('Нет прямых билетов на')) return true;
-                  if (arg.kind === 'flight' &&
-                      /на выбранную дату нет билетов|ничего не найдено/i.test(text))
-                    return true;
-                  return false;
-                }""",
-                arg={"ready": ready, "kind": kind},
-                timeout=45000 if kind == "flight" else 25000
-            )
-        except PlaywrightTimeoutError:
-            print("::warning::Search did not finish loading:",
-                  kind, day.isoformat())
+
+        if kind in ("flight", "train"):
+            # Calendar prices usually render before the ticket list. Waiting
+            # for a booking button incorrectly discards already visible fares.
+            deadline = monotonic() + (45 if kind == "flight" else 30)
+            while monotonic() < deadline:
+                body = page.locator("body").inner_text(timeout=10000)
+                found = route_minimum(body, day, kind)
+                if found is not None:
+                    # Confirm that React has finished replacing initial data.
+                    page.wait_for_timeout(750)
+                    confirmed = route_minimum(
+                        page.locator("body").inner_text(timeout=10000), day, kind
+                    )
+                    if confirmed == found:
+                        print(f"CALENDAR {kind}: {stamp(day)} = {found} RUB")
+                        return found
+                if (kind == "train" and "Нет прямых билетов на" in body) or (
+                    kind == "flight" and re.search(
+                        r"на выбранную дату нет билетов|ничего не найдено", body, re.I
+                    )
+                ):
+                    return None
+                page.wait_for_timeout(850)
+            print("::warning::No exact-day calendar fare appeared:",
+                  kind, day.isoformat(), page.url[:170])
             return None
 
-        if not page.locator("body").inner_text(timeout=12000).count(ready):
-            return None  # confirmed sold out / no direct trains for this day
+        try:
+            page.wait_for_function(
+                """() => {
+                  const text = document.body?.innerText || '';
+                  return text.includes('Забронировать') ||
+                    /выбранныедаты.{0,20}всёраспродано/i.test(text.replace(/\\s/g,''));
+                }""",
+                timeout=25000
+            )
+        except PlaywrightTimeoutError:
+            print("::warning::Hotel search did not finish loading:", day.isoformat())
+            return None
+
+        text = page.locator("body").inner_text(timeout=12000)
+        if "Забронировать" not in text:
+            return None
         page.wait_for_timeout(650)
         text = page.locator("body").inner_text(timeout=12000)
-        if kind == "hotel":
-            if not name_ok(target["name"], page.title()):
-                print("::warning::Hotel name mismatch; refusing quote:",
-                      target["name"], page.title()[:100])
-                return None
-            return hotel_minimum(text)
-        return route_minimum(text, day, kind)
+        if not name_ok(target["name"], page.title()):
+            print("::warning::Hotel name mismatch; refusing quote:",
+                  target["name"], page.title()[:100])
+            return None
+        return hotel_minimum(text)
     except Exception as exc:
         print("::warning::Public booking search unavailable:", kind,
-              type(exc).__name__, str(exc).split("\n")[0][:180])
+              type(exc).__name__, str(exc).split("\\n")[0][:180])
         return None
 
 
@@ -236,22 +273,47 @@ def self_test() -> None:
     assert rubles(group) == [5301]
     assert hotel_minimum(sample_hotel) == 5301
     assert hotel_minimum("Доступные варианты Уточните даты проживания") is None
-    sample_train = (
-        "Ж/д\nот 2\u2009526\u00a0₽\nАвтобусы\nот 1 495 ₽\n"
-        "12 окт, пн\nПлацкарт\nМест нет\n~ 100 ₽\n"
-        "Купе\nот 8 700 ₽\nВыбрать места\n"
-        "Отель в Москве 500 ₽"
-    )
-    assert route_minimum(sample_train, day, "train") == 2526
-    assert route_minimum(sample_train, date(2026, 10, 13), "train") is None
+    # Tutu flight calendar as shown for Moscow -> Delhi on 13 Oct 2026.
+    # The cheaper fares for 14/15/16 Oct must never replace the 13 Oct fare.
     sample_flight = (
-        "Авиа\nот 32\u2009090\u00a0₽\n"
-        "12 окт, пн\nШереметьево Москва\nДели\n"
-        "Доплата за багаж +1000 ₽\n"
-        "32 090 ₽\nбез багажа, за одного\nВыбрать билет"
+        "Откуда\\nМосква\\nКуда\\nДели\\nКогда\\n13 окт, вт\\nОбратно\\n"
+        "Авиа\\nот 44 269 ₽\\nЖ/д\\nНет билетов\\n"
+        "Прямой\\nот 44 269 ₽\\n"
+        "12 окт, пн\\n39 475 ₽\\n"
+        "13 окт, вт\\n44 269 ₽\\n"
+        "14 окт, ср\\n31 835 ₽\\n"
+        "15 окт, чт\\n26 051 ₽\\n"
+        "16 окт, пт\\n31 835 ₽\\n"
     )
-    assert route_minimum(sample_flight, day, "flight") == 32090
-    assert route_minimum(sample_flight, day, "train") is None
+    target_day = date(2026, 10, 13)
+    assert route_minimum(sample_flight, target_day, "flight") == 44269
+    assert route_minimum(sample_flight, date(2026, 10, 14), "flight") == 31835
+    assert route_minimum(sample_flight, date(2026, 10, 15), "flight") == 26051
+    assert route_minimum(sample_flight, date(2026, 10, 17), "flight") is None
+    assert route_minimum(sample_flight, target_day, "train") == 44269
+    # Date header and top-level transport summary are NOT calendar quotes.
+    no_target_tile = sample_flight.replace(
+        "13 окт, вт\\n44 269 ₽", "13 окт, вт\\nНет билетов"
+    )
+    assert route_minimum(no_target_tile, target_day, "flight") is None
+    # Nonbreaking spaces must not erase the separator in the date label.
+    assert route_minimum(
+        "13\\u00a0окт, вт\\n44\\u202f269\\u00a0₽", target_day, "flight"
+    ) == 44269
+    assert route_minimum(
+        "13 окт, вт\\n44 269 ₽\\n13 окт, вт\\n45 269 ₽",
+        target_day, "flight"
+    ) is None
+    sample_train = (
+        "Ж/д\\nот 2 526 ₽\\n"
+        "12 окт, пн\\n2 526 ₽\\n"
+        "13 окт, вт\\n3 000 ₽\\n"
+        "14 окт, ср\\n1 800 ₽\\n"
+        "Купе\\nот 8 700 ₽\\nВыбрать места"
+    )
+    assert route_minimum(sample_train, date(2026, 10, 12), "train") == 2526
+    assert route_minimum(sample_train, target_day, "train") == 3000
+    assert route_minimum(sample_train, date(2026, 10, 15), "train") is None
     assert name_ok("Альфа Измайлово", "Альфа Измайлово 4* в городе Москва")
     assert name_ok("Novotel Шереметьево", "Отель Novotel Москва Аэропорт Шереметьево 4*")
     assert not name_ok("Альфа Измайлово", "Venera в городе Казань")
