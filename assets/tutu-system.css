@@ -4491,13 +4491,16 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
 }
 
 
-/* Narrow each promo plate a further 10% relative to the previous width;
-   keep the inter-plate gap fixed and the copy button functional. */
+/* Restore promo plates to their previous 5%-narrower size, with the
+   original inter-plate gap. The promo code itself is slightly larger. */
 #hotels .hotel-offer__badge {
-  width: calc(var(--ph) * 666 / 235);
+  width: calc(var(--ph) * 740 / 235);
 }
 #hotels .hotel-offer__plate.hotel-offer__plate {
-  width: calc(var(--ph) * 1539 / 235) !important;
+  width: calc(var(--ph) * 1710 / 235) !important;
+}
+#hotels .hotel-offer .hotel-offer__code {
+  font-size: calc(var(--ph) * 25 / 33);
 }
 
 /* The RU and EN support bubble art is 10% smaller on desktop only.
