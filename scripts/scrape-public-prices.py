@@ -154,7 +154,7 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
                   // Absence must be declared by the selected-date booking UI,
                   // not inferred from a delayed network response or price tiles.
                   if (arg.kind === 'hotel' &&
-                      /выбранные даты.{0,20}всё распродано/i.test(text.replace(/\s/g,'')))
+                      /выбранныедаты.{0,20}всёраспродано/i.test(text.replace(/\s/g,'')))
                     return true;
                   if (arg.kind === 'train' &&
                       text.includes('Нет прямых билетов на')) return true;
