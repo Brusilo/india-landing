@@ -8,6 +8,7 @@ Run in the repository root with an HTTP server on port 8765:
 from __future__ import annotations
 from urllib.parse import urlparse, parse_qs
 import json
+import re
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from playwright.sync_api import sync_playwright
@@ -624,7 +625,7 @@ with sync_playwright() as playwright:
             h5=page.locator('#hotels-row [data-cta="hotel_h5"]')
             assert h5.get_attribute("data-quote-day")==later_day.isoformat()
             assert h5.locator(".card-quote-date").is_visible()
-            assert "4338" in h5.locator(".price").inner_text().replace("\u202f","").replace(" ",""), lang
+            assert "4338" in re.sub(r"[^0-9]","",h5.locator(".price").inner_text()), lang
             assert parse_qs(urlparse(h5.get_attribute("data-href")).query
                 )["check_in"] == [later_day.isoformat()]
             h10=page.locator('#hotels-row [data-cta="hotel_h10"]')
@@ -633,7 +634,7 @@ with sync_playwright() as playwright:
                 )["check_in"] == [next_day.isoformat()]
             r2=page.locator('#routes-row [data-cta="route_r2"]')
             assert r2.get_attribute("data-quote-day")==tomorrow.isoformat()
-            assert "40563" in r2.locator(".price").inner_text().replace("\u202f","").replace(" ",""), lang
+            assert "40563" in re.sub(r"[^0-9]","",r2.locator(".price").inner_text()), lang
             no_train=page.locator('#routes-row [data-cta="route_r1"]')
             no_hotel=page.locator('#hotels-row [data-cta="hotel_h1"]')
             assert no_train.locator(".price").inner_text()==missing_names[lang]
