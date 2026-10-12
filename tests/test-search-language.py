@@ -494,9 +494,17 @@ with sync_playwright() as playwright:
         # every locale. "All routes" must match the dated r3 search URL,
         # while "All hotels" still leads to hotel search.
         name_sets = {
-            "ru": ["Мриналини", "Ритвик", "Анирбан", "Танушри", "Сатьяджит"],
-            "en": ["Mrinalini", "Ritwik", "Anirban", "Tanushree", "Satyajit"],
-            "hi": ["मृणालिनी", "ऋत्विक", "अनिर्बान", "तनुश्री", "सत्यजीत"],
+            "ru": ["Прия", "Рахул", "Анирбан", "Танушри", "Сатьяджит"],
+            "en": ["Priya", "Rahul", "Anirban", "Tanushree", "Satyajit"],
+            "hi": ["प्रिया", "राहुल", "अनिर्बान", "तनुश्री", "सत्यजीत"],
+        }
+        context_sets = {
+            "ru": ["Казань → Дели", "Путешествует с друзьями",
+                   "Мумбаи → Тверь", "Учится в России", "Йошкар-Ола → Москва"],
+            "en": ["Kazan → Delhi", "Travelling with friends",
+                   "Mumbai → Tver", "Studying in Russia", "Yoshkar-Ola → Moscow"],
+            "hi": ["कज़ान → दिल्ली", "दोस्तों के साथ यात्रा",
+                   "मुंबई → त्वेर", "रूस में पढ़ाई", "योश्कर-ओला → मॉस्को"],
         }
         for locale, filename in (
             ("ru", "index-ru.html"), ("en", "index.html"), ("hi", "index-hi.html")
@@ -505,6 +513,31 @@ with sync_playwright() as playwright:
             open_page(page, filename)
             assert page.locator("#reviews-row .review-card").count() == 5
             assert page.locator("#reviews-row .review-card__author").all_inner_texts() == name_sets[locale]
+            assert page.locator("#reviews-row .review-card__detail").all_inner_texts() == context_sets[locale]
+            for width in (1460, 390):
+                page.set_viewport_size({"width": width, "height": 900})
+                aligned = page.evaluate("""() =>
+                    Array.from(document.querySelectorAll('#reviews-row .review-card')).map(card => {
+                        const avatar=card.querySelector('.review-avatar');
+                        const identity=card.querySelector('.review-card__identity');
+                        const name=card.querySelector('.review-card__author');
+                        const detail=card.querySelector('.review-card__detail');
+                        const a=avatar.getBoundingClientRect();
+                        const b=identity.getBoundingClientRect();
+                        const nc=getComputedStyle(name), dc=getComputedStyle(detail);
+                        return {centerDiff:Math.abs((a.top+a.bottom-b.top-b.bottom)/2),
+                                nameWeight:nc.fontWeight,detailWeight:dc.fontWeight,
+                                nameSize:parseFloat(nc.fontSize),
+                                detailSize:parseFloat(dc.fontSize),
+                                detailColor:dc.color,hasBoth:identity.contains(name)&&identity.contains(detail)};
+                    })
+                """)
+                assert len(aligned) == 5, (locale, width, aligned)
+                for g in aligned:
+                    assert g["hasBoth"] and g["centerDiff"] <= 1.5, (locale, width, g)
+                    assert g["nameWeight"] == g["detailWeight"] == "600", (locale, width, g)
+                    assert g["nameSize"] > g["detailSize"], (locale, width, g)
+                    assert g["detailColor"] == "rgb(107, 111, 143)", (locale, width, g)
             ref = page.locator('#routes [data-cta="route_r3"]').get_attribute("data-href")
             header = page.locator("#routes .see-all").get_attribute("href")
             last_card = page.locator("#routes-row .card--cta").get_attribute("href")
@@ -530,7 +563,7 @@ with sync_playwright() as playwright:
             assert offer["codeScroll"] <= offer["codeClient"] + 2, offer
             assert not errors, (locale, errors)
             ctx.close()
-        print("Three-language route buttons, five review first names, and narrow discount plates verified.")
+        print("Three-language route buttons, reviewer names+grey captions, desktop/mobile alignment and discount plates verified.")
 
         print("Browser search state and tour native alert validation passed: five modes, RU/EN/HI, no layout-shifting error notices.")
     finally:
