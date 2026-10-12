@@ -1,0 +1,74 @@
+name: Diagnose four unpriced public cards
+
+on:
+  push:
+    paths:
+      - '.github/workflows/diagnose-pricing-gaps.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  investigate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Inspect dated searches with a real Chromium browser
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from datetime import datetime,timedelta
+          from zoneinfo import ZoneInfo
+          import json,re
+          from playwright.sync_api import sync_playwright
+          import sys
+          sys.path.insert(0,str(Path('scripts').resolve()))
+          import importlib.util
+          spec=importlib.util.spec_from_file_location('quote','scripts/scrape-public-prices.py')
+          quote=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(quote)
+          targets=json.loads(Path('scripts/price-targets.json').read_text())
+          d=datetime.now(ZoneInfo('Europe/Moscow')).date()+timedelta(days=1)
+          with sync_playwright() as p:
+            browser=p.chromium.launch(headless=True,args=['--no-sandbox'])
+            ctx=browser.new_context(locale='ru-RU',timezone_id='Europe/Moscow',viewport={'width':1440,'height':1000})
+            for key,group in [('r2','routes'),('r10','routes'),('h5','hotels'),('h10','hotels')]:
+              cfg=targets[group][key]
+              kind=cfg.get('kind','hotel')
+              url=quote.dated_link(kind,cfg,d)
+              page=ctx.new_page()
+              print('=== INVESTIGATE',key,'date',d.isoformat(),'url',url,flush=True)
+              try:
+                res=page.goto(url,wait_until='domcontentloaded',timeout=30000)
+                print('HTTP',res.status if res else None,'title',repr(page.title()),'redirected',page.url)
+                for delay in [4500,7500]:
+                  page.wait_for_timeout(delay)
+                  text=page.locator('body').inner_text(timeout=20000)
+                  t=quote.clean(text)
+                  print('AFTER_MS',delay,'size',len(text),'days',quote.stamp(d),'dateFound',quote.stamp(d) in t)
+                  for marker in ['Выбрать билет','Выбрать места','Забронировать','Доступные варианты','Уточните даты','Ж/д','Авиа','Номера','Дата поездки','Купить','от ']:
+                    print('MARKER',repr(marker),t.count(marker))
+                  for i,line in enumerate(text.splitlines()):
+                    if any(x in line for x in ['₽','руб.','рублей']) and i<400:
+                      print('PRICE_LINE',i,repr(line[:200]))
+                      if i>30: break
+                  print('BODY_HEAD',repr(t[:2400]))
+                  print('BODY_TAIL',repr(t[-1100:]))
+                  if kind=='hotel':
+                    print('NAME_OK',quote.name_ok(cfg['name'],page.title()))
+                    print('HOTEL_EXTRACT',quote.hotel_minimum(text))
+                  else:
+                    print('ROUTE_EXTRACT',quote.route_minimum(text,d,kind))
+                print('HEADINGS',page.locator('h1,h2,h3').all_inner_texts()[:20])
+              except Exception as exc: print('DIAG_ERROR',key,type(exc).__name__,str(exc)[:250])
+              page.close()
+            ctx.close();browser.close()
+          PY
