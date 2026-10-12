@@ -80,9 +80,9 @@
     card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.location.assign(url)}});
   }
 
-  /* Each card opens Tutu's search results for tomorrow straight away, not the
-     route's landing page. The cities come from fixed ids rather than the card
-     title, which differs by language; the audited plain URL is the fallback. */
+  /* Each card opens Tutu's search for the precise day of its verified price.
+     Tomorrow is preferred; when unavailable, a later day within the next
+     week is opened. Route cities come from fixed IDs, independent of language. */
   const routeEnds={
     r1:['ru-saint-petersburg','ru-moscow'],
     r2:['ru-moscow','in-delhi'],

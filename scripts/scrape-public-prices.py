@@ -4,9 +4,10 @@
 This job does not use internal APIs, accounts, hidden endpoints, CAPTCHA bypass,
 or ambiguous undated/SEO prices. At most one page is open at a time.
 
-Only the exact next-day booking date is accepted. A missing price is omitted,
-never substituted with a fare for a different date.
-A missing/unavailable/mismatched offer is omitted, never fabricated.
+The next-day price is preferred. If no ticket or room is bookable for that
+date, check subsequent dates up to a week ahead and select the earliest
+available offer. Always publish the actual booking date with a fallback price.
+Missing, unavailable, or mismatched offers are never fabricated.
 """
 from __future__ import annotations
 
@@ -238,12 +239,30 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
         return None
 
 
+MAX_NEARBY_DAYS = 7
+
+
+def first_available(day: date, lookup, max_nearby_days: int = MAX_NEARBY_DAYS) -> tuple[date, int] | None:
+    """Prefer the requested date, else the nearest verified date in one week."""
+    if not 0 <= max_nearby_days <= MAX_NEARBY_DAYS:
+        raise ValueError("Booking fallback window is outside the supported range")
+    for offset in range(max_nearby_days + 1):
+        check_day = day + timedelta(days=offset)
+        value = lookup(check_day)
+        if value is not None:
+            if not isinstance(value, int) or not 100 <= value <= MAX_PER_CARD:
+                raise ValueError("Price lookup returned an invalid fare")
+            return check_day, value
+    return None
+
+
 def scrape(day: date, only: set[str] | None = None) -> dict:
     from playwright.sync_api import sync_playwright
 
     targets = json.loads(TARGETS.read_text(encoding="utf-8"))
     routes, hotels = targets["routes"], targets["hotels"]
     prices = {"routes": {}, "hotels": {}}
+    dates = {"routes": {}, "hotels": {}}
     tasks = [(group, key, conf) for group, table in
              (("routes", routes), ("hotels", hotels))
              for key, conf in table.items()
@@ -256,20 +275,30 @@ def scrape(day: date, only: set[str] | None = None) -> dict:
         )
         try:
             for group, key, target in tasks:
-                page = context.new_page()
-                try:
-                    value = extract_page(page, group, target, day)
-                finally:
-                    page.close()
-                if value is None:
-                    print(f"SKIP {key}: no verified price for {day.isoformat()}; "
-                          "never use another booking day")
+                def lookup(check_day: date) -> int | None:
+                    page = context.new_page()
+                    try:
+                        return extract_page(page, group, target, check_day)
+                    finally:
+                        page.close()
+
+                found = first_available(day, lookup)
+                if found is None:
+                    print(f"SKIP {key}: no verified bookable offer within "
+                          f"{MAX_NEARBY_DAYS + 1} days from {day.isoformat()}")
                     continue
+
+                check_day, value = found
                 prices[group][key] = value
-                print(f"FOUND {key}: {value} RUB on {day.isoformat()}")
+                if check_day != day:
+                    dates[group][key] = check_day.isoformat()
+                    print(f"NEARBY {key}: {day.isoformat()} not available; "
+                          f"using {check_day.isoformat()} for {value} RUB")
+                print(f"FOUND {key}: {value} RUB on {check_day.isoformat()}")
         finally:
             context.close()
             browser.close()
+    prices["dates"] = dates
     return prices
 
 
@@ -326,6 +355,22 @@ def self_test() -> None:
     assert route_minimum(sample_train, date(2026, 10, 12), "train") == 2526
     assert route_minimum(sample_train, target_day, "train") == 3000
     assert route_minimum(sample_train, date(2026, 10, 15), "train") is None
+    # Stavropol -> Moscow: 13 Oct has no ticket, but the 14 Oct tile has 9,736 RUB.
+    sample_stavropol = (
+        "Ж/д\nНет прямых\nНет прямых билетов на эту дату\n"
+        "12 окт, пн\n5 607 ₽\n"
+        "13 окт, вт\n"
+        "14 окт, ср\n9 736 ₽\n"
+        "15 окт, чт\n"
+        "16 окт, пт\n5 356 ₽\n"
+    )
+    assert route_minimum(sample_stavropol, target_day, "train") is None
+    assert route_minimum(sample_stavropol, date(2026, 10, 14), "train") == 9736
+    assert first_available(
+        target_day, lambda d: route_minimum(sample_stavropol, d, "train")
+    ) == (date(2026, 10, 14), 9736)
+    assert first_available(target_day, lambda d: None) is None
+    assert first_available(target_day, lambda d: 44269 if d == target_day else 9736) == (target_day, 44269)
     assert name_ok("Альфа Измайлово", "Альфа Измайлово 4* в городе Москва")
     assert name_ok("Novotel Шереметьево", "Отель Novotel Москва Аэропорт Шереметьево 4*")
     assert not name_ok("Альфа Измайлово", "Venera в городе Казань")
@@ -353,7 +398,7 @@ def main() -> int:
         "quote_date": day.isoformat(), "currency": "RUB",
         "source": "Public Tutu date-specific booking search (one adult; hotels one room/night)",
         "routes": prices["routes"], "hotels": prices["hotels"],
-        "dates": {"routes": {}, "hotels": {}}
+        "dates": prices["dates"]
     }
     output = Path(args.out)
     output.parent.mkdir(parents=True, exist_ok=True)

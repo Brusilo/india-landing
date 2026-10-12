@@ -1,4 +1,4 @@
-/* Offline regression: exchange-rate overrides, tomorrow-only supplier prices,
+/* Offline regression: exchange-rate overrides, date-matched supplier prices,
  * price caps and promo expiration, plus all three language entrypoints.
  * Run: node tests/landing-pricing.cjs
  */
@@ -44,8 +44,21 @@ assert.equal(live.dateLabel('hotels','h1','ru'),'');
 assert.equal(live.dateLabel('hotels','h1','en'),'');
 assert.equal(live.dateLabel('hotels','h1','hi'),'');
 assert.equal(live.dateLabel('routes','r2','ru'),'');
-const offDate=load({...quotes,quotes:{...quotes.quotes,dates:{hotels:{h1:near}}}});
-assert.equal(offDate.basePrice('hotels','h1',5931),null,'refuse nearby-day prices');
+const nearby=load({...quotes,quotes:{...quotes.quotes,
+  dates:{hotels:{h1:near},routes:{r2:near}}}});
+assert.equal(nearby.basePrice('hotels','h1',5931),9000,'allow verified nearest-day prices');
+assert.equal(nearby.basePrice('routes','r2',19668),19000,'allow verified nearby route fare');
+assert.equal(nearby.quoteDate('hotels','h1'),near);
+assert.equal(nearby.quoteDate('routes','r2'),near);
+for(const locale of ['ru','en','hi']){
+  assert.equal(nearby.dateLabel('hotels','h1',locale),'','never show date badges');
+  assert.equal(nearby.dateLabel('routes','r2',locale),'','never show date badges');
+}
+const tooFar=Array.from({length:8}).reduce(d=>sample.nextDate(d),tomorrow);
+const outside=load({...quotes,quotes:{...quotes.quotes,dates:{hotels:{h1:tooFar}}}});
+assert.equal(outside.basePrice('hotels','h1',5931),null,'refuse dates beyond the week');
+const yesterday=load({...quotes,quotes:{...quotes.quotes,dates:{hotels:{h1:currentMsk}}}});
+assert.equal(yesterday.basePrice('hotels','h1',5931),null,'refuse dates before tomorrow');
 const invalid=load({...quotes,quotes:{...quotes.quotes,dates:{hotels:{h1:'2031-01-01'}}}});
 assert.equal(invalid.basePrice('hotels','h1',5931),null,'refuse mismatched future dates');
 
@@ -77,6 +90,11 @@ for(const page of ['index-ru.html','index.html','index-hi.html']){
  assert.ok(scriptEnd>start);
  new vm.Script(html.slice(start,scriptEnd),{filename:page});
 }
+const cardLinks=fs.readFileSync(path.join(root,'assets/card-links.js'),'utf8');
+assert.match(cardLinks,/date:quotedBookingDate\('routes',id\)/,
+  'route links must use the date of their verified price');
+assert.match(cardLinks,/const a=quotedBookingDate\('hotels',id\)/,
+  'hotel links must use the date of their verified price');
 // The bot must not be blocked by an outdated static asset cache version.
 const workflow=fs.readFileSync(path.join(root,'.github/workflows/update-market-data.yml'),'utf8');
 assert.match(workflow,/- cron: '0 \*\/3 \* \* \*'/,

@@ -46,7 +46,7 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check playwright
           python -m playwright install --with-deps chromium
-      - name: Find minimum bookable prices for tomorrow on public Tutu pages
+      - name: Find first available prices from tomorrow on public Tutu pages
         run: python scripts/scrape-public-prices.py --out /tmp/tutu-public-price-feed.json
       - name: Fetch CBR FX and publish only verified date-matched prices
         env:
