@@ -63,6 +63,12 @@
     const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+1);return d;
   };
   const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+  // Quote dates are checked by the pricing layer; each fallback-priced card
+  // opens the exact travel/stay day that supplied that verified price.
+  const quotedBookingDate=(group,id)=>{
+    const day=window.TUTU_PRICING?.quoteDate?.(group,id);
+    return day?new Date(day+'T12:00:00'):tomorrow();
+  };
   const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   const hotelAllUrl=()=>{
     const a=tomorrow(),b=addDays(a,1),p=new URLSearchParams({check_in:iso(a),check_out:iso(b),details_params:'',geo_id:'2657260',geo_name:'Москва',geo_type:'locality',resultId:'','room[0]':'3',search_id:'',sorting:'relevanceDesc'});
@@ -99,13 +105,13 @@
     if(!ends||!window.TUTU_LINKS)return plain;
     const from=placeById(ends[0]),to=placeById(ends[1]);if(!from||!to)return plain;
     try{
-      const url=TUTU_LINKS.build(card.dataset.transport,{from,to,date:tomorrow(),adults:1,children:0,childAges:[],cabin:'economy'});
+      const url=TUTU_LINKS.build(card.dataset.transport,{from,to,date:quotedBookingDate('routes',id),adults:1,children:0,childAges:[],cabin:'economy'});
       return url&&url!==HOME?url:plain;
     }catch(_){return plain}
   }
   /* Hotel cards open the hotel with tomorrow's one-night stay for one guest. */
-  function hotelUrl(url){
-    const a=tomorrow();
+  function hotelUrl(url,id){
+    const a=quotedBookingDate('hotels',id);
     return url+'?'+new URLSearchParams({check_in:iso(a),check_out:iso(addDays(a,1)),'room[0]':'1'}).toString();
   }
 
@@ -128,11 +134,16 @@
         // never overwrite today's recalculated or discounted prices.
         const alt=card.querySelector('.price-alt');
         if(alt){
-          const base=window.TUTU_PRICING?.basePrice('routes',id,d.price)??d.price;
-          const actual=window.TUTU_PRICING?.reducedRub(card.dataset.transport==='flight'?'flight':'train',base)??base;
+          const base=window.TUTU_PRICING?.basePrice('routes',id,d.price);
           const price=card.querySelector('.price');
-          if(price)price.innerHTML=lang==='en'?'<span class="price-from">from</span> '+nf(actual)+'&nbsp;₽':lang==='hi'?nf(actual)+'&nbsp;₽ <span class="price-from">से</span>':'<span class="price-from">от</span> '+nf(actual)+'&nbsp;₽';
-          alt.textContent='≈ ₹'+nf(Math.round(actual*RUB_TO_INR));
+          if(!Number.isFinite(base)){
+            if(price)price.textContent=lang==='en'?'Check price':lang==='hi'?'कीमत देखें':'Уточнить цену';
+            alt.textContent='';
+          }else{
+            const actual=window.TUTU_PRICING?.reducedRub(card.dataset.transport==='flight'?'flight':'train',base)??base;
+            if(price)price.innerHTML=lang==='en'?'<span class="price-from">from</span> '+nf(actual)+'&nbsp;₽':lang==='hi'?nf(actual)+'&nbsp;₽ <span class="price-from">से</span>':'<span class="price-from">от</span> '+nf(actual)+'&nbsp;₽';
+            alt.textContent='≈ ₹'+nf(Math.round(actual*RUB_TO_INR));
+          }
         }
         const meta=card.querySelector('.card-meta');if(meta)meta.textContent=duration(d.h,d.m);
       }
@@ -158,7 +169,7 @@
         else if(lang==='hi')price.innerHTML='<span class="price">'+nf(d.price)+' ₽ <span class="hotel-night">'+night+'</span></span><span class="price-alt">≈ ₹'+nf(inr)+'</span>';
         else price.innerHTML='<span class="price">'+nf(d.price)+' ₽ <span class="hotel-night">'+night+'</span></span><span class="price-alt">≈ ₹'+nf(inr)+'</span>';
       }
-      activate(card,hotelUrl(d.url));
+      activate(card,hotelUrl(d.url,id));
     });
     const cta=hotelRow.querySelector('.card--cta');if(cta)cta.href=hotelAllUrl();
   }
