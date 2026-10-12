@@ -7,6 +7,9 @@ Run in the repository root with an HTTP server on port 8765:
 """
 from __future__ import annotations
 from urllib.parse import urlparse, parse_qs
+import json
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from playwright.sync_api import sync_playwright
 
 BASE = "http://127.0.0.1:8765/"
@@ -584,6 +587,63 @@ with sync_playwright() as playwright:
             assert abs(offer["codeFont"] - offer["ph"] * 25 / 33) <= .4, offer
             assert not errors, (locale, errors)
             ctx.close()
+        # Validate the live rendering, not just isolated price math:
+        # a missing quote must never display an old illustrative amount, and
+        # the price and click URL must use the SAME verified nearby date.
+        tomorrow=datetime.now(ZoneInfo("Europe/Moscow")).date()+timedelta(days=1)
+        next_day=tomorrow+timedelta(days=1)
+        later_day=tomorrow+timedelta(days=3)
+        sample_quotes={
+            "fx": {"rubToInr": 1.13792052, "rateDate": "2026-10-10"},
+            "quotes": {
+                "for": tomorrow.isoformat(), "currency": "RUB",
+                "routes": {"r2": 41563, "r10": 9736},
+                "hotels": {"h5": 5103, "h10": 10170},
+                "dates": {
+                    "routes": {"r10": next_day.isoformat()},
+                    "hotels": {"h5": later_day.isoformat(),
+                               "h10": next_day.isoformat()}
+                }
+            }
+        }
+        missing_names={"ru":"Уточнить цену","en":"Check price","hi":"कीमत देखें"}
+        for lang,filename in (("ru","index-ru.html"),("en","index.html"),
+                              ("hi","index-hi.html")):
+            ctx,page,errors=setup(browser)
+            page.route("**/assets/daily-prices.js", lambda route:route.fulfill(
+                status=200, content_type="application/javascript",
+                body="window.TUTU_DAILY_PRICES="+json.dumps(
+                    sample_quotes,ensure_ascii=False)+";"))
+            open_page(page,filename)
+            r10=page.locator('#routes-row [data-cta="route_r10"]')
+            assert r10.get_attribute("data-quote-day")==next_day.isoformat()
+            assert r10.locator(".card-quote-date").is_visible()
+            assert "9" in r10.locator(".price").inner_text()
+            route_url=r10.get_attribute("data-href")
+            assert next_day.strftime("%d.%m.%Y") in route_url, (lang,route_url)
+            h5=page.locator('#hotels-row [data-cta="hotel_h5"]')
+            assert h5.get_attribute("data-quote-day")==later_day.isoformat()
+            assert h5.locator(".card-quote-date").is_visible()
+            assert "4338" in h5.locator(".price").inner_text().replace("\u202f","").replace(" ",""), lang
+            assert parse_qs(urlparse(h5.get_attribute("data-href")).query
+                )["check_in"] == [later_day.isoformat()]
+            h10=page.locator('#hotels-row [data-cta="hotel_h10"]')
+            assert h10.get_attribute("data-quote-day")==next_day.isoformat()
+            assert parse_qs(urlparse(h10.get_attribute("data-href")).query
+                )["check_in"] == [next_day.isoformat()]
+            r2=page.locator('#routes-row [data-cta="route_r2"]')
+            assert r2.get_attribute("data-quote-day")==tomorrow.isoformat()
+            assert "40563" in r2.locator(".price").inner_text().replace("\u202f","").replace(" ",""), lang
+            no_train=page.locator('#routes-row [data-cta="route_r1"]')
+            no_hotel=page.locator('#hotels-row [data-cta="hotel_h1"]')
+            assert no_train.locator(".price").inner_text()==missing_names[lang]
+            assert no_hotel.locator(".price").inner_text()==missing_names[lang]
+            assert no_train.locator(".route-inr").count()==0
+            assert no_hotel.locator(".route-inr").count()==0
+            assert not errors, (lang,errors)
+            ctx.close()
+        print("Synthetic booking quotes verified in RU, EN and HI: exact dated URLs, nearby labels and no illustrative prices.")
+
         print("Three-language route buttons, reviewer names+grey captions, desktop/mobile alignment and discount plates verified.")
 
         print("Browser search state and tour native alert validation passed: five modes, RU/EN/HI, no layout-shifting error notices.")
