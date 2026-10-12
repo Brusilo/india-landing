@@ -618,18 +618,19 @@ with sync_playwright() as playwright:
             open_page(page,filename)
             r10=page.locator('#routes-row [data-cta="route_r10"]')
             assert r10.get_attribute("data-quote-day")==next_day.isoformat()
-            assert r10.locator(".card-quote-date").is_visible()
+            assert r10.locator(".card-quote-date").count()==0, "No date badge on route cards"
             assert "9" in r10.locator(".price").inner_text()
             route_url=r10.get_attribute("data-href")
             assert next_day.strftime("%d.%m.%Y") in route_url, (lang,route_url)
             h5=page.locator('#hotels-row [data-cta="hotel_h5"]')
             assert h5.get_attribute("data-quote-day")==later_day.isoformat()
-            assert h5.locator(".card-quote-date").is_visible()
+            assert h5.locator(".card-quote-date").count()==0, "No date badge on hotel cards"
             assert "4338" in re.sub(r"[^0-9]","",h5.locator(".price").inner_text()), lang
             assert parse_qs(urlparse(h5.get_attribute("data-href")).query
                 )["check_in"] == [later_day.isoformat()]
             h10=page.locator('#hotels-row [data-cta="hotel_h10"]')
             assert h10.get_attribute("data-quote-day")==next_day.isoformat()
+            assert h10.locator(".card-quote-date").count()==0, "No date badge on hotel cards"
             assert parse_qs(urlparse(h10.get_attribute("data-href")).query
                 )["check_in"] == [next_day.isoformat()]
             r2=page.locator('#routes-row [data-cta="route_r2"]')
@@ -643,7 +644,7 @@ with sync_playwright() as playwright:
             assert no_hotel.locator(".route-inr").count()==0
             assert not errors, (lang,errors)
             ctx.close()
-        print("Synthetic booking quotes verified in RU, EN and HI: exact dated URLs, nearby labels and no illustrative prices.")
+        print("Synthetic booking quotes verified in RU, EN and HI: exact dated URLs, no date badges and no illustrative prices.")
 
         print("Three-language route buttons, reviewer names+grey captions, desktop/mobile alignment and discount plates verified.")
 
