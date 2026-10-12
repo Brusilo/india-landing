@@ -466,7 +466,16 @@ with sync_playwright() as playwright:
                     const c=card.getBoundingClientRect();
                     const i=img.getBoundingClientRect();
                     const css=getComputedStyle(img);
-                    return {cardWidth:+c.width.toFixed(2),
+                    let uplift=0;
+                    if(document.documentElement.lang==='ru'){
+                      const inline=img.style.translate;
+                      const raisedTop=img.getBoundingClientRect().top;
+                      img.style.translate='-5% 2.5%';
+                      const baselineTop=img.getBoundingClientRect().top;
+                      img.style.translate=inline;
+                      uplift=+(baselineTop-raisedTop).toFixed(2);
+                    }
+                    return {cardWidth:+c.width.toFixed(2),uplift,
                       cardHeight:+c.height.toFixed(2),
                       imgWidth:+i.width.toFixed(2),imgHeight:+i.height.toFixed(2),
                       right:+(c.right-i.right).toFixed(2),
@@ -485,6 +494,7 @@ with sync_playwright() as playwright:
             # HI stays unchanged. Card text lengths may change total heights.
             assert ru["scale"] == en["scale"] == "0.99", (width, artwork)
             assert hi["scale"] == "1.1", (width, artwork)
+            assert abs(ru["uplift"]-12)<1, (width, artwork)
             assert all(art["imgWidth"] > 50 and art["imgHeight"] > 50
                        for art in artwork.values()), (width, artwork)
             assert not errors
@@ -511,6 +521,14 @@ with sync_playwright() as playwright:
         ):
             ctx, page, errors = setup(browser)
             open_page(page, filename)
+            legal=page.locator("footer .legal").inner_text()
+            assert "www.tutu.ru" in legal, (locale, legal)
+            for obsolete in (
+                "Цены в карточках ориентировочные",
+                "Card prices are indicative.",
+                "कार्ड में दिखाई गई कीमतें अनुमानित हैं",
+            ):
+                assert obsolete not in legal, (locale, obsolete, legal)
             assert page.locator("#reviews-row .review-card").count() == 5
             assert page.locator("#reviews-row .review-card__author").all_inner_texts() == name_sets[locale]
             assert page.locator("#reviews-row .review-card__detail").all_inner_texts() == context_sets[locale]
