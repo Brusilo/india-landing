@@ -1118,17 +1118,23 @@ const CTA_CARD = `
 
 document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
   const baseRub = window.TUTU_PRICING.basePrice('routes',r.id,r.price);
-  const promoRub = r.transport==='flight' ? window.TUTU_PRICING.discountRub('flight',baseRub) : 0;
-  const rub = baseRub - promoRub;
+  const hasQuote = Number.isFinite(baseRub) && baseRub >= 100;
+  const promoRub = hasQuote && r.transport==='flight' ? window.TUTU_PRICING.discountRub('flight',baseRub) : 0;
+  const rub = hasQuote ? baseRub - promoRub : null;
+  const priceHtml = hasQuote ? '<span class="price"><span class="price-from">from</span> '+fmtNum(rub)+'&nbsp;'+CONFIG.currency+'</span>' : '<span class="price">Check price</span>';
+  const inrHtml = hasQuote ? '<span class="route-inr">≈&nbsp;₹'+fmtNum(Math.round(rub * CONFIG.rubToInr))+'</span>' : '';
+  const quoteNote = window.TUTU_PRICING.dateLabel('routes',r.id,document.documentElement.lang);
+  const dateHtml = quoteNote ? '<p class="card-quote-date">'+quoteNote+'</p>' : '';
   return `
-  <article class="card card--route" data-cta="route_${r.id}${r.combined ? '_combined' : ''}" data-transport="${r.transport}">
+  <article class="card card--route" data-cta="route_${r.id}${r.combined ? '_combined' : ''}" data-transport="${r.transport}" data-quote-day="${window.TUTU_PRICING.quoteDate('routes',r.id)||''}">
     <div class="card-media${r.img ? '' : ' card-media--placeholder'}" style="background:${r.img ? `url('${r.img}') center/cover no-repeat, ` : ''}${r.gradient}">${r.img ? '' : `<img src="assets/icon-${r.transport === 'flight' ? 'flight' : 'train'}.png" alt="" aria-hidden="true">`}</div>
     <div class="card-body">
       <p class="route-name">${r.from}&nbsp;→ ${r.to}</p>
       <div class="route-price">
-        <span class="price"><span class="price-from">from</span> ${fmtNum(rub)}&nbsp;${CONFIG.currency}</span>
-        <span class="route-inr">≈&nbsp;₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
+        ${priceHtml}
+        ${inrHtml}
       </div>
+      ${dateHtml}
     </div>
   </article>`;
 }).join('') + CTA_CARD;
@@ -1136,10 +1142,21 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
 document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
   // INTHOTELTUTU: 15% off Tutu's price, at most 3000 ₽.
   const oldRub = window.TUTU_PRICING.basePrice('hotels',h.id,h.price);
-  const offRub = window.TUTU_PRICING.discountRub('hotel',oldRub);
-  const rub = oldRub - offRub;
+  const hasQuote = Number.isFinite(oldRub) && oldRub >= 100;
+  const offRub = hasQuote ? window.TUTU_PRICING.discountRub('hotel',oldRub) : 0;
+  const rub = hasQuote ? oldRub - offRub : null;
+  const priceHtml = hasQuote ?
+    '<span class="price">'+fmtNum(rub)+'&nbsp;'+CONFIG.currency+'</span>' :
+    '<span class="price">Check price</span>';
+  const oldPriceHtml = offRub ? '<s class="route-old">'+fmtNum(oldRub)+'&nbsp;'+CONFIG.currency+'</s>' : '';
+  const discountHtml = offRub ? '<span class="route-discount">-'+Math.round(offRub/oldRub*100)+'%</span>' : '';
+  const inrHtml = hasQuote ? '<span class="route-inr">≈&nbsp;₹'+fmtNum(Math.round(rub * CONFIG.rubToInr))+'</span>' : '';
+  const inrOldHtml = offRub ? '<s class="route-old">₹'+fmtNum(Math.round(oldRub * CONFIG.rubToInr))+'</s>' : '';
+  const nightHtml = hasQuote ? '<span class="hotel-night">per night</span>' : '';
+  const quoteNote = window.TUTU_PRICING.dateLabel('hotels',h.id,document.documentElement.lang);
+  const dateHtml = quoteNote ? '<p class="card-quote-date">'+quoteNote+'</p>' : '';
   return `
-  <article class="card card--hotel" data-cta="hotel_${h.id}">
+  <article class="card card--hotel" data-cta="hotel_${h.id}" data-quote-day="${window.TUTU_PRICING.quoteDate('hotels',h.id)||''}">
     <div class="card-media" style="background:${h.img ? `url('${h.img}') center/cover no-repeat, ` : ''}${h.gradient}">
       <span class="hotel-city">${h.city}</span>
     </div>
@@ -1150,15 +1167,16 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
       </div>
       <p class="hotel-name">${h.name}</p>
       <div class="route-price">
-        <span class="price">${fmtNum(rub)}&nbsp;₽</span>
-        ${offRub ? `<s class="route-old">${fmtNum(oldRub)}&nbsp;${CONFIG.currency}</s>` : ''}
-        ${offRub ? `<span class="route-discount">-${Math.round(offRub / oldRub * 100)}%</span>` : ''}
+        ${priceHtml}
+        ${oldPriceHtml}
+        ${discountHtml}
       </div>
       <div class="route-price route-price--inr">
-        <span class="route-inr">≈&nbsp;₹${fmtNum(Math.round(rub * CONFIG.rubToInr))}</span>
-        ${offRub ? `<s class="route-old">₹${fmtNum(Math.round(oldRub * CONFIG.rubToInr))}</s>` : ''}
-        <span class="hotel-night">per night</span>
+        ${inrHtml}
+        ${inrOldHtml}
+        ${nightHtml}
       </div>
+      ${dateHtml}
     </div>
   </article>`;
 }).join('') + CTA_CARD;
