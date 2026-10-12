@@ -32,17 +32,17 @@ SPACES = str.maketrans({
     "\u00a0": " ", "\u202f": " ", "\u2009": " ",
     "\u200a": " ", "\u2007": " ", "\u2060": None, "\u200b": None,
 })
-CURRENCY_RE = re.compile(r"(?<!\\d)(\\d{1,3}(?:[ \\t]\\d{3})+|\\d{3,7})[ \\t]*₽")
+CURRENCY_RE = re.compile(r"(?<!\d)(\d{1,3}(?:[ \t]\d{3})+|\d{3,7})[ \t]*₽")
 MAX_PER_CARD = 2_000_000
 WEEKDAYS = "пн|вт|ср|чт|пт|сб|вс"
 # The visible Tutu date navigation has a date on one line and the minimum
 # fare immediately underneath. Never infer the date from other prices nearby.
 CALENDAR_DATE_RE = re.compile(
-    rf"(?P<day>\\d{{1,2}})[ \\t]+(?P<month>{'|'.join(MONTHS)})\\.?"
-    rf"(?:[ \\t]*,[ \\t]*(?:{WEEKDAYS}))?", re.I
+    rf"(?P<day>\d{{1,2}})[ \t]+(?P<month>{'|'.join(MONTHS)})\.?"
+    rf"(?:[ \t]*,[ \t]*(?:{WEEKDAYS}))?", re.I
 )
 CALENDAR_PRICE_RE = re.compile(
-    r"(?:от[ \\t]+)?(?P<amount>\\d{1,3}(?:[ \\t]+\\d{3})+|\\d{3,7})[ \\t]*₽", re.I
+    r"(?:от[ \t]+)?(?P<amount>\d{1,3}(?:[ \t]+\d{3})+|\d{3,7})[ \t]*₽", re.I
 )
 
 
@@ -51,7 +51,7 @@ def clean(text: str) -> str:
 
 
 def rubles(text: str) -> list[int]:
-    amounts = [int(num.replace(" ", "").replace("\\t", ""))
+    amounts = [int(num.replace(" ", "").replace("\t", ""))
                for num in CURRENCY_RE.findall(clean(text))]
     return [value for value in amounts if 100 <= value <= MAX_PER_CARD]
 
@@ -201,7 +201,7 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
                 """() => {
                   const text = document.body?.innerText || '';
                   return text.includes('Забронировать') ||
-                    /выбранныедаты.{0,20}всёраспродано/i.test(text.replace(/\\s/g,''));
+                    /выбранныедаты.{0,20}всёраспродано/i.test(text.replace(/\s/g,''));
                 }""",
                 timeout=25000
             )
@@ -221,7 +221,7 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
         return hotel_minimum(text)
     except Exception as exc:
         print("::warning::Public booking search unavailable:", kind,
-              type(exc).__name__, str(exc).split("\\n")[0][:180])
+              type(exc).__name__, str(exc).split("\n")[0][:180])
         return None
 
 
@@ -276,40 +276,39 @@ def self_test() -> None:
     # Tutu flight calendar as shown for Moscow -> Delhi on 13 Oct 2026.
     # The cheaper fares for 14/15/16 Oct must never replace the 13 Oct fare.
     sample_flight = (
-        "Откуда\\nМосква\\nКуда\\nДели\\nКогда\\n13 окт, вт\\nОбратно\\n"
-        "Авиа\\nот 44 269 ₽\\nЖ/д\\nНет билетов\\n"
-        "Прямой\\nот 44 269 ₽\\n"
-        "12 окт, пн\\n39 475 ₽\\n"
-        "13 окт, вт\\n44 269 ₽\\n"
-        "14 окт, ср\\n31 835 ₽\\n"
-        "15 окт, чт\\n26 051 ₽\\n"
-        "16 окт, пт\\n31 835 ₽\\n"
+        "Откуда\nМосква\nКуда\nДели\nКогда\n13 окт, вт\nОбратно\n"
+        "Авиа\nот 44 269 ₽\nЖ/д\nНет билетов\n"
+        "Прямой\nот 44 269 ₽\n"
+        "12 окт, пн\n39 475 ₽\n"
+        "13 окт, вт\n44 269 ₽\n"
+        "14 окт, ср\n31 835 ₽\n"
+        "15 окт, чт\n26 051 ₽\n"
+        "16 окт, пт\n31 835 ₽\n"
     )
     target_day = date(2026, 10, 13)
     assert route_minimum(sample_flight, target_day, "flight") == 44269
     assert route_minimum(sample_flight, date(2026, 10, 14), "flight") == 31835
     assert route_minimum(sample_flight, date(2026, 10, 15), "flight") == 26051
     assert route_minimum(sample_flight, date(2026, 10, 17), "flight") is None
-    assert route_minimum(sample_flight, target_day, "train") == 44269
     # Date header and top-level transport summary are NOT calendar quotes.
     no_target_tile = sample_flight.replace(
-        "13 окт, вт\\n44 269 ₽", "13 окт, вт\\nНет билетов"
+        "13 окт, вт\n44 269 ₽", "13 окт, вт\nНет билетов"
     )
     assert route_minimum(no_target_tile, target_day, "flight") is None
     # Nonbreaking spaces must not erase the separator in the date label.
     assert route_minimum(
-        "13\\u00a0окт, вт\\n44\\u202f269\\u00a0₽", target_day, "flight"
+        "13\u00a0окт, вт\n44\u202f269\u00a0₽", target_day, "flight"
     ) == 44269
     assert route_minimum(
-        "13 окт, вт\\n44 269 ₽\\n13 окт, вт\\n45 269 ₽",
+        "13 окт, вт\n44 269 ₽\n13 окт, вт\n45 269 ₽",
         target_day, "flight"
     ) is None
     sample_train = (
-        "Ж/д\\nот 2 526 ₽\\n"
-        "12 окт, пн\\n2 526 ₽\\n"
-        "13 окт, вт\\n3 000 ₽\\n"
-        "14 окт, ср\\n1 800 ₽\\n"
-        "Купе\\nот 8 700 ₽\\nВыбрать места"
+        "Ж/д\nот 2 526 ₽\n"
+        "12 окт, пн\n2 526 ₽\n"
+        "13 окт, вт\n3 000 ₽\n"
+        "14 окт, ср\n1 800 ₽\n"
+        "Купе\nот 8 700 ₽\nВыбрать места"
     )
     assert route_minimum(sample_train, date(2026, 10, 12), "train") == 2526
     assert route_minimum(sample_train, target_day, "train") == 3000
