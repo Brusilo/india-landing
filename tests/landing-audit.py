@@ -88,7 +88,7 @@ def card_audit(page, lang, width):
             check("check price" not in text.lower() and "уточнить" not in text.lower()
                   and "कीमत देखें" not in text,
                   f"{lang}/{width} {key} no Check price for verified quote")
-            discount = min(round(base * .15), 1000 if key == "r2" else 3000) if group == "hotels" or key == "r2" else 0
+            discount = min(int(base * .15 + .5), 1000 if key == "r2" else 3000) if group == "hotels" or key == "r2" else 0
             correct = str(int(base - discount))
             check(digits(text) == correct,
                   f"{lang}/{width} {key} correct price (expected {correct}, got {text})")
@@ -192,7 +192,7 @@ with sync_playwright() as pw:
                     for code in ("INTAVIATUTU", "INTHOTELTUTU"):
                         page.locator(f".promo-strip__copy[data-promo-code='{code}']").click()
                         page.wait_for_function(
-                            "(code) => window.__promoCopied.includes(code)", code)
+                            "(code) => window.__promoCopied.includes(code)", arg=code)
                         check(True, f"{case} copy promo {code}")
                 if width in (390, 1440):
                     for section in ("routes", "hotels", "about"):
