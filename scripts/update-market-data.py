@@ -3,8 +3,8 @@
 
 Runs every three hours on GitHub Actions in Moscow time.
 The Central Bank is the FX source. Verified one-adult next-day public booking
-results can provide minimum base prices; when tomorrow is sold out the
-nearest available date within a week is tagged explicitly. Undated SEO,
+results can provide minimum base prices only for tomorrow. Quotes for any
+other booking day are rejected rather than substituted. Undated SEO,
 unavailable trains and unrelated amenity charges never enter the feed.
 A private supplier feed overrides public page observations if configured.
 
@@ -143,7 +143,7 @@ def money_prices(prices: object, allowed: set[str]) -> dict[str, int]:
 
 
 def quote_dates(meta: object, routes: dict, hotels: dict, quoted_for: date) -> dict:
-    """Validate optional per-card future dates, only when a verified price exists."""
+    """Validate every quoted card against the exact requested booking day."""
     if meta is None:
         return {"routes": {}, "hotels": {}}
     if not isinstance(meta, dict):
@@ -160,8 +160,8 @@ def quote_dates(meta: object, routes: dict, hotels: dict, quoted_for: date) -> d
                 booking = date.fromisoformat(raw)
             except ValueError as exc:
                 raise ValueError("Invalid quote booking date") from exc
-            if not quoted_for <= booking <= quoted_for + timedelta(days=7):
-                raise ValueError("Quote is outside the next eight days")
+            if booking != quoted_for:
+                raise ValueError("Quote is not for the requested booking day")
             result[group][card] = booking.isoformat()
     return result
 
@@ -240,12 +240,12 @@ def self_test() -> None:
         "quote_date": "2026-10-12", "currency": "RUB",
         "source": "partner-test", "routes": {"r1": 1500, "ignored": 1000},
         "hotels": {"h1": 4000},
-        "dates": {"hotels": {"h1": "2026-10-14"}},
+        "dates": {"hotels": {"h1": "2026-10-12"}},
     }).encode()
     doc = parse_quotes(payload, now.date() + timedelta(days=1), now)
     assert doc["routes"] == {"r1": 1500} and doc["hotels"] == {"h1": 4000}
     assert doc["for"] == "2026-10-12"
-    assert doc["dates"] == {"routes": {}, "hotels": {"h1": "2026-10-14"}}
+    assert doc["dates"] == {"routes": {}, "hotels": {"h1": "2026-10-12"}}
     bad = json.dumps({
         "quote_date": "2026-10-12", "currency": "RUB",
         "source": "test", "routes": {"r1": 1200},
