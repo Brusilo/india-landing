@@ -1,4 +1,4 @@
-# Ежедневное обновление цен и курса / Nightly pricing
+# Обновление цен каждые 3 часа и курса ЦБ / Three-hour price refresh
 
 ## Поиск минимальной цены без внутреннего API
 
@@ -39,10 +39,13 @@ python scripts/scrape-public-prices.py --only r1,r2,h1 --out /tmp/tutu-test-pric
 
 ## Что уже работает
 
-* `.github/workflows/update-market-data.yml` запускает проверку каждый день
-  по cron `0 21 * * *` (21:00 UTC = **00:00 по Москве**, без перехода на летнее
-  время), а также вручную через **Actions → Update India landing FX and verified
+* `.github/workflows/update-market-data.yml` запускает проверку **каждые 3 часа**
+  по cron `0 */3 * * *` (UTC: 00:00, 03:00, …, 21:00;
+  Москва: **03:00, 06:00, …, 00:00** без сезонного перевода часов),
+  а также вручную через **Actions → Update India landing FX and verified
   prices → Run workflow**. Запуск GitHub по расписанию может задерживаться.
+  Каждый запуск заново проверяет минимальные предложения на завтра и курс ЦБ.
+  Сам ЦБ может публиковать новый курс реже, чем обновляются цены.
 * `scripts/update-market-data.py` получает официальный курс INR/RUB из
   `https://www.cbr.ru/scripts/XML_daily.asp`. Если ЦБ недоступен, используются
   данные зеркала `https://www.cbr-xml-daily.ru/daily_json.js`. Проверяется
