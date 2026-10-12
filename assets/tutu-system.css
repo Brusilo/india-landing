@@ -4507,4 +4507,8 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
   html:lang(en) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art {
     scale: .99;
   }
+  /* Nudge only the Russian chat-bubble sticker up by 12px; keep x and scale. */
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art {
+    translate: -5% calc(2.5% - 12px);
+  }
 }
