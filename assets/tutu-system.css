@@ -4489,3 +4489,22 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
     max-height: 52%;
   }
 }
+
+
+/* Small refinement to hotel promo plates: both backgrounds are ~5% narrower,
+   without changing the gap between them or the copy icon/text sizes. */
+#hotels .hotel-offer__badge {
+  width: calc(var(--ph) * 740 / 235);
+}
+#hotels .hotel-offer__plate.hotel-offer__plate {
+  width: calc(var(--ph) * 1710 / 235) !important;
+}
+
+/* The RU and EN support bubble art is 10% smaller on desktop only.
+   Hindi and all tablet/phone art keep their current appearance. */
+@media (min-width: 1101px) {
+  html:lang(ru) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art,
+  html:lang(en) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art {
+    scale: .99;
+  }
+}
