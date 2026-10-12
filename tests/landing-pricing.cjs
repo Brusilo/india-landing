@@ -19,15 +19,17 @@ const sample=load({});
 const currentMsk=sample.moscowDate(),tomorrow=sample.nextDate(currentMsk);
 assert.match(currentMsk,/^\d{4}-\d{2}-\d{2}$/);
 assert.equal(sample.rubToInr(),1.12888);
-assert.equal(sample.basePrice('hotels','h1','5 931'),5931);
+assert.equal(sample.basePrice('hotels','h1','5 931'),null,'never show illustrative old hotel prices');
 assert.equal(sample.discountRub('hotel',4000),600);
 assert.equal(sample.discountRub('hotel',30000),3000);
 assert.equal(sample.discountRub('flight',19668),1000);
 assert.equal(sample.discountRub('train',19668),0);
 
+const near=sample.nextDate(sample.nextDate(sample.nextDate(tomorrow)));
 const quotes={
  fx:{rubToInr:1.13792052,rateDate:'2026-10-10'},
- quotes:{for:tomorrow,currency:'RUB',hotels:{h1:9000},routes:{r2:19000}}
+ quotes:{for:tomorrow,currency:'RUB',hotels:{h1:9000},routes:{r2:19000},
+   dates:{hotels:{h1:near},routes:{}}}
 };
 const live=load(quotes);
 assert.equal(live.rubToInr(),1.13792052);
@@ -35,13 +37,21 @@ assert.equal(live.basePrice('hotels','h1',5931),9000);
 assert.equal(live.reducedRub('hotel',9000),7650);
 assert.equal(live.basePrice('routes','r2',19668),19000);
 assert.equal(live.reducedRub('flight',19000),18000);
-assert.equal(live.basePrice('routes','r1',831),831,'no unrelated price changes');
+assert.equal(live.basePrice('routes','r1',831),null,'never fall back to invented sample');
+assert.equal(live.quoteDate('hotels','h1'),near);
+assert.equal(live.quoteDate('routes','r2'),tomorrow);
+assert.match(live.dateLabel('hotels','h1','ru'),/^На /);
+assert.match(live.dateLabel('hotels','h1','en'),/^For /);
+assert.match(live.dateLabel('hotels','h1','hi'),/^तारीख: /);
+assert.equal(live.dateLabel('routes','r2','ru'),'');
+const invalid=load({...quotes,quotes:{...quotes.quotes,dates:{hotels:{h1:'2031-01-01'}}}});
+assert.equal(invalid.basePrice('hotels','h1',5931),null,'refuse mismatched future dates');
 
 const stale=load({...quotes,quotes:{...quotes.quotes,for:currentMsk}});
-assert.equal(stale.basePrice('hotels','h1',5931),5931,'never quote prices for a mismatched date');
+assert.equal(stale.basePrice('hotels','h1',5931),null,'never reuse stale booking prices as current');
 const unsupported=load({fx:{rubToInr:-20},quotes:{...quotes.quotes,currency:'USD'}});
 assert.equal(unsupported.rubToInr(),1.12888);
-assert.equal(unsupported.basePrice('hotels','h1',5931),5931);
+assert.equal(unsupported.basePrice('hotels','h1',5931),null);
 
 class FutureDate extends Date{
  constructor(...args){super(...(args.length?args:['2027-01-01T12:00:00+03:00']))}
