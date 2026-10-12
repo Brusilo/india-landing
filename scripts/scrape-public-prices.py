@@ -4,8 +4,9 @@
 This job does not use internal APIs, accounts, hidden endpoints, CAPTCHA bypass,
 or ambiguous undated/SEO prices. At most one page is open at a time.
 
-A missing/unavailable/mismatched offer is omitted from the JSON snapshot.
-The website keeps an illustrative fallback instead of manufacturing a price.
+If the requested next-day booking is sold out, the job checks subsequent days
+within seven days. The exact bookable day accompanies each alternative price.
+A missing/unavailable/mismatched offer is omitted, never fabricated.
 """
 from __future__ import annotations
 
@@ -131,50 +132,72 @@ def dated_link(kind: str, target: dict, day: date) -> str:
 
 
 def extract_page(page, group: str, target: dict, day: date) -> int | None:
-    """Wait for rendered, date-specific booking results and parse only their prices."""
+    """Wait for final, date-specific bookable results or an explicit sold-out state."""
     from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
     kind = "hotel" if group == "hotels" else target["kind"]
     url = dated_link(kind, target, day)
     try:
-        response = page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        response = page.goto(url, wait_until="domcontentloaded", timeout=35000)
         if response is None or response.status != 200:
+            print("::warning::Non-200 public search", kind,
+                  response.status if response else None)
             return None
-        if kind == "hotel":
-            ready = "Забронировать"  # wait until at least one rate actually loads
-        elif kind == "flight":
-            ready = "Выбрать билет"
-        else:
-            ready = "Выбрать места"
+        ready = {"hotel": "Забронировать",
+                 "flight": "Выбрать билет",
+                 "train": "Выбрать места"}[kind]
         try:
             page.wait_for_function(
-                "marker => document.body && document.body.innerText.includes(marker)",
-                arg=ready, timeout=15000
+                """arg => {
+                  const text = document.body?.innerText || '';
+                  if (text.includes(arg.ready)) return true;
+                  // Absence must be declared by the selected-date booking UI,
+                  // not inferred from a delayed network response or price tiles.
+                  if (arg.kind === 'hotel' &&
+                      /выбранные даты.{0,20}всё распродано/i.test(text.replace(/\s/g,'')))
+                    return true;
+                  if (arg.kind === 'train' &&
+                      text.includes('Нет прямых билетов на')) return true;
+                  if (arg.kind === 'flight' &&
+                      /на выбранную дату нет билетов|ничего не найдено/i.test(text))
+                    return true;
+                  return false;
+                }""",
+                arg={"ready": ready, "kind": kind},
+                timeout=45000 if kind == "flight" else 25000
             )
         except PlaywrightTimeoutError:
+            print("::warning::Search did not finish loading:",
+                  kind, day.isoformat())
             return None
-        page.wait_for_timeout(650)  # allow the last price tiles to finish rendering
+
+        if not page.locator("body").inner_text(timeout=12000).count(ready):
+            return None  # confirmed sold out / no direct trains for this day
+        page.wait_for_timeout(650)
         text = page.locator("body").inner_text(timeout=12000)
         if kind == "hotel":
             if not name_ok(target["name"], page.title()):
-                print("::warning::Hotel name mismatch; refusing to use quote:", target["name"])
+                print("::warning::Hotel name mismatch; refusing quote:",
+                      target["name"], page.title()[:100])
                 return None
             return hotel_minimum(text)
         return route_minimum(text, day, kind)
     except Exception as exc:
-        # Any network failure, anti-bot screen or script problem is a miss.
         print("::warning::Public booking search unavailable:", kind,
               type(exc).__name__, str(exc).split("\n")[0][:180])
         return None
+
+
+MAX_NEARBY_DAYS = 7
 
 
 def scrape(day: date, only: set[str] | None = None) -> dict:
     from playwright.sync_api import sync_playwright
 
     targets = json.loads(TARGETS.read_text(encoding="utf-8"))
-    routes = targets["routes"]
-    hotels = targets["hotels"]
+    routes, hotels = targets["routes"], targets["hotels"]
     prices = {"routes": {}, "hotels": {}}
+    dates = {"routes": {}, "hotels": {}}
     tasks = [(group, key, conf) for group, table in
              (("routes", routes), ("hotels", hotels))
              for key, conf in table.items()
@@ -187,19 +210,32 @@ def scrape(day: date, only: set[str] | None = None) -> dict:
         )
         try:
             for group, key, target in tasks:
-                page = context.new_page()
-                try:
-                    value = extract_page(page, group, target, day)
-                    if value is None:
-                        print(f"SKIP {key}: dated bookable minimum not established")
-                    else:
+                # The displayed price and booking URL must always describe
+                # the SAME day. Prefer tomorrow, then the nearest bookable day.
+                found = False
+                for offset in range(MAX_NEARBY_DAYS + 1):
+                    check_day = day + timedelta(days=offset)
+                    page = context.new_page()
+                    try:
+                        value = extract_page(page, group, target, check_day)
+                    finally:
+                        page.close()
+                    if value is not None:
                         prices[group][key] = value
-                        print(f"FOUND {key}: {value} RUB for {day.isoformat()}")
-                finally:
-                    page.close()
+                        if offset:
+                            dates[group][key] = check_day.isoformat()
+                            print(f"NEARBY {key}: tomorrow not bookable;"
+                                  f" using {check_day.isoformat()} instead")
+                        print(f"FOUND {key}: {value} RUB on {check_day.isoformat()}")
+                        found = True
+                        break
+                if not found:
+                    print(f"SKIP {key}: no dated bookable offer confirmed over "
+                          f"{MAX_NEARBY_DAYS + 1} checked days")
         finally:
             context.close()
             browser.close()
+    prices["dates"] = dates
     return prices
 
 
@@ -258,7 +294,8 @@ def main() -> int:
     doc = {
         "quote_date": day.isoformat(), "currency": "RUB",
         "source": "Public Tutu date-specific booking search (one adult; hotels one room/night)",
-        "routes": prices["routes"], "hotels": prices["hotels"]
+        "routes": prices["routes"], "hotels": prices["hotels"],
+        "dates": prices["dates"]
     }
     output = Path(args.out)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -266,7 +303,7 @@ def main() -> int:
     print(f"Public search: {total} dated price quotes from {len(prices['routes'])} routes"
           f" and {len(prices['hotels'])} hotels; checked {day}")
     if not total:
-        print("::warning::No bookable prices confirmed; retain illustrative fallback.")
+        print("::warning::No bookable prices confirmed; do not publish sample prices.")
     return 0
 
 
