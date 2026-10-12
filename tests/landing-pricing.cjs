@@ -67,9 +67,9 @@ for(const page of ['index-ru.html','index.html','index-hi.html']){
 }
 // The bot must not be blocked by an outdated static asset cache version.
 const workflow=fs.readFileSync(path.join(root,'.github/workflows/update-market-data.yml'),'utf8');
-assert.match(workflow,/- cron: '0 \\*\\/3 \\* \\* \\*'/,
+assert.match(workflow,/- cron: '0 \*\/3 \* \* \*'/,
   'market-data workflow should run every 3 hours (UTC and Moscow intervals match)');
-assert.match(workflow,/python scripts\\/scrape-public-prices\\.py --out/,
+assert.match(workflow,/python scripts\/scrape-public-prices\.py --out/,
   'scheduled job must still perform the 27 public booking searches');
 const tourJs=fs.readFileSync(path.join(root,'assets/tour-form.js'),'utf8');
 assert.match(tourJs,/function departureCountryName\(d\)/);
