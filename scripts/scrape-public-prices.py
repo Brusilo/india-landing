@@ -190,6 +190,9 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
                         r"на выбранную дату нет билетов|ничего не найдено", body, re.I
                     )
                 ):
+                    if kind == "train":
+                        print("DIAG route soldout:", stamp(day),
+                              re.sub(r"\s+", " ", clean(body))[:380])
                     return None
                 page.wait_for_timeout(850)
             print("::warning::No exact-day calendar fare appeared:",
@@ -211,6 +214,10 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
 
         text = page.locator("body").inner_text(timeout=12000)
         if "Забронировать" not in text:
+            head = clean(text)
+            pos = head.find("Доступные варианты")
+            print("DIAG hotel no booking action:", target["name"],
+                  re.sub(r"\s+", " ", head[max(0, pos):max(0, pos) + 600]))
             return None
         page.wait_for_timeout(650)
         text = page.locator("body").inner_text(timeout=12000)
@@ -218,7 +225,13 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
             print("::warning::Hotel name mismatch; refusing quote:",
                   target["name"], page.title()[:100])
             return None
-        return hotel_minimum(text)
+        rate = hotel_minimum(text)
+        if rate is None:
+            head = clean(text)
+            pos = head.find("Доступные варианты")
+            print("DIAG hotel offer parser:", target["name"],
+                  re.sub(r"\s+", " ", head[max(0, pos):max(0, pos) + 600]))
+        return rate
     except Exception as exc:
         print("::warning::Public booking search unavailable:", kind,
               type(exc).__name__, str(exc).split("\n")[0][:180])
