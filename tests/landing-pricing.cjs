@@ -58,13 +58,19 @@ for(const page of ['index-ru.html','index.html','index-hi.html']){
  assert.match(html,/window\.TUTU_PRICING\.basePrice\('routes'/);
  assert.match(html,/window\.TUTU_PRICING\.basePrice\('hotels'/);
  assert.match(html,/window\.TUTU_PRICING\.discountRub\('hotel'/);
- assert.match(html,/assets\/tour-form\.js\?v=20261011-country-and-date-chips/);
+ assert.match(html,/assets\/tour-form\.js\?v=[\w-]+/);
  const start=html.indexOf('const CONFIG = ');
  assert.ok(start!==-1,'CONFIG exists for '+page);
  const scriptEnd=html.indexOf('</script>',start);
  assert.ok(scriptEnd>start);
  new vm.Script(html.slice(start,scriptEnd),{filename:page});
 }
+// The bot must not be blocked by an outdated static asset cache version.
+const workflow=fs.readFileSync(path.join(root,'.github/workflows/update-market-data.yml'),'utf8');
+assert.match(workflow,/- cron: '0 \\*\\/3 \\* \\* \\*'/,
+  'market-data workflow should run every 3 hours (UTC and Moscow intervals match)');
+assert.match(workflow,/python scripts\\/scrape-public-prices\\.py --out/,
+  'scheduled job must still perform the 27 public booking searches');
 const tourJs=fs.readFileSync(path.join(root,'assets/tour-form.js'),'utf8');
 assert.match(tourJs,/function departureCountryName\(d\)/);
 assert.match(tourJs,/data-tour-date/);
