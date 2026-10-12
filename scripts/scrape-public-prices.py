@@ -4,8 +4,8 @@
 This job does not use internal APIs, accounts, hidden endpoints, CAPTCHA bypass,
 or ambiguous undated/SEO prices. At most one page is open at a time.
 
-If the requested next-day booking is sold out, the job checks subsequent days
-within seven days. The exact bookable day accompanies each alternative price.
+Only the exact next-day booking date is accepted. A missing price is omitted,
+never substituted with a fare for a different date.
 A missing/unavailable/mismatched offer is omitted, never fabricated.
 """
 from __future__ import annotations
@@ -188,16 +188,12 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
         return None
 
 
-MAX_NEARBY_DAYS = 7
-
-
 def scrape(day: date, only: set[str] | None = None) -> dict:
     from playwright.sync_api import sync_playwright
 
     targets = json.loads(TARGETS.read_text(encoding="utf-8"))
     routes, hotels = targets["routes"], targets["hotels"]
     prices = {"routes": {}, "hotels": {}}
-    dates = {"routes": {}, "hotels": {}}
     tasks = [(group, key, conf) for group, table in
              (("routes", routes), ("hotels", hotels))
              for key, conf in table.items()
@@ -210,32 +206,20 @@ def scrape(day: date, only: set[str] | None = None) -> dict:
         )
         try:
             for group, key, target in tasks:
-                # The displayed price and booking URL must always describe
-                # the SAME day. Prefer tomorrow, then the nearest bookable day.
-                found = False
-                for offset in range(MAX_NEARBY_DAYS + 1):
-                    check_day = day + timedelta(days=offset)
-                    page = context.new_page()
-                    try:
-                        value = extract_page(page, group, target, check_day)
-                    finally:
-                        page.close()
-                    if value is not None:
-                        prices[group][key] = value
-                        if offset:
-                            dates[group][key] = check_day.isoformat()
-                            print(f"NEARBY {key}: tomorrow not bookable;"
-                                  f" using {check_day.isoformat()} instead")
-                        print(f"FOUND {key}: {value} RUB on {check_day.isoformat()}")
-                        found = True
-                        break
-                if not found:
-                    print(f"SKIP {key}: no dated bookable offer confirmed over "
-                          f"{MAX_NEARBY_DAYS + 1} checked days")
+                page = context.new_page()
+                try:
+                    value = extract_page(page, group, target, day)
+                finally:
+                    page.close()
+                if value is None:
+                    print(f"SKIP {key}: no verified price for {day.isoformat()}; "
+                          "never use another booking day")
+                    continue
+                prices[group][key] = value
+                print(f"FOUND {key}: {value} RUB on {day.isoformat()}")
         finally:
             context.close()
             browser.close()
-    prices["dates"] = dates
     return prices
 
 
@@ -295,7 +279,7 @@ def main() -> int:
         "quote_date": day.isoformat(), "currency": "RUB",
         "source": "Public Tutu date-specific booking search (one adult; hotels one room/night)",
         "routes": prices["routes"], "hotels": prices["hotels"],
-        "dates": prices["dates"]
+        "dates": {"routes": {}, "hotels": {}}
     }
     output = Path(args.out)
     output.parent.mkdir(parents=True, exist_ok=True)
