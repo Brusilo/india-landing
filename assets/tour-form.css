@@ -239,15 +239,18 @@
   }
 }
 
-/* Desktop: ALL search popups start at exactly the form's lower edge,
-   regardless of field or travel mode. This places them 5px above the
-   quick-chip row, hiding any lilac chip peeking out alongside a popup.
-   Leave phone and tablet popups in their established layouts. */
+/* Desktop: one consistent popup baseline for all five search modes.
+   Lower all panels by 3px without changing their sizes or mobile geometry.
+   Nudge only the quick-hint bubbles 1px right; their grid stays aligned. */
 @media (min-width: 1101px) {
   html .search.search-v2 .search-suggest,
   html .search.search-v2 .v2-calendar,
   html .search.search-v2 .v2-popover {
-    top: 100% !important;
+    top: calc(100% + 3px) !important;
+  }
+  html .search-hints.search-hints-v2 .quick-chip-v2 {
+    position: relative;
+    left: 1px;
   }
 }
 

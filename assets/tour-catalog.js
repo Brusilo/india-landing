@@ -19,7 +19,7 @@
     {key:'ekaterinburg',id:25,name:{ru:'Екатеринбург',en:'Yekaterinburg',hi:'येकातेरिनबुर्ग'}},
     {key:'novosibirsk',id:53,name:{ru:'Новосибирск',en:'Novosibirsk',hi:'नोवोसिबिर्स्क'}},
     {key:'samara',id:64,name:{ru:'Самара',en:'Samara',hi:'समारा'}},
-    {key:'nizhny-novgorod',id:50,name:{ru:'Нижний Новгород',en:'Nizhny Novgorod',hi:'निझनी नोवगोरोद'}},
+    {key:'nizhny-novgorod',id:50,name:{ru:'Нижний Новгород',en:'Nizhny Novgorod',hi:'निझ्नी नोवगोरोद'}},
     {key:'irkutsk',id:28,name:{ru:'Иркутск',en:'Irkutsk',hi:'इर्कुत्स्क'}},
     {key:'perm',id:61,name:{ru:'Пермь',en:'Perm',hi:'पेर्म'}},
     {key:'krasnodar',id:36,name:{ru:'Краснодар',en:'Krasnodar',hi:'क्रास्नोदार'}},
@@ -36,7 +36,7 @@
   // Egypt=29 remains grounded in the supplied Tutu-branded search example.
   const destinations=[
     {key:'russia',kind:'country',id:76,name:{ru:'Россия',en:'Russia',hi:'रूस'},ru:'Россия',browse:'https://tours.tutu.ru/strana/rossiya/',aliases:'rossiya winter snow'},
-    {key:'turkey',kind:'country',id:92,name:{ru:'Турция',en:'Turkey',hi:'तुर्किये'},ru:'Турция',browse:'https://tours.tutu.ru/strana/turkey/',aliases:'turkiye turkiye türkiye'},
+    {key:'turkey',kind:'country',id:92,name:{ru:'Турция',en:'Turkey',hi:'तुर्की'},ru:'Турция',browse:'https://tours.tutu.ru/strana/turkey/',aliases:'turkiye türkiye तुर्किये'},
     {key:'egypt',kind:'country',id:29,name:{ru:'Египет',en:'Egypt',hi:'मिस्र'},ru:'Египет',browse:'https://tours.tutu.ru/strana/egypt/',aliases:'misr'},
     {key:'uae',kind:'country',id:68,name:{ru:'ОАЭ',en:'UAE',hi:'संयुक्त अरब अमीरात'},ru:'ОАЭ',browse:'https://tours.tutu.ru/strana/united_arab_emirates/',aliases:'emirates dubai дубай दुबई'},
     {key:'thailand',kind:'country',id:87,name:{ru:'Таиланд',en:'Thailand',hi:'थाईलैंड'},ru:'Таиланд',browse:'https://tours.tutu.ru/strana/thailand/',aliases:'тайланд'},

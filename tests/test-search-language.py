@@ -82,9 +82,9 @@ def check_desktop_popup_geometry(page, panel_selector, field_selector):
                 formBottom:bar.bottom,hintsTop:h.top};
     }""", [panel_selector, field_selector])
     assert rects, f"Popup failed to open: {panel_selector}"
-    assert abs(rects["panelTop"] - rects["formBottom"]) <= 1.1, rects
-    assert rects["panelTop"] >= rects["fieldBottom"] - 1.1, rects
-    assert rects["hintsTop"] - rects["panelTop"] >= 3, rects
+    assert abs(rects["panelTop"] - rects["formBottom"] - 3) <= 1.1, rects
+    assert rects["panelTop"] >= rects["fieldBottom"] + 1.8, rects
+    assert rects["hintsTop"] - rects["panelTop"] >= 1, rects
 
 
 with sync_playwright() as playwright:
@@ -130,6 +130,9 @@ with sync_playwright() as playwright:
                                  ("hi", "index-hi.html")):
             ctx, page, errors = setup(browser)
             open_page(page, filename)
+            hint_offset=page.locator(".search-hints-v2 .quick-chip-v2").first.evaluate(
+                "el => getComputedStyle(el).left")
+            assert hint_offset == "1px", (locale, hint_offset)
             for mode, index in (("flight", 1), ("hotel", 0),
                                 ("train", 2), ("bus", 3), ("tour", None)):
                 tab = (page.locator(".transport .tours-tab") if mode == "tour"
@@ -143,7 +146,23 @@ with sync_playwright() as playwright:
                     page.keyboard.press("Escape")
             assert not errors, (locale, "desktop dropdowns", errors)
             ctx.close()
-        print("All desktop dropdowns share the form-bottom alignment: RU/EN/HI, all five modes.")
+        # Confirm the two FAQ explanations are unambiguous in each language.
+        ctx,page,errors=setup(browser)
+        open_page(page, "index.html")
+        assert "combined length, width and height of each item must not exceed 180 cm" in page.locator("#faq-list").inner_text()
+        ctx.close()
+        ctx,page,errors=setup(browser)
+        open_page(page, "index-hi.html")
+        assert "हर एक टुकड़े की लंबाई, चौड़ाई और ऊँचाई का कुल जोड़ 180 सेमी" in page.locator("#faq-list").inner_text()
+        names=page.evaluate("""() => ({
+            turkey: TUTU_TOURS.byKey.get('turkey').name.hi,
+            nizhny: TUTU_TOURS.departureByKey.get('nizhny-novgorod').name.hi
+        })""")
+        assert names == {"turkey":"तुर्की", "nizhny":"निझ्नी नोवगोरोद"}, names
+        ctx.close()
+        from pathlib import Path
+        assert "टूटू" not in Path("assets/tour-form.js").read_text(encoding="utf-8"), "Tutu brand spelling differs between Hindi sections"
+        print("All desktop dropdowns align 3px below the form: RU/EN/HI, five modes; quick chips +1px; selected localized wording verified.")
 
         # Flights: both place IDs and their localized labels, dates, guest ages, cabin.
         ctx, page, errors = setup(browser)

@@ -69,7 +69,7 @@
       },
       {
         q: 'How much baggage can I take?',
-        a: 'Allowances depend on the carrier and fare. On long-distance trains you can take up to 36 kg of hand luggage free, or up to 50 kg in SV (two-berth first-class) coaches. Each item can measure up to 180 cm in length, width and height combined. For flights and buses, we show the allowance when you choose a ticket.'
+        a: 'Allowances depend on the carrier and fare. On long-distance trains you can take up to 36 kg of hand luggage free, or up to 50 kg in SV (two-berth first-class) coaches. The combined length, width and height of each item must not exceed 180 cm. For flights and buses, we show the allowance when you choose a ticket.'
       },
       {
         q: 'How does “Pay later” work?',
@@ -111,7 +111,7 @@
       },
       {
         q: 'कितना सामान साथ ले जा सकते हैं?',
-        a: 'सामान की सीमा परिवहन कंपनी और किराये पर निर्भर करती है। लंबी दूरी की ट्रेनों में 36 किलो तक हैंड लगेज मुफ़्त ले जा सकते हैं, और SV (दो बर्थ वाले फ़र्स्ट क्लास) कोच में 50 किलो तक। हर सामान की लंबाई, चौड़ाई और ऊँचाई का जोड़ 180 सेमी से ज़्यादा नहीं होना चाहिए। फ़्लाइट और बस के नियम हम टिकट चुनते समय दिखाते हैं।'
+        a: 'सामान की सीमा परिवहन कंपनी और किराये पर निर्भर करती है। लंबी दूरी की ट्रेनों में 36 किलो तक हैंड लगेज मुफ़्त ले जा सकते हैं, और SV (दो बर्थ वाले फ़र्स्ट क्लास) कोच में 50 किलो तक। सामान के हर एक टुकड़े की लंबाई, चौड़ाई और ऊँचाई का कुल जोड़ 180 सेमी से ज़्यादा नहीं होना चाहिए। फ़्लाइट और बस के नियम हम टिकट चुनते समय दिखाते हैं।'
       },
       {
         q: '«बाद में भुगतान करें» कैसे काम करता है?',
