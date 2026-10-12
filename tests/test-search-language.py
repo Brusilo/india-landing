@@ -67,25 +67,84 @@ def handoff_consumed(page):
     )
 
 def check_desktop_popup_geometry(page, panel_selector, field_selector):
-    """Top of a dropdown should cover the chips row but not overlap its field."""
+    """Every desktop dropdown begins on the form bottom, above quick chips."""
     rects = page.evaluate("""([panelSelector,fieldSelector]) => {
         const panel=document.querySelector(panelSelector);
         const field=document.querySelector(fieldSelector);
+        const form=document.querySelector('#search');
         const hints=document.querySelector('.search-hints-v2');
-        if (!panel || !field || !hints || panel.hidden) return null;
+        if (!panel || !field || !form || !hints || panel.hidden) return null;
         const p=panel.getBoundingClientRect();
         const f=field.getBoundingClientRect();
+        const bar=form.getBoundingClientRect();
         const h=hints.getBoundingClientRect();
-        return {panelTop:p.top,fieldBottom:f.bottom,hintsTop:h.top};
+        return {panelTop:p.top,fieldBottom:f.bottom,
+                formBottom:bar.bottom,hintsTop:h.top};
     }""", [panel_selector, field_selector])
     assert rects, f"Popup failed to open: {panel_selector}"
-    assert rects["panelTop"] >= rects["fieldBottom"] - 1, rects
-    assert abs(rects["panelTop"] - rects["hintsTop"]) <= 2, rects
+    assert abs(rects["panelTop"] - rects["formBottom"]) <= 1.1, rects
+    assert rects["panelTop"] >= rects["fieldBottom"] - 1.1, rects
+    assert rects["hintsTop"] - rects["panelTop"] >= 3, rects
 
 
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=True, args=["--no-sandbox"])
     try:
+        # Popups in every tab and every locale share the same desktop Y.
+        # Check all visible dropdown kinds, not just the city autocomplete.
+        desktop_popups = {
+            "flight": [
+                ("[data-role='from'] .v2-input", "[data-role='from'] .search-suggest", "[data-role='from']"),
+                ("[data-role='to'] .v2-input", "[data-role='to'] .search-suggest", "[data-role='to']"),
+                ("[data-trigger='date']", "[data-role='date'] > .v2-calendar", "[data-role='date']"),
+                ("[data-trigger='return']", "[data-role='return'] > .v2-calendar", "[data-role='return']"),
+                ("[data-trigger='pax']", "[data-role='pax'] .v2-popover", "[data-role='pax']"),
+            ],
+            "hotel": [
+                ("[data-role='destination'] .v2-input", "[data-role='destination'] .search-suggest", "[data-role='destination']"),
+                ("[data-trigger='date']", "[data-role='date'] > .v2-calendar", "[data-role='date']"),
+                ("[data-trigger='pax']", "[data-role='pax'] .v2-popover", "[data-role='pax']"),
+            ],
+            "train": [
+                ("[data-role='from'] .v2-input", "[data-role='from'] .search-suggest", "[data-role='from']"),
+                ("[data-role='to'] .v2-input", "[data-role='to'] .search-suggest", "[data-role='to']"),
+                ("[data-trigger='date']", "[data-role='date'] > .v2-calendar", "[data-role='date']"),
+                ("[data-trigger='pax']", "[data-role='pax'] .v2-popover", "[data-role='pax']"),
+            ],
+            "bus": [
+                ("[data-role='from'] .v2-input", "[data-role='from'] .search-suggest", "[data-role='from']"),
+                ("[data-role='to'] .v2-input", "[data-role='to'] .search-suggest", "[data-role='to']"),
+                ("[data-trigger='date']", "[data-role='date'] > .v2-calendar", "[data-role='date']"),
+                ("[data-trigger='pax']", "[data-role='pax'] .v2-popover", "[data-role='pax']"),
+            ],
+            "tour": [
+                (".tour-departure-input", ".tour-cell--departure .search-suggest", ".tour-cell--departure"),
+                (".tour-destination", ".tour-cell--destination .search-suggest", ".tour-cell--destination"),
+                ("[data-tour-trigger='date']", ".tour-cell--date .v2-calendar", ".tour-cell--date"),
+                ("[data-tour-trigger='nights']", ".tour-cell--nights .v2-popover", ".tour-cell--nights"),
+                ("[data-tour-trigger='people']", ".tour-cell--people .v2-popover", ".tour-cell--people"),
+            ],
+        }
+        for locale, filename in (("ru", "index-ru.html"),
+                                 ("en", "index.html"),
+                                 ("hi", "index-hi.html")):
+            ctx, page, errors = setup(browser)
+            open_page(page, filename)
+            for mode, index in (("flight", 1), ("hotel", 0),
+                                ("train", 2), ("bus", 3), ("tour", None)):
+                tab = (page.locator(".transport .tours-tab") if mode == "tour"
+                       else page.locator(".transport button:not(.tours-tab)").nth(index))
+                tab.click()
+                assert page.locator("#search").get_attribute("data-mode") == mode
+                for trigger, panel, field in desktop_popups[mode]:
+                    page.locator("#search " + trigger).click()
+                    check_desktop_popup_geometry(page, "#search " + panel,
+                                                 "#search " + field)
+                    page.keyboard.press("Escape")
+            assert not errors, (locale, "desktop dropdowns", errors)
+            ctx.close()
+        print("All desktop dropdowns share the form-bottom alignment: RU/EN/HI, all five modes.")
+
         # Flights: both place IDs and their localized labels, dates, guest ages, cabin.
         ctx, page, errors = setup(browser)
         open_page(page)

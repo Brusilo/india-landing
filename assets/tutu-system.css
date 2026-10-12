@@ -4571,10 +4571,3 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
 #hotels .card.card--cta { background: #fff; }
 #hotels .card.card--cta:hover { background: #FAFAFD; }
 
-/* Desktop city autocomplete: overlap the gap slightly so the lilac
-   quick-search chip cannot peek out above the dropdown edge. */
-@media (min-width: 1101px) {
-  html body .search.search-v2 .v2-field--place > .search-suggest:not([hidden]) {
-    top: calc(100% + 3px);
-  }
-}

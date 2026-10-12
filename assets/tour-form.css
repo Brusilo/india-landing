@@ -239,14 +239,15 @@
   }
 }
 
-/* On desktop, popup top edges meet the quick-chip row (+5px below
-   the search form). The fields keep their original height and remain
-   unobscured; the higher-z-index panels cover any chips underneath. */
-@media (min-width:1101px) {
+/* Desktop: ALL search popups start at exactly the form's lower edge,
+   regardless of field or travel mode. This places them 5px above the
+   quick-chip row, hiding any lilac chip peeking out alongside a popup.
+   Leave phone and tablet popups in their established layouts. */
+@media (min-width: 1101px) {
   html .search.search-v2 .search-suggest,
   html .search.search-v2 .v2-calendar,
   html .search.search-v2 .v2-popover {
-    top:calc(100% + 5px) !important;
+    top: 100% !important;
   }
 }
 
