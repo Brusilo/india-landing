@@ -553,7 +553,8 @@ with sync_playwright() as playwright:
                 assert len(aligned) == 5, (locale, width, aligned)
                 for g in aligned:
                     assert g["hasBoth"] and g["centerDiff"] <= 1.5, (locale, width, g)
-                    assert g["nameWeight"] == g["detailWeight"] == "600", (locale, width, g)
+                    assert g["nameWeight"] == "700" and g["detailWeight"] == "600", (locale, width, g)
+                    assert g["detailSize"] == 14, (locale, width, g)
                     assert g["nameSize"] > g["detailSize"], (locale, width, g)
                     assert g["detailColor"] == "rgb(107, 111, 143)", (locale, width, g)
             ref = page.locator('#routes [data-cta="route_r3"]').get_attribute("data-href")
@@ -575,8 +576,8 @@ with sync_playwright() as playwright:
                   gap:c.left-b.right, expectedGap:parseFloat(style.columnGap),
                   codeScroll:code.scrollWidth, codeClient:code.clientWidth};
             }""")
-            assert abs(offer["badgeWidth"] - offer["ph"] * 740 / 235) <= 1, offer
-            assert abs(offer["codeWidth"] - offer["ph"] * 1710 / 235) <= 1, offer
+            assert abs(offer["badgeWidth"] - offer["ph"] * 666 / 235) <= 1, offer
+            assert abs(offer["codeWidth"] - offer["ph"] * 1539 / 235) <= 1, offer
             assert abs(offer["gap"] - offer["expectedGap"]) <= 1, offer
             assert offer["codeScroll"] <= offer["codeClient"] + 2, offer
             assert not errors, (locale, errors)
