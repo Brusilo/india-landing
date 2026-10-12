@@ -15,6 +15,7 @@ on:
       - 'tests/test-search-language.py'
       - '.github/workflows/test-search-language.yml'
       - 'tests/landing-audit.py'
+      - 'tests/landing-interactions.py'
 
 permissions:
   contents: read
@@ -47,6 +48,7 @@ jobs:
           python -m http.server 8765 --bind 127.0.0.1 > /tmp/india-landing-web.log 2>&1 &
           python tests/test-search-language.py
           python tests/landing-audit.py
+          python tests/landing-interactions.py
       - name: Upload full QA report and responsive screenshots
         if: always()
         uses: actions/upload-artifact@v4
