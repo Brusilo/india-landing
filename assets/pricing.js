@@ -36,7 +36,7 @@
     const amount=Number(prices[type]?.[id]);
     if(!positive(amount,100,2000000))return null;
     const dated=prices.dates?.[type]?.[id]||tomorrow;
-    if(typeof dated!=='string'||!/^\\d{4}-\\d{2}-\\d{2}$/.test(dated)||
+    if(typeof dated!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(dated)||
        dated<tomorrow||dated>addDays(tomorrow,7))return null;
     return {price:amount,date:dated};
   }
