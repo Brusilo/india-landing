@@ -12,6 +12,8 @@ on:
       - 'scripts/update-market-data.py'
       - 'scripts/scrape-public-prices.py'
       - 'scripts/price-targets.json'
+      - 'tests/landing-pricing.cjs'
+      - 'tests/landing-tours.cjs'
       - '.github/workflows/update-market-data.yml'
 
 permissions:
