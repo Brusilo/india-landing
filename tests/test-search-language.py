@@ -566,6 +566,36 @@ with sync_playwright() as playwright:
             last_card = page.locator("#routes-row .card--cta").get_attribute("href")
             assert ref and ref.startswith("https://www.tutu.ru/poezda/"), ref
             assert header == ref == last_card, (locale, header, ref, last_card)
+            # Visual regressions: Tutu's neutral See-all tile, not a dashed
+            # outline, and small centring offsets on the transport glyphs.
+            for viewport_width in (390, 1460):
+                page.set_viewport_size({"width": viewport_width, "height": 900})
+                for section_id in ("routes", "hotels"):
+                    card = page.locator(f"#{section_id} .card--cta")
+                    styling = card.evaluate("""el => {
+                        const cs=getComputedStyle(el);
+                        const svg=getComputedStyle(el.querySelector('svg'));
+                        return {background:cs.backgroundColor,color:cs.color,
+                                border:cs.borderTopWidth,radius:cs.borderTopLeftRadius,
+                                iconWidth:svg.width};
+                    }""")
+                    assert styling == {
+                        "background":"rgb(245, 245, 249)",
+                        "color":"rgb(95, 23, 197)",
+                        "border":"0px",
+                        "radius":"24px",
+                        "iconWidth":"24px",
+                    }, (locale, viewport_width, section_id, styling)
+                icons=page.evaluate("""() => {
+                    const img=kind=>document.querySelector(
+                        '.hero .transport .ico img[src*="icon-'+kind+'"]');
+                    return {flight:getComputedStyle(img('flight')).transform,
+                            train:getComputedStyle(img('train')).transform};
+                }""")
+                # 'scale' is a separate CSS property; the following matrices
+                # reflect only the requested optical x/y nudges.
+                assert icons["flight"].startswith("matrix(1, 0, 0, 1, 0, "), (locale,viewport_width,icons)
+                assert icons["train"].startswith("matrix(1, 0, 0, 1, 2, "), (locale,viewport_width,icons)
             hotels_href = page.locator("#hotels .see-all").get_attribute("href")
             assert hotels_href.startswith("https://hotel.tutu.ru/"), hotels_href
             offer = page.evaluate("""() => {

@@ -4526,3 +4526,42 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
   line-height: 1.25;
   font-weight: 500;
 }
+
+/* Visual polish: Tutu-style full-card "See all" tiles, in both carousels.
+   Neutral #F5F5F9 and accent #5F17C5 match the supplied Tutu reference. */
+#routes .card.card--cta,
+#hotels .card.card--cta {
+  background: #F5F5F9;
+  border: 0;
+  border-radius: 24px;
+  box-shadow: none;
+  color: #5F17C5;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+#routes .card.card--cta:hover,
+#hotels .card.card--cta:hover {
+  background: #ECECF3;
+  border: 0;
+  color: #5F17C5;
+}
+#routes .card.card--cta svg,
+#hotels .card.card--cta svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+  flex: none;
+}
+#routes .card.card--cta span,
+#hotels .card.card--cta span {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Keep every icon at its current size. Compensate only for the slight
+   optical misalignment inside the purple transport circles. */
+.hero .transport .ico img[src*="icon-flight"] { transform: translateY(0.5%) !important; }
+.hero .transport .ico img[src*="icon-train"] { transform: translate(2px, -5.1%) !important; }
