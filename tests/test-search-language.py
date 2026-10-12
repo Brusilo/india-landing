@@ -481,17 +481,57 @@ with sync_playwright() as playwright:
             ru, en, hi = (artwork[x] for x in ("ru", "en", "hi"))
             assert ru["maxHeight"] == hi["maxHeight"] == en["maxHeight"] == "52%", (
                 width, artwork)
-            for reference in (en, hi):
-                # Copy lengths can change card height, so compare artwork
-                # size relative to its card, not the absolute image pixels.
-                actual_ratio = ru["imgHeight"] / ru["cardHeight"]
-                expected_ratio = reference["imgHeight"] / reference["cardHeight"]
-                assert abs(actual_ratio - expected_ratio) <= .025, (width, artwork)
-                assert abs(ru["right"] - reference["right"]) <= 9, (width, artwork)
-                assert abs(ru["bottom"] - reference["bottom"]) <= 9, (width, artwork)
+            # RU and EN are exactly 10% smaller than the previous scale 1.1;
+            # HI stays unchanged. Card text lengths may change total heights.
+            assert ru["scale"] == en["scale"] == "0.99", (width, artwork)
+            assert hi["scale"] == "1.1", (width, artwork)
+            assert all(art["imgWidth"] > 50 and art["imgHeight"] > 50
+                       for art in artwork.values()), (width, artwork)
             assert not errors
             ctx.close()
-        print("RU/EN/HI desktop support illustration geometry passed at 1101/1200/1366/1600px.")
+        print("RU/EN -10% and HI unchanged support illustration: all desktop widths.")
+        # Check the actual rendered links, reviews and discount plates in
+        # every locale. "All routes" must match the dated r3 search URL,
+        # while "All hotels" still leads to hotel search.
+        name_sets = {
+            "ru": ["Мриналини", "Ритвик", "Анирбан", "Танушри", "Сатьяджит"],
+            "en": ["Mrinalini", "Ritwik", "Anirban", "Tanushree", "Satyajit"],
+            "hi": ["मृणालिनी", "ऋत्विक", "अनिर्बान", "तनुश्री", "सत्यजीत"],
+        }
+        for locale, filename in (
+            ("ru", "index-ru.html"), ("en", "index.html"), ("hi", "index-hi.html")
+        ):
+            ctx, page, errors = setup(browser)
+            open_page(page, filename)
+            assert page.locator("#reviews-row .review-card").count() == 5
+            assert page.locator("#reviews-row .review-card__author").all_inner_texts() == name_sets[locale]
+            ref = page.locator('#routes [data-cta="route_r3"]').get_attribute("data-href")
+            header = page.locator("#routes .see-all").get_attribute("href")
+            last_card = page.locator("#routes-row .card--cta").get_attribute("href")
+            assert ref and ref.startswith("https://www.tutu.ru/poezda/"), ref
+            assert header == ref == last_card, (locale, header, ref, last_card)
+            hotels_href = page.locator("#hotels .see-all").get_attribute("href")
+            assert hotels_href.startswith("https://hotel.tutu.ru/"), hotels_href
+            offer = page.evaluate("""() => {
+                const wrap=document.querySelector('#hotels .hotel-offer');
+                const badge=wrap.querySelector('.hotel-offer__badge');
+                const code=wrap.querySelector('.hotel-offer__plate');
+                const b=badge.getBoundingClientRect();
+                const c=code.getBoundingClientRect();
+                const style=getComputedStyle(wrap);
+                const ph=parseFloat(style.getPropertyValue('--ph'));
+                return {ph, badgeWidth:b.width, codeWidth:c.width,
+                  gap:c.left-b.right, expectedGap:parseFloat(style.columnGap),
+                  codeScroll:code.scrollWidth, codeClient:code.clientWidth};
+            }""")
+            assert abs(offer["badgeWidth"] - offer["ph"] * 740 / 235) <= 1, offer
+            assert abs(offer["codeWidth"] - offer["ph"] * 1710 / 235) <= 1, offer
+            assert abs(offer["gap"] - offer["expectedGap"]) <= 1, offer
+            assert offer["codeScroll"] <= offer["codeClient"] + 2, offer
+            assert not errors, (locale, errors)
+            ctx.close()
+        print("Three-language route buttons, five review first names, and narrow discount plates verified.")
+
         print("Browser search state and tour native alert validation passed: five modes, RU/EN/HI, no layout-shifting error notices.")
     finally:
         browser.close()
