@@ -574,12 +574,14 @@ with sync_playwright() as playwright:
                 const ph=parseFloat(style.getPropertyValue('--ph'));
                 return {ph, badgeWidth:b.width, codeWidth:c.width,
                   gap:c.left-b.right, expectedGap:parseFloat(style.columnGap),
-                  codeScroll:code.scrollWidth, codeClient:code.clientWidth};
+                  codeScroll:code.scrollWidth, codeClient:code.clientWidth,
+                  codeFont:parseFloat(getComputedStyle(wrap.querySelector('.hotel-offer__code')).fontSize)};
             }""")
-            assert abs(offer["badgeWidth"] - offer["ph"] * 666 / 235) <= 1, offer
-            assert abs(offer["codeWidth"] - offer["ph"] * 1539 / 235) <= 1, offer
+            assert abs(offer["badgeWidth"] - offer["ph"] * 740 / 235) <= 1, offer
+            assert abs(offer["codeWidth"] - offer["ph"] * 1710 / 235) <= 1, offer
             assert abs(offer["gap"] - offer["expectedGap"]) <= 1, offer
             assert offer["codeScroll"] <= offer["codeClient"] + 2, offer
+            assert abs(offer["codeFont"] - offer["ph"] * 25 / 33) <= .4, offer
             assert not errors, (locale, errors)
             ctx.close()
         print("Three-language route buttons, reviewer names+grey captions, desktop/mobile alignment and discount plates verified.")
