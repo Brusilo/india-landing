@@ -2,9 +2,10 @@ name: Update India landing FX and verified prices
 
 on:
   schedule:
-    # GitHub Actions cron uses UTC. 21:00 UTC = 00:00 Europe/Moscow.
-    # Scheduled jobs can begin a little later during GitHub runner congestion.
-    - cron: '0 21 * * *'
+    # Every three hours on Moscow's clock: 00:00, 03:00, ..., 21:00 MSK.
+    # GitHub Actions uses UTC; UTC+3 remains constant year-round for Moscow.
+    # Actual starts can be delayed by GitHub runner congestion.
+    - cron: '0 */3 * * *'
   workflow_dispatch:
   push:
     paths:
@@ -60,6 +61,6 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add assets/daily-prices.js
-          git commit -m "data: nightly INR rate and verified card prices"
+          git commit -m "data: refresh INR rate and verified card prices"
           git pull --rebase origin main
           git push origin HEAD:main
