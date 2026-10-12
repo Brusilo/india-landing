@@ -241,7 +241,7 @@
 
 /* Desktop: one consistent popup baseline for all five search modes.
    Lower all panels by 3px without changing their sizes or mobile geometry.
-   Nudge only the quick-hint bubbles 1px right; their grid stays aligned. */
+   Nudge quick-hint bubbles 1px right and 2px lower; their grid stays aligned. */
 @media (min-width: 1101px) {
   html .search.search-v2 .search-suggest,
   html .search.search-v2 .v2-calendar,
@@ -251,6 +251,7 @@
   html .search-hints.search-hints-v2 .quick-chip-v2 {
     position: relative;
     left: 1px;
+    top: 2px;
   }
 }
 

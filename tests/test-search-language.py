@@ -130,9 +130,9 @@ with sync_playwright() as playwright:
                                  ("hi", "index-hi.html")):
             ctx, page, errors = setup(browser)
             open_page(page, filename)
-            hint_offset=page.locator(".search-hints-v2 .quick-chip-v2").first.evaluate(
-                "el => getComputedStyle(el).left")
-            assert hint_offset == "1px", (locale, hint_offset)
+            hint_offsets=page.locator(".search-hints-v2 .quick-chip-v2").first.evaluate(
+                "el => ({left:getComputedStyle(el).left, top:getComputedStyle(el).top})")
+            assert hint_offsets == {"left": "1px", "top": "2px"}, (locale, hint_offsets)
             for mode, index in (("flight", 1), ("hotel", 0),
                                 ("train", 2), ("bus", 3), ("tour", None)):
                 tab = (page.locator(".transport .tours-tab") if mode == "tour"
