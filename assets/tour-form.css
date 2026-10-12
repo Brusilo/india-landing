@@ -239,14 +239,15 @@
   }
 }
 
-/* Desktop: one consistent popup baseline for all five search modes.
-   Lower all panels by 3px without changing their sizes or mobile geometry.
-   Nudge quick-hint bubbles 1px right and 2px lower; their grid stays aligned. */
+/* Desktop: all popup top edges stay aligned (+3px below the fields).
+   Shift every floating dropdown 1px left, leaving its size and Y unchanged.
+   Hint bubbles keep their independent 1px-right, 2px-down adjustments. */
 @media (min-width: 1101px) {
   html .search.search-v2 .search-suggest,
   html .search.search-v2 .v2-calendar,
   html .search.search-v2 .v2-popover {
     top: calc(100% + 3px) !important;
+    translate: -1px 0 !important;
   }
   html .search-hints.search-hints-v2 .quick-chip-v2 {
     position: relative;

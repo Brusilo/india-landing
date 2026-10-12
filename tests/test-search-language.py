@@ -79,12 +79,14 @@ def check_desktop_popup_geometry(page, panel_selector, field_selector):
         const bar=form.getBoundingClientRect();
         const h=hints.getBoundingClientRect();
         return {panelTop:p.top,fieldBottom:f.bottom,
-                formBottom:bar.bottom,hintsTop:h.top};
+                formBottom:bar.bottom,hintsTop:h.top,
+                leftShift:parseFloat(getComputedStyle(panel).translate) || 0};
     }""", [panel_selector, field_selector])
     assert rects, f"Popup failed to open: {panel_selector}"
     assert abs(rects["panelTop"] - rects["formBottom"] - 3) <= 1.1, rects
     assert rects["panelTop"] >= rects["fieldBottom"] + 1.8, rects
     assert rects["hintsTop"] - rects["panelTop"] >= 1, rects
+    assert abs(rects["leftShift"] + 1) <= 0.1, rects
 
 
 with sync_playwright() as playwright:
