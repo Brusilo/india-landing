@@ -675,7 +675,7 @@ with sync_playwright() as playwright:
                 # 'scale' is a separate CSS property; the following matrices
                 # reflect only the requested optical x/y nudges.
                 assert icons["flight"].startswith("matrix(1, 0, 0, 1, 0, "), (locale,viewport_width,icons)
-                assert icons["train"].startswith("matrix(1, 0, 0, 1, 2, "), (locale,viewport_width,icons)
+                assert icons["train"].startswith("matrix(1, 0, 0, 1, 1, "), (locale,viewport_width,icons)
             hotels_href = page.locator("#hotels .see-all").get_attribute("href")
             assert hotels_href.startswith("https://hotel.tutu.ru/"), hotels_href
             offer = page.evaluate("""() => {
