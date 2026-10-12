@@ -149,11 +149,11 @@ with sync_playwright() as playwright:
         # Confirm the two FAQ explanations are unambiguous in each language.
         ctx,page,errors=setup(browser)
         open_page(page, "index.html")
-        assert "combined length, width and height of each item must not exceed 180 cm" in page.locator("#faq-list").inner_text()
+        assert "combined length, width and height of each item must not exceed 180 cm" in page.locator("#faq-list").text_content()
         ctx.close()
         ctx,page,errors=setup(browser)
         open_page(page, "index-hi.html")
-        assert "हर एक टुकड़े की लंबाई, चौड़ाई और ऊँचाई का कुल जोड़ 180 सेमी" in page.locator("#faq-list").inner_text()
+        assert "हर एक टुकड़े की लंबाई, चौड़ाई और ऊँचाई का कुल जोड़ 180 सेमी" in page.locator("#faq-list").text_content()
         names=page.evaluate("""() => ({
             turkey: TUTU_TOURS.byKey.get('turkey').name.hi,
             nizhny: TUTU_TOURS.departureByKey.get('nizhny-novgorod').name.hi
