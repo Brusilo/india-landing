@@ -4515,3 +4515,14 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
     translate: -5% calc(2.5% - 12px);
   }
 }
+
+/* When a booking quote comes from a later available date, show its
+   verified travel/check-in day beneath the price instead of implying tomorrow. */
+#routes .card-quote-date,
+#hotels .card-quote-date {
+  margin: 4px 0 0;
+  color: #6B6F8F;
+  font-size: 12px;
+  line-height: 1.25;
+  font-weight: 500;
+}
