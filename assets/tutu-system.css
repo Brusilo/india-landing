@@ -4564,7 +4564,7 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
 /* Keep every icon at its current size. Compensate only for the slight
    optical misalignment inside the purple transport circles. */
 .hero .transport .ico img[src*="icon-flight"] { transform: translateY(0.5%) !important; }
-.hero .transport .ico img[src*="icon-train"] { transform: translate(0px, -5.1%) !important; }
+.hero .transport .ico img[src*="icon-train"] { transform: translate(0.5px, -5.1%) !important; }
 
 /* Hotel carousel: the final See all tile has the same white surface as hotel cards.
    Keep the neutral tile in the routes carousel unchanged. */
