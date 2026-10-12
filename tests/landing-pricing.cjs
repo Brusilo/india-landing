@@ -29,7 +29,7 @@ const near=sample.nextDate(sample.nextDate(sample.nextDate(tomorrow)));
 const quotes={
  fx:{rubToInr:1.13792052,rateDate:'2026-10-10'},
  quotes:{for:tomorrow,currency:'RUB',hotels:{h1:9000},routes:{r2:19000},
-   dates:{hotels:{h1:near},routes:{}}}
+   dates:{hotels:{h1:tomorrow},routes:{}}}
 };
 const live=load(quotes);
 assert.equal(live.rubToInr(),1.13792052);
@@ -38,12 +38,14 @@ assert.equal(live.reducedRub('hotel',9000),7650);
 assert.equal(live.basePrice('routes','r2',19668),19000);
 assert.equal(live.reducedRub('flight',19000),18000);
 assert.equal(live.basePrice('routes','r1',831),null,'never fall back to invented sample');
-assert.equal(live.quoteDate('hotels','h1'),near);
+assert.equal(live.quoteDate('hotels','h1'),tomorrow);
 assert.equal(live.quoteDate('routes','r2'),tomorrow);
-assert.match(live.dateLabel('hotels','h1','ru'),/^На /);
-assert.match(live.dateLabel('hotels','h1','en'),/^For /);
-assert.match(live.dateLabel('hotels','h1','hi'),/^तारीख: /);
+assert.equal(live.dateLabel('hotels','h1','ru'),'');
+assert.equal(live.dateLabel('hotels','h1','en'),'');
+assert.equal(live.dateLabel('hotels','h1','hi'),'');
 assert.equal(live.dateLabel('routes','r2','ru'),'');
+const offDate=load({...quotes,quotes:{...quotes.quotes,dates:{hotels:{h1:near}}}});
+assert.equal(offDate.basePrice('hotels','h1',5931),null,'refuse nearby-day prices');
 const invalid=load({...quotes,quotes:{...quotes.quotes,dates:{hotels:{h1:'2031-01-01'}}}});
 assert.equal(invalid.basePrice('hotels','h1',5931),null,'refuse mismatched future dates');
 
