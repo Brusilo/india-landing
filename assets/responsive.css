@@ -614,12 +614,31 @@
 .review-avatar--pink{background:var(--magenta)}
 .review-avatar--orange{background:var(--orange)}
 .review-avatar--green{background:var(--green)}
+/* Two-line reviewer identity is centred as a group against the avatar. */
+.review-card__identity{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-self:center;
+  gap:2px;
+  min-width:0;
+}
 .review-card__author{
   min-width:0;
+  margin:0;
   font-size:16px;
-  line-height:1.3;
-  font-weight:700;
+  line-height:1.25;
+  font-weight:600;
   color:var(--deep-blue);
+  overflow-wrap:anywhere;
+}
+.review-card__detail{
+  min-width:0;
+  margin:0;
+  font-size:13px;
+  line-height:1.35;
+  font-weight:600;
+  color:#6B6F8F;
   overflow-wrap:anywhere;
 }
 @media(min-width:1101px){
