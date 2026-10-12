@@ -111,8 +111,14 @@
 
   const routes=document.getElementById('routes');
   if(routes){
-    const see=routes.querySelector('.see-all');if(see)see.href=OFFERS;
-    const cta=routes.querySelector('.card--cta');if(cta)cta.href=OFFERS;
+    // Both "All routes" controls open the same dated train search as the
+    // Moscow -> Saint Petersburg card (r3), in all three languages.
+    const moscowPetersburg=routes.querySelector('[data-cta="route_r3"]');
+    const allRoutesUrl=moscowPetersburg
+      ?routeUrl(moscowPetersburg,'r3',verifiedRouteUrls.r3)
+      :verifiedRouteUrls.r3;
+    const see=routes.querySelector('.see-all');if(see)see.href=allRoutesUrl;
+    const cta=routes.querySelector('.card--cta');if(cta)cta.href=allRoutesUrl;
     routes.querySelectorAll('.card[data-transport]').forEach(card=>{
       const id=(card.dataset.cta||'').replace(/^route_/,'').replace(/_combined$/,'');
       const d=routeData[id];
