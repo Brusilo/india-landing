@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Update nightly RUB/INR and date-matched base prices from public Tutu search.
+"""Update RUB/INR and date-matched base prices from public Tutu search.
 
-Runs from GitHub Actions at about 00:00 Europe/Moscow.
+Runs every three hours on GitHub Actions in Moscow time.
 The Central Bank is the FX source. Verified one-adult next-day public booking
-results can provide optional minimum base prices; undated SEO, unavailable
-trains, other-day prices and unrelated amenities never enter the feed.
+results can provide minimum base prices; when tomorrow is sold out the
+nearest available date within a week is tagged explicitly. Undated SEO,
+unavailable trains and unrelated amenity charges never enter the feed.
 A private supplier feed overrides public page observations if configured.
 
 Optional secret PRICE_FEED_URL: HTTPS endpoint returning JSON:
@@ -141,6 +142,30 @@ def money_prices(prices: object, allowed: set[str]) -> dict[str, int]:
     return result
 
 
+def quote_dates(meta: object, routes: dict, hotels: dict, quoted_for: date) -> dict:
+    """Validate optional per-card future dates, only when a verified price exists."""
+    if meta is None:
+        return {"routes": {}, "hotels": {}}
+    if not isinstance(meta, dict):
+        raise ValueError("Booking dates must be grouped by card kind")
+    result = {"routes": {}, "hotels": {}}
+    for group, prices in (("routes", routes), ("hotels", hotels)):
+        values = meta.get(group, {})
+        if not isinstance(values, dict):
+            raise ValueError("Per-card dates must be keyed by card ID")
+        for card, raw in values.items():
+            if card not in prices or not isinstance(raw, str) or len(raw) != 10:
+                raise ValueError("Quote date has no corresponding verified price")
+            try:
+                booking = date.fromisoformat(raw)
+            except ValueError as exc:
+                raise ValueError("Invalid quote booking date") from exc
+            if not quoted_for <= booking <= quoted_for + timedelta(days=7):
+                raise ValueError("Quote is outside the next eight days")
+            result[group][card] = booking.isoformat()
+    return result
+
+
 def parse_quotes(raw: bytes, quoted_for: date, now: datetime) -> dict:
     doc = json.loads(raw)
     if doc.get("quote_date") != quoted_for.isoformat():
@@ -152,6 +177,7 @@ def parse_quotes(raw: bytes, quoted_for: date, now: datetime) -> dict:
     hotels = money_prices(doc.get("hotels", {}), HOTELS)
     if not routes and not hotels:
         raise ValueError("Supplier sent no usable prices")
+    dates = quote_dates(doc.get("dates"), routes, hotels, quoted_for)
     if not isinstance(doc.get("source"), str) or not doc["source"].strip():
         raise ValueError("Supplier quote provenance is required")
     return {
@@ -159,6 +185,7 @@ def parse_quotes(raw: bytes, quoted_for: date, now: datetime) -> dict:
         "currency": "RUB",
         "routes": routes,
         "hotels": hotels,
+        "dates": dates,
         "updatedAt": now.isoformat(timespec="seconds"),
         "source": doc["source"].strip()[:160],
     }
@@ -166,7 +193,8 @@ def parse_quotes(raw: bytes, quoted_for: date, now: datetime) -> dict:
 
 def get_quotes(now: datetime) -> dict:
     default = {"for": None, "currency": "RUB", "routes": {},
-               "hotels": {}, "updatedAt": None}
+               "hotels": {}, "dates": {"routes": {}, "hotels": {}},
+               "updatedAt": None}
     day = now.date() + timedelta(days=1)
     feed = os.environ.get("PRICE_FEED_URL", "").strip()
     if feed:
@@ -212,10 +240,22 @@ def self_test() -> None:
         "quote_date": "2026-10-12", "currency": "RUB",
         "source": "partner-test", "routes": {"r1": 1500, "ignored": 1000},
         "hotels": {"h1": 4000},
+        "dates": {"hotels": {"h1": "2026-10-14"}},
     }).encode()
     doc = parse_quotes(payload, now.date() + timedelta(days=1), now)
     assert doc["routes"] == {"r1": 1500} and doc["hotels"] == {"h1": 4000}
     assert doc["for"] == "2026-10-12"
+    assert doc["dates"] == {"routes": {}, "hotels": {"h1": "2026-10-14"}}
+    bad = json.dumps({
+        "quote_date": "2026-10-12", "currency": "RUB",
+        "source": "test", "routes": {"r1": 1200},
+        "dates": {"routes": {"r1": "2026-10-25"}}
+    }).encode()
+    try:
+        parse_quotes(bad, now.date() + timedelta(days=1), now)
+        raise AssertionError("Invalid future quote date must be refused")
+    except ValueError:
+        pass
     assert '"rubToInr": 1.25' in render_js({"fx": parse_cbr_xml(xml, now)})
     print("Market data unit checks: OK")
 
