@@ -4579,3 +4579,28 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
 @media (max-width: 599.98px) {
   html:lang(hi) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.35; translate: -21% -3%; }
 }
+
+/* Hindi phones: support stickers 10% larger; card headings 6% larger with the
+   same line height, so every tile keeps its size and number of lines. The
+   10,000+ and pay-later tiles give their headings a little more width. */
+@media (max-width: 479.98px) {
+  html:lang(hi) body .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { zoom: 1.1; }
+  html:lang(hi) body .bento .bento-cell.bento-cell h3 {
+    font-size: calc(1.06 * clamp(19px, 6.1vw, 25px));
+    line-height: calc(1.21 * clamp(19px, 6.1vw, 25px));
+  }
+  html:lang(hi) body .bento .bento-cell.bento-pos-c h3,
+  html:lang(hi) body .bento .bento-cell.bento-pos-tc h3 {
+    font-size: calc(1.06 * clamp(18px, 5.75vw, 24px));
+    line-height: calc(1.21 * clamp(18px, 5.75vw, 24px));
+  }
+  html:lang(hi) body .bento .bento-cell.bento-pos-r h3 { padding-right: clamp(72px, 22vw, 96px); }
+}
+@media (min-width: 370px) and (max-width: 479.98px) {
+  html:lang(hi) body .bento .bento-cell.bento-pos-tr h3 { padding-right: clamp(112px, 38vw, 150px); }
+}
+/* From 420px these two headings sit right at a line break; keep their size. */
+@media (min-width: 420px) and (max-width: 479.98px) {
+  html:lang(hi) body .bento .bento-cell.bento-pos-tc h3 { font-size: clamp(18px, 5.75vw, 24px); line-height: 1.22; }
+  html:lang(hi) body .bento .bento-cell.bento-pos-bl h3 { font-size: clamp(19px, 6.1vw, 25px); line-height: 1.22; }
+}
