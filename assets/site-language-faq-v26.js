@@ -149,10 +149,10 @@
      positions in the lists above, which keep the same order in every language. */
   const FAQ_ORDER = [0, 6, 2, 7, 4, 5, 3, 8, 1, 9];
 
-  /* The promo code answer: one line per code with its maximum discount in
-     roubles and, after ≈, in rupees at the CBR rate the price bot publishes
-     (assets/daily-prices.js via TUTU_PRICING). Then validity and where to
-     enter the code. Plain item.a stays as the fallback text. */
+  /* The promo code answer is plain text like every other answer: each code
+     with its maximum discount in roubles and, after ≈, in rupees at the CBR
+     rate the price bot publishes (assets/daily-prices.js via TUTU_PRICING).
+     Plain item.a stays as the fallback text. */
   const PROMO = {
     ru: {
       codes: [['INTAVIATUTU', ' — скидка 15% на авиабилеты, максимальная скидка ', 1000],
@@ -183,19 +183,14 @@
     const data = PROMO[lang];
     const pricing = window.TUTU_PRICING;
     const rate = pricing && typeof pricing.rubToInr === 'function' ? pricing.rubToInr() : null;
-    const codes = document.createElement('p');
-    data.codes.forEach(function (line, i) {
-      if (i) codes.appendChild(document.createElement('br'));
-      const code = document.createElement('strong');
-      code.textContent = line[0];
-      codes.appendChild(code);
-      let text = line[1] + amount(line[2]) + '\u00a0₽';
+    const sentences = data.codes.map(function (line) {
+      let text = line[0] + line[1] + amount(line[2]) + '\u00a0₽';
       if (Number.isFinite(rate) && rate > 0) text += ' (≈\u00a0₹' + amount(line[2] * rate) + ')';
-      codes.appendChild(document.createTextNode(text));
+      return text + (lang === 'hi' ? '।' : '.');
     });
-    const note = document.createElement('p');
-    note.textContent = data.note;
-    return [codes, note];
+    const answer = document.createElement('p');
+    answer.textContent = sentences.concat(data.note).join(' ');
+    return answer;
   }
 
   function renderFaq() {
@@ -211,13 +206,9 @@
       summary.appendChild(plus);
       summary.appendChild(document.createTextNode(item.q));
       details.appendChild(summary);
-      if (item.promo && PROMO[lang]) {
-        promoAnswer().forEach(function (node) { details.appendChild(node); });
-      } else {
-        const answer = document.createElement('p');
-        answer.textContent = item.a;
-        details.appendChild(answer);
-      }
+      const answer = item.promo && PROMO[lang] ? promoAnswer() : document.createElement('p');
+      if (!(item.promo && PROMO[lang])) answer.textContent = item.a;
+      details.appendChild(answer);
       return details.outerHTML;
     }).join('');
   }
