@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Update RUB/INR and date-matched base prices from public Tutu search.
 
-Runs every three hours on GitHub Actions in Moscow time.
+Runs every hour (at :17) on GitHub Actions.
 The Central Bank is the FX source. Verified one-adult next-day public booking
 results prefer tomorrow, but can use the first available day within the
 following week. Each price must match its real bookable day. Undated SEO,

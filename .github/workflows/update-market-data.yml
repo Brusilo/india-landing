@@ -2,10 +2,11 @@ name: Update India landing FX and verified prices
 
 on:
   schedule:
-    # Every three hours on Moscow's clock: 00:00, 03:00, ..., 21:00 MSK.
+    # Every hour at :17 (00:17, 01:17, ..., 23:17 MSK). Off the top of the hour,
+    # where GitHub drops or delays the most scheduled runs.
     # GitHub Actions uses UTC; UTC+3 remains constant year-round for Moscow.
     # Actual starts can be delayed by GitHub runner congestion.
-    - cron: '0 */3 * * *'
+    - cron: '17 * * * *'
   workflow_dispatch:
   push:
     paths:
