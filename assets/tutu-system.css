@@ -4578,15 +4578,24 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
    on Windows), so the support tile's height varies. Pin the bubbles to the
    tile's bottom-right corner by their visible area (bubbles.webp is 11%
    transparent on the right and 17.7% of its width at the bottom) instead of
-   scaling and shifting them, so they always sit fully inside the tile. */
+   scaling and shifting them, so they always sit fully inside the tile.
+   The short Hindi stickers leave room for a larger white heading, which sits
+   at the bottom left level with the bubbles. */
 @media (max-width: 599.98px) {
   html:lang(hi) body .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art {
-    --bw: clamp(168px, 49vw, 216px);
+    --bw: clamp(150px, 44vw, 196px);
     width: var(--bw); max-width: none; max-height: none; top: auto;
     scale: 1; translate: none;
     right: calc(16px - 0.11 * var(--bw));
     bottom: calc(16px - 0.177 * var(--bw));
   }
-  /* Wallet and timer sit a little higher, clear of the tile's bottom edge. */
-  html:lang(hi) body .bento .bento-cell.bento-pos-tr .bento-art { translate: 0 -8px; }
+  html:lang(hi) body .bento .bento-cell.bento-cell.bento-pos-tl h3 {
+    font-size: clamp(27px, 7.8vw, 34px); line-height: 1.16;
+    padding-right: 0; max-width: 58%; margin-top: auto;
+  }
+}
+/* Phones, all languages: wallet and timer sit a little higher, clear of the
+   tile's bottom edge. */
+@media (max-width: 599.98px) {
+  html body .bento .bento-cell.bento-pos-tr .bento-art { translate: 0 -8px; }
 }
