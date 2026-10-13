@@ -2573,7 +2573,7 @@ h1, h2, h3 { text-wrap: balance; }
   :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker.bento-sticker--text { font-size: clamp(26px, 8vw, 34px); }
   :lang(en) .bento .bento-cell.bento-pos-tl .bento-sticker:first-child { margin-top: 0.33em; }
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker:first-child { margin-top: 0.6em; }
-  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker:first-child { margin-top: 0.1em; }
+  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker:first-child { margin-top: 0.33em; }
   .bento .bento-cell.bento-pos-tl h3 { margin-top: -6px; }
 }
 
@@ -2871,7 +2871,6 @@ h1, h2, h3 { text-wrap: balance; }
   :lang(ru) .bento .bento-cell.bento-pos-bl .bento-art--train { scale: 0.84; right: 4px; }
   :lang(hi) .bento .bento-cell.bento-pos-bl .bento-art--train { right: -4px; }
   :lang(hi) .bento .bento-cell.bento-pos-r h3 { padding-right: clamp(96px, 30vw, 128px); }
-  :lang(hi) .bento .bento-cell.bento-pos-tl { min-height: clamp(192px, 52vw, 224px); }
 }
 @media (min-width: 390px) and (max-width: 599.98px) {
   :lang(en) .bento .bento-cell.bento-pos-bl h3 { padding-right: 0; }
@@ -3244,7 +3243,7 @@ br.br-wide { display: none; }
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -12px 4px; }
   :lang(ru) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 5px; }
   :lang(ru) .bento .bento-cell.bento-pos-r .bento-sticker { translate: 0 2px; }
-  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -12px -18px; }
+  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -12px -8px; }
   :lang(hi) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 -7px; }
   :lang(hi) .bento .bento-cell.bento-pos-r .bento-sticker { translate: 0 1px; }
 }
@@ -3255,7 +3254,7 @@ br.br-wide { display: none; }
   :lang(ru) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -8px 2px; }
   :lang(ru) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 -2px; }
   :lang(ru) .bento .bento-cell.bento-pos-r .bento-sticker { translate: 0 -7px; }
-  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -8px -10px; }
+  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -8px -8px; }
   :lang(hi) .bento .bento-cell.bento-pos-bl .bento-sticker,
   :lang(hi) .bento .bento-cell.bento-pos-r .bento-sticker { translate: 0 -7px; }
 }
@@ -3420,7 +3419,7 @@ br.br-wide { display: none; }
   :lang(ru) .bento .bento-cell.bento-pos-tc .bento-sticker { translate: 0 -2px; }
   :lang(ru) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 8px; }
   :lang(ru) .bento .bento-cell.bento-pos-r .bento-sticker { translate: 0 -6px; }
-  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -8px -14px; }
+  :lang(hi) .bento .bento-cell.bento-pos-tl .bento-sticker { translate: -8px -8px; }
   :lang(hi) .bento .bento-cell.bento-pos-c .bento-sticker { translate: 0 1px; }
   :lang(hi) .bento .bento-cell.bento-pos-tc .bento-sticker { translate: 0 -2px; }
   :lang(hi) .bento .bento-cell.bento-pos-bl .bento-sticker { translate: 0 0; }
@@ -4574,26 +4573,6 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
 #hotels .card.card--cta:hover { background: #FAFAFD; }
 
 
-/* Hindi phones: Devanagari falls back to system fonts (Noto on Android, Nirmala
-   on Windows), so the support tile's height varies. Pin the bubbles to the
-   tile's bottom-right corner by their visible area (bubbles.webp is 11%
-   transparent on the right and 17.7% of its width at the bottom) instead of
-   scaling and shifting them, so they always sit fully inside the tile.
-   The short Hindi stickers leave room for a larger white heading, which sits
-   at the bottom left level with the bubbles. */
-@media (max-width: 599.98px) {
-  html:lang(hi) body .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art {
-    --bw: clamp(150px, 44vw, 196px);
-    width: var(--bw); max-width: none; max-height: none; top: auto;
-    scale: 1; translate: none;
-    right: calc(16px - 0.11 * var(--bw));
-    bottom: calc(16px - 0.177 * var(--bw));
-  }
-  html:lang(hi) body .bento .bento-cell.bento-cell.bento-pos-tl h3 {
-    font-size: clamp(27px, 7.8vw, 34px); line-height: 1.16;
-    padding-right: 0; max-width: 58%; margin-top: auto;
-  }
-}
 /* Phones, all languages: wallet and timer sit a little higher, clear of the
    tile's bottom edge. */
 @media (max-width: 599.98px) {
