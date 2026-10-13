@@ -506,7 +506,7 @@
   font-weight: 600;
 }
 
-.promo-strip--v2 .promo-strip__copy:hover { background: var(--action-hover); }
+@media (hover: hover) { .promo-strip--v2 .promo-strip__copy:hover { background: var(--action-hover); } }
 
 .promo-strip__links { display: flex; gap: 8px; flex-wrap: wrap; }
 
@@ -2364,7 +2364,7 @@ h1, h2, h3 { text-wrap: balance; }
   line-height: 1;
   letter-spacing: .04em;
 }
-.promo-strip--v2 .promo-strip__copy.promo-strip__copy--code:hover { background: var(--action-hover); }
+@media (hover: hover) { .promo-strip--v2 .promo-strip__copy.promo-strip__copy--code:hover { background: var(--action-hover); } }
 .promo-strip--v2 .promo-strip__copy.promo-strip__copy--code:focus-visible { outline: 2px solid var(--action); outline-offset: 3px; }
 .promo-strip__copy--code svg { width: 24px; height: 24px; flex: none; }
 .promo-strip__copy--code .promo-strip__copied-icon,
@@ -4390,7 +4390,7 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
   transform: skewX(-12deg);
   transition: background .15s ease;
 }
-#hotels .hotel-offer__plate:hover::before { background: #F3EEFF; }
+@media (hover: hover) { #hotels .hotel-offer__plate:hover::before { background: #F3EEFF; } }
 #hotels .hotel-offer__code {
   font-size: 22px;
   font-weight: 700;
@@ -4424,7 +4424,7 @@ html:lang(hi) .hero .pill svg { transform: translateY(-1px); }
   background: url("art/promo-plate-white.webp?v=5") 0 0 / 100% 100% no-repeat !important;
 }
 #hotels .hotel-offer__badge::before { background-image: url("art/promo-plate-orange.webp?v=3") !important; }
-#hotels .hotel-offer__plate:hover::before { filter: brightness(.96); }
+@media (hover: hover) { #hotels .hotel-offer__plate:hover::before { filter: brightness(.96); } }
 @media (max-width: 599.98px) {
   #hotels .hotel-offer { --ph: 28px; grid-column: 1 / -1; }
 }
@@ -4581,4 +4581,14 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
 /* Hindi phones: the support tile's white heading sits a touch further right. */
 @media (max-width: 599.98px) {
   html:lang(hi) .bento .bento-cell.bento-pos-tl h3 { translate: 4px 0; }
+}
+
+/* Touch screens have no hover, so a tapped promo code button shows the same
+   tint as on hover for about a second after copying, then returns to normal
+   by itself (a sticky :hover used to keep it grey until the next tap). */
+@keyframes promo-copy-tap { 0%, 75% { filter: brightness(.94); } 100% { filter: none; } }
+@keyframes promo-copy-tap-plate { 0%, 75% { filter: brightness(.96); } 100% { filter: none; } }
+@media (hover: none) {
+  .promo-strip__copy.is-copied { animation: promo-copy-tap 1s ease forwards; }
+  #hotels .hotel-offer__plate.is-copied::before { animation: promo-copy-tap-plate 1s ease forwards; }
 }

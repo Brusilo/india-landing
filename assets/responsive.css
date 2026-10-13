@@ -408,7 +408,7 @@
   cursor:pointer;
   transition:filter .18s ease,transform .18s ease;
 }
-.promo-strip__copy:hover{filter:brightness(.94)}
+@media (hover:hover){.promo-strip__copy:hover{filter:brightness(.94)}}
 .promo-strip__copy:active{transform:translateY(1px)}
 .promo-strip__offer{
   min-width:0;
