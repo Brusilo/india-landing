@@ -45,6 +45,15 @@ CALENDAR_DATE_RE = re.compile(
 CALENDAR_PRICE_RE = re.compile(
     r"(?:от[ \t]+)?(?P<amount>\d{1,3}(?:[ \t]+\d{3})+|\d{3,7})[ \t]*₽", re.I
 )
+# Transport tab of the searched mode. It reads "Ищем билеты" while Tutu is
+# still searching and switches to "от N ₽" (or "Нет ...") once it is done.
+# Before that, calendar tiles can show cached fares or partial results.
+SEARCH_TAB = {"flight": "Авиа", "train": "Ж/д"}
+HOTEL_OFFERS_RE = re.compile(r"Доступные\s+(?:варианты|номера)")
+
+
+class QuoteUnverified(Exception):
+    """The page never settled on one fare; publish nothing for this card."""
 
 
 def clean(text: str) -> str:
@@ -94,6 +103,26 @@ def route_minimum(text: str, day: date, kind: str) -> int | None:
     return next(iter(matches)) if len(matches) == 1 else None
 
 
+def search_state(text: str, kind: str) -> tuple[str, int | None]:
+    """Read the searched mode's tab: ("searching"|"price"|"none", fare)."""
+    lines = [line.strip() for line in clean(text).splitlines()]
+    label = SEARCH_TAB[kind]
+    state: tuple[str, int | None] = ("searching", None)
+    for i, line in enumerate(lines):
+        if line != label:
+            continue
+        summary = next((x for x in lines[i + 1:i + 3] if x), "")
+        price = CALENDAR_PRICE_RE.fullmatch(summary)
+        if summary.startswith("Ищем"):
+            return ("searching", None)
+        if price:
+            amount = int(price.group("amount").replace(" ", ""))
+            state = ("price", amount) if 100 <= amount <= MAX_PER_CARD else state
+        elif summary.startswith("Нет") and state[0] == "searching":
+            state = ("none", None)
+    return state
+
+
 def hotel_minimum(text: str) -> int | None:
     """Read room offers only, for ONE guest and ONE night.
 
@@ -101,12 +130,14 @@ def hotel_minimum(text: str) -> int | None:
     prices are excluded. Extract only amounts preceding a bookable room button.
     """
     body = clean(text)
-    begin = body.find("Доступные варианты")
-    if begin < 0:
+    # Tutu labels the room list either "Доступные варианты" or "Доступные номера".
+    heading = HOTEL_OFFERS_RE.search(body)
+    if not heading:
         return None
+    begin = heading.start()
     end = body.find("Об отеле и заселении", begin)
     offers = body[begin:end if end >= 0 else len(body)]
-    if not re.search(r"Доступные варианты\s*на\s*1\s*ночь", offers):
+    if not re.match(r"Доступные\s+(?:варианты|номера)\s*на\s*1\s*ночь", offers):
         return None
     hits = []
     for match in re.finditer(r"1\s*ночь,\s*1\s*гость", offers):
@@ -171,34 +202,41 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
             return None
 
         if kind in ("flight", "train"):
-            # Calendar prices usually render before the ticket list. Waiting
-            # for a booking button incorrectly discards already visible fares.
-            deadline = monotonic() + (45 if kind == "flight" else 30)
+            # Calendar tiles render first with cached fares and keep changing
+            # while results stream in. Read them only after the mode's tab has
+            # finished searching and the page has stayed unchanged for a while.
+            deadline = monotonic() + 90
+            last, steady = None, 0
             while monotonic() < deadline:
                 body = page.locator("body").inner_text(timeout=10000)
-                found = route_minimum(body, day, kind)
-                if found is not None:
-                    # Confirm that React has finished replacing initial data.
-                    page.wait_for_timeout(750)
-                    confirmed = route_minimum(
-                        page.locator("body").inner_text(timeout=10000), day, kind
-                    )
-                    if confirmed == found:
-                        print(f"CALENDAR {kind}: {stamp(day)} = {found} RUB")
-                        return found
-                if (kind == "train" and "Нет прямых билетов на" in body) or (
-                    kind == "flight" and re.search(
-                        r"на выбранную дату нет билетов|ничего не найдено", body, re.I
-                    )
-                ):
-                    if kind == "train":
-                        print("DIAG route soldout:", stamp(day),
-                              re.sub(r"\s+", " ", clean(body))[:380])
+                state, summary = search_state(body, kind)
+                if state == "searching":
+                    last, steady = None, 0
+                    page.wait_for_timeout(1000)
+                    continue
+                tile = route_minimum(body, day, kind)
+                snapshot = (state, summary, tile)
+                steady = steady + 1 if snapshot == last else 0
+                last = snapshot
+                # Two identical reads 1.5 s apart for a fare; three for "no offer".
+                if tile is not None and steady >= 1:
+                    if summary is not None and summary != tile:
+                        raise QuoteUnverified(
+                            f"{kind} {day.isoformat()}: date tile {tile} RUB "
+                            f"but search summary {summary} RUB")
+                    print(f"CALENDAR {kind}: {stamp(day)} = {tile} RUB")
+                    return tile
+                if tile is None and summary is not None and steady >= 1:
+                    print(f"SUMMARY {kind}: {stamp(day)} = {summary} RUB (no date tile)")
+                    return summary
+                if tile is None and summary is None and steady >= 2:
+                    print("DIAG route no offer:", kind, stamp(day),
+                          re.sub(r"\s+", " ", clean(body))[:380])
                     return None
-                page.wait_for_timeout(850)
-            print("::warning::No exact-day calendar fare appeared:",
-                  kind, day.isoformat(), page.url[:170])
-            return None
+                page.wait_for_timeout(1500)
+            raise QuoteUnverified(
+                f"{kind} {day.isoformat()}: search did not settle; last={last} "
+                f"url={page.url[:170]}")
 
         try:
             page.wait_for_function(
@@ -216,9 +254,10 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
         text = page.locator("body").inner_text(timeout=12000)
         if "Забронировать" not in text:
             head = clean(text)
-            pos = head.find("Доступные варианты")
+            found = HOTEL_OFFERS_RE.search(head)
+            pos = found.start() if found else 0
             print("DIAG hotel no booking action:", target["name"],
-                  re.sub(r"\s+", " ", head[max(0, pos):max(0, pos) + 600]))
+                  re.sub(r"\s+", " ", head[pos:pos + 600]))
             return None
         page.wait_for_timeout(650)
         text = page.locator("body").inner_text(timeout=12000)
@@ -229,10 +268,13 @@ def extract_page(page, group: str, target: dict, day: date) -> int | None:
         rate = hotel_minimum(text)
         if rate is None:
             head = clean(text)
-            pos = head.find("Доступные варианты")
+            found = HOTEL_OFFERS_RE.search(head)
+            pos = found.start() if found else 0
             print("DIAG hotel offer parser:", target["name"],
-                  re.sub(r"\s+", " ", head[max(0, pos):max(0, pos) + 600]))
+                  re.sub(r"\s+", " ", head[pos:pos + 600]))
         return rate
+    except QuoteUnverified:
+        raise
     except Exception as exc:
         print("::warning::Public booking search unavailable:", kind,
               type(exc).__name__, str(exc).split("\n")[0][:180])
@@ -282,7 +324,12 @@ def scrape(day: date, only: set[str] | None = None) -> dict:
                     finally:
                         page.close()
 
-                found = first_available(day, lookup)
+                try:
+                    found = first_available(day, lookup)
+                except QuoteUnverified as exc:
+                    # An unsettled page says nothing about later dates either.
+                    print(f"::warning::SKIP {key}: unverified fare ({exc})")
+                    continue
                 if found is None:
                     print(f"SKIP {key}: no verified bookable offer within "
                           f"{MAX_NEARBY_DAYS + 1} days from {day.isoformat()}")
@@ -315,6 +362,29 @@ def self_test() -> None:
     assert rubles(group) == [5301]
     assert hotel_minimum(sample_hotel) == 5301
     assert hotel_minimum("Доступные варианты Уточните даты проживания") is None
+    # Grace Gorizont, 14 Oct 2026: Tutu now titles the room list "Доступные номера".
+    sample_rooms = (
+        "Доступные номера на 1 ночь\nЗаезд — Выезд\nГости\nОбновить\nЦена\n"
+        "Стандарт без окна\nОплата онлайн \nКешбэк 77\n2 588 ₽\n2 875 ₽\n\n"
+        "1 ночь, 1 гость\n\nЗабронировать\n"
+        "Стандарт супериор\nКешбэк 93\n3 105 ₽\n3 450 ₽\n\n1 ночь, 1 гость\n\n"
+        "Забронировать\nОб отеле и заселении\n"
+    )
+    assert hotel_minimum(sample_rooms) == 2588
+    # The searched mode's tab tells whether Tutu has finished searching.
+    # Moscow -> Delhi, 23 Oct 2026: cached tiles first, then the live fare.
+    assert search_state("Отели\nАвиа\nИщем билеты\nЖ/д\nИщем билеты\n"
+                        "Авиа\nИщем билеты\n", "flight") == ("searching", None)
+    assert search_state("Авиа\nот 25 920 ₽\nЖ/д\nНет билетов\n"
+                        "Авиа\nот 25 920 ₽\n", "flight") == ("price", 25920)
+    # Novgorod -> St Petersburg: other tabs never count as the train result.
+    assert search_state("Авиа\nПроверить наличие\nЖ/д\nИщем билеты\n"
+                        "Автобусы\nот 782 ₽\n", "train") == ("searching", None)
+    assert search_state("Авиа\nПроверить наличие\nЖ/д\nот 2 353 ₽\n"
+                        "Автобусы\nот 782 ₽\n", "train") == ("price", 2353)
+    assert search_state("Ж/д\nНет прямых\nНет прямых билетов на эту дату\n",
+                        "train") == ("none", None)
+    assert search_state("Откуда\nКуда\nКогда\n", "train") == ("searching", None)
     # Tutu flight calendar as shown for Moscow -> Delhi on 13 Oct 2026.
     # The cheaper fares for 14/15/16 Oct must never replace the 13 Oct fare.
     sample_flight = (
