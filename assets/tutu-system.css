@@ -4578,3 +4578,7 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
 @media (max-width: 599.98px) {
   html body .bento .bento-cell.bento-pos-tr .bento-art { translate: 0 -8px; }
 }
+/* Hindi phones: the support tile's white heading sits a touch further right. */
+@media (max-width: 599.98px) {
+  html:lang(hi) .bento .bento-cell.bento-pos-tl h3 { translate: 4px 0; }
+}
