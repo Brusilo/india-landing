@@ -4574,8 +4574,8 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
 #hotels .card.card--cta:hover { background: #FAFAFD; }
 
 
-/* Hindi phones: the support tile's message bubbles a little larger and
-   further left (the two-line Hindi heading leaves room for them). */
+/* Hindi phones: the support tile's message bubbles a little larger, left of
+   centre and raised beside the heading so they stay inside the tile. */
 @media (max-width: 599.98px) {
-  html:lang(hi) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.35; translate: -21% -3%; }
+  html:lang(hi) .bento .bento-cell.bento-pos-tl .bento-art.bento-art.bento-art { scale: 1.3; translate: -18% -12%; }
 }
