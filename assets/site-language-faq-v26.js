@@ -39,7 +39,8 @@
       },
       {
         q: 'Какие условия у промокодов INTAVIATUTU и INTHOTELTUTU?',
-        a: 'INTAVIATUTU даёт скидку 15% на авиабилеты, но не больше 1000 ₽. INTHOTELTUTU даёт скидку 15% на отели, но не больше 3000 ₽. Оба промокода действуют до 31 декабря 2026 года. Введите код при оформлении заказа на tutu.ru.'
+        promo: true,
+        a: 'INTAVIATUTU — скидка 15% на авиабилеты, максимальная скидка 1000 ₽. INTHOTELTUTU — скидка 15% на отели, максимальная скидка 3000 ₽. Оба промокода действуют до 31 декабря 2026 года. Введите код при оформлении заказа на tutu.ru.'
       },
       {
         q: 'Можно ли вернуть или обменять билет?',
@@ -81,7 +82,8 @@
       },
       {
         q: 'What are the terms of the INTAVIATUTU and INTHOTELTUTU promo codes?',
-        a: 'INTAVIATUTU gives you 15% off flights, up to 1,000 ₽. INTHOTELTUTU gives you 15% off hotels, up to 3,000 ₽. Both codes are valid until 31 December 2026. Enter the code when you check out on tutu.ru.'
+        promo: true,
+        a: 'INTAVIATUTU — 15% off flights, maximum discount 1,000 ₽. INTHOTELTUTU — 15% off hotels, maximum discount 3,000 ₽. Both codes are valid until 31 December 2026. Enter the code when you check out on tutu.ru.'
       },
       {
         q: 'Can I refund or exchange a ticket?',
@@ -123,7 +125,8 @@
       },
       {
         q: 'प्रोमो कोड INTAVIATUTU और INTHOTELTUTU की शर्तें क्या हैं?',
-        a: 'INTAVIATUTU से फ़्लाइट टिकटों पर 15% की छूट मिलती है, अधिकतम 1,000 ₽। INTHOTELTUTU से होटलों पर 15% की छूट मिलती है, अधिकतम 3,000 ₽। दोनों कोड 31 दिसंबर 2026 तक मान्य हैं। tutu.ru पर ऑर्डर करते समय कोड डालें।'
+        promo: true,
+        a: 'INTAVIATUTU — फ़्लाइट टिकटों पर 15% की छूट, अधिकतम छूट 1,000 ₽। INTHOTELTUTU — होटलों पर 15% की छूट, अधिकतम छूट 3,000 ₽। दोनों कोड 31 दिसंबर 2026 तक मान्य हैं। tutu.ru पर ऑर्डर करते समय कोड डालें।'
       },
       {
         q: 'क्या टिकट वापस करना या बदलना संभव है?',
@@ -146,6 +149,55 @@
      positions in the lists above, which keep the same order in every language. */
   const FAQ_ORDER = [0, 6, 2, 7, 4, 5, 3, 8, 1, 9];
 
+  /* The promo code answer: one line per code with its maximum discount in
+     roubles and, after ≈, in rupees at the CBR rate the price bot publishes
+     (assets/daily-prices.js via TUTU_PRICING). Then validity and where to
+     enter the code. Plain item.a stays as the fallback text. */
+  const PROMO = {
+    ru: {
+      codes: [['INTAVIATUTU', ' — скидка 15% на авиабилеты, максимальная скидка ', 1000],
+              ['INTHOTELTUTU', ' — скидка 15% на отели, максимальная скидка ', 3000]],
+      note: 'Оба промокода действуют до 31 декабря 2026 года. Введите код при оформлении заказа на tutu.ru.'
+    },
+    en: {
+      codes: [['INTAVIATUTU', ' — 15% off flights, maximum discount ', 1000],
+              ['INTHOTELTUTU', ' — 15% off hotels, maximum discount ', 3000]],
+      note: 'Both codes are valid until 31 December 2026. Enter the code when you check out on tutu.ru.'
+    },
+    hi: {
+      codes: [['INTAVIATUTU', ' — फ़्लाइट टिकटों पर 15% की छूट, अधिकतम छूट ', 1000],
+              ['INTHOTELTUTU', ' — होटलों पर 15% की छूट, अधिकतम छूट ', 3000]],
+      note: 'दोनों कोड 31 दिसंबर 2026 तक मान्य हैं। tutu.ru पर ऑर्डर करते समय कोड डालें।'
+    }
+  };
+
+  /* Same grouping as the price cards: a space in Russian, Indian commas otherwise. */
+  function amount(n) {
+    const value = Math.round(n);
+    return lang === 'ru'
+      ? String(value).replace(/B(?=(d{3})+(?!d))/g, ' ')
+      : new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(value);
+  }
+
+  function promoAnswer() {
+    const data = PROMO[lang];
+    const pricing = window.TUTU_PRICING;
+    const rate = pricing && typeof pricing.rubToInr === 'function' ? pricing.rubToInr() : null;
+    const codes = document.createElement('p');
+    data.codes.forEach(function (line, i) {
+      if (i) codes.appendChild(document.createElement('br'));
+      const code = document.createElement('strong');
+      code.textContent = line[0];
+      codes.appendChild(code);
+      let text = line[1] + amount(line[2]) + ' ₽';
+      if (Number.isFinite(rate) && rate > 0) text += ' (≈ ₹' + amount(line[2] * rate) + ')';
+      codes.appendChild(document.createTextNode(text));
+    });
+    const note = document.createElement('p');
+    note.textContent = data.note;
+    return [codes, note];
+  }
+
   function renderFaq() {
     const list = document.getElementById('faq-list');
     if (!list) return;
@@ -158,10 +210,14 @@
       plus.setAttribute('aria-hidden', 'true');
       summary.appendChild(plus);
       summary.appendChild(document.createTextNode(item.q));
-      const answer = document.createElement('p');
-      answer.textContent = item.a;
       details.appendChild(summary);
-      details.appendChild(answer);
+      if (item.promo && PROMO[lang]) {
+        promoAnswer().forEach(function (node) { details.appendChild(node); });
+      } else {
+        const answer = document.createElement('p');
+        answer.textContent = item.a;
+        details.appendChild(answer);
+      }
       return details.outerHTML;
     }).join('');
   }
