@@ -175,7 +175,7 @@
   function amount(n) {
     const value = Math.round(n);
     return lang === 'ru'
-      ? String(value).replace(/B(?=(d{3})+(?!d))/g, ' ')
+      ? String(value).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F')
       : new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(value);
   }
 
@@ -189,8 +189,8 @@
       const code = document.createElement('strong');
       code.textContent = line[0];
       codes.appendChild(code);
-      let text = line[1] + amount(line[2]) + ' ₽';
-      if (Number.isFinite(rate) && rate > 0) text += ' (≈ ₹' + amount(line[2] * rate) + ')';
+      let text = line[1] + amount(line[2]) + '\u00a0₽';
+      if (Number.isFinite(rate) && rate > 0) text += ' (≈\u00a0₹' + amount(line[2] * rate) + ')';
       codes.appendChild(document.createTextNode(text));
     });
     const note = document.createElement('p');
