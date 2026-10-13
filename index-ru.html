@@ -1119,8 +1119,8 @@ const CTA_CARD = `
 document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
   const baseRub = window.TUTU_PRICING.basePrice('routes',r.id,r.price);
   const hasQuote = Number.isFinite(baseRub) && baseRub >= 100;
-  const promoRub = hasQuote && r.transport==='flight' ? window.TUTU_PRICING.discountRub('flight',baseRub) : 0;
-  const rub = hasQuote ? baseRub - promoRub : null;
+  // Route cards show Tutu's own fare; promo codes are applied only to hotel cards.
+  const rub = hasQuote ? baseRub : null;
   const priceHtml = hasQuote ? '<span class="price"><span class="price-from">от</span> '+fmtNum(rub)+'&nbsp;'+CONFIG.currency+'</span>' : '<span class="price">Уточнить цену</span>';
   const inrHtml = hasQuote ? '<span class="route-inr">≈&nbsp;₹'+fmtNum(Math.round(rub * CONFIG.rubToInr))+'</span>' : '';
   const quoteNote = window.TUTU_PRICING.dateLabel('routes',r.id,document.documentElement.lang);
@@ -1215,7 +1215,7 @@ initCarousel('reviews-row', 'reviews');
 <script src="assets/tutu-link-builder.js?v=20261011-age-bands-v2"></script>
 <script src="assets/search-state.js?v=20261011-language-only-v4"></script>
 <script src="assets/search-v2.js?v=20261011-state-sync-v3"></script>
-<script src="assets/card-links.js?v=20261012-dated-booking-links"></script>
+<script src="assets/card-links.js?v=20261013-routes-no-promo"></script>
 <script src="assets/responsive.js?v=20261008-no-flash"></script>
 <script src="assets/tour-public-options.js?v=20261011-visual-catalog"></script>
 <script src="assets/tour-catalog.js?v=20261012-hi-country-names"></script>

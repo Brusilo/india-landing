@@ -83,6 +83,8 @@ for(const page of ['index-ru.html','index.html','index-hi.html']){
  assert.match(html,/window\.TUTU_PRICING\.basePrice\('routes'/);
  assert.match(html,/window\.TUTU_PRICING\.basePrice\('hotels'/);
  assert.match(html,/window\.TUTU_PRICING\.discountRub\('hotel'/);
+ assert.doesNotMatch(html,/discountRub\('flight'/,'route cards must show the Tutu fare, not a promo price: '+page);
+ assert.match(html,/const rub = hasQuote \? baseRub : null;/,'route card price is the undiscounted fare: '+page);
  assert.match(html,/assets\/tour-form\.js\?v=[\w-]+/);
  const start=html.indexOf('const CONFIG = ');
  assert.ok(start!==-1,'CONFIG exists for '+page);

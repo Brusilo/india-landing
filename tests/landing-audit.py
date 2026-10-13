@@ -88,7 +88,8 @@ def card_audit(page, lang, width):
             check("check price" not in text.lower() and "уточнить" not in text.lower()
                   and "कीमत देखें" not in text,
                   f"{lang}/{width} {key} no Check price for verified quote")
-            discount = min(int(base * .15 + .5), 1000 if key == "r2" else 3000) if group == "hotels" or key == "r2" else 0
+            # Only hotel cards apply a promo code; route cards show the Tutu fare.
+            discount = min(int(base * .15 + .5), 3000) if group == "hotels" else 0
             correct = str(int(base - discount))
             check(digits(text) == correct,
                   f"{lang}/{width} {key} correct price (expected {correct}, got {text})")

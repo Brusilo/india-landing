@@ -140,7 +140,7 @@
             if(price)price.textContent=lang==='en'?'Check price':lang==='hi'?'कीमत देखें':'Уточнить цену';
             alt.textContent='';
           }else{
-            const actual=window.TUTU_PRICING?.reducedRub(card.dataset.transport==='flight'?'flight':'train',base)??base;
+            const actual=base; // route cards never show promo-reduced fares
             if(price)price.innerHTML=lang==='en'?'<span class="price-from">from</span> '+nf(actual)+'&nbsp;₽':lang==='hi'?nf(actual)+'&nbsp;₽ <span class="price-from">से</span>':'<span class="price-from">от</span> '+nf(actual)+'&nbsp;₽';
             alt.textContent='≈ ₹'+nf(Math.round(actual*RUB_TO_INR));
           }

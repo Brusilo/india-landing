@@ -745,7 +745,7 @@ with sync_playwright() as playwright:
                 )["check_in"] == [next_day.isoformat()]
             r2=page.locator('#routes-row [data-cta="route_r2"]')
             assert r2.get_attribute("data-quote-day")==tomorrow.isoformat()
-            assert "40563" in re.sub(r"[^0-9]","",r2.locator(".price").inner_text()), lang
+            assert "41563" in re.sub(r"[^0-9]","",r2.locator(".price").inner_text()), lang
             no_train=page.locator('#routes-row [data-cta="route_r1"]')
             no_hotel=page.locator('#hotels-row [data-cta="hotel_h1"]')
             assert no_train.locator(".price").inner_text()==missing_names[lang]
