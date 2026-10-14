@@ -10,10 +10,14 @@ const assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'..');
 const engine=fs.readFileSync(path.join(root,'assets/pricing.js'),'utf8');
 
-function load(daily,DateImpl=Date){
- const context={window:{TUTU_DAILY_PRICES:daily},Date:DateImpl,Intl};
+function load(daily,DateImpl=Date,extra={}){
+ const context={window:{TUTU_DAILY_PRICES:daily,...extra},Date:DateImpl,Intl};
  vm.runInNewContext(engine,context,{filename:'assets/pricing.js'});
  return context.window.TUTU_PRICING;
+}
+function memoryStorage(seed){
+ const data={...seed};
+ return {getItem:k=>k in data?data[k]:null,setItem:(k,v)=>{data[k]=String(v)},data};
 }
 const sample=load({});
 const currentMsk=sample.moscowDate(),tomorrow=sample.nextDate(currentMsk);
@@ -107,4 +111,36 @@ const tourJs=fs.readFileSync(path.join(root,'assets/tour-form.js'),'utf8');
 assert.match(tourJs,/function departureCountryName\(d\)/);
 assert.match(tourJs,/data-tour-date/);
 assert.match(tourJs,/esc\(departureCountryName\(d\)\)/);
-console.log('Daily market-data and tour UI checks: OK');
+
+// INR rate from the CBR mirror, cached in the browser; the bot's rate is the fallback.
+(async()=>{
+ const KEY='tutu-inr-rate-v1';
+ const botDaily={fx:{rubToInr:1.1,rateDate:'2026-10-13'}};
+ const today=new Date().toISOString().slice(0,10);
+ const mirror={Date:today+'T11:30:00+03:00',Valute:{INR:{Nominal:100,Value:88}}};
+ const settle=()=>new Promise(r=>setTimeout(r,0));
+ // A fresh cache with a later CBR date wins at once and is not re-fetched.
+ let calls=0;
+ const fetchStub=body=>()=>{calls++;return Promise.resolve({ok:true,json:()=>Promise.resolve(body)})};
+ const freshCache=memoryStorage({[KEY]:JSON.stringify({rate:1.2,date:'2026-10-14',checkedAt:Date.now()})});
+ const cached=load(botDaily,Date,{localStorage:freshCache,fetch:fetchStub(mirror)});
+ assert.equal(cached.rubToInr(),1.2,'cached newer CBR rate wins over the bot');
+ await settle();
+ assert.equal(calls,0,'no API request while the cache is fresh');
+ // An old cache date never beats a newer bot date.
+ const oldCache=memoryStorage({[KEY]:JSON.stringify({rate:1.3,date:'2026-10-01',checkedAt:Date.now()})});
+ assert.equal(load(botDaily,Date,{localStorage:oldCache}).rubToInr(),1.1,'bot wins with the later CBR date');
+ // A stale cache asks the mirror, stores the answer and switches to it.
+ const staleCache=memoryStorage({[KEY]:JSON.stringify({rate:1.2,date:'2026-10-13',checkedAt:Date.now()-7*3600e3})});
+ calls=0;
+ const refreshed=load(botDaily,Date,{localStorage:staleCache,fetch:fetchStub(mirror)});
+ await settle();await settle();await settle();
+ assert.equal(calls,1,'one API request once the cache is older than 6 hours');
+ assert.equal(refreshed.rubToInr(),1.13636364,'mirror rate = Nominal / Value');
+ assert.equal(JSON.parse(staleCache.data[KEY]).date,today,'mirror answer cached');
+ // A malformed answer changes nothing.
+ const broken=load(botDaily,Date,{localStorage:memoryStorage({}),fetch:fetchStub({Valute:{}})});
+ await settle();await settle();await settle();
+ assert.equal(broken.rubToInr(),1.1,'bad API answer keeps the bot rate');
+ console.log('Daily market-data and tour UI checks: OK');
+})().catch(e=>{console.error(e);process.exit(1)});

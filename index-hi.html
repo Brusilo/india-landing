@@ -670,7 +670,7 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 @media(min-width:768px){html:lang(hi) .hero{padding-bottom:176px!important}}
 </style>
 <link rel="stylesheet" href="assets/search-v2.css?v=20261011-popup-black-text">
-<script src="assets/site-language-faq-v26.js?v=20261013-promo-plain"></script>
+<script src="assets/site-language-faq-v26.js?v=20261014-cbr-api-rate"></script>
 <link rel="stylesheet" href="assets/responsive.css?v=20261013-touch-promo">
 <link rel="stylesheet" href="assets/kite-tokens.css?v=2.6.3">
 <link rel="stylesheet" href="assets/tutu-system.css?v=20261013-touch-promo">
@@ -1062,14 +1062,14 @@ html:lang(hi) .hero{padding-bottom:132px!important}
 
     <p class="footer-site">Globus Media LLC के सॉफ़्टवेयर पर आधारित</p>
     <p class="legal">
-      इस साइट की सामग्री इस्तेमाल करने पर www.tutu.ru का लिंक देना ज़रूरी है।
+      इस साइट की सामग्री इस्तेमाल करने पर www.tutu.ru का लिंक देना ज़रूरी है। रुपये की दर: बैंक ऑफ़ रशिया के आँकड़े, <a href="https://www.cbr-xml-daily.ru/">API для курсов ЦБ РФ</a> के ज़रिए।
     </p>
   </div>
 </footer>
 
 <script src="assets/search-places.js?v=20261009-routes"></script>
 <script src="assets/daily-prices.js"></script>
-<script src="assets/pricing.js?v=20261012-nearest-available"></script>
+<script src="assets/pricing.js?v=20261014-cbr-api-rate"></script>
 <script>
 const CONFIG = {
   currency: '₽',
@@ -1126,7 +1126,7 @@ document.getElementById('routes-row').innerHTML = CONFIG.routes.map(r => {
   // Route cards show Tutu's own fare; promo codes are applied only to hotel cards.
   const rub = hasQuote ? baseRub : null;
   const priceHtml = hasQuote ? '<span class="price">'+fmtNum(rub)+'&nbsp;'+CONFIG.currency+' <span class="price-from">से</span></span>' : '<span class="price">कीमत देखें</span>';
-  const inrHtml = hasQuote ? '<span class="route-inr">≈&nbsp;₹'+fmtNum(Math.round(rub * CONFIG.rubToInr))+'</span>' : '';
+  const inrHtml = hasQuote ? '<span class="route-inr" data-rub="'+rub+'">≈&nbsp;₹'+fmtNum(Math.round(rub * CONFIG.rubToInr))+'</span>' : '';
   const quoteNote = window.TUTU_PRICING.dateLabel('routes',r.id,document.documentElement.lang);
   const dateHtml = quoteNote ? '<p class="card-quote-date">'+quoteNote+'</p>' : '';
   return `
@@ -1154,8 +1154,8 @@ document.getElementById('hotels-row').innerHTML = CONFIG.hotels.map(h => {
     '<span class="price">कीमत देखें</span>';
   const oldPriceHtml = offRub ? '<s class="route-old">'+fmtNum(oldRub)+'&nbsp;'+CONFIG.currency+'</s>' : '';
   const discountHtml = offRub ? '<span class="route-discount">-'+Math.round(offRub/oldRub*100)+'%</span>' : '';
-  const inrHtml = hasQuote ? '<span class="route-inr">≈&nbsp;₹'+fmtNum(Math.round(rub * CONFIG.rubToInr))+'</span>' : '';
-  const inrOldHtml = offRub ? '<s class="route-old">₹'+fmtNum(Math.round(oldRub * CONFIG.rubToInr))+'</s>' : '';
+  const inrHtml = hasQuote ? '<span class="route-inr" data-rub="'+rub+'">≈&nbsp;₹'+fmtNum(Math.round(rub * CONFIG.rubToInr))+'</span>' : '';
+  const inrOldHtml = offRub ? '<s class="route-old" data-rub="'+oldRub+'">₹'+fmtNum(Math.round(oldRub * CONFIG.rubToInr))+'</s>' : '';
   const nightHtml = hasQuote ? '<span class="hotel-night">प्रति रात</span>' : '';
   const quoteNote = window.TUTU_PRICING.dateLabel('hotels',h.id,document.documentElement.lang);
   const dateHtml = quoteNote ? '<p class="card-quote-date">'+quoteNote+'</p>' : '';

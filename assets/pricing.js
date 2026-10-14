@@ -24,10 +24,76 @@
     return d.toISOString().slice(0,10);
   }
   const positive=(n,min,max)=>Number.isFinite(n)&&n>=min&&n<=max;
-  function rubToInr(){
-    const value=Number(daily.fx&&daily.fx.rubToInr);
-    return positive(value,0.1,10)?value:sampleRate;
+  const isDay=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d);
+
+  /* INR rate. The page asks the CBR JSON mirror itself (cbr.ru sends no CORS
+     headers, the mirror does; its terms ask for at most 10,000 requests a day
+     and a backlink, which is in the footer). The answer is cached in the
+     visitor's browser and re-checked at most every RATE_TTL_MS, so reloading
+     the page does not hit the API again; the CBR sets a new rate once a
+     working day. The bot's rate in daily-prices.js stays as the fallback, and
+     whichever rate has the later CBR date wins. */
+  const RATE_URL='https://www.cbr-xml-daily.ru/daily_json.js';
+  const RATE_CACHE_KEY='tutu-inr-rate-v1';
+  const RATE_TTL_MS=6*60*60*1000;
+  function storage(){try{return root.localStorage||null}catch(_){return null}}
+  function readCachedRate(){
+    try{
+      const c=JSON.parse(storage()?.getItem(RATE_CACHE_KEY)||'null');
+      if(c&&positive(c.rate,0.1,10)&&isDay(c.date)&&Number.isFinite(c.checkedAt))return c;
+    }catch(_){}
+    return null;
   }
+  function newer(a,b){return !b||(a&&a.date>b.date)?a:b}
+  const botFx=daily.fx&&positive(Number(daily.fx.rubToInr),0.1,10)
+    ?{rate:Number(daily.fx.rubToInr),date:isDay(daily.fx.rateDate)?daily.fx.rateDate:'0000-00-00'}:null;
+  let current=newer(readCachedRate(),botFx);
+  function rubToInr(){return current?current.rate:sampleRate}
+
+  /* Same grouping as the cards: a narrow space in Russian, Indian commas otherwise. */
+  function formatInr(n){
+    const lang=root.document?.documentElement?.lang;
+    return lang==='ru'?String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ')
+      :new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(n);
+  }
+  /* Every rupee amount on the page carries its rouble source in data-rub. */
+  function applyRate(){
+    const doc=root.document;
+    if(!doc)return;
+    doc.querySelectorAll('[data-rub]').forEach(function(el){
+      const rub=Number(el.getAttribute('data-rub'));
+      if(!positive(rub,1,10000000))return;
+      el.textContent=el.textContent.replace(/₹[\d,   ]*\d/,'₹'+formatInr(Math.round(rub*rubToInr())));
+    });
+    if(typeof root.CustomEvent==='function')
+      root.dispatchEvent(new root.CustomEvent('tutu:inr-rate',{detail:current}));
+  }
+  function parseMirror(json){
+    const inr=json&&json.Valute&&json.Valute.INR;
+    const date=String(json&&json.Date||'').slice(0,10);
+    const rate=inr?Number(inr.Nominal)/Number(inr.Value):NaN;
+    const ageDays=(Date.now()-Date.parse(date+'T00:00:00Z'))/864e5;
+    if(!positive(rate,0.1,10)||!isDay(date)||!(ageDays>-3&&ageDays<14))return null;
+    return {rate:Math.round(rate*1e8)/1e8,date};
+  }
+  function refreshRate(){
+    const cached=readCachedRate();
+    if(cached&&Date.now()-cached.checkedAt<RATE_TTL_MS)return;
+    if(typeof root.fetch!=='function')return;
+    root.fetch(RATE_URL,{credentials:'omit'}).then(function(r){return r.ok?r.json():null})
+      .then(function(json){
+        const fresh=parseMirror(json);
+        if(!fresh)return;
+        try{storage()?.setItem(RATE_CACHE_KEY,JSON.stringify({...fresh,checkedAt:Date.now()}))}catch(_){}
+        const before=current;
+        current=newer(fresh,current);
+        if(current!==before&&current.rate!==before?.rate){
+          if(root.document?.readyState==='loading')root.document.addEventListener('DOMContentLoaded',applyRate);
+          else applyRate();
+        }
+      }).catch(function(){});
+  }
+  refreshRate();
   function quote(type,id){
     const prices=daily.quotes;
     const tomorrow=nextDate(moscowDate());
@@ -56,5 +122,5 @@
     return Math.min(Math.round(amount*promo.percent/100),promo.maxRub);
   }
   function reducedRub(type,price){return price-discountRub(type,price)}
-  root.TUTU_PRICING={rubToInr,basePrice,quoteDate,dateLabel,discountRub,reducedRub,moscowDate,nextDate,promotions};
+  root.TUTU_PRICING={rubToInr,formatInr,basePrice,quoteDate,dateLabel,discountRub,reducedRub,moscowDate,nextDate,promotions};
 })(window);

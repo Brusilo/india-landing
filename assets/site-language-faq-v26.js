@@ -189,9 +189,18 @@
       return text + (lang === 'hi' ? '।' : '.');
     });
     const answer = document.createElement('p');
+    answer.setAttribute('data-promo-answer', '');
     answer.textContent = sentences.concat(data.note).join(' ');
     return answer;
   }
+
+  /* pricing.js announces a fresher CBR rate after the page has rendered;
+     recount the rupee amounts in the promo answer. */
+  window.addEventListener('tutu:inr-rate', function () {
+    document.querySelectorAll('[data-promo-answer]').forEach(function (answer) {
+      answer.textContent = promoAnswer().textContent;
+    });
+  });
 
   function renderFaq() {
     const list = document.getElementById('faq-list');
