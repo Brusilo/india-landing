@@ -2,15 +2,16 @@
  * Do not edit manually. Generated data is not a booking guarantee. */
 window.TUTU_DAILY_PRICES={
   "fx": {
-    "rateDate": "2026-10-14",
-    "rubToInr": 1.13569255,
+    "rateDate": "2026-10-15",
+    "rubToInr": 1.13200798,
     "source": "https://www.cbr.ru/scripts/XML_daily.asp",
-    "updatedAt": "2026-10-14T16:48:06+03:00"
+    "updatedAt": "2026-10-14T21:42:07+03:00"
   },
   "quotes": {
     "currency": "RUB",
     "dates": {
       "hotels": {
+        "h10": "2026-10-16",
         "h4": "2026-10-16",
         "h5": "2026-10-16"
       },
@@ -21,36 +22,36 @@ window.TUTU_DAILY_PRICES={
     "for": "2026-10-15",
     "hotels": {
       "h1": 7011,
-      "h10": 10800,
-      "h11": 2841,
+      "h10": 8550,
+      "h11": 2603,
       "h12": 10894,
-      "h13": 1295,
-      "h2": 2280,
+      "h13": 1296,
+      "h2": 2470,
       "h3": 2588,
       "h4": 7020,
       "h5": 5589,
       "h6": 3762,
       "h7": 4560,
-      "h8": 3247,
+      "h8": 3515,
       "h9": 1995
     },
     "routes": {
-      "r1": 1706,
-      "r10": 5397,
+      "r1": 1723,
+      "r10": 6388,
       "r11": 6214,
-      "r12": 2168,
-      "r13": 2520,
-      "r14": 3023,
-      "r2": 47370,
-      "r3": 2143,
+      "r12": 1959,
+      "r13": 2435,
+      "r14": 3200,
+      "r2": 39016,
+      "r3": 2721,
       "r4": 2052,
-      "r5": 5117,
+      "r5": 5122,
       "r6": 3030,
-      "r7": 1945,
-      "r8": 6343,
+      "r7": 3334,
+      "r8": 6189,
       "r9": 1828
     },
     "source": "Public Tutu date-specific booking search (one adult; hotels one room/night)",
-    "updatedAt": "2026-10-14T16:48:06+03:00"
+    "updatedAt": "2026-10-14T21:42:07+03:00"
   }
 };
