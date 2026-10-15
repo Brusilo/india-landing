@@ -103,8 +103,8 @@ assert.match(cardLinks,/const a=quotedBookingDate\('hotels',id\)/,
   'hotel links must use the date of their verified price');
 // The bot must not be blocked by an outdated static asset cache version.
 const workflow=fs.readFileSync(path.join(root,'.github/workflows/update-market-data.yml'),'utf8');
-assert.match(workflow,/- cron: '17 \* \* \* \*'/,
-  'market-data workflow should run hourly, off the top of the hour');
+assert.match(workflow,/- cron: '7,27,47 \* \* \* \*'/,
+  'market-data workflow should try every 20 minutes, off the top of the hour');
 assert.match(workflow,/python scripts\/scrape-public-prices\.py --out/,
   'scheduled job must still perform the 27 public booking searches');
 const tourJs=fs.readFileSync(path.join(root,'assets/tour-form.js'),'utf8');

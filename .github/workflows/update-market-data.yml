@@ -2,11 +2,11 @@ name: Update India landing FX and verified prices
 
 on:
   schedule:
-    # Every hour at :17 (00:17, 01:17, ..., 23:17 MSK). Off the top of the hour,
-    # where GitHub drops or delays the most scheduled runs.
+    # Every 20 minutes at :07, :27 and :47, off the top of the hour. GitHub
+    # silently drops most scheduled runs: with an hourly cron only 10 ran in
+    # 53 hours (13-15 Oct 2026, 3-6 h apart), so more attempts are scheduled.
     # GitHub Actions uses UTC; UTC+3 remains constant year-round for Moscow.
-    # Actual starts can be delayed by GitHub runner congestion.
-    - cron: '17 * * * *'
+    - cron: '7,27,47 * * * *'
   workflow_dispatch:
   push:
     paths:
