@@ -2298,7 +2298,7 @@ window.TUTU_DESTINATIONS = {
     ],
     "in-prayagraj": [
       "india",
-      "allahabad",
+      "prayagraj",
       2659300
     ],
     "in-pune": [
