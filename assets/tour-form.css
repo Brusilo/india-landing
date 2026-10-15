@@ -55,7 +55,7 @@
     column-gap:7px!important;
     width:100%!important;
     padding:0!important;
-    margin-top:10px!important;
+    margin-top:8px!important; /* same gap under the tabs as Flights/Trains/Buses/Hotels */
     border-radius:0!important;
     background:transparent!important;
     box-shadow:none!important;
