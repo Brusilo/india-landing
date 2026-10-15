@@ -4599,3 +4599,8 @@ footer .footer-site, footer .legal, footer .legal a { font-weight: 400 !importan
    other footer links, muted and without the browser's default blue. */
 footer .legal a { color: inherit; text-decoration: none; transition: color .15s ease; }
 footer .legal a:hover { color: var(--white, #fff); }
+
+/* FAQ answers: a link in the text (the contact centre) in tutu.ru's purple,
+   underlined only on hover, not the browser's default blue. */
+.faq-item > p .faq-link { color: var(--action, #7028EB); text-decoration: none; }
+.faq-item > p .faq-link:hover { text-decoration: underline; }

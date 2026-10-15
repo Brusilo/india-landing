@@ -53,6 +53,11 @@
       {
         q: 'Чем отличается плацкарт от купе?',
         a: 'В плацкарте обычно 54 спальных места в открытых отсеках вдоль общего прохода. В купейном вагоне обычно 32 или 36 мест, по четыре в каждом купе с дверью. В купе меньше пассажиров и больше приватности, поэтому оно обычно дороже.'
+      },
+      {
+        q: 'Куда обратиться по другим вопросам?',
+        a: 'Напишите в наш круглосуточный контакт-центр: мы отвечаем на английском и русском языках. Чат с поддержкой открывается на {link}.',
+        link: { text: 'странице обратной связи', href: 'https://www.tutu.ru/feedback.php' }
       }
     ],
     en: [
@@ -96,6 +101,11 @@
       {
         q: 'What is the difference between platskart and kupe?',
         a: 'A platskart coach normally has 54 berths in open bays along a common aisle, much like sleeper class in India. A kupe coach usually has 32 or 36 berths, four in each closed compartment. Kupe coaches have fewer passengers and more privacy, so they are usually more expensive.'
+      },
+      {
+        q: 'Where can I get help with other questions?',
+        a: 'Write to our 24/7 contact centre: we answer in English and Russian. The support chat opens on the {link}.',
+        link: { text: 'feedback page', href: 'https://www.tutu.ru/feedback.php' }
       }
     ],
     hi: [
@@ -139,15 +149,21 @@
       {
         q: 'प्लात्सकार्ट और कूपे में क्या अंतर है?',
         a: 'प्लात्सकार्ट कोच में आम तौर पर 54 बर्थ होती हैं, जो खुले सेक्शन में एक साझा गलियारे के साथ होती हैं, लगभग भारत के स्लीपर कोच जैसी। कूपे में आम तौर पर 32 या 36 बर्थ होती हैं, और हर बंद कूपे में चार बर्थ होती हैं। कूपे में यात्री कम होते हैं और ज़्यादा प्राइवेसी मिलती है, इसलिए यह आम तौर पर महँगा होता है।'
+      },
+      {
+        q: 'दूसरे सवालों के लिए कहाँ संपर्क करें?',
+        a: 'हमारे 24/7 कॉन्टैक्ट सेंटर को लिखें: हम अंग्रेज़ी और रूसी में जवाब देते हैं। सपोर्ट चैट {link} पर खुलती है।',
+        link: { text: 'फ़ीडबैक पेज', href: 'https://www.tutu.ru/feedback.php' }
       }
     ]
   };
 
   /* Questions by importance for an Indian traveller: paying, the promo code,
      the name on the ticket, refunds, pay later, train discounts, baggage,
-     buying for others, airport transfers, carriage classes. The numbers are
-     positions in the lists above, which keep the same order in every language. */
-  const FAQ_ORDER = [0, 6, 2, 7, 4, 5, 3, 8, 1, 9];
+     buying for others, airport transfers, carriage classes, and last where to
+     ask anything else (the 24/7 contact centre). The numbers are positions in
+     the lists above, which keep the same order in every language. */
+  const FAQ_ORDER = [0, 6, 2, 7, 4, 5, 3, 8, 1, 9, 10];
 
   /* The promo code answer is plain text like every other answer: each code
      with its maximum discount in roubles and, after ≈, in rupees at the CBR
@@ -216,7 +232,17 @@
       summary.appendChild(document.createTextNode(item.q));
       details.appendChild(summary);
       const answer = item.promo && PROMO[lang] ? promoAnswer() : document.createElement('p');
-      if (!(item.promo && PROMO[lang])) answer.textContent = item.a;
+      if (item.link) {
+        /* {link} in the text marks where the link goes; the rest stays plain text. */
+        const parts = item.a.split('{link}');
+        const link = document.createElement('a');
+        link.className = 'faq-link';
+        link.href = item.link.href;
+        link.textContent = item.link.text;
+        answer.append(parts[0], link, parts[1] || '');
+      } else if (!(item.promo && PROMO[lang])) {
+        answer.textContent = item.a;
+      }
       details.appendChild(answer);
       return details.outerHTML;
     }).join('');
