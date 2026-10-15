@@ -55,9 +55,9 @@
         a: 'В плацкарте обычно 54 спальных места в открытых отсеках вдоль общего прохода. В купейном вагоне обычно 32 или 36 мест, по четыре в каждом купе с дверью. В купе меньше пассажиров и больше приватности, поэтому оно обычно дороже.'
       },
       {
-        q: 'Куда обратиться по другим вопросам?',
-        a: 'Напишите в наш круглосуточный контакт-центр: мы отвечаем на английском и русском языках. Чат с поддержкой открывается на {link}.',
-        link: { text: 'странице обратной связи', href: 'https://www.tutu.ru/feedback.php' }
+        q: 'Куда обратиться, если остались вопросы?',
+        a: 'Напишите нам в {link}. Мы на связи круглосуточно и отвечаем на английском и русском.',
+        link: { text: 'чат поддержки', href: 'https://www.tutu.ru/feedback.php' }
       }
     ],
     en: [
@@ -82,8 +82,8 @@
         a: 'For some tickets and hotels you can book now and pay later: we hold the price while the booking lasts. We show the payment deadline when you book. If you don’t pay in time, the booking is cancelled.'
       },
       {
-        q: 'What train discounts are there?',
-        a: 'Non-refundable train tickets come with up to 20% off. On your birthday, you and up to three companions get a discount: 30% on Sapsan trains and 10% on other long-distance trains. We show the exact timing and conditions when you choose a fare.'
+        q: 'What discounts are available on train tickets?',
+        a: 'Non-refundable train tickets come with up to 20% off. On your birthday, you and up to three companions get a discount: 30% on Sapsan trains and 10% on other long-distance trains. We show the exact dates and terms when you choose a fare.'
       },
       {
         q: 'What are the terms of the INTAVIATUTU and INTHOTELTUTU promo codes?',
@@ -91,7 +91,7 @@
         a: 'INTAVIATUTU — 15% off flights, maximum discount 1,000 ₽. INTHOTELTUTU — 15% off hotels, maximum discount 3,000 ₽. Both codes are valid until 31 December 2026. Enter the code when you check out on tutu.ru.'
       },
       {
-        q: 'Can I refund or exchange a ticket?',
+        q: 'Can I return or exchange a ticket?',
         a: 'It depends on the transport type, carrier and fare. We show the refund conditions before you buy. After that, you’ll find everything you can do with the ticket in your order on the Tutu website or app. Some tickets can’t be exchanged directly: you return the ticket and buy a new one.'
       },
       {
@@ -103,9 +103,9 @@
         a: 'A platskart coach normally has 54 berths in open bays along a common aisle, much like sleeper class in India. A kupe coach usually has 32 or 36 berths, four in each closed compartment. Kupe coaches have fewer passengers and more privacy, so they are usually more expensive.'
       },
       {
-        q: 'Where can I get help with other questions?',
-        a: 'Write to our 24/7 contact centre: we answer in English and Russian. The support chat opens on the {link}.',
-        link: { text: 'feedback page', href: 'https://www.tutu.ru/feedback.php' }
+        q: 'Where can I get help if I still have questions?',
+        a: 'Message us in the {link}. We’re available 24/7 and reply in English and Russian.',
+        link: { text: 'support chat', href: 'https://www.tutu.ru/feedback.php' }
       }
     ],
     hi: [
@@ -131,7 +131,7 @@
       },
       {
         q: 'ट्रेन टिकटों पर कौन-सी छूट मिलती है?',
-        a: 'नॉन-रिफ़ंडेबल ट्रेन टिकटों पर 20% तक की छूट मिलती है। जन्मदिन पर आपको और आपके साथ यात्रा करने वाले अधिकतम तीन लोगों को छूट मिलती है: सपसान ट्रेनों पर 30% और दूसरी लंबी दूरी की ट्रेनों पर 10%। सटीक तारीख़ें और शर्तें हम किराया चुनते समय दिखाते हैं।'
+        a: 'नॉन-रिफ़ंडेबल ट्रेन टिकटों पर 20% तक की छूट मिलती है। जन्मदिन पर आपको और आपके साथ यात्रा करने वाले अधिकतम तीन लोगों को छूट मिलती है: सापसान ट्रेनों पर 30% और दूसरी लंबी दूरी की ट्रेनों पर 10%। सटीक तारीख़ें और शर्तें हम किराया चुनते समय दिखाते हैं।'
       },
       {
         q: 'प्रोमो कोड INTAVIATUTU और INTHOTELTUTU की शर्तें क्या हैं?',
@@ -151,19 +151,21 @@
         a: 'प्लात्सकार्ट कोच में आम तौर पर 54 बर्थ होती हैं, जो खुले सेक्शन में एक साझा गलियारे के साथ होती हैं, लगभग भारत के स्लीपर कोच जैसी। कूपे में आम तौर पर 32 या 36 बर्थ होती हैं, और हर बंद कूपे में चार बर्थ होती हैं। कूपे में यात्री कम होते हैं और ज़्यादा प्राइवेसी मिलती है, इसलिए यह आम तौर पर महँगा होता है।'
       },
       {
-        q: 'दूसरे सवालों के लिए कहाँ संपर्क करें?',
-        a: 'हमारे 24/7 कॉन्टैक्ट सेंटर को लिखें: हम अंग्रेज़ी और रूसी में जवाब देते हैं। सपोर्ट चैट {link} पर खुलती है।',
-        link: { text: 'फ़ीडबैक पेज', href: 'https://www.tutu.ru/feedback.php' }
+        q: 'अगर कोई सवाल रह गया हो, तो कहाँ संपर्क करें?',
+        a: 'हमें {link} में लिखें। हम 24/7 उपलब्ध हैं और अंग्रेज़ी व रूसी में जवाब देते हैं।',
+        link: { text: 'सपोर्ट चैट', href: 'https://www.tutu.ru/feedback.php' }
       }
     ]
   };
 
-  /* Questions by importance for an Indian traveller: paying, the promo code,
-     the name on the ticket, refunds, pay later, train discounts, baggage,
-     buying for others, airport transfers, carriage classes, and last where to
-     ask anything else (the 24/7 contact centre). The numbers are positions in
-     the lists above, which keep the same order in every language. */
-  const FAQ_ORDER = [0, 6, 2, 7, 4, 5, 3, 8, 1, 9, 10];
+  /* Questions by importance for an Indian student: what blocks a purchase
+     first (paying, the name on the ticket), then money (promo codes, train
+     discounts, refunds), then the trip (platskart vs kupe, baggage), then
+     extras (pay later, tickets for others), and last the 24/7 support chat.
+     The numbers are positions in the lists above, which keep the same order
+     in every language. Not shown: 1 (airport transfers — the route banner
+     says it). */
+  const FAQ_ORDER = [0, 2, 6, 5, 7, 9, 3, 4, 8, 10];
 
   /* The promo code answer is plain text like every other answer: each code
      with its maximum discount in roubles and, after ≈, in rupees at the CBR
