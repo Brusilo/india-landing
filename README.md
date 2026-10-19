@@ -24,11 +24,10 @@ index-en.html               Legacy redirect to index.html
 fonts/                      Tutu Sans (WOFF2) — regular 400, medium 500, demibold 600, bold 700
 assets/
   logo-tutu-white.png       wordmark used in the header and footer
-  logo-tutu-lavender.png    not used yet, kept for light backgrounds
   icon-bus / train / flight / hotel .png   transport tab icons
-  qr.png                    app download QR code
+  qr-new.png                app download QR code
   favicon.png, apple-touch-icon.png   browser tab and home-screen icon
-  icons/                    brand icons taken from «Иконки для оформления.pptx» (tiles, panels, socials, stores); store-apple.png was generated separately
+  icons/, art/, photos/, routes/, hotels/   icons, illustrations and photos used on the page
 ```
 
 Fonts are declared with `@font-face` at the top of the `<style>` block. To swap a weight,
@@ -69,7 +68,7 @@ wrap the `<img>` and the chip in a `.card-media` without the inline gradient.
 
 ### QR code
 
-`assets/qr.png` is the real app code and carries its own white rounded background.
+`assets/qr-new.png` is the real app code and carries its own white rounded background.
 To change the code, overwrite the file.
 
 ## Fonts
@@ -102,15 +101,7 @@ exactly (`--ink`, `--ink-muted`, `--action-hover`, `--strawberry`, `--tangerine`
 `--surface-neutral-2`, `--deep-blue`, `--r-panel`, `--r-card`, `--r-btn`). The old values stay
 as fallbacks, so the page looks the same if the file is missing.
 
-To refresh the tokens (needs access to Tutu's internal npm registry):
-
-```bash
-npm pack @tutu/mother-of-tokens --registry=https://artifactory.tutu.ru/artifactory/api/npm/npm-common/
-tar -xzf tutu-mother-of-tokens-*.tgz
-node scripts/build-kite-tokens.js ./package
-```
-
-Then bump `?v=` on the `kite-tokens.css` link in the three pages.
+When refreshing the tokens, bump `?v=` on the `kite-tokens.css` link in the three pages.
 
 ## Not wired up yet (stage 2)
 

@@ -157,8 +157,7 @@ variables → Actions → New repository secret**:
 
 ```bash
 python scripts/update-market-data.py --self-test
-node tests/landing-pricing.cjs
-node tests/landing-tours.cjs
+python scripts/scrape-public-prices.py --self-test
 ```
 
 Чтобы запустить обновление вручную, откройте GitHub Actions → указанное

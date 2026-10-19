@@ -1,7 +1,3 @@
 .claude/
 Thumbs.db
 .DS_Store
-
-# Kite token refresh leftovers (see README)
-/package/
-tutu-mother-of-tokens-*.tgz

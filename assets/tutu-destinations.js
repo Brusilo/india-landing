@@ -1,6 +1,5 @@
 /* Confirmed public Tutu city mappings, checked 2026-09-17; extended and
-   re-verified 2026-10-08 (docs/destinations-2026-10-08.md).
-   See docs/landing-audit-v25.md for coverage and limitations.
+   re-verified 2026-10-08; every URL live-checked on tutu.ru 2026-10-15.
    No transliteration guesses are used as destination URLs. */
 window.TUTU_DESTINATIONS = {
   "bus": {

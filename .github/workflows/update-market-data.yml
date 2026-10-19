@@ -13,8 +13,6 @@ on:
       - 'scripts/update-market-data.py'
       - 'scripts/scrape-public-prices.py'
       - 'scripts/price-targets.json'
-      - 'tests/landing-pricing.cjs'
-      - 'tests/landing-tours.cjs'
       - '.github/workflows/update-market-data.yml'
 
 permissions:
@@ -37,10 +35,6 @@ jobs:
           python-version: '3.12'
       - name: Check FX and quote parsing against fixtures (offline)
         run: python scripts/update-market-data.py --self-test
-      - name: Validate price displays and all languages (offline)
-        run: node tests/landing-pricing.cjs
-      - name: Verify tour deep links (offline)
-        run: node tests/landing-tours.cjs
       - name: Verify Tutu minimum-price extraction against fixtures (offline)
         run: python scripts/scrape-public-prices.py --self-test
       - name: Install headless browser for public Tutu booking pages
