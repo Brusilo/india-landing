@@ -115,6 +115,13 @@ Styled but inert on purpose:
 Route cards already carry `data-cta` (`route_r3_combined`, `hotel_h1`, …), which is the
 identifier stage 2 needs for `utm_content` and `dataLayer`.
 
+## Foreign cards first at checkout
+
+`assets/landing-source.js` sets the cookie `landing_source=international` for `.tutu.ru` (30 days).
+Tutu's checkout then lists Visa and Mastercard first. Browsers only let a page set cookies
+for its own domain, so this starts working once the landing is served from tutu.ru or a
+subdomain; on github.io it does nothing. Tours open travelata.ru and do not get the cookie.
+
 ## Deploying to GitHub Pages
 
 Push to `main`, then in the repository open **Settings → Pages** and set
