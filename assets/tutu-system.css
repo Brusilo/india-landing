@@ -4605,8 +4605,8 @@ footer .legal a:hover { color: var(--white, #fff); }
 .faq-item > p .faq-link { color: var(--action, #7028EB); text-decoration: none; }
 .faq-item > p .faq-link:hover { text-decoration: underline; }
 
-/* English, tablet and desktop: the "to any city" sticker sits centred under
-   "We'll get you" instead of hanging off its left edge. */
+/* English, tablet and desktop: the "to any city" sticker sits under "We'll get
+   you", a little left of centre for balance, instead of hanging off its left edge. */
 @media (min-width: 600px) {
-  html:lang(en) .panel--photo .panel-badge { align-self: center; margin-left: 0; }
+  html:lang(en) .panel--photo .panel-badge { align-self: center; margin-left: 0; translate: -0.37em 0; }
 }
