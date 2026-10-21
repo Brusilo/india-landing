@@ -4625,3 +4625,5 @@ footer .legal a:hover { color: var(--white, #fff); }
 @media (max-width: 599.98px) {
   html:lang(hi) .panel--photo .panel-badge { translate: 0 -2px; margin-bottom: 3px; }
 }
+/* No blue tap box on phones: every control already shows its own state. */
+html { -webkit-tap-highlight-color: transparent; }
