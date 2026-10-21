@@ -4610,3 +4610,10 @@ footer .legal a:hover { color: var(--white, #fff); }
 @media (min-width: 600px) {
   html:lang(en) .panel--photo .panel-badge { align-self: center; margin-left: 0; translate: -0.37em 0; }
 }
+
+/* Hindi, tablet and desktop: Devanagari matras (the curl of ि, the headline
+   bar) reach above the tight line box, so give the sticker text more room on
+   top and take it from the bottom; the sticker keeps about the same height. */
+@media (min-width: 600px) {
+  html:lang(hi) .panel--photo .panel-badge { padding-top: .3em; padding-bottom: .12em; }
+}
