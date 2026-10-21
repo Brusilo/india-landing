@@ -18,7 +18,7 @@
       economy:'Эконом',business:'Бизнес',cabin:'Класс обслуживания',
       passenger1:'пассажир',passenger2:'пассажира',passenger5:'пассажиров',
       guest1:'гость',guest2:'гостя',guest5:'гостей',
-      prev:'Предыдущий месяц',next:'Следующий месяц'
+      prev:'Предыдущий месяц',next:'Следующий месяц',hotelsNewTab:'Искать отели в новой вкладке'
     },
     en:{
       from:'From',to:'To',when:'Departure',back:'Return',flightWho:'Travellers',travelWho:'Travellers',swap:'Swap departure and destination',search:'Search',
@@ -27,7 +27,7 @@
       economy:'Economy',business:'Business',cabin:'Cabin class',
       passenger1:'traveller',passenger2:'travellers',passenger5:'travellers',
       guest1:'guest',guest2:'guests',guest5:'guests',
-      prev:'Previous month',next:'Next month'
+      prev:'Previous month',next:'Next month',hotelsNewTab:'Search hotels in a new tab'
     },
     hi:{
       from:'कहाँ से',to:'कहाँ तक',when:'प्रस्थान',back:'वापसी',flightWho:'यात्री',travelWho:'यात्री',swap:'कहाँ से और कहाँ तक की जगह बदलें',search:'खोजें',
@@ -36,7 +36,7 @@
       economy:'इकोनॉमी',business:'बिज़नेस',cabin:'ट्रैवल क्लास',
       passenger1:'यात्री',passenger2:'यात्री',passenger5:'यात्री',
       guest1:'मेहमान',guest2:'मेहमान',guest5:'मेहमान',
-      prev:'पिछला महीना',next:'अगला महीना'
+      prev:'पिछला महीना',next:'अगला महीना',hotelsNewTab:'होटल नए टैब में खोजें'
     }
   }[pageLang];
 
@@ -522,6 +522,25 @@
     });
   }
 
+  /* Desktop-only flight option, like on tutu.ru: tickets open in a new tab,
+     this tab turns into the hotel search for the destination on the same dates. */
+  const HOTELS_TAB_KEY='tutu-hotels-newtab-v1';
+  const desktopQuery=window.matchMedia('(min-width: 1101px)');
+  let hotelsNewTab=true;
+  try{hotelsNewTab=localStorage.getItem(HOTELS_TAB_KEY)!=='0'}catch(_){}
+
+  function hotelUrlForFlight(state){
+    const place=state.to;
+    if(!place||!window.TUTU_LINKS||!TUTU_LINKS.supports('hotel',place))return '';
+    const start=state.date;
+    let end=state.returnDate&&state.returnDate>start?state.returnDate:null;
+    if(!end){end=new Date(start);end.setDate(end.getDate()+1)}
+    try{
+      const url=TUTU_LINKS.build('hotel',{destination:place,start,end,adults:state.adults,children:state.children,childAges:state.childAges});
+      return url==='https://www.tutu.ru/'?'':url;
+    }catch(_){return ''}
+  }
+
   function submitSearch(){
     const state=states[mode],roles=mode==='hotel'?['destination']:['from','to'];
     // Exact multilingual names are enough; partial/ambiguous input is never guessed.
@@ -543,6 +562,12 @@
     try{
       if(!window.TUTU_LINKS){window.location.assign('https://www.tutu.ru/');return}
       const url=window.TUTU_LINKS.build(mode,state);
+      const hotelUrl=mode==='flight'&&hotelsNewTab&&desktopQuery.matches?hotelUrlForFlight(state):'';
+      if(hotelUrl){
+        // If the browser blocks the new tab, the tickets simply open here as before.
+        const tab=window.open(url,'_blank');
+        if(tab){try{tab.opener=null}catch(_){}window.location.assign(hotelUrl);return}
+      }
       window.location.assign(url);
     }catch(err){
       const code=err&&err.code?err.code:'unsupported';
@@ -602,7 +627,8 @@
       const fromHtml=a.filter(item=>item[1]==='from').map(placeChip).join('');
       const toHtml=a.filter(item=>item[1]==='to').map(placeChip).join('');
       const returnHtml=mode==='flight'?'<div class="quick-group-v2 quick-group-v2--return">'+[1,2].map(n=>'<button type="button" class="quick-chip-v2" data-v2-return="'+n+'">'+esc(dayWord(n))+'</button>').join('')+'</div>':'';
-      hints.innerHTML='<div class="quick-group-v2 quick-group-v2--from">'+fromHtml+'</div><div class="quick-group-v2 quick-group-v2--to">'+toHtml+'</div><div class="quick-group-v2 quick-group-v2--date">'+dateHtml+'</div>'+returnHtml;
+      const hotelsHtml=mode==='flight'?'<label class="hotels-tab-v2"><span>'+esc(labels.hotelsNewTab)+'</span><input type="checkbox" role="switch"'+(hotelsNewTab?' checked':'')+'><i aria-hidden="true"></i></label>':'';
+      hints.innerHTML='<div class="quick-group-v2 quick-group-v2--from">'+fromHtml+'</div><div class="quick-group-v2 quick-group-v2--to">'+toHtml+'</div><div class="quick-group-v2 quick-group-v2--date">'+dateHtml+'</div>'+returnHtml+hotelsHtml;
     }
   }
 
@@ -610,6 +636,12 @@
     const p=e.target.closest('[data-v2-place]');if(p){setQuickPlace(p.dataset.v2Role,p.dataset.v2Place);return}
     const r=e.target.closest('[data-v2-return]');if(r){setQuickReturn(Number(r.dataset.v2Return));return}
     const d=e.target.closest('[data-v2-date]');if(d)setQuickDate(Number(d.dataset.v2Date),Number(d.dataset.v2Length));
+  });
+
+  hints.addEventListener('change',e=>{
+    if(!e.target.closest('.hotels-tab-v2'))return;
+    hotelsNewTab=e.target.checked;
+    try{localStorage.setItem(HOTELS_TAB_KEY,hotelsNewTab?'1':'0')}catch(_){}
   });
 
   buttons.forEach((button,index)=>button.addEventListener('click',()=>{
