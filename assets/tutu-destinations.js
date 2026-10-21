@@ -850,6 +850,382 @@ window.TUTU_DESTINATIONS = {
     "uz-tashkent": [
       "Tashkent",
       1635924
+    ],
+    "ru-balashikha": [
+      "Balashiha",
+      1385051
+    ],
+    "ru-podolsk": [
+      "Podolsk",
+      1385342
+    ],
+    "ru-shakhty": [
+      "Shahty",
+      1391658
+    ],
+    "ru-dzerzhinsk": [
+      "Dzerzhinsk",
+      1427805
+    ],
+    "ru-angarsk": [
+      "Angarsk",
+      1309618
+    ],
+    "ru-korolyov": [
+      "Korolyov",
+      1384567
+    ],
+    "ru-mytishchi": [
+      "Mytishhi",
+      1385167
+    ],
+    "ru-biysk": [
+      "Bijsk",
+      1306974
+    ],
+    "ru-lyubertsy": [
+      "Lyubertsy",
+      1384568
+    ],
+    "ru-balakovo": [
+      "Balakovo",
+      1434078
+    ],
+    "ru-severodvinsk": [
+      "Severodvinsk",
+      1339809
+    ],
+    "ru-ussuriysk": [
+      "Ussurijsk",
+      1297866
+    ],
+    "ru-volgodonsk": [
+      "Volgodonsk",
+      1391660
+    ],
+    "ru-zlatoust": [
+      "Zlatoust",
+      1443463
+    ],
+    "ru-kamensk-uralsky": [
+      "Kamensk-Uralskij",
+      1322777
+    ],
+    "ru-almetyevsk": [
+      "Almetevsk",
+      1333103
+    ],
+    "ru-elektrostal": [
+      "Elektrostal",
+      1384565
+    ],
+    "ru-miass": [
+      "Miass",
+      1443464
+    ],
+    "ru-salavat": [
+      "Salavat",
+      1337671
+    ],
+    "ru-kopeysk": [
+      "Kopejsk",
+      1443465
+    ],
+    "ru-nakhodka": [
+      "Nahodka",
+      1297865
+    ],
+    "ru-khasavyurt": [
+      "Hasavyurt",
+      1436996
+    ],
+    "ru-rubtsovsk": [
+      "Rubtsovsk",
+      1305386
+    ],
+    "ru-odintsovo": [
+      "Odintsovo",
+      1384570
+    ],
+    "ru-kovrov": [
+      "Kovrov",
+      1425288
+    ],
+    "ru-krasnogorsk": [
+      "Krasnogorsk",
+      1384602
+    ],
+    "ru-neftekamsk": [
+      "Neftekamsk",
+      1333154
+    ],
+    "ru-berezniki": [
+      "Berezniki",
+      1324710
+    ],
+    "ru-bataysk": [
+      "Batajsk",
+      1391892
+    ],
+    "ru-serpukhov": [
+      "Serpuhov",
+      1384571
+    ],
+    "ru-novomoskovsk": [
+      "Novomoskovsk",
+      1422426
+    ],
+    "ru-kaspiysk": [
+      "Kaspijsk",
+      1436998
+    ],
+    "ru-pervouralsk": [
+      "Pervouralsk",
+      1322778
+    ],
+    "ru-nazran": [
+      "Nazran",
+      1438657
+    ],
+    "ru-ramenskoye": [
+      "Ramenskoe",
+      1384686
+    ],
+    "ru-shchyolkovo": [
+      "Shhyolkovo",
+      1389232
+    ],
+    "ru-orekhovo-zuyevo": [
+      "Orehovo-Zuevo",
+      1384572
+    ],
+    "ru-noginsk": [
+      "Noginsk",
+      1384566
+    ],
+    "ru-nevinnomyssk": [
+      "Nevinnomyssk",
+      1435839
+    ],
+    "ru-oktyabrsky": [
+      "Oktyabrskij",
+      1333155
+    ],
+    "ru-dimitrovgrad": [
+      "Dimitrovgrad",
+      1351718
+    ],
+    "ru-kamyshin": [
+      "Kamyshin",
+      1412654
+    ],
+    "ru-dolgoprudny": [
+      "Dolgoprudnyj",
+      1384562
+    ],
+    "ru-novoshakhtinsk": [
+      "Novoshahtinsk",
+      1391661
+    ],
+    "ru-zhukovsky": [
+      "Zhukovskij",
+      1384574
+    ],
+    "ru-pushkino": [
+      "Pushkino",
+      1384715
+    ],
+    "ru-reutov": [
+      "Reutov",
+      1384689
+    ],
+    "ru-arzamas": [
+      "Arzamas",
+      1427806
+    ],
+    "ru-berdsk": [
+      "Berdsk",
+      1302718
+    ],
+    "ru-novokuybyshevsk": [
+      "Novokujbyshevsk",
+      1321499
+    ],
+    "ru-yelets": [
+      "Elets",
+      1379568
+    ],
+    "ru-zelenodolsk": [
+      "Zelenodolsk",
+      1330032
+    ],
+    "ru-achinsk": [
+      "Achinsk",
+      1307746
+    ],
+    "ru-vidnoye": [
+      "Vidnoe",
+      1384685
+    ],
+    "ru-birobidzhan": [
+      "Birobidzhan",
+      1315537
+    ],
+    "ru-taman": [
+      "Taman",
+      1448433
+    ],
+    "ru-valday": [
+      "Valdaj",
+      1317712
+    ],
+    "ru-pereslavl-zalessky": [
+      "Pereslavl-Zalesskij",
+      1397801
+    ],
+    "ru-kirishi": [
+      "Kirishi",
+      1358042
+    ],
+    "ru-tikhvin": [
+      "Tihvin",
+      1357851
+    ],
+    "ru-gatchina": [
+      "Gatchina",
+      1357850
+    ],
+    "ru-peterhof": [
+      "Petergof",
+      1447627
+    ],
+    "ru-pushkin": [
+      "Pushkin",
+      1447623
+    ],
+    "ru-sestroretsk": [
+      "Sestroretsk",
+      1447628
+    ],
+    "ru-lomonosov": [
+      "Lomonosov",
+      1447637
+    ],
+    "ru-kolpino": [
+      "Kolpino",
+      1447625
+    ],
+    "kz-temirtau": [
+      "Temirtau",
+      1638836
+    ],
+    "kz-ekibastuz": [
+      "Ekibastuz",
+      1637152
+    ],
+    "kz-shchuchinsk": [
+      "Shhuchinsk",
+      1640345
+    ],
+    "kz-rudny": [
+      "Rudnyj",
+      1639136
+    ],
+    "kg-tokmok": [
+      "Tokmok",
+      1615355
+    ],
+    "kg-balykchy": [
+      "Balykchy",
+      1614830
+    ],
+    "am-sevan": [
+      "Sevan",
+      1675997
+    ],
+    "ge-rustavi": [
+      "Rustavi",
+      1035255
+    ],
+    "ge-zugdidi": [
+      "Zugdidi",
+      1035280
+    ],
+    "ge-poti": [
+      "Poti",
+      1035254
+    ],
+    "by-babruysk": [
+      "Bobrujsk",
+      1279065
+    ],
+    "by-baranovichi": [
+      "Baranovichi",
+      1288172
+    ],
+    "by-borisov": [
+      "Borisov",
+      1292649
+    ],
+    "by-pinsk": [
+      "Pinsk",
+      1288173
+    ],
+    "by-orsha": [
+      "Orsha",
+      1288150
+    ],
+    "by-mozyr": [
+      "Mozyr",
+      1292552
+    ],
+    "by-lida": [
+      "Lida",
+      1274802
+    ],
+    "by-novopolotsk": [
+      "Novopolotsk",
+      1282069
+    ],
+    "by-soligorsk": [
+      "Soligorsk",
+      1292642
+    ],
+    "by-molodechno": [
+      "Molodechno",
+      1297478
+    ],
+    "by-polotsk": [
+      "Polotsk",
+      1282070
+    ],
+    "by-zhlobin": [
+      "Zhlobin",
+      1290346
+    ],
+    "by-svetlogorsk": [
+      "Svetlogorsk",
+      1292605
+    ],
+    "md-ungheni": [
+      "Ungeny",
+      1273141
+    ],
+    "md-soroca": [
+      "Soroki",
+      1273220
+    ],
+    "md-comrat": [
+      "Komrat",
+      1273239
+    ],
+    "md-cahul": [
+      "Kagul",
+      1273241
+    ],
+    "kg-manas": [
+      "Dzhalal-Abad",
+      1614833
     ]
   },
   "flight": {
@@ -1872,6 +2248,26 @@ window.TUTU_DESTINATIONS = {
     "uz-urgench": [
       "Urgench",
       442
+    ],
+    "ru-nazran": [
+      "Nazran",
+      9012
+    ],
+    "ru-rostov-on-don": [
+      "Rostov-na-donu",
+      72
+    ],
+    "uz-kokand": [
+      "Kokand",
+      254298
+    ],
+    "uz-muynak": [
+      "Muynak",
+      254588
+    ],
+    "uz-zaamin": [
+      "Zaamin",
+      254589
     ]
   },
   "hotel": {
@@ -3534,6 +3930,421 @@ window.TUTU_DESTINATIONS = {
       "uzbekistan",
       "zarafshan",
       2705334
+    ],
+    "ru-balashikha": [
+      "russia",
+      "balashikha",
+      2665568
+    ],
+    "ru-podolsk": [
+      "russia",
+      "podolsk",
+      2665609
+    ],
+    "ru-shakhty": [
+      "russia",
+      "shakhty",
+      2694274
+    ],
+    "ru-dzerzhinsk": [
+      "russia",
+      "dzerzhinsk",
+      2665579
+    ],
+    "ru-angarsk": [
+      "russia",
+      "angarsk",
+      2694225
+    ],
+    "ru-korolyov": [
+      "russia",
+      "korolev",
+      2665606
+    ],
+    "ru-mytishchi": [
+      "russia",
+      "mytishchi",
+      2687776
+    ],
+    "ru-biysk": [
+      "russia",
+      "biysk",
+      2657287
+    ],
+    "ru-lyubertsy": [
+      "russia",
+      "lyubertsy",
+      2665629
+    ],
+    "ru-balakovo": [
+      "russia",
+      "balakovo",
+      2656853
+    ],
+    "ru-severodvinsk": [
+      "russia",
+      "severodvinsk",
+      2665653
+    ],
+    "ru-ussuriysk": [
+      "russia",
+      "ussuriysk",
+      2665635
+    ],
+    "ru-volgodonsk": [
+      "russia",
+      "volgodonsk",
+      2656864
+    ],
+    "ru-zlatoust": [
+      "russia",
+      "zlatoust",
+      2665581
+    ],
+    "ru-kamensk-uralsky": [
+      "russia",
+      "kamensk_uralskiy",
+      2694234
+    ],
+    "ru-almetyevsk": [
+      "russia",
+      "almetyevsk",
+      2665566
+    ],
+    "ru-elektrostal": [
+      "russia",
+      "elektrostal",
+      2694260
+    ],
+    "ru-miass": [
+      "russia",
+      "miass",
+      2694241
+    ],
+    "ru-salavat": [
+      "russia",
+      "salavat",
+      2665649
+    ],
+    "ru-kopeysk": [
+      "russia",
+      "kopeysk",
+      2694268
+    ],
+    "ru-nakhodka": [
+      "russia",
+      "nakhodka",
+      2694244
+    ],
+    "ru-rubtsovsk": [
+      "russia",
+      "rubtsovsk",
+      2694256
+    ],
+    "ru-odintsovo": [
+      "russia",
+      "odintsovo",
+      2694250
+    ],
+    "ru-kovrov": [
+      "russia",
+      "kovrov",
+      2694237
+    ],
+    "ru-krasnogorsk": [
+      "russia",
+      "krasnogorsk",
+      2665767
+    ],
+    "ru-neftekamsk": [
+      "russia",
+      "neftekamsk",
+      2662391
+    ],
+    "ru-berezniki": [
+      "russia",
+      "berezniki",
+      2694230
+    ],
+    "ru-bataysk": [
+      "russia",
+      "bataysk",
+      2694228
+    ],
+    "ru-serpukhov": [
+      "russia",
+      "serpukhov",
+      2665595
+    ],
+    "ru-novomoskovsk": [
+      "russia",
+      "novomoskovsk",
+      2694269
+    ],
+    "ru-kaspiysk": [
+      "russia",
+      "kaspiysk",
+      2696348
+    ],
+    "ru-pervouralsk": [
+      "russia",
+      "pervouralsk",
+      2694252
+    ],
+    "ru-nazran": [
+      "russia",
+      "nazran",
+      2665466
+    ],
+    "ru-ramenskoye": [
+      "russia",
+      "ramenskoye",
+      2696138
+    ],
+    "ru-orekhovo-zuyevo": [
+      "russia",
+      "orekhovo_zuevo",
+      2694270
+    ],
+    "ru-noginsk": [
+      "russia",
+      "noginsk",
+      2694249
+    ],
+    "ru-nevinnomyssk": [
+      "russia",
+      "nevinnomyssk",
+      2694245
+    ],
+    "ru-oktyabrsky": [
+      "russia",
+      "oktyabrskiy",
+      2662393
+    ],
+    "ru-dimitrovgrad": [
+      "russia",
+      "dimitrovgrad",
+      2694232
+    ],
+    "ru-kamyshin": [
+      "russia",
+      "kamyshin",
+      2694235
+    ],
+    "ru-dolgoprudny": [
+      "russia",
+      "dolgoprudnyy",
+      2696140
+    ],
+    "ru-novoshakhtinsk": [
+      "russia",
+      "novoshakhtinsk",
+      2694248
+    ],
+    "ru-zhukovsky": [
+      "russia",
+      "zhukovskiy",
+      2694265
+    ],
+    "ru-pushkino": [
+      "russia",
+      "pushkino",
+      2665612
+    ],
+    "ru-reutov": [
+      "russia",
+      "reutov",
+      2696139
+    ],
+    "ru-arzamas": [
+      "russia",
+      "arzamas",
+      2694226
+    ],
+    "ru-berdsk": [
+      "russia",
+      "berdsk",
+      2665574
+    ],
+    "ru-novokuybyshevsk": [
+      "russia",
+      "novokuybyshevsk",
+      2665590
+    ],
+    "ru-yelets": [
+      "russia",
+      "yelets",
+      2686563
+    ],
+    "ru-zelenodolsk": [
+      "russia",
+      "zelenodolsk",
+      2697982
+    ],
+    "ru-achinsk": [
+      "russia",
+      "achinsk",
+      2657261
+    ],
+    "ru-vidnoye": [
+      "russia",
+      "vidnoye",
+      2696149
+    ],
+    "ru-birobidzhan": [
+      "russia",
+      "birobidzhan",
+      2698113
+    ],
+    "ru-taman": [
+      "russia",
+      "taman",
+      3962574
+    ],
+    "ru-valday": [
+      "russia",
+      "valday",
+      2696760
+    ],
+    "ru-pereslavl-zalessky": [
+      "russia",
+      "pereslavl_zalesskiy",
+      2665608
+    ],
+    "ru-kirishi": [
+      "russia",
+      "kirishi",
+      2696685
+    ],
+    "ru-tikhvin": [
+      "russia",
+      "tikhvin",
+      2696684
+    ],
+    "ru-gatchina": [
+      "russia",
+      "gatchina",
+      2665577
+    ],
+    "ru-peterhof": [
+      "russia",
+      "peterhof",
+      2684866
+    ],
+    "ru-pushkin": [
+      "russia",
+      "pushkin",
+      2665764
+    ],
+    "ru-sestroretsk": [
+      "russia",
+      "sestroretsk",
+      2665763
+    ],
+    "ru-lomonosov": [
+      "russia",
+      "lomonosov",
+      2690987
+    ],
+    "ru-kolpino": [
+      "russia",
+      "kolpino",
+      2694267
+    ],
+    "kz-temirtau": [
+      "kazakhstan",
+      "temirtau",
+      2694258
+    ],
+    "kz-ekibastuz": [
+      "kazakhstan",
+      "ekibastuz",
+      2659876
+    ],
+    "kz-shchuchinsk": [
+      "kazakhstan",
+      "shchuchinsk",
+      2712861
+    ],
+    "kg-tokmok": [
+      "kirgizstan",
+      "tokmok",
+      4104889
+    ],
+    "kg-balykchy": [
+      "kirgizstan",
+      "balykchy",
+      3454008
+    ],
+    "am-sevan": [
+      "armenia",
+      "sevan",
+      2700326
+    ],
+    "ge-rustavi": [
+      "georgia",
+      "rustavi",
+      2718670
+    ],
+    "ge-zugdidi": [
+      "georgia",
+      "zugdidi",
+      4030361
+    ],
+    "ge-poti": [
+      "georgia",
+      "poti",
+      2693421
+    ],
+    "by-babruysk": [
+      "belarus",
+      "babruysk",
+      2665648
+    ],
+    "by-pinsk": [
+      "belarus",
+      "pinsk",
+      2694253
+    ],
+    "by-orsha": [
+      "belarus",
+      "orsha",
+      2694251
+    ],
+    "by-lida": [
+      "belarus",
+      "lida",
+      2694238
+    ],
+    "by-zhlobin": [
+      "belarus",
+      "zhlobin",
+      3686199
+    ],
+    "by-svetlogorsk": [
+      "belarus",
+      "svetlogorsk",
+      3626775
+    ],
+    "md-ungheni": [
+      "moldova",
+      "ungheni",
+      3492546
+    ],
+    "md-soroca": [
+      "moldova",
+      "soroca",
+      3355055
+    ],
+    "md-comrat": [
+      "moldova",
+      "comrat",
+      4022138
+    ],
+    "md-cahul": [
+      "moldova",
+      "cahul",
+      4229390
     ]
   },
   "train": {
@@ -3728,6 +4539,52 @@ window.TUTU_DESTINATIONS = {
     "uz-samarkand": "Samarkand",
     "uz-tashkent": "Tashkent",
     "uz-termez": "Termez",
-    "uz-urgench": "Urgench"
+    "uz-urgench": "Urgench",
+    "ru-dzerzhinsk": "Dzerzhinsk",
+    "ru-angarsk": "Angarsk",
+    "ru-mytishchi": "Mytishchi",
+    "ru-biysk": "Biysk",
+    "ru-balakovo": "Balakovo",
+    "ru-severodvinsk": "Severodvinsk",
+    "ru-ussuriysk": "Ussuriysk",
+    "ru-zlatoust": "Zlatoust",
+    "ru-kamensk-uralsky": "Kamensk-Uralskiy",
+    "ru-salavat": "Salavat",
+    "ru-nakhodka": "Nakhodka",
+    "ru-rubtsovsk": "Rubtsovsk",
+    "ru-bataysk": "Bataisk",
+    "ru-serpukhov": "Serpukhov",
+    "ru-pervouralsk": "Pervouralsk",
+    "ru-nazran": "Nazran",
+    "ru-ramenskoye": "Ramenskoe",
+    "ru-orekhovo-zuyevo": "Orekhovo-Zuevo",
+    "ru-kamyshin": "Kamyshin",
+    "ru-reutov": "Reutov",
+    "ru-berdsk": "Berdsk",
+    "ru-yelets": "Elets",
+    "ru-birobidzhan": "Birobidzhan",
+    "ru-valday": "Valdai",
+    "ru-pereslavl-zalessky": "Pereslavl",
+    "ru-kirishi": "Kirishi",
+    "ru-tikhvin": "Tikhvin",
+    "ru-gatchina": "Gatchina",
+    "ru-zelenogorsk": "Zelenogorsk",
+    "ru-kolpino": "Kolpino",
+    "kz-temirtau": "Temirtau",
+    "uz-gulistan": "Gulistan",
+    "uz-jizzakh": "Dzhizak",
+    "uz-khiva": "Khiva",
+    "uz-angren": "Angren",
+    "kg-kara-balta": "Karabalta",
+    "az-sumgait": "Sumgait",
+    "by-babruysk": "Bobruisk",
+    "by-baranovichi": "Baranovichi",
+    "by-borisov": "Borisov",
+    "by-pinsk": "Pinsk",
+    "by-mozyr": "Mozyr",
+    "by-lida": "Lida",
+    "by-soligorsk": "Soligorsk",
+    "by-molodechno": "Molodechno",
+    "by-zhlobin": "Zhlobin"
   }
 };
