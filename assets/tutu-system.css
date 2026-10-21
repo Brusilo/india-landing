@@ -4621,3 +4621,7 @@ footer .legal a:hover { color: var(--white, #fff); }
 @media (max-width: 599.98px) {
   html:lang(hi) .panel--photo .panel-badge { padding-top: calc(4px + .1em); padding-bottom: calc(8px - .1em); }
 }
+/* Hindi phones: lift the sticker a touch and give it room above the text below. */
+@media (max-width: 599.98px) {
+  html:lang(hi) .panel--photo .panel-badge { translate: 0 -2px; margin-bottom: 3px; }
+}
