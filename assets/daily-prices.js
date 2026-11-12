@@ -5,7 +5,7 @@ window.TUTU_DAILY_PRICES={
     "rateDate": "2026-11-12",
     "rubToInr": 1.13483677,
     "source": "https://www.cbr.ru/scripts/XML_daily.asp",
-    "updatedAt": "2026-11-12T02:11:57+03:00"
+    "updatedAt": "2026-11-12T06:53:17+03:00"
   },
   "quotes": {
     "currency": "RUB",
@@ -21,7 +21,7 @@ window.TUTU_DAILY_PRICES={
       "h10": 6800,
       "h11": 4374,
       "h12": 9008,
-      "h13": 1239,
+      "h13": 1242,
       "h2": 2610,
       "h4": 5275,
       "h5": 6120,
@@ -31,22 +31,22 @@ window.TUTU_DAILY_PRICES={
       "h9": 1710
     },
     "routes": {
-      "r1": 1309,
-      "r10": 5064,
-      "r11": 5162,
-      "r12": 1916,
-      "r13": 4460,
-      "r14": 2555,
+      "r1": 1410,
+      "r10": 5253,
+      "r11": 5398,
+      "r12": 1662,
+      "r13": 4649,
+      "r14": 2634,
       "r2": 33508,
-      "r3": 1683,
-      "r4": 2263,
-      "r5": 3338,
-      "r6": 2839,
-      "r7": 2086,
-      "r8": 3287,
-      "r9": 1236
+      "r3": 2015,
+      "r4": 1610,
+      "r5": 3521,
+      "r6": 2926,
+      "r7": 2598,
+      "r8": 7136,
+      "r9": 1327
     },
     "source": "Public Tutu date-specific booking search (one adult; hotels one room/night)",
-    "updatedAt": "2026-11-12T02:11:57+03:00"
+    "updatedAt": "2026-11-12T06:53:17+03:00"
   }
 };
